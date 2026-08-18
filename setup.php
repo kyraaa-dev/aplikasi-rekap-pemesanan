@@ -34,6 +34,7 @@ $sql_pesanan = "CREATE TABLE IF NOT EXISTS pesanan (
     jumlah INT(5) NOT NULL DEFAULT 1,
     status_bayar ENUM('Belum Lunas', 'Lunas') DEFAULT 'Belum Lunas',
     status_pengambilan ENUM('Menunggu Diproses', 'Sedang Dibuat', 'Siap Diambil', 'Sudah Diambil') DEFAULT 'Menunggu Diproses',
+    catatan VARCHAR(255) NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (skpd_id) REFERENCES skpd(id) ON DELETE CASCADE
 )";
@@ -41,6 +42,13 @@ if ($conn->query($sql_pesanan) === TRUE) {
     echo "<div style='color: green;'>✅ Table 'pesanan' created successfully.</div>";
 } else {
     echo "<div style='color: red;'>❌ Error creating table pesanan: " . $conn->error . "</div>";
+}
+
+// Auto-migrate: Pastikan kolom 'catatan' ada jika tabel sudah dibuat sebelumnya
+$check_catatan = $conn->query("SHOW COLUMNS FROM pesanan LIKE 'catatan'");
+if ($check_catatan && $check_catatan->num_rows == 0) {
+    $conn->query("ALTER TABLE pesanan ADD COLUMN catatan VARCHAR(255) NULL AFTER status_pengambilan");
+    echo "<div style='color: green;'>✅ Kolom 'catatan' berhasil ditambahkan ke tabel pesanan.</div>";
 }
 
 // Create Retur table

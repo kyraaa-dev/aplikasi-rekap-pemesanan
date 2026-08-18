@@ -94,6 +94,12 @@ if (!isset($skip_db_select)) {
             <p>Silakan jalankan <a href='setup.php' style='color:#0056b3; font-weight:bold;'>setup.php</a> terlebih dahulu untuk membuat tabel database.</p>
         </div>");
     }
+
+    // Auto-migrate missing columns if any
+    $check_catatan = @$conn->query("SHOW COLUMNS FROM pesanan LIKE 'catatan'");
+    if ($check_catatan && $check_catatan->num_rows == 0) {
+        @$conn->query("ALTER TABLE pesanan ADD COLUMN catatan VARCHAR(255) NULL AFTER status_pengambilan");
+    }
 }
 
 // Authentication Check
