@@ -25,11 +25,11 @@ if (!empty($db_url) && $parsed = parse_url($db_url)) {
     $pass = $parsed['pass'] ?? '';
     $db   = isset($parsed['path']) ? ltrim($parsed['path'], '/') : 'rekap_mutz_asn';
 } else {
-    $host = get_env_var(['DB_HOST', 'DATABASE_HOST', 'MYSQL_HOST', 'TIDB_HOST', 'HOST'], 'localhost');
-    $user = get_env_var(['DB_USER', 'DB_USERNAME', 'DATABASE_USER', 'MYSQL_USER', 'TIDB_USER', 'USER'], 'root');
-    $pass = get_env_var(['DB_PASS', 'DB_PASSWORD', 'DATABASE_PASSWORD', 'MYSQL_PASSWORD', 'PASSWORD'], 'root');
-    $db   = get_env_var(['DB_NAME', 'DB_DATABASE', 'DATABASE_NAME', 'MYSQL_DATABASE', 'TIDB_DATABASE'], 'rekap_mutz_asn');
-    $port = (int)get_env_var(['DB_PORT', 'DATABASE_PORT', 'MYSQL_PORT', 'TIDB_PORT', 'PORT'], '3306');
+    $host = get_env_var(['DB_HOST', 'DATABASE_HOST', 'MYSQL_HOST', 'TIDB_HOST', 'HOST'], 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com');
+    $user = get_env_var(['DB_USER', 'DB_USERNAME', 'DATABASE_USER', 'MYSQL_USER', 'TIDB_USER', 'USER'], '4J75fkYqnQjcSSW.root');
+    $pass = get_env_var(['DB_PASS', 'DB_PASSWORD', 'DATABASE_PASSWORD', 'MYSQL_PASSWORD', 'PASSWORD'], '7Y3R2Vazfvg7LKFg');
+    $db   = get_env_var(['DB_NAME', 'DB_DATABASE', 'DATABASE_NAME', 'MYSQL_DATABASE', 'TIDB_DATABASE'], 'test');
+    $port = (int)get_env_var(['DB_PORT', 'DATABASE_PORT', 'MYSQL_PORT', 'TIDB_PORT', 'PORT'], '4000');
 }
 
 // Cek apakah berjalan di Vercel tapi env DB_HOST belum terdeteksi
