@@ -37,24 +37,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>E-MutZ KORPRI - Login</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
         body {
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            margin: 0;
-            overflow-y: auto;
             background: linear-gradient(135deg, rgba(79, 70, 229, 0.85) 0%, rgba(139, 92, 246, 0.85) 100%), url('assets/images/bg-bupati-new.jpg');
             background-size: cover;
             background-position: center;
             font-family: 'Inter', sans-serif;
-            padding: 1rem 0;
+            box-sizing: border-box;
         }
         
         [data-theme="dark"] body {
             background: linear-gradient(135deg, rgba(30, 27, 75, 0.9) 0%, rgba(76, 29, 149, 0.9) 100%), url('assets/images/bg-bupati-new.jpg');
             background-size: cover;
             background-position: center;
+        }
+
+        @media (max-height: 720px), (max-width: 480px) {
+            html, body {
+                overflow-y: auto;
+                height: auto;
+            }
+            body {
+                padding: 2rem 0;
+            }
         }
 
         .login-wrapper {
