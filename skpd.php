@@ -80,22 +80,42 @@ $skpds = $conn->query("
             <h1>Data SKPD</h1>
         </div>
 
-        <div class="panel">
-            <h2>Tambah SKPD Baru</h2>
+        <div class="panel" style="background: var(--white); border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid var(--gray-light);">
+            <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1.2rem; color: var(--primary); display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7.5" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                Tambah SKPD Baru
+            </h2>
             <form method="POST">
                 <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
-                <div class="form-group flex gap-4 items-center" style="flex-wrap: wrap;">
-                    <input type="text" name="nama_skpd" placeholder="Nama SKPD (contoh: Dinas Pendidikan)" required style="flex: 2; min-width: 260px;">
-                    <input type="text" name="no_wa" placeholder="No. WA / Kontak (contoh: 08123456789)" style="flex: 1; min-width: 200px;">
-                    <button type="submit" style="white-space:nowrap;">Tambah SKPD</button>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) auto; gap: 14px; align-items: flex-end;">
+                    <div>
+                        <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--dark);">Nama SKPD / Instansi <span style="color: #DC2626;">*</span></label>
+                        <input type="text" name="nama_skpd" placeholder="Contoh: Dinas Pendidikan" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 1rem; box-sizing: border-box;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--dark);">
+                            <span style="display: inline-flex; align-items: center; gap: 5px; color: #059669;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                                No. WhatsApp Kontak
+                            </span>
+                            <span style="font-size:0.75rem; color:var(--gray); font-weight:400;">(Opsional)</span>
+                        </label>
+                        <input type="text" name="no_wa" placeholder="Contoh: 08123456789" style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 1rem; box-sizing: border-box;">
+                    </div>
+                    <div>
+                        <button type="submit" class="btn-card-primary" style="padding: 0.65rem 1.4rem; white-space: nowrap; height: 42px; width: auto;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            Tambah SKPD
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
         
-        <div class="panel">
-            <div class="flex justify-between items-center mb-4">
-                <h2>Daftar SKPD Terdaftar</h2>
-                <input type="text" id="searchSkpd" onkeyup="filterTable('searchSkpd', 'skpdTable')" placeholder="Cari nama SKPD..." style="width: 250px; padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid var(--gray-light); font-size: 0.9rem;">
+        <div class="panel" style="margin-top: 1.5rem; background: var(--white); border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid var(--gray-light);">
+            <div class="flex justify-between items-center mb-4" style="flex-wrap: wrap; gap: 10px;">
+                <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--dark); margin: 0;">Daftar SKPD Terdaftar</h2>
+                <input type="text" id="searchSkpd" onkeyup="filterTable('searchSkpd', 'skpdTable')" placeholder="🔍 Cari nama SKPD..." style="width: 250px; padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid var(--gray-light); font-size: 0.85rem;">
             </div>
             <div class="table-responsive">
                 <table id="skpdTable">
@@ -115,18 +135,26 @@ $skpds = $conn->query("
                             <td><?= $no++ ?></td>
                             <td><strong><?= htmlspecialchars($row['nama_skpd']) ?></strong></td>
                             <td>
-                                <div style="display: flex; align-items: center; gap: 6px;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
                                     <?php if (!empty($row['no_wa'])): ?>
-                                        <span style="color: #059669; font-weight: 500; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px;">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                        <button type="button" 
+                                                class="btn-wa-pill btn-wa-notify" 
+                                                data-skpd="<?= htmlspecialchars($row['nama_skpd'], ENT_QUOTES) ?>" 
+                                                data-wa="<?= htmlspecialchars($row['no_wa'], ENT_QUOTES) ?>" 
+                                                data-total-qty="<?= (int)$row['total_lunas'] + (int)$row['total_belum'] ?>" 
+                                                data-total-rp="-" 
+                                                data-status-bayar="<?= $row['total_belum'] == 0 ? 'Lunas' : 'Belum Lunas' ?>" 
+                                                data-status-ambil="-" 
+                                                title="Kirim Pesan WhatsApp">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                                             <?= htmlspecialchars($row['no_wa']) ?>
-                                        </span>
-                                        <button type="button" class="btn-quick-wa" data-id="<?= $row['id'] ?>" data-name="<?= htmlspecialchars($row['nama_skpd'], ENT_QUOTES) ?>" data-wa="<?= htmlspecialchars($row['no_wa'], ENT_QUOTES) ?>" title="Ubah Nomor WA" style="background: none; border: none; cursor: pointer; color: var(--gray); padding: 2px 4px; display: inline-flex; align-items: center;">
+                                        </button>
+                                        <button type="button" class="btn-quick-wa" data-id="<?= $row['id'] ?>" data-name="<?= htmlspecialchars($row['nama_skpd'], ENT_QUOTES) ?>" data-wa="<?= htmlspecialchars($row['no_wa'], ENT_QUOTES) ?>" title="Ubah Nomor WA" style="background: #F3F4F6; border: 1px solid var(--gray-light); border-radius: 6px; cursor: pointer; color: var(--dark); padding: 4px 7px; display: inline-flex; align-items: center; transition: all 0.15s ease;">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
                                         </button>
                                     <?php else: ?>
-                                        <button type="button" class="btn-quick-wa" data-id="<?= $row['id'] ?>" data-name="<?= htmlspecialchars($row['nama_skpd'], ENT_QUOTES) ?>" data-wa="" style="background: var(--light); border: 1px dashed #9CA3AF; color: var(--gray); font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                        <button type="button" class="btn-quick-wa" data-id="<?= $row['id'] ?>" data-name="<?= htmlspecialchars($row['nama_skpd'], ENT_QUOTES) ?>" data-wa="" style="background: #ECFDF5; border: 1px dashed #10B981; color: #059669; font-size: 0.78rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; transition: all 0.15s ease;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                                             + Tambah WA
                                         </button>
                                     <?php endif; ?>
@@ -170,7 +198,7 @@ $skpds = $conn->query("
                         </tr>
                         <?php endwhile; ?>
                         <?php if($skpds->num_rows == 0): ?>
-                        <tr><td colspan="3" style="text-align:center;">Belum ada data SKPD. Silakan tambahkan terlebih dahulu.</td></tr>
+                        <tr><td colspan="6" style="text-align:center; padding: 20px; color: var(--gray);">Belum ada data SKPD. Silakan tambahkan terlebih dahulu.</td></tr>
                         <?php endif; ?>
                     </tbody>
                 </table>
@@ -187,15 +215,22 @@ $skpds = $conn->query("
                 const currentWa = this.getAttribute('data-wa') || '';
 
                 Swal.fire({
-                    title: 'Atur Kontak WhatsApp',
+                    title: '<span style="display:inline-flex; align-items:center; gap:8px; color:#059669;"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> Atur Kontak WhatsApp</span>',
                     html: `
-                        <p style="font-size:0.9rem; color:var(--gray); margin-bottom:12px; text-align:left;">Masukkan nomor WhatsApp untuk <b>${name}</b>:</p>
-                        <input id="swal-input-wa" class="swal2-input" placeholder="Contoh: 08123456789" value="${currentWa}" style="width:100%; margin:0; box-sizing:border-box;">
+                        <div style="text-align:left; font-size:0.9rem;">
+                            <div style="margin-bottom:12px; background:#ECFDF5; border:1px solid #A7F3D0; padding:10px 12px; border-radius:8px; color:#065F46;">
+                                <strong>SKPD:</strong> ${name}
+                            </div>
+                            <label style="font-weight:600; display:block; margin-bottom:4px; font-size:0.85rem; color:var(--dark);">Nomor WhatsApp Narahubung:</label>
+                            <input id="swal-input-wa" class="swal2-input" placeholder="Contoh: 08123456789" value="${currentWa}" style="width:100%; margin:0; padding:8px 12px; height:38px; font-size:0.9rem; box-sizing:border-box;">
+                            <p style="font-size:0.75rem; color:var(--gray); margin-top:6px;">Nomor ini akan otomatis digunakan saat mengirim notifikasi WA dari Dashboard & Rekapitulasi.</p>
+                        </div>
                     `,
                     showCancelButton: true,
-                    confirmButtonText: 'Simpan Kontak',
+                    confirmButtonText: '💾 Simpan Kontak',
                     cancelButtonText: 'Batal',
                     confirmButtonColor: '#10B981',
+                    cancelButtonColor: '#6B7280',
                     preConfirm: () => {
                         return document.getElementById('swal-input-wa').value;
                     }
