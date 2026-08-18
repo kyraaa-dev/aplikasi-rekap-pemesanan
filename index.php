@@ -244,79 +244,98 @@ if ($q_all_orders) {
 
         <div class="panel fade-up delay-2">
             <h2>Rincian Pesanan per SKPD</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; margin-top: 1.5rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; margin-top: 1.5rem;">
                 <?php if(!empty($rincian_skpd)): ?>
                     <?php foreach($rincian_skpd as $nama => $details): ?>
-                        <div class="fade-up" style="border: 1px solid var(--gray-light); padding: 15px; border-radius: 8px; background: var(--white); box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                            <h4 style="color: var(--primary); margin-bottom: 12px; font-size: 1.05rem; border-bottom: 2px solid var(--light); padding-bottom: 8px;">
-                                <?= htmlspecialchars($nama) ?>
-                            </h4>
-                            <ul style="list-style-type: none; margin-left: 0; padding-left: 0; font-size: 0.9rem;">
-                                <?php 
-                                    $total_item = 0;
-                                    $total_rupiah = 0;
-                                    foreach($details as $d): 
-                                        $total_item += $d['total_jumlah'];
-                                        $total_rupiah += $d['total_tagihan'];
-                                ?>
-                                    <li style="display: flex; justify-content: space-between; margin-bottom: 6px; border-bottom: 1px dashed #eee; padding-bottom: 6px;">
+                        <?php 
+                            $status = isset($status_skpd[$nama]) ? $status_skpd[$nama] : '-';
+                            $status_bg = '#F3F4F6';
+                            $status_color = '#374151';
+                            if ($status == 'Lunas') {
+                                $status_bg = '#DCFCE7'; $status_color = '#15803D';
+                            } elseif ($status == 'Sebagian Lunas') {
+                                $status_bg = '#FEF3C7'; $status_color = '#D97706';
+                            } elseif ($status == 'Belum Lunas') {
+                                $status_bg = '#FEE2E2'; $status_color = '#B91C1C';
+                            }
+
+                            $status_ambil = isset($status_ambil_skpd[$nama]) ? $status_ambil_skpd[$nama] : 'Belum Diambil';
+                            $ambil_bg = '#F3F4F6';
+                            $ambil_color = '#374151';
+                            if ($status_ambil == 'Sudah Diambil') {
+                                $ambil_bg = '#DCFCE7'; $ambil_color = '#15803D';
+                            } elseif ($status_ambil == 'Sebagian Diambil') {
+                                $ambil_bg = '#DBEAFE'; $ambil_color = '#1D4ED8';
+                            } else {
+                                $ambil_bg = '#F3F4F6'; $ambil_color = '#6B7280';
+                            }
+                            $current_skpd_id = $skpd_id_map[$nama] ?? 0;
+
+                            $total_item = 0;
+                            $total_rupiah = 0;
+                            foreach($details as $d) {
+                                $total_item += $d['total_jumlah'];
+                                $total_rupiah += $d['total_tagihan'];
+                            }
+                        ?>
+                        <div class="fade-up skpd-card" style="padding: 16px; border-radius: 12px; background: var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.04);">
+                            <div class="skpd-card-header">
+                                <h4 style="color: var(--primary); margin: 0; font-size: 0.98rem; font-weight: 700; display: flex; align-items: center; gap: 6px; line-height: 1.3;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M3 21h18"></path><path d="M9 8h1"></path><path d="M9 12h1"></path><path d="M9 16h1"></path><path d="M14 8h1"></path><path d="M14 12h1"></path><path d="M14 16h1"></path><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path></svg>
+                                    <span><?= htmlspecialchars($nama) ?></span>
+                                </h4>
+                                <?php if (!empty($skpd_wa_map[$nama])): ?>
+                                    <button type="button" 
+                                            class="btn-wa-pill btn-wa-notify" 
+                                            data-skpd="<?= htmlspecialchars($nama, ENT_QUOTES) ?>" 
+                                            data-wa="<?= htmlspecialchars($skpd_wa_map[$nama], ENT_QUOTES) ?>" 
+                                            data-total-qty="<?= $total_item ?>" 
+                                            data-total-rp="Rp <?= number_format($total_rupiah, 0, ',', '.') ?>" 
+                                            data-status-bayar="<?= $status ?>" 
+                                            data-status-ambil="<?= $status_ambil ?>" 
+                                            title="Kirim Notifikasi WhatsApp">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                                        <?= htmlspecialchars($skpd_wa_map[$nama]) ?>
+                                    </button>
+                                <?php endif; ?>
+                            </div>
+
+                            <ul style="list-style-type: none; margin-left: 0; padding-left: 0; font-size: 0.875rem;">
+                                <?php foreach($details as $d): ?>
+                                    <li style="display: flex; justify-content: space-between; margin-bottom: 5px; border-bottom: 1px dashed #f0f0f0; padding-bottom: 4px;">
                                         <span>
-                                            <span style="display:inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: <?= $d['jenis_kelamin'] == 'Laki-laki' ? 'var(--primary)' : '#EC4899' ?>; margin-right: 5px;"></span>
-                                            <?= $d['jenis_kelamin'] ?> (Uk: <?= $d['ukuran'] ?>) - <span style="font-size: 0.8rem; color: var(--gray);"><?= $d['jenis_mutz'] ?></span>
+                                            <span style="display:inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: <?= $d['jenis_kelamin'] == 'Laki-laki' ? 'var(--primary)' : '#EC4899' ?>; margin-right: 5px;"></span>
+                                            <?= $d['jenis_kelamin'] ?> (Uk: <?= $d['ukuran'] ?>) - <span style="font-size: 0.78rem; color: var(--gray);"><?= $d['jenis_mutz'] ?></span>
                                         </span>
                                         <strong><?= $d['total_jumlah'] ?> buah</strong>
                                     </li>
                                 <?php endforeach; ?>
-                                <li style="display: flex; justify-content: space-between; margin-top: 10px; font-weight: 600;">
+                                <li style="display: flex; justify-content: space-between; margin-top: 8px; font-weight: 600;">
                                     <span>Total Pesanan:</span>
                                     <span><?= $total_item ?> buah</span>
                                 </li>
-                                <li style="display: flex; justify-content: space-between; margin-top: 5px; font-weight: 700; color: #B45309; background: #FEF3C7; padding: 6px 8px; border-radius: 6px;">
+                                <li style="display: flex; justify-content: space-between; margin-top: 5px; font-weight: 700; color: #B45309; background: #FEF3C7; padding: 5px 8px; border-radius: 6px; font-size: 0.85rem;">
                                     <span>Total Tagihan:</span>
                                     <span>Rp <?= number_format($total_rupiah, 0, ',', '.') ?></span>
                                 </li>
-                                <?php 
-                                    $status = isset($status_skpd[$nama]) ? $status_skpd[$nama] : '-';
-                                    $status_bg = '#F3F4F6';
-                                    $status_color = '#374151';
-                                    if ($status == 'Lunas') {
-                                        $status_bg = '#DCFCE7'; $status_color = '#15803D';
-                                    } elseif ($status == 'Sebagian Lunas') {
-                                        $status_bg = '#FEF3C7'; $status_color = '#D97706';
-                                    } elseif ($status == 'Belum Lunas') {
-                                        $status_bg = '#FEE2E2'; $status_color = '#B91C1C';
-                                    }
-
-                                    $status_ambil = isset($status_ambil_skpd[$nama]) ? $status_ambil_skpd[$nama] : 'Belum Diambil';
-                                    $ambil_bg = '#F3F4F6';
-                                    $ambil_color = '#374151';
-                                    if ($status_ambil == 'Sudah Diambil') {
-                                        $ambil_bg = '#DCFCE7'; $ambil_color = '#15803D';
-                                    } elseif ($status_ambil == 'Sebagian Diambil') {
-                                        $ambil_bg = '#DBEAFE'; $ambil_color = '#1D4ED8';
-                                    } else {
-                                        $ambil_bg = '#F3F4F6'; $ambil_color = '#6B7280';
-                                    }
-                                    $current_skpd_id = $skpd_id_map[$nama] ?? 0;
-                                ?>
-                                <li style="display: flex; justify-content: space-between; margin-top: 5px; font-weight: 700; color: <?= $status_color ?>; background: <?= $status_bg ?>; padding: 6px 8px; border-radius: 6px;">
+                                <li style="display: flex; justify-content: space-between; margin-top: 4px; font-weight: 700; color: <?= $status_color ?>; background: <?= $status_bg ?>; padding: 5px 8px; border-radius: 6px; font-size: 0.825rem;">
                                     <span>Status Bayar:</span>
                                     <span><?= $status ?></span>
                                 </li>
-                                <li style="display: flex; justify-content: space-between; margin-top: 5px; font-weight: 700; color: <?= $ambil_color ?>; background: <?= $ambil_bg ?>; padding: 6px 8px; border-radius: 6px;">
+                                <li style="display: flex; justify-content: space-between; margin-top: 4px; font-weight: 700; color: <?= $ambil_color ?>; background: <?= $ambil_bg ?>; padding: 5px 8px; border-radius: 6px; font-size: 0.825rem;">
                                     <span>Status Pengambilan:</span>
                                     <span><?= $status_ambil ?></span>
                                 </li>
                                 <?php if (!empty($catatan_skpd[$nama])): ?>
-                                <li style="margin-top: 10px; font-size: 0.85rem; color: var(--gray); background: #F9FAFB; padding: 8px; border-radius: 6px; border: 1px solid var(--gray-light);">
-                                    <strong style="display: block; margin-bottom: 3px; color: var(--dark);">Catatan Tambahan:</strong>
+                                <li style="margin-top: 8px; font-size: 0.825rem; color: var(--gray); background: #F9FAFB; padding: 6px 8px; border-radius: 6px; border: 1px solid var(--gray-light);">
+                                    <strong style="display: block; margin-bottom: 2px; color: var(--dark); font-size: 0.75rem;">Catatan:</strong>
                                     <span style="font-style: italic;"><?= htmlspecialchars($catatan_skpd[$nama]) ?></span>
                                 </li>
                                 <?php endif; ?>
                             </ul>
                             
-                            <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--gray-light); display: flex; flex-direction: column; gap: 6px;">
-                                <button type="button" class="btn btn-sm btn-detail-skpd" 
+                            <div class="skpd-card-actions">
+                                <button type="button" class="btn-card-primary btn-detail-skpd" 
                                         data-skpd="<?= htmlspecialchars($nama, ENT_QUOTES) ?>" 
                                         data-skpd-id="<?= $current_skpd_id ?>"
                                         data-status="<?= $status ?>"
@@ -326,54 +345,55 @@ if ($q_all_orders) {
                                         data-status-ambil-color="<?= $ambil_color ?>"
                                         data-status-ambil-bg="<?= $ambil_bg ?>"
                                         data-total-qty="<?= $total_item ?>"
-                                        data-total-rp="Rp <?= number_format($total_rupiah, 0, ',', '.') ?>"
-                                        style="width: 100%; justify-content: center; background: linear-gradient(135deg, var(--primary) 0%, #6366f1 100%); color: white; border: none; border-radius: 6px; padding: 7px 12px; font-size: 0.825rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25); transition: transform 0.15s ease, box-shadow 0.15s ease;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        data-total-rp="Rp <?= number_format($total_rupiah, 0, ',', '.') ?>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                     Lihat Detail Pesanan
                                 </button>
                                 
-                                <?php if ($status !== 'Lunas'): ?>
-                                    <a href="index.php?lunas_semua_skpd=<?= $current_skpd_id ?>" 
-                                       class="btn btn-sm btn-confirm" 
-                                       data-confirm-title="Konfirmasi Pembayaran Lunas" 
-                                       data-confirm-text="Apakah Anda yakin ingin menandai SEMUA pesanan dari SKPD '<?= htmlspecialchars($nama, ENT_QUOTES) ?>' sebagai LUNAS?" 
-                                       data-confirm-btn="Ya, Sudah Lunas" 
-                                       data-confirm-color="#D97706" 
-                                       style="width: 100%; justify-content: center; background: #D97706; color: white; border: none; border-radius: 6px; padding: 7px 12px; font-size: 0.825rem; font-weight: 600; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(217,119,6,0.25); text-decoration: none; transition: transform 0.15s ease;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                                        Tandai Semua Lunas
-                                    </a>
-                                <?php endif; ?>
+                                <div class="skpd-actions-grid">
+                                    <button type="button" 
+                                            class="btn-wa btn-wa-notify" 
+                                            data-skpd="<?= htmlspecialchars($nama, ENT_QUOTES) ?>" 
+                                            data-wa="<?= htmlspecialchars($skpd_wa_map[$nama] ?? '', ENT_QUOTES) ?>" 
+                                            data-total-qty="<?= $total_item ?>" 
+                                            data-total-rp="Rp <?= number_format($total_rupiah, 0, ',', '.') ?>" 
+                                            data-status-bayar="<?= $status ?>" 
+                                            data-status-ambil="<?= $status_ambil ?>" 
+                                            title="Kirim Notifikasi WhatsApp"
+                                            style="padding: 7px 8px; font-size: 0.8rem;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                                        Notif WA
+                                    </button>
 
-                                <?php if ($status_ambil === 'Sudah Diambil'): ?>
-                                    <div style="width: 100%; text-align: center; background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; border-radius: 6px; padding: 6px 10px; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        Semua Barang Sudah Diambil
-                                    </div>
-                                <?php else: ?>
-                                    <a href="index.php?ambil_semua_skpd=<?= $current_skpd_id ?>" 
-                                       class="btn btn-sm btn-confirm" 
-                                       data-confirm-title="Konfirmasi Pengambilan Barang" 
-                                       data-confirm-text="Apakah Anda yakin ingin menandai SEMUA pesanan dari SKPD '<?= htmlspecialchars($nama, ENT_QUOTES) ?>' sebagai SUDAH DIAMBIL?" 
-                                       data-confirm-btn="Ya, Sudah Diambil" 
-                                       data-confirm-color="#10B981" 
-                                       style="width: 100%; justify-content: center; background: #10B981; color: white; border: none; border-radius: 6px; padding: 7px 12px; font-size: 0.825rem; font-weight: 600; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(16,185,129,0.25); text-decoration: none; transition: transform 0.15s ease;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        Tandai Sudah Diambil
-                                    </a>
-                                <?php endif; ?>
-                                <button type="button" 
-                                        class="btn btn-sm btn-wa-notify" 
-                                        data-skpd="<?= htmlspecialchars($nama, ENT_QUOTES) ?>" 
-                                        data-wa="<?= htmlspecialchars($skpd_wa_map[$nama] ?? '', ENT_QUOTES) ?>" 
-                                        data-total-qty="<?= $total_item ?>" 
-                                        data-total-rp="Rp <?= number_format($total_rupiah, 0, ',', '.') ?>" 
-                                        data-status-bayar="<?= $status ?>" 
-                                        data-status-ambil="<?= $status_ambil ?>" 
-                                        style="width: 100%; justify-content: center; background: #25D366; color: white; border: none; border-radius: 6px; padding: 7px 12px; font-size: 0.825rem; font-weight: 600; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(37,211,102,0.25); cursor: pointer; transition: transform 0.15s ease;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                                    Kirim Notifikasi WA
-                                </button>
+                                    <?php if ($status !== 'Lunas'): ?>
+                                        <a href="index.php?lunas_semua_skpd=<?= $current_skpd_id ?>" 
+                                           class="btn-card-amber btn-confirm" 
+                                           data-confirm-title="Konfirmasi Pembayaran Lunas" 
+                                           data-confirm-text="Tandai SEMUA pesanan dari '<?= htmlspecialchars($nama, ENT_QUOTES) ?>' sebagai LUNAS?" 
+                                           data-confirm-btn="Ya, Lunas" 
+                                           data-confirm-color="#D97706" 
+                                           title="Tandai Semua Lunas">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                            Set Lunas
+                                        </a>
+                                    <?php elseif ($status_ambil !== 'Sudah Diambil'): ?>
+                                        <a href="index.php?ambil_semua_skpd=<?= $current_skpd_id ?>" 
+                                           class="btn-card-emerald btn-confirm" 
+                                           data-confirm-title="Konfirmasi Pengambilan Barang" 
+                                           data-confirm-text="Tandai SEMUA pesanan dari '<?= htmlspecialchars($nama, ENT_QUOTES) ?>' sebagai SUDAH DIAMBIL?" 
+                                           data-confirm-btn="Ya, Sudah Diambil" 
+                                           data-confirm-color="#10B981" 
+                                           title="Tandai Sudah Diambil">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            Set Diambil
+                                        </a>
+                                    <?php else: ?>
+                                        <div style="background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; border-radius: 8px; font-size: 0.78rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 4px; padding: 6px 8px;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            Selesai
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -427,20 +447,20 @@ if ($q_all_orders) {
                     <div id="modalSkpdFooterSummary" style="font-weight: 700; color: var(--dark); font-size: 0.9rem;">
                         <!-- Summary info -->
                     </div>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button id="btnModalWa" type="button" class="btn btn-sm btn-wa-notify" style="background: #25D366; color: white; border: none; border-radius: 6px; padding: 7px 14px; font-weight: 600; box-shadow: 0 2px 6px rgba(37,211,102,0.25); cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button id="btnModalWa" type="button" class="btn-wa btn-wa-notify" style="padding: 7px 14px; font-size: 0.825rem;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                             Kirim WA
                         </button>
-                        <a id="btnModalLunasSemua" href="#" class="btn btn-sm btn-confirm" data-confirm-title="Konfirmasi Pembayaran Lunas" data-confirm-text="Tandai SEMUA pesanan SKPD ini sebagai LUNAS?" data-confirm-btn="Ya, Sudah Lunas" data-confirm-color="#D97706" style="background: #D97706; color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; border-radius: 6px; padding: 7px 14px; font-weight: 600; box-shadow: 0 2px 6px rgba(217,119,6,0.25);">
+                        <a id="btnModalLunasSemua" href="#" class="btn-card-amber btn-confirm" data-confirm-title="Konfirmasi Pembayaran Lunas" data-confirm-text="Tandai SEMUA pesanan SKPD ini sebagai LUNAS?" data-confirm-btn="Ya, Sudah Lunas" data-confirm-color="#D97706" style="width: auto; padding: 7px 14px;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                             Tandai Semua Lunas
                         </a>
-                        <a id="btnModalAmbilSemua" href="#" class="btn btn-sm btn-confirm" data-confirm-title="Konfirmasi Pengambilan Barang" data-confirm-text="Tandai SEMUA pesanan SKPD ini sebagai SUDAH DIAMBIL?" data-confirm-btn="Ya, Sudah Diambil" data-confirm-color="#10B981" style="background: #10B981; color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; border-radius: 6px; padding: 7px 14px; font-weight: 600; box-shadow: 0 2px 6px rgba(16,185,129,0.25);">
+                        <a id="btnModalAmbilSemua" href="#" class="btn-card-emerald btn-confirm" data-confirm-title="Konfirmasi Pengambilan Barang" data-confirm-text="Tandai SEMUA pesanan SKPD ini sebagai SUDAH DIAMBIL?" data-confirm-btn="Ya, Sudah Diambil" data-confirm-color="#10B981" style="width: auto; padding: 7px 14px;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             Tandai Semua Sudah Diambil
                         </a>
-                        <a id="btnFilterKePesanan" href="#" class="btn btn-sm" style="background: var(--primary); color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; border-radius: 6px; padding: 7px 14px; font-weight: 600;">
+                        <a id="btnFilterKePesanan" href="#" class="btn-card-primary" style="width: auto; padding: 7px 14px; text-decoration: none;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                             Kelola di Halaman Pesanan
                         </a>

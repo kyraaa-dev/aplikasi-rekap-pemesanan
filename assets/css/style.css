@@ -235,6 +235,168 @@ button:active, .btn:active {
     font-size: 0.875rem;
 }
 
+/* WhatsApp Brand Buttons */
+.btn-wa {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 8px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(37, 211, 102, 0.28);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-wa:hover {
+    background: linear-gradient(135deg, #20BD5A 0%, #0E7064 100%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(37, 211, 102, 0.4);
+    color: #ffffff !important;
+}
+
+.btn-wa:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(37, 211, 102, 0.2);
+}
+
+.btn-wa-pill {
+    background: #ECFDF5;
+    color: #059669;
+    border: 1px solid #A7F3D0;
+    border-radius: 20px;
+    padding: 3px 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-wa-pill:hover {
+    background: #25D366;
+    color: #ffffff;
+    border-color: #25D366;
+    box-shadow: 0 2px 6px rgba(37, 211, 102, 0.35);
+    transform: scale(1.05);
+}
+
+/* SKPD Card Modern Layout */
+.skpd-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    border: 1px solid var(--gray-light);
+    display: flex;
+    flex-direction: column;
+}
+
+.skpd-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.08), 0 4px 8px -2px rgba(0, 0, 0, 0.04);
+    border-color: #CBD5E1;
+}
+
+.skpd-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--gray-light);
+}
+
+.skpd-card-actions {
+    margin-top: auto;
+    padding-top: 10px;
+    border-top: 1px solid var(--gray-light);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.skpd-actions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+.btn-card-primary {
+    width: 100%;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary) 0%, #6366F1 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 0.825rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(79, 70, 229, 0.22);
+    transition: all 0.2s ease;
+}
+
+.btn-card-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(79, 70, 229, 0.35);
+}
+
+.btn-card-amber {
+    width: 100%;
+    justify-content: center;
+    background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 2px 6px rgba(217, 119, 6, 0.25);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-card-amber:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(217, 119, 6, 0.35);
+    color: white;
+}
+
+.btn-card-emerald {
+    width: 100%;
+    justify-content: center;
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-card-emerald:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(16, 185, 129, 0.35);
+    color: white;
+}
+
 .table-responsive {
     overflow-x: auto;
 }
