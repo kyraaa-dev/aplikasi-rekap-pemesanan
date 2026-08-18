@@ -153,7 +153,12 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
             Pengaturan</a>
         </li>
-        <li style="margin-top: 2rem;"><a href="logout.php" id="btnLogout" style="color: var(--danger);">
+        <li id="pwaInstallItem" style="margin-top: 0.75rem;">
+            <a href="#" id="btnPwaInstall" style="background: rgba(79, 70, 229, 0.08); color: var(--primary); font-weight: 600; border-radius: 8px; border: 1px dashed rgba(79, 70, 229, 0.4);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line><polyline points="9 9 12 12 15 9"></polyline><line x1="12" y1="6" x2="12" y2="12"></line></svg>
+                📲 Pasang Aplikasi</a>
+        </li>
+        <li style="margin-top: 1.5rem;"><a href="logout.php" id="btnLogout" style="color: var(--danger);">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
             Keluar (Logout)</a>
         </li>
@@ -422,6 +427,81 @@ document.addEventListener('DOMContentLoaded', function() {
 
             window.openWhatsAppSender({ skpdName, targetWa, totalQty, totalRp, statusBayar, statusAmbil });
         }
+    });
+
+    // 5. Progressive Web App (PWA) Handler & Service Worker Registration
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('E-MutZ PWA Service Worker Registered! Scope:', reg.scope))
+            .catch(err => console.warn('E-MutZ PWA SW Registration failed:', err));
+    }
+
+    let deferredPwaPrompt = null;
+    const btnPwaInstall = document.getElementById('btnPwaInstall');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPwaPrompt = e;
+        // Tampilkan tombol pasang aplikasi dengan badge menarik
+        if (btnPwaInstall) {
+            btnPwaInstall.style.animation = 'pulse 2s infinite';
+        }
+    });
+
+    if (btnPwaInstall) {
+        btnPwaInstall.addEventListener('click', async (e) => {
+            e.preventDefault();
+            if (deferredPwaPrompt) {
+                deferredPwaPrompt.prompt();
+                const { outcome } = await deferredPwaPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    const pwaItem = document.getElementById('pwaInstallItem');
+                    if (pwaItem) pwaItem.style.display = 'none';
+                }
+                deferredPwaPrompt = null;
+            } else {
+                // Panduan interaktif jika dibuka di browser yang tidak trigger beforeinstallprompt (seperti Safari iOS)
+                Swal.fire({
+                    title: '<span style="display:inline-flex; align-items:center; gap:8px; color:var(--primary);"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line><polyline points="9 9 12 12 15 9"></polyline><line x1="12" y1="6" x2="12" y2="12"></line></svg> Pasang Aplikasi di HP</span>',
+                    html: `
+                        <div style="text-align:left; font-size:0.875rem;">
+                            <p style="margin-bottom:12px; color:var(--dark);">Pasang <b>E-MutZ KORPRI</b> di layar utama HP / Tablet Anda agar dapat dibuka seperti aplikasi resmi tanpa perlu ketik link:</p>
+                            
+                            <div style="background:#F0FDF4; border:1px solid #BBF7D0; padding:12px; border-radius:8px; margin-bottom:10px; color:#166534;">
+                                <strong style="display:flex; align-items:center; gap:5px; margin-bottom:4px; font-size:0.9rem;">
+                                    🤖 Pengguna Android (Chrome / Edge):
+                                </strong>
+                                1. Ketuk menu titik tiga (<b>⋮</b>) di kanan atas browser.<br>
+                                2. Pilih menu <b>"Install app"</b> atau <b>"Tambahkan ke Layar Utama"</b>.
+                            </div>
+
+                            <div style="background:#EFF6FF; border:1px solid #BFDBFE; padding:12px; border-radius:8px; color:#1E40AF;">
+                                <strong style="display:flex; align-items:center; gap:5px; margin-bottom:4px; font-size:0.9rem;">
+                                    🍎 Pengguna iPhone / iPad (Safari):
+                                </strong>
+                                1. Ketuk ikon <b>Bagikan (Share / Kotak Panah Atas)</b> di bilah bawah Safari.<br>
+                                2. Gulir ke bawah dan pilih <b>"Add to Home Screen"</b> (Tambah ke Layar Utama).
+                            </div>
+                        </div>
+                    `,
+                    icon: 'info',
+                    confirmButtonColor: 'var(--primary)',
+                    confirmButtonText: 'Saya Mengerti 👍'
+                });
+            }
+        });
+    }
+
+    window.addEventListener('appinstalled', () => {
+        const pwaItem = document.getElementById('pwaInstallItem');
+        if (pwaItem) pwaItem.style.display = 'none';
+        deferredPwaPrompt = null;
+        Swal.fire({
+            title: 'Aplikasi Terpasang! 🎉',
+            text: 'E-MutZ KORPRI sekarang dapat dibuka langsung dari layar utama HP atau Komputer Anda.',
+            icon: 'success',
+            confirmButtonColor: '#10B981'
+        });
     });
 });
 </script>

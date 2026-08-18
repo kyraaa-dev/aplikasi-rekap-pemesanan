@@ -1,0 +1,32 @@
+{
+  "name": "E-MutZ KORPRI - Rekap Pesanan ASN",
+  "short_name": "E-MutZ KORPRI",
+  "description": "Sistem Rekapitulasi & Manajemen Pemesanan Topi MutZ KORPRI ASN",
+  "start_url": "index.php",
+  "id": "emutz-korpri-app",
+  "display": "standalone",
+  "background_color": "#F8FAFC",
+  "theme_color": "#4F46E5",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/images/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["business", "productivity", "government", "utilities"]
+}
