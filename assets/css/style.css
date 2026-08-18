@@ -736,3 +736,8 @@ tr:hover {
         padding: 0.25rem !important;
     }
 }
+
+/* SweetAlert2 Highest Layer Priority (Guarantee on top of all modals) */
+.swal2-container {
+    z-index: 100000 !important;
+}

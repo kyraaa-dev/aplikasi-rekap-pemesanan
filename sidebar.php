@@ -21,6 +21,11 @@
 .brand:hover img {
     transform: scale(1.15) rotate(-6deg);
 }
+
+/* SweetAlert2 Highest Layer Guarantee */
+.swal2-container {
+    z-index: 100000 !important;
+}
 </style>
 <script>
     if(localStorage.getItem('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
