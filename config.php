@@ -1,18 +1,36 @@
 <?php
 session_start();
 
-function get_env_var($key, $default = '') {
-    if (getenv($key) !== false && getenv($key) !== '') return trim(getenv($key));
-    if (isset($_ENV[$key]) && $_ENV[$key] !== '') return trim($_ENV[$key]);
-    if (isset($_SERVER[$key]) && $_SERVER[$key] !== '') return trim($_SERVER[$key]);
+function get_env_var($keys, $default = '') {
+    if (!is_array($keys)) $keys = [$keys];
+    
+    // Check all combinations
+    foreach ($keys as $k) {
+        $variants = [$k, strtoupper($k), strtolower($k)];
+        foreach ($variants as $var) {
+            if (getenv($var) !== false && getenv($var) !== '') return trim(getenv($var));
+            if (isset($_ENV[$var]) && $_ENV[$var] !== '') return trim($_ENV[$var]);
+            if (isset($_SERVER[$var]) && $_SERVER[$var] !== '') return trim($_SERVER[$var]);
+        }
+    }
     return $default;
 }
 
-$host = get_env_var('DB_HOST', 'localhost');
-$user = get_env_var('DB_USER', 'root');
-$pass = get_env_var('DB_PASS', 'root');
-$db   = get_env_var('DB_NAME', 'rekap_mutz_asn');
-$port = (int)get_env_var('DB_PORT', '3306');
+// Check for DATABASE_URL / MYSQL_URL connection string if present
+$db_url = get_env_var(['DATABASE_URL', 'MYSQL_URL', 'JAWSDB_URL', 'CLEARDB_DATABASE_URL']);
+if (!empty($db_url) && $parsed = parse_url($db_url)) {
+    $host = $parsed['host'] ?? 'localhost';
+    $port = (int)($parsed['port'] ?? 3306);
+    $user = $parsed['user'] ?? 'root';
+    $pass = $parsed['pass'] ?? '';
+    $db   = isset($parsed['path']) ? ltrim($parsed['path'], '/') : 'rekap_mutz_asn';
+} else {
+    $host = get_env_var(['DB_HOST', 'DATABASE_HOST', 'MYSQL_HOST', 'TIDB_HOST', 'HOST'], 'localhost');
+    $user = get_env_var(['DB_USER', 'DB_USERNAME', 'DATABASE_USER', 'MYSQL_USER', 'TIDB_USER', 'USER'], 'root');
+    $pass = get_env_var(['DB_PASS', 'DB_PASSWORD', 'DATABASE_PASSWORD', 'MYSQL_PASSWORD', 'PASSWORD'], 'root');
+    $db   = get_env_var(['DB_NAME', 'DB_DATABASE', 'DATABASE_NAME', 'MYSQL_DATABASE', 'TIDB_DATABASE'], 'rekap_mutz_asn');
+    $port = (int)get_env_var(['DB_PORT', 'DATABASE_PORT', 'MYSQL_PORT', 'TIDB_PORT', 'PORT'], '3306');
+}
 
 // Cek apakah berjalan di Vercel tapi env DB_HOST belum terdeteksi
 if (($host === "localhost" || $host === "127.0.0.1") && (isset($_SERVER['VERCEL']) || isset($_ENV['VERCEL']) || getenv('VERCEL'))) {
