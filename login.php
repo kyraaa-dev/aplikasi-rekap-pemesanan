@@ -38,17 +38,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
         html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
+            height: 100vh !important;
+            max-height: 100vh !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden !important;
         }
 
         body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
             background: linear-gradient(135deg, rgba(79, 70, 229, 0.85) 0%, rgba(139, 92, 246, 0.85) 100%), url('assets/images/bg-bupati-new.jpg');
             background-size: cover;
             background-position: center;
@@ -62,13 +62,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background-position: center;
         }
 
-        @media (max-height: 720px), (max-width: 480px) {
+        @media (max-height: 650px), (max-width: 480px) {
             html, body {
-                overflow-y: auto;
-                height: auto;
+                overflow-y: auto !important;
+                height: auto !important;
+                max-height: none !important;
             }
             body {
-                padding: 2rem 0;
+                padding: 1.5rem 0 !important;
             }
         }
 
