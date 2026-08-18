@@ -93,6 +93,25 @@ if ($res_status) {
         $catatan_skpd[$row['nama_skpd']] = $row['catatan_semua'];
     }
 }
+
+// Get all individual orders grouped by SKPD for detail popup modal
+$q_all_orders = $conn->query("
+    SELECT p.id, p.skpd_id, s.nama_skpd, p.nama_pemesan, p.jenis_kelamin, p.ukuran, p.jumlah, p.jenis_mutz, 
+           p.status_bayar, p.status_pengambilan, p.catatan, p.created_at,
+           (CASE WHEN p.jenis_mutz = 'Kepala SKPD' THEN p.jumlah * 150000 ELSE p.jumlah * 55000 END) as subtotal
+    FROM pesanan p
+    JOIN skpd s ON p.skpd_id = s.id
+    ORDER BY s.nama_skpd ASC, p.id ASC
+");
+
+$skpd_order_items = [];
+$skpd_id_map = [];
+if ($q_all_orders) {
+    while ($row = $q_all_orders->fetch_assoc()) {
+        $skpd_order_items[$row['nama_skpd']][] = $row;
+        $skpd_id_map[$row['nama_skpd']] = $row['skpd_id'];
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -233,11 +252,80 @@ if ($res_status) {
                                 </li>
                                 <?php endif; ?>
                             </ul>
+                            
+                            <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--gray-light);">
+                                <button type="button" class="btn btn-sm btn-detail-skpd" 
+                                        data-skpd="<?= htmlspecialchars($nama, ENT_QUOTES) ?>" 
+                                        data-skpd-id="<?= $skpd_id_map[$nama] ?? 0 ?>"
+                                        data-status="<?= $status ?>"
+                                        data-status-color="<?= $status_color ?>"
+                                        data-status-bg="<?= $status_bg ?>"
+                                        data-total-qty="<?= $total_item ?>"
+                                        data-total-rp="Rp <?= number_format($total_rupiah, 0, ',', '.') ?>"
+                                        style="width: 100%; justify-content: center; background: linear-gradient(135deg, var(--primary) 0%, #6366f1 100%); color: white; border: none; border-radius: 6px; padding: 7px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25); transition: transform 0.15s ease, box-shadow 0.15s ease;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    Lihat Detail Pesanan
+                                </button>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <p style="color: var(--gray); grid-column: 1 / -1;">Belum ada SKPD yang melakukan pemesanan sejauh ini.</p>
                 <?php endif; ?>
+            </div>
+        </div>
+
+        <!-- Modal Detail Rincian Pesanan per SKPD -->
+        <div id="modalDetailSkpd" class="modal-skpd-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 9999; justify-content: center; align-items: center; padding: 15px;">
+            <div class="modal-skpd-content" style="background: var(--white); width: 100%; max-width: 900px; max-height: 90vh; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.35); display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--gray-light);">
+                <!-- Modal Header -->
+                <div style="padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--gray-light); display: flex; justify-content: space-between; align-items: flex-start; background: var(--light);">
+                    <div>
+                        <h3 id="modalSkpdName" style="margin: 0; color: var(--dark); font-size: 1.2rem; font-weight: 700;">-</h3>
+                        <div style="display: flex; gap: 8px; margin-top: 8px; font-size: 0.825rem; flex-wrap: wrap;" id="modalSkpdBadges">
+                            <!-- Badges -->
+                        </div>
+                    </div>
+                    <button id="closeModalSkpd" type="button" title="Tutup" style="background: transparent; border: none; font-size: 1.5rem; line-height: 1; color: var(--gray); cursor: pointer; padding: 4px 8px; border-radius: 6px; transition: color 0.2s;">&times;</button>
+                </div>
+
+                <!-- Modal Body Table -->
+                <div style="padding: 1.25rem 1.5rem; overflow-y: auto; flex: 1;">
+                    <div class="table-responsive" style="margin-top: 0; border: 1px solid var(--gray-light); border-radius: 8px;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem; margin-top: 0;">
+                            <thead>
+                                <tr style="background: var(--light);">
+                                    <th style="padding: 10px 12px; width: 40px; text-align: center;">No</th>
+                                    <th style="padding: 10px 12px;">Nama Pemesan</th>
+                                    <th style="padding: 10px 12px; text-align: center;">Gender</th>
+                                    <th style="padding: 10px 12px; text-align: center;">Jenis Mutz</th>
+                                    <th style="padding: 10px 12px; text-align: center;">Ukuran</th>
+                                    <th style="padding: 10px 12px; text-align: center;">Jumlah</th>
+                                    <th style="padding: 10px 12px; text-align: right;">Tagihan</th>
+                                    <th style="padding: 10px 12px; text-align: center;">Status Bayar</th>
+                                    <th style="padding: 10px 12px; text-align: center;">Status Ambil</th>
+                                    <th style="padding: 10px 12px;">Catatan</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modalSkpdTableBody">
+                                <!-- Injected via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div style="padding: 1rem 1.5rem; border-top: 1px solid var(--gray-light); display: flex; justify-content: space-between; align-items: center; background: var(--light); flex-wrap: wrap; gap: 10px;">
+                    <div id="modalSkpdFooterSummary" style="font-weight: 700; color: var(--dark); font-size: 0.9rem;">
+                        <!-- Summary info -->
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <a id="btnFilterKePesanan" href="#" class="btn btn-sm" style="background: var(--primary); color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; border-radius: 6px; padding: 7px 14px; font-weight: 600;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            Kelola di Halaman Pesanan
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -404,6 +492,112 @@ if ($res_status) {
             
             animateCountUp(document.querySelectorAll('.count-up'));
             animateCountUp(document.querySelectorAll('.count-up-money'));
+        });
+
+        // Detail Rincian Pesanan per SKPD Modal Logic
+        const skpdOrdersData = <?= json_encode($skpd_order_items, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) ?>;
+        const modalDetailSkpd = document.getElementById('modalDetailSkpd');
+        const closeModalSkpd = document.getElementById('closeModalSkpd');
+        const modalSkpdName = document.getElementById('modalSkpdName');
+        const modalSkpdBadges = document.getElementById('modalSkpdBadges');
+        const modalSkpdTableBody = document.getElementById('modalSkpdTableBody');
+        const modalSkpdFooterSummary = document.getElementById('modalSkpdFooterSummary');
+        const btnFilterKePesanan = document.getElementById('btnFilterKePesanan');
+
+        function openSkpdModal(skpdName, skpdId, status, statusColor, statusBg, totalQty, totalRp) {
+            modalSkpdName.innerText = skpdName;
+            
+            // Set Badges
+            modalSkpdBadges.innerHTML = `
+                <span style="background: #e0e7ff; color: #4338ca; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Total: ${totalQty} buah</span>
+                <span style="background: #fef3c7; color: #b45309; padding: 4px 8px; border-radius: 4px; font-weight: 600;">${totalRp}</span>
+                <span style="background: ${statusBg}; color: ${statusColor}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">${status}</span>
+            `;
+            
+            // Set Action Link
+            btnFilterKePesanan.href = `pesanan.php?filter_skpd=${skpdId}`;
+            
+            // Populate Table
+            const items = skpdOrdersData[skpdName] || [];
+            if (items.length === 0) {
+                modalSkpdTableBody.innerHTML = `<tr><td colspan="10" style="text-align: center; padding: 20px; color: var(--gray);">Tidak ada rincian data pemesan untuk SKPD ini.</td></tr>`;
+            } else {
+                let html = '';
+                items.forEach((item, index) => {
+                    const genderColor = item.jenis_kelamin === 'Laki-laki' ? 'var(--primary)' : '#EC4899';
+                    const bayarBg = item.status_bayar === 'Lunas' ? '#DCFCE7' : '#FEE2E2';
+                    const bayarColor = item.status_bayar === 'Lunas' ? '#15803D' : '#B91C1C';
+                    
+                    let ambilBg = '#F3F4F6', ambilColor = '#374151';
+                    if (item.status_pengambilan === 'Sudah Diambil') { ambilBg = '#DCFCE7'; ambilColor = '#15803D'; }
+                    else if (item.status_pengambilan === 'Siap Diambil') { ambilBg = '#E0E7FF'; ambilColor = '#4338CA'; }
+                    else if (item.status_pengambilan === 'Sedang Dibuat') { ambilBg = '#FEF3C7'; ambilColor = '#D97706'; }
+
+                    const subtotalFormatted = 'Rp ' + parseInt(item.subtotal || 0).toLocaleString('id-ID');
+                    const pemesan = item.nama_pemesan && item.nama_pemesan.trim() !== '' ? item.nama_pemesan : '-';
+                    const catatan = item.catatan && item.catatan.trim() !== '' ? item.catatan : '-';
+
+                    html += `
+                        <tr style="border-bottom: 1px solid var(--gray-light);">
+                            <td style="padding: 10px 12px; text-align: center; color: var(--gray);">${index + 1}</td>
+                            <td style="padding: 10px 12px; font-weight: 600; color: var(--dark);">${pemesan}</td>
+                            <td style="padding: 10px 12px; text-align: center;">
+                                <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background-color:${genderColor}; margin-right:4px;"></span>
+                                ${item.jenis_kelamin}
+                            </td>
+                            <td style="padding: 10px 12px; text-align: center;"><span style="font-size:0.8rem; background:var(--light); padding:2px 6px; border-radius:4px;">${item.jenis_mutz}</span></td>
+                            <td style="padding: 10px 12px; text-align: center; font-weight: 600;">${item.ukuran}</td>
+                            <td style="padding: 10px 12px; text-align: center; font-weight: 600;">${item.jumlah}</td>
+                            <td style="padding: 10px 12px; text-align: right; font-weight: 600; color:#B45309;">${subtotalFormatted}</td>
+                            <td style="padding: 10px 12px; text-align: center;">
+                                <span style="background:${bayarBg}; color:${bayarColor}; padding:3px 8px; border-radius:12px; font-size:0.75rem; font-weight:700;">${item.status_bayar}</span>
+                            </td>
+                            <td style="padding: 10px 12px; text-align: center;">
+                                <span style="background:${ambilBg}; color:${ambilColor}; padding:3px 8px; border-radius:12px; font-size:0.75rem; font-weight:600;">${item.status_pengambilan}</span>
+                            </td>
+                            <td style="padding: 10px 12px; font-size:0.8rem; color:var(--gray);">${catatan}</td>
+                        </tr>
+                    `;
+                });
+                modalSkpdTableBody.innerHTML = html;
+            }
+            
+            modalSkpdFooterSummary.innerText = `Menampilkan ${items.length} rincian pemesan (${totalQty} buah mutz)`;
+            
+            modalDetailSkpd.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSkpdModal() {
+            modalDetailSkpd.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('.btn-detail-skpd').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const skpdName = this.getAttribute('data-skpd');
+                const skpdId = this.getAttribute('data-skpd-id');
+                const status = this.getAttribute('data-status');
+                const statusColor = this.getAttribute('data-status-color');
+                const statusBg = this.getAttribute('data-status-bg');
+                const totalQty = this.getAttribute('data-total-qty');
+                const totalRp = this.getAttribute('data-total-rp');
+                openSkpdModal(skpdName, skpdId, status, statusColor, statusBg, totalQty, totalRp);
+            });
+        });
+
+        if (closeModalSkpd) closeModalSkpd.addEventListener('click', closeSkpdModal);
+        if (modalDetailSkpd) {
+            modalDetailSkpd.addEventListener('click', function(e) {
+                if (e.target === modalDetailSkpd) {
+                    closeSkpdModal();
+                }
+            });
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modalDetailSkpd && modalDetailSkpd.style.display === 'flex') {
+                closeSkpdModal();
+            }
         });
     </script>
 </body>
