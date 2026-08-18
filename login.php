@@ -18,6 +18,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $row = $q->fetch_assoc();
         if ($password === $row['admin_password']) {
             $_SESSION['is_logged_in'] = true;
+            $_SESSION['admin_user'] = $username;
+
+            // Set 30-day Persistent Auth Cookie for seamless reconnection
+            $token = generate_auth_token($username, $row['admin_password']);
+            $cookie_val = base64_encode($username . ':' . $token);
+            $is_https = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+            
+            setcookie('emutz_auth_remember', $cookie_val, [
+                'expires' => time() + (86400 * 30),
+                'path' => '/',
+                'secure' => $is_https,
+                'httponly' => true,
+                'samesite' => 'Lax'
+            ]);
+
             header("Location: index.php");
             exit;
         } else {

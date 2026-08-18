@@ -1,5 +1,16 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    ini_set('session.gc_maxlifetime', 86400 * 30);
+    $is_https = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+    session_set_cookie_params([
+        'lifetime' => 86400 * 30, // 30 days
+        'path' => '/',
+        'secure' => $is_https,
+        'httponly' => true,
+        'samesite' => 'Lax'
+    ]);
+    session_start();
+}
 
 function get_env_var($keys, $default = '') {
     if (!is_array($keys)) $keys = [$keys];
@@ -102,7 +113,31 @@ if (!isset($skip_db_select)) {
     }
 }
 
-// Authentication Check
+// Authentication Check & Persistent Session
+define('AUTH_SECRET_KEY', 'emutz_korpri_secret_auth_token_key_2026');
+
+function generate_auth_token($username, $password) {
+    return hash_hmac('sha256', $username . '::' . $password, AUTH_SECRET_KEY);
+}
+
+// Auto-relogin via Persistent Cookie if Session Expired (e.g. Vercel serverless idle spin-down)
+if ((!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) && isset($_COOKIE['emutz_auth_remember'])) {
+    $decoded = base64_decode($_COOKIE['emutz_auth_remember']);
+    if ($decoded && strpos($decoded, ':') !== false) {
+        list($c_user, $c_token) = explode(':', $decoded, 2);
+        $c_user_safe = $conn->real_escape_string($c_user);
+        $q_auth = @$conn->query("SELECT admin_username, admin_password FROM settings WHERE admin_username = '$c_user_safe' LIMIT 1");
+        if ($q_auth && $q_auth->num_rows > 0) {
+            $auth_row = $q_auth->fetch_assoc();
+            $expected_token = generate_auth_token($auth_row['admin_username'], $auth_row['admin_password']);
+            if (hash_equals($expected_token, $c_token)) {
+                $_SESSION['is_logged_in'] = true;
+                $_SESSION['admin_user'] = $auth_row['admin_username'];
+            }
+        }
+    }
+}
+
 $current_page = basename($_SERVER['PHP_SELF']);
 $allowed_pages = ['login.php', 'setup.php'];
 
