@@ -368,6 +368,10 @@ tr:hover {
         overflow-x: hidden;
     }
 
+    #themeToggle {
+        display: none !important;
+    }
+
     .mobile-topbar {
         display: flex;
     }
