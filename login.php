@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-MutZ KORPRI - Login</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
@@ -42,11 +43,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            overflow: hidden;
+            overflow-y: auto;
             background: linear-gradient(135deg, rgba(79, 70, 229, 0.85) 0%, rgba(139, 92, 246, 0.85) 100%), url('assets/images/bg-bupati-new.jpg');
             background-size: cover;
             background-position: center;
             font-family: 'Inter', sans-serif;
+            padding: 1rem 0;
         }
         
         [data-theme="dark"] body {

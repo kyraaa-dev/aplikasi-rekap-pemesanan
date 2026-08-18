@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pengaturan - E-MutZ KORPRI</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/png" href="assets/images/logo.png">
@@ -43,6 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
+        }
+        @media (max-width: 768px) {
+            .settings-grid {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
         }
         @media (max-width: 768px) {
             .settings-grid { grid-template-columns: 1fr; }

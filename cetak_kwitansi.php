@@ -58,10 +58,18 @@ function terbilang($x) {
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kwitansi - <?= htmlspecialchars($row['nama_pemesan']) ?></title>
     <style>
-        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; margin: 0; padding: 40px; background: #e5e7eb; }
-        .kwitansi-container { max-width: 800px; margin: 0 auto; background: #fff; border: 2px solid #333; padding: 40px; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; margin: 0; padding: 40px 20px; background: #e5e7eb; }
+        .kwitansi-container { max-width: 800px; margin: 0 auto; background: #fff; border: 2px solid #333; padding: 40px; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box; }
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .kwitansi-container { padding: 20px 15px; }
+            .row { flex-direction: column; gap: 4px; }
+            .label { width: 100%; }
+            .header h1 { font-size: 20px; }
+        }
         .header { display: flex; justify-content: space-between; border-bottom: 2px solid #333; padding-bottom: 20px; margin-bottom: 30px; }
         .header h1 { margin: 0; font-size: 28px; color: #111827; text-transform: uppercase; letter-spacing: 2px; }
         .header p { margin: 5px 0 0; color: #6b7280; font-size: 14px; }
