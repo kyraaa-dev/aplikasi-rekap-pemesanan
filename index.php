@@ -319,6 +319,19 @@ if ($q_all_orders) {
                                     Lihat Detail Pesanan
                                 </button>
                                 
+                                <?php if ($status !== 'Lunas'): ?>
+                                    <a href="index.php?lunas_semua_skpd=<?= $current_skpd_id ?>" 
+                                       class="btn btn-sm btn-confirm" 
+                                       data-confirm-title="Konfirmasi Pembayaran Lunas" 
+                                       data-confirm-text="Apakah Anda yakin ingin menandai SEMUA pesanan dari SKPD '<?= htmlspecialchars($nama, ENT_QUOTES) ?>' sebagai LUNAS?" 
+                                       data-confirm-btn="Ya, Sudah Lunas" 
+                                       data-confirm-color="#D97706" 
+                                       style="width: 100%; justify-content: center; background: #D97706; color: white; border: none; border-radius: 6px; padding: 7px 12px; font-size: 0.825rem; font-weight: 600; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(217,119,6,0.25); text-decoration: none; transition: transform 0.15s ease;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                        Tandai Semua Lunas
+                                    </a>
+                                <?php endif; ?>
+
                                 <?php if ($status_ambil === 'Sudah Diambil'): ?>
                                     <div style="width: 100%; text-align: center; background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; border-radius: 6px; padding: 6px 10px; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -390,6 +403,10 @@ if ($q_all_orders) {
                         <!-- Summary info -->
                     </div>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <a id="btnModalLunasSemua" href="#" class="btn btn-sm btn-confirm" data-confirm-title="Konfirmasi Pembayaran Lunas" data-confirm-text="Tandai SEMUA pesanan SKPD ini sebagai LUNAS?" data-confirm-btn="Ya, Sudah Lunas" data-confirm-color="#D97706" style="background: #D97706; color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; border-radius: 6px; padding: 7px 14px; font-weight: 600; box-shadow: 0 2px 6px rgba(217,119,6,0.25);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                            Tandai Semua Lunas
+                        </a>
                         <a id="btnModalAmbilSemua" href="#" class="btn btn-sm btn-confirm" data-confirm-title="Konfirmasi Pengambilan Barang" data-confirm-text="Tandai SEMUA pesanan SKPD ini sebagai SUDAH DIAMBIL?" data-confirm-btn="Ya, Sudah Diambil" data-confirm-color="#10B981" style="background: #10B981; color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; border-radius: 6px; padding: 7px 14px; font-weight: 600; box-shadow: 0 2px 6px rgba(16,185,129,0.25);">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             Tandai Semua Sudah Diambil
@@ -578,6 +595,7 @@ if ($q_all_orders) {
         const modalSkpdFooterSummary = document.getElementById('modalSkpdFooterSummary');
         const btnFilterKePesanan = document.getElementById('btnFilterKePesanan');
         const btnModalAmbilSemua = document.getElementById('btnModalAmbilSemua');
+        const btnModalLunasSemua = document.getElementById('btnModalLunasSemua');
 
         function openSkpdModal(skpdName, skpdId, status, statusColor, statusBg, statusAmbil, statusAmbilColor, statusAmbilBg, totalQty, totalRp) {
             modalSkpdName.innerText = skpdName;
@@ -592,6 +610,17 @@ if ($q_all_orders) {
             
             // Set Action Link
             btnFilterKePesanan.href = `pesanan.php?filter_skpd=${skpdId}`;
+
+            // Set Bulk Lunas Action Link
+            if (btnModalLunasSemua) {
+                if (status === 'Lunas') {
+                    btnModalLunasSemua.style.display = 'none';
+                } else {
+                    btnModalLunasSemua.style.display = 'inline-flex';
+                    btnModalLunasSemua.href = `index.php?lunas_semua_skpd=${skpdId}`;
+                    btnModalLunasSemua.setAttribute('data-confirm-text', `Tandai SEMUA pesanan dari ${skpdName} sebagai LUNAS?`);
+                }
+            }
 
             // Set Bulk Ambil Action Link
             if (btnModalAmbilSemua) {

@@ -150,6 +150,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                     <p style="font-size: 0.85rem; color: var(--gray);">Catatan: Perubahan harga ini akan mempengaruhi kueri total tagihan di menu Dashboard dan Cetak Laporan.</p>
                 </div>
+
+                <!-- Database Backup Section -->
+                <div class="form-section" style="grid-column: 1 / -1;">
+                    <h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Pencadangan Database (Backup 1-Klik)
+                    </h3>
+                    <p style="color: var(--gray); font-size: 0.9rem; margin-bottom: 1.25rem;">
+                        Unduh salinan lengkap seluruh data sistem (Data SKPD, Semua Pesanan, Stok Gudang, Log Retur, dan Pengaturan) ke komputer Anda secara berkala sebagai arsip yang aman.
+                    </p>
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <a href="backup.php?format=sql" class="btn" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 8px; font-weight: 600; box-shadow: 0 4px 12px rgba(16,185,129,0.3); transition: transform 0.15s ease;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                            Unduh Cadangan SQL (.sql)
+                        </a>
+                        <a href="backup.php?format=json" class="btn" style="background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%); color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 8px; font-weight: 600; box-shadow: 0 4px 12px rgba(79,70,229,0.3); transition: transform 0.15s ease;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                            Unduh Cadangan JSON (.json)
+                        </a>
+                    </div>
+                </div>
             </div>
             
             <div style="margin-top: 2rem;">
