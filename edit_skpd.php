@@ -17,10 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['nama_skpd'])) {
     }
 
     $nama = trim($_POST['nama_skpd'] ?? '');
+    $no_wa = trim($_POST['no_wa'] ?? '');
     if (!empty($nama)) {
-        $stmt = $conn->prepare("UPDATE skpd SET nama_skpd = ? WHERE id = ?");
+        $stmt = $conn->prepare("UPDATE skpd SET nama_skpd = ?, no_wa = ? WHERE id = ?");
         if ($stmt) {
-            $stmt->bind_param("si", $nama, $id);
+            $stmt->bind_param("ssi", $nama, $no_wa, $id);
             $success = $stmt->execute();
             $stmt->close();
             if ($success) {
@@ -75,6 +76,10 @@ if (!$skpd) {
                 <div class="form-group">
                     <label>Nama SKPD</label>
                     <input type="text" name="nama_skpd" value="<?= htmlspecialchars($skpd['nama_skpd']) ?>" placeholder="Masukkan Nama SKPD" required>
+                </div>
+                <div class="form-group">
+                    <label>No. WhatsApp / Kontak Narahubung (Opsional)</label>
+                    <input type="text" name="no_wa" value="<?= htmlspecialchars($skpd['no_wa'] ?? '') ?>" placeholder="Contoh: 08123456789">
                 </div>
                 <button type="submit">Update SKPD</button>
             </form>

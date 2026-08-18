@@ -134,6 +134,11 @@ if (!isset($skip_db_select)) {
     if ($check_catatan && $check_catatan->num_rows == 0) {
         @$conn->query("ALTER TABLE pesanan ADD COLUMN catatan VARCHAR(255) NULL AFTER status_pengambilan");
     }
+
+    $check_wa = @$conn->query("SHOW COLUMNS FROM skpd LIKE 'no_wa'");
+    if ($check_wa && $check_wa->num_rows == 0) {
+        @$conn->query("ALTER TABLE skpd ADD COLUMN no_wa VARCHAR(30) NULL AFTER nama_skpd");
+    }
 }
 
 // Authentication Check & Persistent Session

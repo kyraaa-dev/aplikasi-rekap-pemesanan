@@ -304,5 +304,119 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
+
+    // 4. Global WhatsApp Direct Notification Handler
+    window.openWhatsAppSender = function({ skpdName, targetWa, totalQty, totalRp, statusBayar, statusAmbil }) {
+        // Normalisasi nomor telepon
+        let cleanWa = (targetWa || '').replace(/[^0-9]/g, '');
+        if (cleanWa.startsWith('0')) {
+            cleanWa = '62' + cleanWa.substring(1);
+        }
+
+        const tplReady = `Yth. Pengurus / Bendahara *${skpdName}*,\n\nKami informasikan dari *Sekretariat KORPRI* bahwa pemesanan Topi MutZ KORPRI sebanyak *${totalQty} pcs* (Total: ${totalRp}) saat ini statusnya: *SIAP DIAMBIL* 📦.\n\nStatus Pembayaran: *${statusBayar}*\n\nMohon dapat diambil pada jam kerja di Sekretariat KORPRI. Terima kasih banyak. 🙏`;
+
+        const tplTagihan = `Yth. Bendahara / Kontak *${skpdName}*,\n\nBerikut kami sampaikan rincian tagihan pemesanan Topi MutZ KORPRI untuk *${skpdName}*:\n• Jumlah Pesanan: *${totalQty} pcs*\n• Total Tagihan: *${totalRp}*\n• Status Bayar: *${statusBayar}*\n• Status Barang: *${statusAmbil}*\n\nMohon untuk dapat segera melakukan konfirmasi pembayaran. Terima kasih atas perhatian dan kerjasamanya. 🙏`;
+
+        const tplSelesai = `Yth. Pengurus / Perwakilan *${skpdName}*,\n\nTerima kasih, kami konfirmasikan bahwa pemesanan Topi MutZ KORPRI sebanyak *${totalQty} pcs* untuk *${skpdName}* telah *SELESAI & DITERIMA* dengan status pembayaran: *LUNAS* ✅.\n\nTerima kasih atas kerjasamanya! 🙏✨`;
+
+        const tplCustom = `Yth. Pengurus *${skpdName}*,\n\n`;
+
+        Swal.fire({
+            title: '<span style="display:inline-flex; align-items:center; gap:8px; color:#059669;"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> Notifikasi WhatsApp</span>',
+            html: `
+                <div style="text-align: left; font-size: 0.9rem;">
+                    <div style="margin-bottom: 12px; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 10px 14px; border-radius: 8px; color: #065F46;">
+                        <strong style="font-size: 1rem;">${skpdName}</strong><br>
+                        <span style="font-size: 0.825rem; color: #047857;">Pesanan: <b>${totalQty} pcs</b> | Total: <b>${totalRp}</b> | Bayar: <b>${statusBayar}</b></span>
+                    </div>
+
+                    <div style="margin-bottom: 12px;">
+                        <label style="font-weight: 600; display: block; margin-bottom: 4px; color: var(--dark); font-size: 0.85rem;">Nomor WhatsApp Tujuan:</label>
+                        <input type="text" id="swal-wa-phone" class="swal2-input" style="width: 100%; margin: 0; padding: 8px 12px; height: 38px; font-size: 0.9rem; box-sizing: border-box;" placeholder="Contoh: 08123456789 (Kosongkan jika ingin memilih kontak manual di WA)" value="${cleanWa}">
+                    </div>
+
+                    <div style="margin-bottom: 12px;">
+                        <label style="font-weight: 600; display: block; margin-bottom: 4px; color: var(--dark); font-size: 0.85rem;">Pilih Format Template Pesan:</label>
+                        <select id="swal-wa-tpl" class="swal2-select" style="width: 100%; margin: 0; padding: 8px 12px; height: 38px; font-size: 0.85rem; border-radius: 6px; box-sizing: border-box;">
+                            <option value="ready">📦 1. Pemberitahuan Siap Diambil</option>
+                            <option value="tagihan">💳 2. Pemberitahuan Tagihan Pembayaran</option>
+                            <option value="selesai">✅ 3. Konfirmasi Pesanan Selesai & Lunas</option>
+                            <option value="custom">✏️ 4. Tulis Pesan Bebas (Kustom)</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 4px;">
+                        <label style="font-weight: 600; display: block; margin-bottom: 4px; color: var(--dark); font-size: 0.85rem;">Pratinjau Pesan WhatsApp (Dapat Diedit):</label>
+                        <textarea id="swal-wa-text" class="swal2-textarea" style="width: 100%; margin: 0; padding: 10px; height: 130px; font-size: 0.825rem; font-family: monospace; line-height: 1.4; resize: vertical; border-radius: 6px; box-sizing: border-box;"></textarea>
+                    </div>
+                </div>
+            `,
+            showCancelButton: true,
+            confirmButtonColor: '#25D366',
+            cancelButtonColor: '#6B7280',
+            confirmButtonText: '<span style="display:inline-flex; align-items:center; gap:6px; font-weight:700;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> Buka di WhatsApp</span>',
+            cancelButtonText: 'Batal',
+            didOpen: () => {
+                const selectTpl = document.getElementById('swal-wa-tpl');
+                const txtArea = document.getElementById('swal-wa-text');
+
+                // Template default berdasarkan status
+                if (statusBayar !== 'Lunas') {
+                    selectTpl.value = 'tagihan';
+                    txtArea.value = tplTagihan;
+                } else if (statusAmbil === 'Sudah Diambil') {
+                    selectTpl.value = 'selesai';
+                    txtArea.value = tplSelesai;
+                } else {
+                    selectTpl.value = 'ready';
+                    txtArea.value = tplReady;
+                }
+
+                selectTpl.addEventListener('change', function() {
+                    switch(this.value) {
+                        case 'ready': txtArea.value = tplReady; break;
+                        case 'tagihan': txtArea.value = tplTagihan; break;
+                        case 'selesai': txtArea.value = tplSelesai; break;
+                        case 'custom': txtArea.value = tplCustom; break;
+                    }
+                });
+            }
+        }).then((res) => {
+            if (res.isConfirmed) {
+                const phoneInput = (document.getElementById('swal-wa-phone').value || '').trim();
+                const message = (document.getElementById('swal-wa-text').value || '').trim();
+
+                let targetPhone = phoneInput.replace(/[^0-9]/g, '');
+                if (targetPhone.startsWith('0')) {
+                    targetPhone = '62' + targetPhone.substring(1);
+                }
+
+                let waUrl = '';
+                if (targetPhone) {
+                    waUrl = `https://api.whatsapp.com/send?phone=${targetPhone}&text=${encodeURIComponent(message)}`;
+                } else {
+                    waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+                }
+
+                window.open(waUrl, '_blank');
+            }
+        });
+    };
+
+    // Global Event Listener for all .btn-wa-notify
+    document.addEventListener('click', function(e) {
+        const btn = e.target.closest('.btn-wa-notify');
+        if (btn) {
+            e.preventDefault();
+            const skpdName = btn.getAttribute('data-skpd') || '';
+            const targetWa = btn.getAttribute('data-wa') || '';
+            const totalQty = btn.getAttribute('data-total-qty') || '0';
+            const totalRp = btn.getAttribute('data-total-rp') || 'Rp 0';
+            const statusBayar = btn.getAttribute('data-status-bayar') || 'Belum Lunas';
+            const statusAmbil = btn.getAttribute('data-status-ambil') || 'Belum Diambil';
+
+            window.openWhatsAppSender({ skpdName, targetWa, totalQty, totalRp, statusBayar, statusAmbil });
+        }
+    });
 });
 </script>
