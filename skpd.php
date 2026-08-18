@@ -23,6 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['nama_skpd'])) {
             }
         }
     }
+    header("Location: skpd.php?error_msg=" . urlencode("Gagal menyimpan SKPD"));
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['quick_update_wa'])) {
     $csrf_token = $_POST['csrf_token'] ?? '';
     if (verify_csrf_token($csrf_token)) {
