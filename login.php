@@ -244,6 +244,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             position: relative;
             display: flex;
             align-items: center;
+            width: 100%;
         }
 
         .input-icon-left {
@@ -254,43 +255,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 5;
             transition: color 0.2s ease;
         }
 
+        .input-group input[type="text"],
+        .input-group input[type="password"],
         .form-input {
-            width: 100%;
-            height: 44px;
-            padding: 0 42px 0 40px;
-            font-size: 0.925rem;
-            color: #1e293b;
-            background: #f8fafc;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 10px;
-            transition: all 0.2s ease;
-            outline: none;
+            width: 100% !important;
+            height: 46px !important;
+            padding: 0 42px 0 44px !important;
+            font-size: 0.95rem !important;
+            color: #1e293b !important;
+            background: #f8fafc !important;
+            border: 1.5px solid #e2e8f0 !important;
+            border-radius: 10px !important;
+            transition: all 0.2s ease !important;
+            outline: none !important;
+            box-sizing: border-box !important;
+            position: relative;
+            z-index: 1;
         }
+        [data-theme="dark"] .input-group input[type="text"],
+        [data-theme="dark"] .input-group input[type="password"],
         [data-theme="dark"] .form-input {
-            background: #1e293b;
-            border-color: #334155;
-            color: #f8fafc;
+            background: #1e293b !important;
+            border-color: #334155 !important;
+            color: #f8fafc !important;
         }
 
+        .input-group input[type="text"]:focus,
+        .input-group input[type="password"]:focus,
         .form-input:focus {
-            background: #ffffff;
-            border-color: #4f46e5;
-            box-shadow: 0 0 0 3.5px rgba(79, 70, 229, 0.15);
+            background: #ffffff !important;
+            border-color: #4f46e5 !important;
+            box-shadow: 0 0 0 3.5px rgba(79, 70, 229, 0.15) !important;
         }
+        [data-theme="dark"] .input-group input[type="text"]:focus,
+        [data-theme="dark"] .input-group input[type="password"]:focus,
         [data-theme="dark"] .form-input:focus {
-            background: #0f172a;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3.5px rgba(99, 102, 241, 0.25);
+            background: #0f172a !important;
+            border-color: #6366f1 !important;
+            box-shadow: 0 0 0 3.5px rgba(99, 102, 241, 0.25) !important;
         }
-        .form-input:focus + .input-icon-left,
         .input-group:focus-within .input-icon-left {
-            color: #4f46e5;
+            color: #4f46e5 !important;
         }
         [data-theme="dark"] .input-group:focus-within .input-icon-left {
-            color: #818cf8;
+            color: #818cf8 !important;
         }
 
         .toggle-password {
@@ -305,6 +317,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 5;
             transition: color 0.2s, transform 0.2s;
         }
         .toggle-password:hover {
