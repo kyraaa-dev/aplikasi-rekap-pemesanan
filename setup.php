@@ -15,12 +15,20 @@ echo "<div style='color: green;'>✅ Database '$db_name' siap digunakan.</div>";
 $sql_skpd = "CREATE TABLE IF NOT EXISTS skpd (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nama_skpd VARCHAR(255) NOT NULL,
+    no_wa VARCHAR(30) NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )";
 if ($conn->query($sql_skpd) === TRUE) {
     echo "<div style='color: green;'>✅ Table 'skpd' created successfully.</div>";
 } else {
     echo "<div style='color: red;'>❌ Error creating table skpd: " . $conn->error . "</div>";
+}
+
+// Auto-migrate: Pastikan kolom 'no_wa' ada jika tabel skpd sudah dibuat sebelumnya
+$check_wa = $conn->query("SHOW COLUMNS FROM skpd LIKE 'no_wa'");
+if ($check_wa && $check_wa->num_rows == 0) {
+    $conn->query("ALTER TABLE skpd ADD COLUMN no_wa VARCHAR(30) NULL AFTER nama_skpd");
+    echo "<div style='color: green;'>✅ Kolom 'no_wa' berhasil ditambahkan ke tabel skpd.</div>";
 }
 
 // Create Pesanan table

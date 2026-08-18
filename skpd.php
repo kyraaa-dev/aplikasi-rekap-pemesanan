@@ -23,8 +23,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['nama_skpd'])) {
             }
         }
     }
-    header("Location: skpd.php?error_msg=" . urlencode("Gagal menyimpan SKPD"));
-    exit;
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['quick_update_wa'])) {
+    $csrf_token = $_POST['csrf_token'] ?? '';
+    if (verify_csrf_token($csrf_token)) {
+        $skpd_id = (int)$_POST['skpd_id'];
+        $no_wa = trim($_POST['no_wa'] ?? '');
+        $stmt = $conn->prepare("UPDATE skpd SET no_wa = ? WHERE id = ?");
+        if ($stmt) {
+            $stmt->bind_param("si", $no_wa, $skpd_id);
+            $stmt->execute();
+            $stmt->close();
+        }
+        header("Location: skpd.php?notif=edit_sukses");
+        exit;
+    }
 }
 
 // Delete
@@ -99,14 +111,22 @@ $skpds = $conn->query("
                             <td><?= $no++ ?></td>
                             <td><strong><?= htmlspecialchars($row['nama_skpd']) ?></strong></td>
                             <td>
-                                <?php if (!empty($row['no_wa'])): ?>
-                                    <span style="color: #059669; font-weight: 500; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                        <?= htmlspecialchars($row['no_wa']) ?>
-                                    </span>
-                                <?php else: ?>
-                                    <span style="color: var(--gray); font-size: 0.85rem;">-</span>
-                                <?php endif; ?>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <?php if (!empty($row['no_wa'])): ?>
+                                        <span style="color: #059669; font-weight: 500; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                            <?= htmlspecialchars($row['no_wa']) ?>
+                                        </span>
+                                        <button type="button" class="btn-quick-wa" data-id="<?= $row['id'] ?>" data-name="<?= htmlspecialchars($row['nama_skpd'], ENT_QUOTES) ?>" data-wa="<?= htmlspecialchars($row['no_wa'], ENT_QUOTES) ?>" title="Ubah Nomor WA" style="background: none; border: none; cursor: pointer; color: var(--gray); padding: 2px 4px; display: inline-flex; align-items: center;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                                        </button>
+                                    <?php else: ?>
+                                        <button type="button" class="btn-quick-wa" data-id="<?= $row['id'] ?>" data-name="<?= htmlspecialchars($row['nama_skpd'], ENT_QUOTES) ?>" data-wa="" style="background: var(--light); border: 1px dashed #9CA3AF; color: var(--gray); font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                            + Tambah WA
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
                             </td>
                             <td>
                                 <span style="display: inline-flex; align-items: center; gap: 4px; background-color: #F0FDF4; color: #15803D; padding: 3px 8px; border-radius: 20px; font-weight: 700; font-size: 0.75rem; border: 1px solid #BBF7D0;">
@@ -137,5 +157,43 @@ $skpds = $conn->query("
         </div>
     </main>
     <script src="assets/js/script.js?v=<?= time() ?>"></script>
+    <script>
+        document.querySelectorAll('.btn-quick-wa').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const id = this.getAttribute('data-id');
+                const name = this.getAttribute('data-name');
+                const currentWa = this.getAttribute('data-wa') || '';
+
+                Swal.fire({
+                    title: 'Atur Kontak WhatsApp',
+                    html: `
+                        <p style="font-size:0.9rem; color:var(--gray); margin-bottom:12px; text-align:left;">Masukkan nomor WhatsApp untuk <b>${name}</b>:</p>
+                        <input id="swal-input-wa" class="swal2-input" placeholder="Contoh: 08123456789" value="${currentWa}" style="width:100%; margin:0; box-sizing:border-box;">
+                    `,
+                    showCancelButton: true,
+                    confirmButtonText: 'Simpan Kontak',
+                    cancelButtonText: 'Batal',
+                    confirmButtonColor: '#10B981',
+                    preConfirm: () => {
+                        return document.getElementById('swal-input-wa').value;
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const form = document.createElement('form');
+                        form.method = 'POST';
+                        form.innerHTML = `
+                            <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
+                            <input type="hidden" name="quick_update_wa" value="1">
+                            <input type="hidden" name="skpd_id" value="${id}">
+                            <input type="hidden" name="no_wa" value="${result.value}">
+                        `;
+                        document.body.appendChild(form);
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
