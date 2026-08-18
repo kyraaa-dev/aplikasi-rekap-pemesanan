@@ -170,6 +170,8 @@ document.addEventListener('DOMContentLoaded', function() {
         switch(notif) {
             case 'bayar_sukses': text = 'Pembayaran berhasil dikonfirmasi!'; break;
             case 'ambil_sukses': text = 'Status pengambilan berhasil diubah!'; break;
+            case 'ambil_semua_sukses': text = 'Semua pesanan SKPD berhasil ditandai SUDAH DIAMBIL!'; break;
+            case 'bayar_semua_sukses': text = 'Semua pembayaran SKPD berhasil dikonfirmasi LUNAS!'; break;
             case 'hapus_sukses': text = 'Data berhasil dihapus!'; break;
             case 'simpan_sukses': text = 'Data berhasil disimpan!'; break;
             case 'edit_sukses': text = 'Data berhasil diperbarui!'; break;

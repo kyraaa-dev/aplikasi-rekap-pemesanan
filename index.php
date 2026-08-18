@@ -1,6 +1,26 @@
 <?php
 require 'config.php';
 
+// Bulk Action: Tandai Semua Pesanan SKPD Sudah Diambil
+if (isset($_GET['ambil_semua_skpd'])) {
+    $skpd_id = (int)$_GET['ambil_semua_skpd'];
+    if ($skpd_id > 0) {
+        $conn->query("UPDATE pesanan SET status_pengambilan = 'Sudah Diambil' WHERE skpd_id = $skpd_id");
+        header("Location: index.php?notif=ambil_semua_sukses");
+        exit;
+    }
+}
+
+// Bulk Action: Tandai Semua Pesanan SKPD Lunas
+if (isset($_GET['lunas_semua_skpd'])) {
+    $skpd_id = (int)$_GET['lunas_semua_skpd'];
+    if ($skpd_id > 0) {
+        $conn->query("UPDATE pesanan SET status_bayar = 'Lunas' WHERE skpd_id = $skpd_id");
+        header("Location: index.php?notif=bayar_semua_sukses");
+        exit;
+    }
+}
+
 // Get total SKPD
 $q_skpd = $conn->query("SELECT COUNT(*) as total FROM skpd");
 $t_skpd = $q_skpd->fetch_assoc()['total'];
@@ -69,12 +89,14 @@ if ($q_details) {
     }
 }
 
-// Get payment status per SKPD
+// Get payment & pengambilan status per SKPD
 $status_skpd = [];
+$status_ambil_skpd = [];
 $catatan_skpd = [];
 $res_status = $conn->query("
     SELECT s.nama_skpd, 
            SUM(CASE WHEN p.status_bayar = 'Belum Lunas' THEN 1 ELSE 0 END) as jml_belum_lunas,
+           SUM(CASE WHEN p.status_pengambilan = 'Sudah Diambil' THEN 1 ELSE 0 END) as jml_sudah_diambil,
            COUNT(p.id) as total_pesanan,
            GROUP_CONCAT(DISTINCT NULLIF(TRIM(p.catatan), '') SEPARATOR '; ') as catatan_semua
     FROM pesanan p
@@ -83,6 +105,7 @@ $res_status = $conn->query("
 ");
 if ($res_status) {
     while ($row = $res_status->fetch_assoc()) {
+        // Status Bayar
         if ($row['jml_belum_lunas'] == 0 && $row['total_pesanan'] > 0) {
             $status_skpd[$row['nama_skpd']] = 'Lunas';
         } elseif ($row['jml_belum_lunas'] < $row['total_pesanan']) {
@@ -90,6 +113,16 @@ if ($res_status) {
         } else {
             $status_skpd[$row['nama_skpd']] = 'Belum Lunas';
         }
+
+        // Status Pengambilan
+        if ($row['jml_sudah_diambil'] == $row['total_pesanan'] && $row['total_pesanan'] > 0) {
+            $status_ambil_skpd[$row['nama_skpd']] = 'Sudah Diambil';
+        } elseif ($row['jml_sudah_diambil'] > 0) {
+            $status_ambil_skpd[$row['nama_skpd']] = 'Sebagian Diambil';
+        } else {
+            $status_ambil_skpd[$row['nama_skpd']] = 'Belum Diambil';
+        }
+
         $catatan_skpd[$row['nama_skpd']] = $row['catatan_semua'];
     }
 }
@@ -240,10 +273,26 @@ if ($q_all_orders) {
                                     } elseif ($status == 'Belum Lunas') {
                                         $status_bg = '#FEE2E2'; $status_color = '#B91C1C';
                                     }
+
+                                    $status_ambil = isset($status_ambil_skpd[$nama]) ? $status_ambil_skpd[$nama] : 'Belum Diambil';
+                                    $ambil_bg = '#F3F4F6';
+                                    $ambil_color = '#374151';
+                                    if ($status_ambil == 'Sudah Diambil') {
+                                        $ambil_bg = '#DCFCE7'; $ambil_color = '#15803D';
+                                    } elseif ($status_ambil == 'Sebagian Diambil') {
+                                        $ambil_bg = '#DBEAFE'; $ambil_color = '#1D4ED8';
+                                    } else {
+                                        $ambil_bg = '#F3F4F6'; $ambil_color = '#6B7280';
+                                    }
+                                    $current_skpd_id = $skpd_id_map[$nama] ?? 0;
                                 ?>
                                 <li style="display: flex; justify-content: space-between; margin-top: 5px; font-weight: 700; color: <?= $status_color ?>; background: <?= $status_bg ?>; padding: 6px 8px; border-radius: 6px;">
-                                    <span>Status Pembayaran:</span>
+                                    <span>Status Bayar:</span>
                                     <span><?= $status ?></span>
+                                </li>
+                                <li style="display: flex; justify-content: space-between; margin-top: 5px; font-weight: 700; color: <?= $ambil_color ?>; background: <?= $ambil_bg ?>; padding: 6px 8px; border-radius: 6px;">
+                                    <span>Status Pengambilan:</span>
+                                    <span><?= $status_ambil ?></span>
                                 </li>
                                 <?php if (!empty($catatan_skpd[$nama])): ?>
                                 <li style="margin-top: 10px; font-size: 0.85rem; color: var(--gray); background: #F9FAFB; padding: 8px; border-radius: 6px; border: 1px solid var(--gray-light);">
@@ -253,19 +302,40 @@ if ($q_all_orders) {
                                 <?php endif; ?>
                             </ul>
                             
-                            <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--gray-light);">
+                            <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--gray-light); display: flex; flex-direction: column; gap: 6px;">
                                 <button type="button" class="btn btn-sm btn-detail-skpd" 
                                         data-skpd="<?= htmlspecialchars($nama, ENT_QUOTES) ?>" 
-                                        data-skpd-id="<?= $skpd_id_map[$nama] ?? 0 ?>"
+                                        data-skpd-id="<?= $current_skpd_id ?>"
                                         data-status="<?= $status ?>"
                                         data-status-color="<?= $status_color ?>"
                                         data-status-bg="<?= $status_bg ?>"
+                                        data-status-ambil="<?= $status_ambil ?>"
+                                        data-status-ambil-color="<?= $ambil_color ?>"
+                                        data-status-ambil-bg="<?= $ambil_bg ?>"
                                         data-total-qty="<?= $total_item ?>"
                                         data-total-rp="Rp <?= number_format($total_rupiah, 0, ',', '.') ?>"
-                                        style="width: 100%; justify-content: center; background: linear-gradient(135deg, var(--primary) 0%, #6366f1 100%); color: white; border: none; border-radius: 6px; padding: 7px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25); transition: transform 0.15s ease, box-shadow 0.15s ease;">
+                                        style="width: 100%; justify-content: center; background: linear-gradient(135deg, var(--primary) 0%, #6366f1 100%); color: white; border: none; border-radius: 6px; padding: 7px 12px; font-size: 0.825rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25); transition: transform 0.15s ease, box-shadow 0.15s ease;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                     Lihat Detail Pesanan
                                 </button>
+                                
+                                <?php if ($status_ambil === 'Sudah Diambil'): ?>
+                                    <div style="width: 100%; text-align: center; background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; border-radius: 6px; padding: 6px 10px; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        Semua Barang Sudah Diambil
+                                    </div>
+                                <?php else: ?>
+                                    <a href="index.php?ambil_semua_skpd=<?= $current_skpd_id ?>" 
+                                       class="btn btn-sm btn-confirm" 
+                                       data-confirm-title="Konfirmasi Pengambilan Barang" 
+                                       data-confirm-text="Apakah Anda yakin ingin menandai SEMUA pesanan dari SKPD '<?= htmlspecialchars($nama, ENT_QUOTES) ?>' sebagai SUDAH DIAMBIL?" 
+                                       data-confirm-btn="Ya, Sudah Diambil" 
+                                       data-confirm-color="#10B981" 
+                                       style="width: 100%; justify-content: center; background: #10B981; color: white; border: none; border-radius: 6px; padding: 7px 12px; font-size: 0.825rem; font-weight: 600; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(16,185,129,0.25); text-decoration: none; transition: transform 0.15s ease;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        Tandai Sudah Diambil
+                                    </a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -319,7 +389,11 @@ if ($q_all_orders) {
                     <div id="modalSkpdFooterSummary" style="font-weight: 700; color: var(--dark); font-size: 0.9rem;">
                         <!-- Summary info -->
                     </div>
-                    <div style="display: flex; gap: 10px;">
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <a id="btnModalAmbilSemua" href="#" class="btn btn-sm btn-confirm" data-confirm-title="Konfirmasi Pengambilan Barang" data-confirm-text="Tandai SEMUA pesanan SKPD ini sebagai SUDAH DIAMBIL?" data-confirm-btn="Ya, Sudah Diambil" data-confirm-color="#10B981" style="background: #10B981; color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; border-radius: 6px; padding: 7px 14px; font-weight: 600; box-shadow: 0 2px 6px rgba(16,185,129,0.25);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Tandai Semua Sudah Diambil
+                        </a>
                         <a id="btnFilterKePesanan" href="#" class="btn btn-sm" style="background: var(--primary); color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; border-radius: 6px; padding: 7px 14px; font-weight: 600;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                             Kelola di Halaman Pesanan
@@ -503,19 +577,32 @@ if ($q_all_orders) {
         const modalSkpdTableBody = document.getElementById('modalSkpdTableBody');
         const modalSkpdFooterSummary = document.getElementById('modalSkpdFooterSummary');
         const btnFilterKePesanan = document.getElementById('btnFilterKePesanan');
+        const btnModalAmbilSemua = document.getElementById('btnModalAmbilSemua');
 
-        function openSkpdModal(skpdName, skpdId, status, statusColor, statusBg, totalQty, totalRp) {
+        function openSkpdModal(skpdName, skpdId, status, statusColor, statusBg, statusAmbil, statusAmbilColor, statusAmbilBg, totalQty, totalRp) {
             modalSkpdName.innerText = skpdName;
             
             // Set Badges
             modalSkpdBadges.innerHTML = `
                 <span style="background: #e0e7ff; color: #4338ca; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Total: ${totalQty} buah</span>
                 <span style="background: #fef3c7; color: #b45309; padding: 4px 8px; border-radius: 4px; font-weight: 600;">${totalRp}</span>
-                <span style="background: ${statusBg}; color: ${statusColor}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">${status}</span>
+                <span style="background: ${statusBg}; color: ${statusColor}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Bayar: ${status}</span>
+                <span style="background: ${statusAmbilBg}; color: ${statusAmbilColor}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Ambil: ${statusAmbil}</span>
             `;
             
             // Set Action Link
             btnFilterKePesanan.href = `pesanan.php?filter_skpd=${skpdId}`;
+
+            // Set Bulk Ambil Action Link
+            if (btnModalAmbilSemua) {
+                if (statusAmbil === 'Sudah Diambil') {
+                    btnModalAmbilSemua.style.display = 'none';
+                } else {
+                    btnModalAmbilSemua.style.display = 'inline-flex';
+                    btnModalAmbilSemua.href = `index.php?ambil_semua_skpd=${skpdId}`;
+                    btnModalAmbilSemua.setAttribute('data-confirm-text', `Tandai SEMUA pesanan dari ${skpdName} sebagai SUDAH DIAMBIL?`);
+                }
+            }
             
             // Populate Table
             const items = skpdOrdersData[skpdName] || [];
@@ -580,9 +667,12 @@ if ($q_all_orders) {
                 const status = this.getAttribute('data-status');
                 const statusColor = this.getAttribute('data-status-color');
                 const statusBg = this.getAttribute('data-status-bg');
+                const statusAmbil = this.getAttribute('data-status-ambil');
+                const statusAmbilColor = this.getAttribute('data-status-ambil-color');
+                const statusAmbilBg = this.getAttribute('data-status-ambil-bg');
                 const totalQty = this.getAttribute('data-total-qty');
                 const totalRp = this.getAttribute('data-total-rp');
-                openSkpdModal(skpdName, skpdId, status, statusColor, statusBg, totalQty, totalRp);
+                openSkpdModal(skpdName, skpdId, status, statusColor, statusBg, statusAmbil, statusAmbilColor, statusAmbilBg, totalQty, totalRp);
             });
         });
 

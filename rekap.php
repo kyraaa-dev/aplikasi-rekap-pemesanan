@@ -1,6 +1,16 @@
 <?php
 require 'config.php';
 
+// Bulk Action: Tandai Semua Pesanan SKPD Sudah Diambil
+if (isset($_GET['ambil_semua_skpd'])) {
+    $skpd_id = (int)$_GET['ambil_semua_skpd'];
+    if ($skpd_id > 0) {
+        $conn->query("UPDATE pesanan SET status_pengambilan = 'Sudah Diambil' WHERE skpd_id = $skpd_id");
+        header("Location: rekap.php?notif=ambil_semua_sukses");
+        exit;
+    }
+}
+
 $start_date = $_GET['start_date'] ?? '';
 $end_date = $_GET['end_date'] ?? '';
 $status_filter = $_GET['status_filter'] ?? '';
@@ -303,8 +313,22 @@ while ($t = $res_tagihan->fetch_assoc()) {
                                 $sa = isset($status_ambil_skpd[$id]) ? $status_ambil_skpd[$id] : '-';
                                 $sa_color = $sa == 'Sudah Diambil' ? '#10B981' : ($sa == 'Sebagian Diambil' ? '#2563EB' : '#4B5563');
                             ?>
-                            <td class="total-col" rowspan="<?= $rowspan ?>" style="text-align: center; font-weight: bold; color: <?= $sb_color ?>;"><?= $sb ?></td>
-                            <td class="total-col" rowspan="<?= $rowspan ?>" style="text-align: center; font-weight: bold; color: <?= $sa_color ?>;"><?= $sa ?></td>
+                            <td class="total-col" rowspan="<?= $rowspan ?>" style="text-align: center; font-weight: bold; color: <?= $sb_color ?>; vertical-align: middle;"><?= $sb ?></td>
+                            <td class="total-col" rowspan="<?= $rowspan ?>" style="text-align: center; vertical-align: middle;">
+                                <div style="font-weight: bold; color: <?= $sa_color ?>; margin-bottom: <?= ($sa !== 'Sudah Diambil' && $skpd_total > 0) ? '4px' : '0' ?>;"><?= $sa ?></div>
+                                <?php if ($sa !== 'Sudah Diambil' && $skpd_total > 0): ?>
+                                    <a href="rekap.php?ambil_semua_skpd=<?= $id ?>" 
+                                       class="btn btn-sm btn-confirm hide-on-print" 
+                                       data-confirm-title="Konfirmasi Pengambilan Barang"
+                                       data-confirm-text="Tandai SEMUA pesanan dari '<?= htmlspecialchars($nama, ENT_QUOTES) ?>' sebagai SUDAH DIAMBIL?"
+                                       data-confirm-btn="Ya, Sudah Diambil"
+                                       data-confirm-color="#10B981"
+                                       style="background: #10B981; color: white; border: none; border-radius: 4px; padding: 3px 8px; font-size: 0.725rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 3px; box-shadow: 0 1px 3px rgba(16,185,129,0.2);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        Diambil
+                                    </a>
+                                <?php endif; ?>
+                            </td>
                             <?php endif; ?>
                         </tr>
                         <?php 
