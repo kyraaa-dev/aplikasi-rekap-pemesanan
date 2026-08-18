@@ -1,0 +1,412 @@
+<?php
+require 'config.php';
+
+$msg = '';
+
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['skpd_id'])) {
+    $skpd_id = (int)$_POST['skpd_id'];
+    $nama_pemesan = $conn->real_escape_string($_POST['nama_pemesan']);
+    $jenis_kelamin = $conn->real_escape_string($_POST['jenis_kelamin']);
+    $ukuran = (int)$_POST['ukuran'];
+    $jumlah = (int)$_POST['jumlah'];
+    $jenis_mutz = $conn->real_escape_string($_POST['jenis_mutz']);
+    $status_bayar = $conn->real_escape_string($_POST['status_bayar']);
+    $catatan = isset($_POST['catatan']) ? $conn->real_escape_string($_POST['catatan']) : '';
+
+    $sql = "INSERT INTO pesanan (skpd_id, nama_pemesan, jenis_kelamin, ukuran, jumlah, jenis_mutz, status_bayar, catatan) 
+            VALUES ($skpd_id, '$nama_pemesan', '$jenis_kelamin', $ukuran, $jumlah, '$jenis_mutz', '$status_bayar', '$catatan')";
+    
+    if ($conn->query($sql)) {
+        // Kurangi stok otomatis
+        $conn->query("UPDATE stok_mutz SET jumlah_stok = jumlah_stok - $jumlah WHERE jenis_mutz = '$jenis_mutz' AND jenis_kelamin = '$jenis_kelamin' AND ukuran = $ukuran");
+        
+        header("Location: pesanan.php?notif=simpan_sukses");
+        exit;
+    } else {
+        header("Location: pesanan.php?error_msg=" . urlencode("Gagal menyimpan pesanan: " . $conn->error));
+        exit;
+    }
+}
+
+if (isset($_GET['del'])) {
+    $id = (int)$_GET['del'];
+    
+    // Kembalikan stok sebelum dihapus
+    $q_old = $conn->query("SELECT jenis_mutz, jenis_kelamin, ukuran, jumlah FROM pesanan WHERE id = $id");
+    if($old = $q_old->fetch_assoc()) {
+        $old_jm = $old['jenis_mutz'];
+        $old_jk = $old['jenis_kelamin'];
+        $old_uk = $old['ukuran'];
+        $old_jml = (int)$old['jumlah'];
+        $conn->query("UPDATE stok_mutz SET jumlah_stok = jumlah_stok + $old_jml WHERE jenis_mutz = '$old_jm' AND jenis_kelamin = '$old_jk' AND ukuran = $old_uk");
+    }
+    
+    $conn->query("DELETE FROM pesanan WHERE id = $id");
+    header("Location: pesanan.php?notif=hapus_sukses");
+    exit;
+}
+
+if (isset($_GET['lunas'])) {
+    $id = (int)$_GET['lunas'];
+    $conn->query("UPDATE pesanan SET status_bayar = 'Lunas' WHERE id = $id");
+    header("Location: pesanan.php?notif=bayar_sukses");
+    exit;
+}
+
+if (isset($_GET['update_status'])) {
+    $id = (int)$_GET['update_status'];
+    $status = $conn->real_escape_string($_GET['status']);
+    $valid_statuses = ['Menunggu Diproses', 'Sedang Dibuat', 'Siap Diambil', 'Sudah Diambil'];
+    if (in_array($status, $valid_statuses)) {
+        $conn->query("UPDATE pesanan SET status_pengambilan = '$status' WHERE id = $id");
+        header("Location: pesanan.php?notif=status_sukses");
+        exit;
+    }
+}
+
+$skpds = $conn->query("SELECT * FROM skpd ORDER BY nama_skpd ASC");
+
+$filter_skpd = isset($_GET['filter_skpd']) ? (int)$_GET['filter_skpd'] : 0;
+$filter_status = isset($_GET['filter_status']) ? $conn->real_escape_string($_GET['filter_status']) : '';
+$filter_ambil = isset($_GET['filter_ambil']) ? $conn->real_escape_string($_GET['filter_ambil']) : '';
+
+$where = [];
+if ($filter_skpd > 0) {
+    $where[] = "p.skpd_id = $filter_skpd";
+}
+if ($filter_status != '') {
+    $where[] = "p.status_bayar = '$filter_status'";
+}
+if ($filter_ambil != '') {
+    $where[] = "p.status_pengambilan = '$filter_ambil'";
+}
+
+$where_clause = count($where) > 0 ? "WHERE " . implode(" AND ", $where) : "";
+$limit = count($where) > 0 ? "LIMIT 500" : "LIMIT 50";
+
+$pesanans = $conn->query("
+    SELECT p.*, s.nama_skpd 
+    FROM pesanan p 
+    JOIN skpd s ON p.skpd_id = s.id 
+    $where_clause
+    ORDER BY p.id DESC $limit
+");
+?>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Input Pesanan Mutz - E-MutZ KORPRI</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+</head>
+<body>
+    <?php include 'sidebar.php'; ?>
+    <main class="main-content">
+        <div class="header">
+            <h1>Input Pesanan Mutz</h1>
+        </div>
+
+        
+        <div class="panel">
+            <h2>Form Input Pesanan Baru</h2>
+            <form method="POST">
+                <div class="form-group">
+                    <label>SKPD</label>
+                    <select name="skpd_id" required>
+                        <option value="">-- Pilih SKPD --</option>
+                        <?php while($s = $skpds->fetch_assoc()): ?>
+                            <option value="<?= $s['id'] ?>"><?= htmlspecialchars($s['nama_skpd']) ?></option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Nama Pemesan (Opsional)</label>
+                    <input type="text" name="nama_pemesan" placeholder="Masukkan nama pemesan (jika ada)">
+                </div>
+                <div class="form-group">
+                    <label>Jenis Kelamin</label>
+                    <select name="jenis_kelamin" id="jenis_kelamin" required>
+                        <option value="Laki-laki">Laki-laki</option>
+                        <option value="Perempuan">Perempuan</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Ukuran Mutz</label>
+                    <select name="ukuran" id="ukuran" required>
+                        <!-- Akan diisi oleh JavaScript berdasarkan pilihan Jenis Kelamin -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Jenis Mutz</label>
+                    <select name="jenis_mutz" required>
+                        <option value="Biasa">Biasa (Rp 55.000)</option>
+                        <option value="Kepala SKPD">Kepala SKPD (Rp 150.000)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Jumlah Pesanan</label>
+                    <input type="number" name="jumlah" value="1" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label>Status Pembayaran</label>
+                    <select name="status_bayar" required>
+                        <option value="Belum Lunas">Belum Lunas</option>
+                        <option value="Lunas">Lunas</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Catatan Tambahan (Opsional)</label>
+                    <input type="text" name="catatan" placeholder="Contoh: Titip ke bagian admin">
+                </div>
+                <button type="submit">Simpan Pesanan</button>
+            </form>
+        </div>
+
+        <div class="panel">
+            <div class="flex justify-between items-center mb-4" style="flex-wrap: wrap; gap: 10px;">
+                <h2>Daftar Pesanan Mutz</h2>
+                <form method="GET" action="pesanan.php" style="display: flex; gap: 10px; align-items: center; background: #F9FAFB; padding: 10px 15px; border-radius: 12px; border: 1px solid var(--gray-light);">
+                    <select name="filter_skpd" style="padding: 0.4rem; border-radius: 6px; border: 1px solid #d1d5db; outline: none;">
+                        <option value="0">- Semua SKPD -</option>
+                        <?php 
+                        // Reset pointer SKPD for filter dropdown
+                        $skpds->data_seek(0);
+                        while($s = $skpds->fetch_assoc()): 
+                        ?>
+                            <option value="<?= $s['id'] ?>" <?= $filter_skpd == $s['id'] ? 'selected' : '' ?>><?= htmlspecialchars($s['nama_skpd']) ?></option>
+                        <?php endwhile; ?>
+                    </select>
+                    <select name="filter_status" style="padding: 0.4rem; border-radius: 6px; border: 1px solid #d1d5db; outline: none;">
+                        <option value="">- Semua Pembayaran -</option>
+                        <option value="Lunas" <?= $filter_status == 'Lunas' ? 'selected' : '' ?>>Lunas</option>
+                        <option value="Belum Lunas" <?= $filter_status == 'Belum Lunas' ? 'selected' : '' ?>>Belum Lunas</option>
+                    </select>
+                    <select name="filter_ambil" style="padding: 0.4rem; border-radius: 6px; border: 1px solid #d1d5db; outline: none;">
+                        <option value="">- Semua Pengambilan -</option>
+                        <option value="Menunggu Diproses" <?= $filter_ambil == 'Menunggu Diproses' ? 'selected' : '' ?>>Menunggu Diproses</option>
+                        <option value="Sedang Dibuat" <?= $filter_ambil == 'Sedang Dibuat' ? 'selected' : '' ?>>Sedang Dibuat</option>
+                        <option value="Siap Diambil" <?= $filter_ambil == 'Siap Diambil' ? 'selected' : '' ?>>Siap Diambil</option>
+                        <option value="Sudah Diambil" <?= $filter_ambil == 'Sudah Diambil' ? 'selected' : '' ?>>Sudah Diambil</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary" style="padding: 0.4rem 1rem;">Filter</button>
+                    <?php if($filter_skpd > 0 || $filter_status != '' || $filter_ambil != ''): ?>
+                        <a href="pesanan.php" class="btn btn-secondary" style="padding: 0.4rem 1rem; text-decoration: none;">Reset</a>
+                    <?php endif; ?>
+                </form>
+            </div>
+            <div class="table-responsive">
+                <table id="pesananTable">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>SKPD</th>
+                            <th>Nama Pemesan</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Ukuran</th>
+                            <th>Jenis Mutz</th>
+                            <th>Jml</th>
+                            <th>Total Harga</th>
+                            <th>Status Bayar</th>
+                            <th>Pengambilan</th>
+                            <th>Catatan</th>
+                            <th>Tanggal Input</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $no=1; while($row = $pesanans->fetch_assoc()): ?>
+                        <tr>
+                            <td><?= $no++ ?></td>
+                            <td><?= htmlspecialchars($row['nama_skpd']) ?></td>
+                            <td><?= htmlspecialchars($row['nama_pemesan'] ?? '') ?: '-' ?></td>
+                            <td>
+                                <span style="color: <?= $row['jenis_kelamin'] == 'Laki-laki' ? 'var(--primary)' : '#EC4899' ?>; font-weight: 600;">
+                                    <?= $row['jenis_kelamin'] ?>
+                                </span>
+                            </td>
+                            <td><strong><?= $row['ukuran'] ?></strong></td>
+                            <td><?= $row['jenis_mutz'] ?></td>
+                            <td><?= $row['jumlah'] ?></td>
+                            <td>
+                                <?php 
+                                    $harga = $row['jenis_mutz'] == 'Kepala SKPD' ? HARGA_KEPALA : HARGA_BIASA;
+                                    $total = $harga * $row['jumlah'];
+                                ?>
+                                <div style="font-weight: bold; color: var(--dark);">Rp <?= number_format($total, 0, ',', '.') ?></div>
+                            </td>
+                            <td>
+                                <?php if($row['status_bayar'] == 'Lunas'): ?>
+                                    <span style="display: inline-flex; align-items: center; gap: 4px; background-color: #F0FDF4; color: #15803D; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: 1px solid #BBF7D0; letter-spacing: 0.5px;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        Lunas
+                                    </span>
+                                <?php else: ?>
+                                    <span style="display: inline-flex; align-items: center; gap: 4px; background-color: #FEF2F2; color: #B91C1C; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: 1px solid #FECACA; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(185, 28, 28, 0.1);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                        Belum Lunas
+                                    </span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?php 
+                                    $st = $row['status_pengambilan'];
+                                    if($st == 'Menunggu Diproses') {
+                                        $bg = '#F3F4F6'; $color = '#4B5563'; $border = '#D1D5DB';
+                                    } elseif($st == 'Sedang Dibuat') {
+                                        $bg = '#EFF6FF'; $color = '#1D4ED8'; $border = '#BFDBFE';
+                                    } elseif($st == 'Siap Diambil') {
+                                        $bg = '#FEF3C7'; $color = '#B45309'; $border = '#FDE68A';
+                                    } else { // Sudah Diambil
+                                        $bg = '#F0FDF4'; $color = '#15803D'; $border = '#BBF7D0';
+                                    }
+                                ?>
+                                <span style="display: inline-flex; align-items: center; gap: 4px; background-color: <?= $bg ?>; color: <?= $color ?>; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: 1px solid <?= $border ?>; letter-spacing: 0.5px; white-space: nowrap;">
+                                    <?= $st ?>
+                                </span>
+                            </td>
+                            <td><?= htmlspecialchars($row['catatan'] ?? '') ?: '-' ?></td>
+                            <td style="font-size: 0.8rem; color: var(--gray); white-space: nowrap;">
+                                <?= date('d/m/Y H:i', strtotime($row['created_at'])) ?>
+                            </td>
+                            <td style="white-space: nowrap;">
+                                <?php if($row['status_bayar'] == 'Belum Lunas'): ?>
+                                <a href="pesanan.php?lunas=<?= $row['id'] ?>" class="btn btn-sm btn-success btn-bayar btn-confirm" data-confirm-title="Konfirmasi Pembayaran" data-confirm-text="Tandai pesanan ini sebagai Lunas?" data-confirm-btn="Ya, Lunas" data-confirm-color="#10B981" style="display: inline-flex; align-items: center; gap: 4px; margin-right: 5px; padding: 0.35rem 0.7rem; font-weight: 500; border-radius: 6px; background-color: #10B981; color: white; border: none; text-decoration: none;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Bayar
+                                </a>
+                                <?php else: ?>
+                                <a href="cetak_kwitansi.php?id=<?= $row['id'] ?>" target="_blank" class="btn btn-sm" style="display: inline-flex; align-items: center; gap: 4px; margin-right: 5px; padding: 0.35rem 0.7rem; font-weight: 500; border-radius: 6px; background-color: #3B82F6; color: white; border: none; text-decoration: none;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                                    Kwitansi
+                                </a>
+                                <?php endif; ?>
+                                <form action="pesanan.php" method="GET" style="display: inline-block; margin-right: 5px;">
+                                    <input type="hidden" name="update_status" value="<?= $row['id'] ?>">
+                                    <select name="status" onchange="this.form.submit()" style="padding: 0.35rem 0.5rem; font-size: 0.75rem; font-weight: 600; border-radius: 6px; border: 1px solid #ccc; background: #F9FAFB; cursor: pointer; min-width: 140px;">
+                                        <option value="Menunggu Diproses" <?= $row['status_pengambilan'] == 'Menunggu Diproses' ? 'selected' : '' ?>>⏳ Menunggu Diproses</option>
+                                        <option value="Sedang Dibuat" <?= $row['status_pengambilan'] == 'Sedang Dibuat' ? 'selected' : '' ?>>✂️ Sedang Dibuat</option>
+                                        <option value="Siap Diambil" <?= $row['status_pengambilan'] == 'Siap Diambil' ? 'selected' : '' ?>>📦 Siap Diambil</option>
+                                        <option value="Sudah Diambil" <?= $row['status_pengambilan'] == 'Sudah Diambil' ? 'selected' : '' ?>>✅ Sudah Diambil</option>
+                                    </select>
+                                </form>
+                                <a href="edit_pesanan.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-secondary" style="display: inline-flex; align-items: center; gap: 4px; margin-right: 5px; padding: 0.35rem 0.7rem; font-weight: 500; border-radius: 6px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                    Edit
+                                </a>
+                                <?php if($row['status_pengambilan'] == 'Sudah Diambil'): ?>
+                                <a href="proses_retur.php?id=<?= $row['id'] ?>" class="btn btn-sm" style="display: inline-flex; align-items: center; gap: 4px; margin-right: 5px; padding: 0.35rem 0.7rem; font-weight: 500; border-radius: 6px; background-color: #F59E0B; color: white; border: none; text-decoration: none;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path><path d="M3 22v-6h6"></path><path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path></svg>
+                                    Retur
+                                </a>
+                                <?php endif; ?>
+                                <a href="pesanan.php?del=<?= $row['id'] ?>" class="btn btn-sm btn-danger btn-hapus btn-confirm" data-confirm-title="Hapus Pesanan" data-confirm-text="Apakah Anda yakin ingin menghapus pesanan ini secara permanen?" data-confirm-btn="Ya, Hapus" data-confirm-color="#EF4444" style="display: inline-flex; align-items: center; gap: 4px; padding: 0.35rem 0.7rem; font-weight: 500; border-radius: 6px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                    Hapus
+                                </a>
+                            </td>
+                        </tr>
+                        <?php endwhile; ?>
+                        <?php if($pesanans->num_rows == 0): ?>
+                        <tr><td colspan="9" style="text-align:center;">Belum ada data pesanan.</td></tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    <script src="assets/js/script.js?v=<?= time() ?>"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    document.querySelectorAll('.btn-bayar').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const url = this.getAttribute('href');
+            Swal.fire({
+                title: 'Konfirmasi Pembayaran',
+                text: "Anda yakin ingin menandai pesanan ini sebagai Lunas?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#10B981',
+                cancelButtonColor: '#6B7280',
+                confirmButtonText: 'Ya, Lunas!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+        });
+    });
+
+    document.querySelectorAll('.btn-hapus').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const url = this.getAttribute('href');
+            Swal.fire({
+                title: 'Hapus Pesanan?',
+                text: "Data pesanan ini tidak dapat dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#EF4444',
+                cancelButtonColor: '#6B7280',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+        });
+    });
+
+    <?php if(isset($_GET['notif']) && $_GET['notif'] == 'bayar_sukses'): ?>
+    
+    // Mainkan efek suara notifikasi pembayaran digital modern (seperti e-Wallet/Apple Pay)
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) {
+            const ctx = new AudioContext();
+            const playTone = (freq, type, startTime, duration) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, ctx.currentTime + startTime);
+                
+                // Envelope suara lembut (fast attack, exponential decay)
+                gain.gain.setValueAtTime(0, ctx.currentTime + startTime);
+                gain.gain.linearRampToValueAtTime(0.3, ctx.currentTime + startTime + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + startTime + duration);
+                
+                osc.start(ctx.currentTime + startTime);
+                osc.stop(ctx.currentTime + startTime + duration);
+            };
+            
+            // Dua nada cepat yang naik (F5 lalu A5) memberikan kesan sukses yang elegan
+            playTone(698.46, 'sine', 0, 0.4);   // F5
+            playTone(880.00, 'sine', 0.1, 0.6); // A5
+        }
+    } catch(e) {
+        console.log("Audio API tidak didukung browser ini.");
+    }
+
+    Swal.fire({
+        title: 'Pembayaran Berhasil!',
+        text: 'Pesanan ini sekarang telah lunas.',
+        icon: 'success',
+        confirmButtonColor: '#10B981',
+        timer: 2500,
+        timerProgressBar: true,
+        showConfirmButton: false
+    });
+    // Membersihkan URL agar notifikasi tidak muncul lagi saat di-refresh
+    window.history.replaceState({}, document.title, window.location.pathname);
+    <?php endif; ?>
+    </script>
+</body>
+</html>
