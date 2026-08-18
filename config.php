@@ -1,21 +1,48 @@
 <?php
 session_start();
 
-$host = $_ENV['DB_HOST'] ?? $_SERVER['DB_HOST'] ?? getenv('DB_HOST') ?: "localhost";
-$user = $_ENV['DB_USER'] ?? $_SERVER['DB_USER'] ?? getenv('DB_USER') ?: "root";
-$pass = $_ENV['DB_PASS'] ?? $_SERVER['DB_PASS'] ?? (getenv('DB_PASS') !== false ? getenv('DB_PASS') : "root");
-$db   = $_ENV['DB_NAME'] ?? $_SERVER['DB_NAME'] ?? getenv('DB_NAME') ?: "rekap_mutz_asn";
-$port = (int)($_ENV['DB_PORT'] ?? $_SERVER['DB_PORT'] ?? getenv('DB_PORT') ?: 3306);
+function get_env_var($key, $default = '') {
+    if (getenv($key) !== false && getenv($key) !== '') return trim(getenv($key));
+    if (isset($_ENV[$key]) && $_ENV[$key] !== '') return trim($_ENV[$key]);
+    if (isset($_SERVER[$key]) && $_SERVER[$key] !== '') return trim($_SERVER[$key]);
+    return $default;
+}
 
-// Cek apakah berjalan di Vercel tapi env DB_HOST belum diatur
-if (($host === "localhost" || $host === "127.0.0.1") && (isset($_SERVER['VERCEL']) || isset($_ENV['VERCEL']))) {
-    die("<div style='font-family:sans-serif; padding:20px; background:#fff3cd; color:#856404; border:1px solid #ffeeba; border-radius:8px; max-width:600px; margin:40px auto; line-height:1.6;'>
-        <h3 style='margin-top:0;'>⚠️ Environment Variables Database Belum Aktif di Vercel</h3>
-        <p>Aplikasi belum menerima variabel database dari TiDB Cloud.</p>
-        <ol style='padding-left:20px;'>
-            <li>Buka dashboard <b>Vercel</b> > pilih projek ini > masuk menu <b>Settings > Environment Variables</b>.</li>
-            <li>Pastikan variabel <code>DB_HOST</code>, <code>DB_PORT</code>, <code>DB_USER</code>, <code>DB_PASS</code>, dan <code>DB_NAME</code> sudah ditambahkan.</li>
-            <li>Klik tab <b>Deployments</b> > klik titik tiga (<code>...</code>) pada deployment terakhir > pilih <b>Redeploy</b> agar variabel aktif.</li>
+$host = get_env_var('DB_HOST', 'localhost');
+$user = get_env_var('DB_USER', 'root');
+$pass = get_env_var('DB_PASS', 'root');
+$db   = get_env_var('DB_NAME', 'rekap_mutz_asn');
+$port = (int)get_env_var('DB_PORT', '3306');
+
+// Cek apakah berjalan di Vercel tapi env DB_HOST belum terdeteksi
+if (($host === "localhost" || $host === "127.0.0.1") && (isset($_SERVER['VERCEL']) || isset($_ENV['VERCEL']) || getenv('VERCEL'))) {
+    $detected_host = get_env_var('DB_HOST', '(tidak terdeteksi)');
+    $detected_port = get_env_var('DB_PORT', '(tidak terdeteksi)');
+    $detected_user = get_env_var('DB_USER', '(tidak terdeteksi)');
+    $detected_db   = get_env_var('DB_NAME', '(tidak terdeteksi)');
+    $has_pass      = get_env_var('DB_PASS') !== '' ? '✅ Terisi' : '❌ Kosong';
+
+    die("<div style='font-family:sans-serif; padding:24px; background:#fff; color:#333; border:1px solid #ddd; border-radius:12px; max-width:650px; margin:40px auto; box-shadow:0 4px 20px rgba(0,0,0,0.08); line-height:1.6;'>
+        <h2 style='color:#d97706; margin-top:0;'>⚠️ Environment Variables Belum Terhubung</h2>
+        <p>Aplikasi berjalan di Vercel, tetapi variabel database dari TiDB Cloud belum terdeteksi oleh sistem.</p>
+        
+        <table style='width:100%; border-collapse:collapse; margin:16px 0; font-size:14px;'>
+            <tr style='background:#f3f4f6; text-align:left;'>
+                <th style='padding:8px; border:1px solid #e5e7eb;'>Key</th>
+                <th style='padding:8px; border:1px solid #e5e7eb;'>Status Saat Ini</th>
+            </tr>
+            <tr><td style='padding:8px; border:1px solid #e5e7eb;'><code>DB_HOST</code></td><td style='padding:8px; border:1px solid #e5e7eb;'>$detected_host</td></tr>
+            <tr><td style='padding:8px; border:1px solid #e5e7eb;'><code>DB_PORT</code></td><td style='padding:8px; border:1px solid #e5e7eb;'>$detected_port</td></tr>
+            <tr><td style='padding:8px; border:1px solid #e5e7eb;'><code>DB_USER</code></td><td style='padding:8px; border:1px solid #e5e7eb;'>$detected_user</td></tr>
+            <tr><td style='padding:8px; border:1px solid #e5e7eb;'><code>DB_NAME</code></td><td style='padding:8px; border:1px solid #e5e7eb;'>$detected_db</td></tr>
+            <tr><td style='padding:8px; border:1px solid #e5e7eb;'><code>DB_PASS</code></td><td style='padding:8px; border:1px solid #e5e7eb;'>$has_pass</td></tr>
+        </table>
+
+        <h3 style='margin-bottom:8px;'>Langkah Solusi di Vercel:</h3>
+        <ol style='padding-left:20px; color:#4b5563;'>
+            <li>Buka <b>Settings > Environment Variables</b> di dashboard Vercel.</li>
+            <li>Pastikan saat menambahkan variabel, centang <b>Production</b>, <b>Preview</b>, dan <b>Development</b>.</li>
+            <li>Buka tab <b>Deployments</b> > klik titik tiga (<code>...</code>) pada baris deployment paling atas > pilih <b>Redeploy</b> (tanpa centang Use existing build cache).</li>
         </ol>
     </div>");
 }
