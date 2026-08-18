@@ -216,28 +216,93 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 3. Logout handler (still specific but uses similar logic)
-    const btnLogout = document.getElementById('btnLogout');
-    if (btnLogout) {
-        btnLogout.addEventListener('click', function(e) {
+    // 3. Animated Logout & Cache Clearing Handler
+    function performAnimatedLogout(url) {
+        Swal.fire({
+            title: 'Membersihkan Sesi & Cache...',
+            html: `
+                <div style="padding: 10px 0;">
+                    <div id="swal-step-text" style="font-size: 0.9rem; font-weight: 600; color: #4F46E5; margin-bottom: 14px;">
+                        🧹 Menghapus cache lokal browser...
+                    </div>
+                    <div style="width: 100%; height: 8px; background: #E5E7EB; border-radius: 999px; overflow: hidden;">
+                        <div id="swal-progress-bar" style="width: 20%; height: 100%; background: linear-gradient(90deg, #4F46E5 0%, #06B6D4 50%, #10B981 100%); border-radius: 999px; transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);"></div>
+                    </div>
+                </div>
+            `,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                const progressBar = document.getElementById('swal-progress-bar');
+                const stepText = document.getElementById('swal-step-text');
+                
+                // Bersihkan client storage
+                try {
+                    sessionStorage.clear();
+                    const theme = localStorage.getItem('theme');
+                    localStorage.clear();
+                    if (theme) localStorage.setItem('theme', theme);
+                    
+                    if ('caches' in window) {
+                        caches.keys().then(names => {
+                            names.forEach(name => caches.delete(name));
+                        });
+                    }
+                } catch(err) {
+                    console.error(err);
+                }
+
+                // Step 2: Menghapus token & sesi
+                setTimeout(() => {
+                    if (progressBar) progressBar.style.width = '65%';
+                    if (stepText) stepText.innerHTML = '🔒 Menghapus token autentikasi & sesi...';
+                }, 400);
+
+                // Step 3: Penyelesaian
+                setTimeout(() => {
+                    if (progressBar) progressBar.style.width = '100%';
+                    if (stepText) stepText.innerHTML = '✨ Selesai! Mengalihkan ke halaman login...';
+                }, 850);
+
+                // Step 4: Redirect
+                setTimeout(() => {
+                    window.location.href = url;
+                }, 1200);
+            }
+        });
+    }
+
+    const logoutButtons = document.querySelectorAll('#btnLogout, a[href="logout.php"], .btn-logout');
+    logoutButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
             e.preventDefault();
-            const url = this.getAttribute('href');
+            const url = this.getAttribute('href') || 'logout.php';
             Swal.fire({
                 title: 'Konfirmasi Keluar',
-                text: "Apakah Anda yakin ingin keluar dari aplikasi?",
+                html: `
+                    <div style="margin-top: 8px; font-size: 0.95rem; color: var(--dark); line-height: 1.5;">
+                        Apakah Anda yakin ingin keluar dari sistem <strong>E-MutZ KORPRI</strong>?
+                    </div>
+                    <div style="margin-top: 14px; padding: 10px 14px; background: #FEF3C7; border: 1px solid #FDE68A; border-radius: 8px; font-size: 0.825rem; color: #92400E; text-align: left; display: flex; align-items: center; gap: 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        <span>Sistem akan menutup sesi aman Anda dan membersihkan cache sementara browser.</span>
+                    </div>
+                `,
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#EF4444',
+                confirmButtonColor: '#DC2626',
                 cancelButtonColor: '#6B7280',
-                confirmButtonText: 'Ya, Keluar',
+                confirmButtonText: '<span style="display:inline-flex; align-items:center; gap:6px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> Ya, Bersihkan & Keluar</span>',
                 cancelButtonText: 'Batal',
-                reverseButtons: true
+                reverseButtons: true,
+                focusCancel: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = url;
+                    performAnimatedLogout(url);
                 }
             });
         });
-    }
+    });
 });
 </script>

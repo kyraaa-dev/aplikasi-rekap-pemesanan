@@ -495,6 +495,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         });
                     });
                 </script>
+            <?php elseif (isset($_GET['notif']) && $_GET['notif'] === 'logout_sukses'): ?>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            title: 'Berhasil Keluar',
+                            text: 'Sesi aman telah ditutup dan cache browser berhasil dibersihkan.',
+                            icon: 'success',
+                            confirmButtonColor: '#4F46E5',
+                            timer: 3000,
+                            timerProgressBar: true
+                        });
+                        window.history.replaceState(null, null, window.location.pathname);
+                    });
+                </script>
             <?php endif; ?>
 
             <form method="POST" id="loginForm" autocomplete="off">
