@@ -3,20 +3,38 @@ require 'config.php';
 
 $msg = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['nama_skpd'])) {
-    $nama = $conn->real_escape_string($_POST['nama_skpd']);
-    if($conn->query("INSERT INTO skpd (nama_skpd) VALUES ('$nama')")) {
-        header("Location: skpd.php?notif=simpan_sukses");
-        exit;
-    } else {
-        header("Location: skpd.php?error_msg=" . urlencode("Gagal menyimpan SKPD: " . $conn->error));
+    $csrf_token = $_POST['csrf_token'] ?? '';
+    if (!verify_csrf_token($csrf_token)) {
+        header("Location: skpd.php?error_msg=" . urlencode("Token keamanan CSRF tidak valid. Silakan muat ulang halaman."));
         exit;
     }
+
+    $nama = trim($_POST['nama_skpd'] ?? '');
+    if (!empty($nama)) {
+        $stmt = $conn->prepare("INSERT INTO skpd (nama_skpd) VALUES (?)");
+        if ($stmt) {
+            $stmt->bind_param("s", $nama);
+            $success = $stmt->execute();
+            $stmt->close();
+            if ($success) {
+                header("Location: skpd.php?notif=simpan_sukses");
+                exit;
+            }
+        }
+    }
+    header("Location: skpd.php?error_msg=" . urlencode("Gagal menyimpan SKPD"));
+    exit;
 }
 
 // Delete
 if (isset($_GET['del'])) {
     $id = (int)$_GET['del'];
-    $conn->query("DELETE FROM skpd WHERE id = $id");
+    $stmt_del = $conn->prepare("DELETE FROM skpd WHERE id = ?");
+    if ($stmt_del) {
+        $stmt_del->bind_param("i", $id);
+        $stmt_del->execute();
+        $stmt_del->close();
+    }
     header("Location: skpd.php?notif=hapus_sukses");
     exit;
 }
@@ -48,6 +66,7 @@ $skpds = $conn->query("
         <div class="panel">
             <h2>Tambah SKPD Baru</h2>
             <form method="POST">
+                <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
                 <div class="form-group flex gap-4 items-center">
                     <input type="text" name="nama_skpd" placeholder="Masukkan Nama SKPD (contoh: Dinas Pendidikan)" required style="max-width: 400px;">
                     <button type="submit" style="white-space:nowrap;">Tambah SKPD</button>

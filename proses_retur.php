@@ -8,12 +8,15 @@ if ($id == 0) {
     exit;
 }
 
-$pesanan = $conn->query("
-    SELECT p.*, s.nama_skpd 
-    FROM pesanan p 
-    JOIN skpd s ON p.skpd_id = s.id 
-    WHERE p.id = $id
-")->fetch_assoc();
+$stmt_pesanan_init = $conn->prepare("SELECT p.*, s.nama_skpd FROM pesanan p JOIN skpd s ON p.skpd_id = s.id WHERE p.id = ?");
+$pesanan = null;
+if ($stmt_pesanan_init) {
+    $stmt_pesanan_init->bind_param("i", $id);
+    $stmt_pesanan_init->execute();
+    $res_init = $stmt_pesanan_init->get_result();
+    $pesanan = $res_init->fetch_assoc();
+    $stmt_pesanan_init->close();
+}
 
 if (!$pesanan || $pesanan['status_pengambilan'] != 'Sudah Diambil') {
     echo "Pesanan tidak valid untuk diretur.";
@@ -21,33 +24,54 @@ if (!$pesanan || $pesanan['status_pengambilan'] != 'Sudah Diambil') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['alasan'])) {
-    $alasan = $conn->real_escape_string($_POST['alasan']);
-    if($alasan == 'Lainnya') {
-        $alasan = $conn->real_escape_string($_POST['alasan_lainnya']);
+    $csrf_token = $_POST['csrf_token'] ?? '';
+    if (!verify_csrf_token($csrf_token)) {
+        header("Location: proses_retur.php?id=$id&error_msg=" . urlencode("Token keamanan CSRF tidak valid. Silakan muat ulang halaman."));
+        exit;
     }
-    $ukuran_baru = (int)$_POST['ukuran_baru'];
+
+    $alasan = trim($_POST['alasan'] ?? '');
+    if ($alasan == 'Lainnya') {
+        $alasan = trim($_POST['alasan_lainnya'] ?? 'Lainnya');
+    }
+    $ukuran_baru = (int)($_POST['ukuran_baru'] ?? 0);
     $ukuran_lama = (int)$pesanan['ukuran'];
 
     $conn->begin_transaction();
     try {
-        // Insert log retur
+        // Insert log retur via prepared statement
         $stmt_retur = $conn->prepare("INSERT INTO retur_pesanan (pesanan_id, alasan, ukuran_lama, ukuran_baru) VALUES (?, ?, ?, ?)");
+        if (!$stmt_retur) throw new Exception($conn->error);
         $stmt_retur->bind_param("isii", $id, $alasan, $ukuran_lama, $ukuran_baru);
         $stmt_retur->execute();
+        $stmt_retur->close();
 
         // Update pesanan: ganti ukuran dan ubah status menjadi Sedang Dibuat
         $stmt_pesanan = $conn->prepare("UPDATE pesanan SET ukuran = ?, status_pengambilan = 'Sedang Dibuat' WHERE id = ?");
+        if (!$stmt_pesanan) throw new Exception($conn->error);
         $stmt_pesanan->bind_param("ii", $ukuran_baru, $id);
         $stmt_pesanan->execute();
+        $stmt_pesanan->close();
 
-        // Kembalikan stok ukuran lama
+        // Kembalikan stok ukuran lama via prepared statement
         $jm = $pesanan['jenis_mutz'];
         $jk = $pesanan['jenis_kelamin'];
         $jml = (int)$pesanan['jumlah'];
-        $conn->query("UPDATE stok_mutz SET jumlah_stok = jumlah_stok + $jml WHERE jenis_mutz = '$jm' AND jenis_kelamin = '$jk' AND ukuran = $ukuran_lama");
         
-        // Kurangi stok ukuran baru
-        $conn->query("UPDATE stok_mutz SET jumlah_stok = jumlah_stok - $jml WHERE jenis_mutz = '$jm' AND jenis_kelamin = '$jk' AND ukuran = $ukuran_baru");
+        $stmt_inc = $conn->prepare("UPDATE stok_mutz SET jumlah_stok = jumlah_stok + ? WHERE jenis_mutz = ? AND jenis_kelamin = ? AND ukuran = ?");
+        if ($stmt_inc) {
+            $stmt_inc->bind_param("issi", $jml, $jm, $jk, $ukuran_lama);
+            $stmt_inc->execute();
+            $stmt_inc->close();
+        }
+        
+        // Kurangi stok ukuran baru via prepared statement
+        $stmt_dec = $conn->prepare("UPDATE stok_mutz SET jumlah_stok = jumlah_stok - ? WHERE jenis_mutz = ? AND jenis_kelamin = ? AND ukuran = ?");
+        if ($stmt_dec) {
+            $stmt_dec->bind_param("issi", $jml, $jm, $jk, $ukuran_baru);
+            $stmt_dec->execute();
+            $stmt_dec->close();
+        }
 
         $conn->commit();
         header("Location: retur.php?notif=retur_sukses");
@@ -98,6 +122,7 @@ if ($pesanan['jenis_kelamin'] == 'Laki-laki') {
             </div>
             
             <form method="POST">
+                <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
                 <div class="form-group">
                     <label>Alasan Retur</label>
                     <select name="alasan" id="alasan" required onchange="toggleAlasanLainnya()">

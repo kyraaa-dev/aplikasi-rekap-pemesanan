@@ -6,27 +6,42 @@ $msg = '';
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['skpd_id'])) {
-    $skpd_id = (int)$_POST['skpd_id'];
-    $nama_pemesan = $conn->real_escape_string($_POST['nama_pemesan']);
-    $jenis_kelamin = $conn->real_escape_string($_POST['jenis_kelamin']);
-    $ukuran = (int)$_POST['ukuran'];
-    $jumlah = (int)$_POST['jumlah'];
-    $jenis_mutz = $conn->real_escape_string($_POST['jenis_mutz']);
-    $status_bayar = $conn->real_escape_string($_POST['status_bayar']);
-    $catatan = isset($_POST['catatan']) ? $conn->real_escape_string($_POST['catatan']) : '';
+    $csrf_token = $_POST['csrf_token'] ?? '';
+    if (!verify_csrf_token($csrf_token)) {
+        header("Location: pesanan.php?error_msg=" . urlencode("Token keamanan CSRF tidak valid. Silakan muat ulang halaman."));
+        exit;
+    }
 
-    $sql = "INSERT INTO pesanan (skpd_id, nama_pemesan, jenis_kelamin, ukuran, jumlah, jenis_mutz, status_bayar, catatan) 
-            VALUES ($skpd_id, '$nama_pemesan', '$jenis_kelamin', $ukuran, $jumlah, '$jenis_mutz', '$status_bayar', '$catatan')";
-    
-    if ($conn->query($sql)) {
-        // Kurangi stok otomatis
-        $conn->query("UPDATE stok_mutz SET jumlah_stok = jumlah_stok - $jumlah WHERE jenis_mutz = '$jenis_mutz' AND jenis_kelamin = '$jenis_kelamin' AND ukuran = $ukuran");
-        
-        header("Location: pesanan.php?notif=simpan_sukses");
-        exit;
-    } else {
-        header("Location: pesanan.php?error_msg=" . urlencode("Gagal menyimpan pesanan: " . $conn->error));
-        exit;
+    $skpd_id = (int)$_POST['skpd_id'];
+    $nama_pemesan = trim($_POST['nama_pemesan'] ?? '');
+    $jenis_kelamin = trim($_POST['jenis_kelamin'] ?? 'Laki-laki');
+    $ukuran = (int)($_POST['ukuran'] ?? 58);
+    $jumlah = (int)($_POST['jumlah'] ?? 1);
+    $jenis_mutz = trim($_POST['jenis_mutz'] ?? 'Biasa');
+    $status_bayar = trim($_POST['status_bayar'] ?? 'Belum Lunas');
+    $catatan = trim($_POST['catatan'] ?? '');
+
+    $stmt = $conn->prepare("INSERT INTO pesanan (skpd_id, nama_pemesan, jenis_kelamin, ukuran, jumlah, jenis_mutz, status_bayar, catatan) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    if ($stmt) {
+        $stmt->bind_param("issiisss", $skpd_id, $nama_pemesan, $jenis_kelamin, $ukuran, $jumlah, $jenis_mutz, $status_bayar, $catatan);
+        $success = $stmt->execute();
+        $stmt->close();
+
+        if ($success) {
+            // Kurangi stok otomatis via prepared statement
+            $stmt_stok = $conn->prepare("UPDATE stok_mutz SET jumlah_stok = jumlah_stok - ? WHERE jenis_mutz = ? AND jenis_kelamin = ? AND ukuran = ?");
+            if ($stmt_stok) {
+                $stmt_stok->bind_param("issi", $jumlah, $jenis_mutz, $jenis_kelamin, $ukuran);
+                $stmt_stok->execute();
+                $stmt_stok->close();
+            }
+            
+            header("Location: pesanan.php?notif=simpan_sukses");
+            exit;
+        } else {
+            header("Location: pesanan.php?error_msg=" . urlencode("Gagal menyimpan pesanan: " . $conn->error));
+            exit;
+        }
     }
 }
 
@@ -34,33 +49,61 @@ if (isset($_GET['del'])) {
     $id = (int)$_GET['del'];
     
     // Kembalikan stok sebelum dihapus
-    $q_old = $conn->query("SELECT jenis_mutz, jenis_kelamin, ukuran, jumlah FROM pesanan WHERE id = $id");
-    if($old = $q_old->fetch_assoc()) {
-        $old_jm = $old['jenis_mutz'];
-        $old_jk = $old['jenis_kelamin'];
-        $old_uk = $old['ukuran'];
-        $old_jml = (int)$old['jumlah'];
-        $conn->query("UPDATE stok_mutz SET jumlah_stok = jumlah_stok + $old_jml WHERE jenis_mutz = '$old_jm' AND jenis_kelamin = '$old_jk' AND ukuran = $old_uk");
+    $stmt_old = $conn->prepare("SELECT jenis_mutz, jenis_kelamin, ukuran, jumlah FROM pesanan WHERE id = ?");
+    if ($stmt_old) {
+        $stmt_old->bind_param("i", $id);
+        $stmt_old->execute();
+        $res_old = $stmt_old->get_result();
+        if ($old = $res_old->fetch_assoc()) {
+            $old_jm = $old['jenis_mutz'];
+            $old_jk = $old['jenis_kelamin'];
+            $old_uk = (int)$old['ukuran'];
+            $old_jml = (int)$old['jumlah'];
+            
+            $stmt_inc = $conn->prepare("UPDATE stok_mutz SET jumlah_stok = jumlah_stok + ? WHERE jenis_mutz = ? AND jenis_kelamin = ? AND ukuran = ?");
+            if ($stmt_inc) {
+                $stmt_inc->bind_param("issi", $old_jml, $old_jm, $old_jk, $old_uk);
+                $stmt_inc->execute();
+                $stmt_inc->close();
+            }
+        }
+        $stmt_old->close();
     }
     
-    $conn->query("DELETE FROM pesanan WHERE id = $id");
+    $stmt_del = $conn->prepare("DELETE FROM pesanan WHERE id = ?");
+    if ($stmt_del) {
+        $stmt_del->bind_param("i", $id);
+        $stmt_del->execute();
+        $stmt_del->close();
+    }
+
     header("Location: pesanan.php?notif=hapus_sukses");
     exit;
 }
 
 if (isset($_GET['lunas'])) {
     $id = (int)$_GET['lunas'];
-    $conn->query("UPDATE pesanan SET status_bayar = 'Lunas' WHERE id = $id");
+    $stmt_lunas = $conn->prepare("UPDATE pesanan SET status_bayar = 'Lunas' WHERE id = ?");
+    if ($stmt_lunas) {
+        $stmt_lunas->bind_param("i", $id);
+        $stmt_lunas->execute();
+        $stmt_lunas->close();
+    }
     header("Location: pesanan.php?notif=bayar_sukses");
     exit;
 }
 
 if (isset($_GET['update_status'])) {
     $id = (int)$_GET['update_status'];
-    $status = $conn->real_escape_string($_GET['status']);
+    $status = $_GET['status'] ?? '';
     $valid_statuses = ['Menunggu Diproses', 'Sedang Dibuat', 'Siap Diambil', 'Sudah Diambil'];
     if (in_array($status, $valid_statuses)) {
-        $conn->query("UPDATE pesanan SET status_pengambilan = '$status' WHERE id = $id");
+        $stmt_status = $conn->prepare("UPDATE pesanan SET status_pengambilan = ? WHERE id = ?");
+        if ($stmt_status) {
+            $stmt_status->bind_param("si", $status, $id);
+            $stmt_status->execute();
+            $stmt_status->close();
+        }
         header("Location: pesanan.php?notif=status_sukses");
         exit;
     }
@@ -114,6 +157,7 @@ $pesanans = $conn->query("
         <div class="panel">
             <h2>Form Input Pesanan Baru</h2>
             <form method="POST">
+                <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
                 <div class="form-group">
                     <label>SKPD</label>
                     <select name="skpd_id" required>

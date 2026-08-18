@@ -12,6 +12,29 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Global Security Response Headers
+if (!headers_sent()) {
+    header("X-Frame-Options: SAMEORIGIN");
+    header("X-Content-Type-Options: nosniff");
+    header("X-XSS-Protection: 1; mode=block");
+    header("Referrer-Policy: strict-origin-when-cross-origin");
+}
+
+// CSRF Protection Helpers
+function generate_csrf_token() {
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+function verify_csrf_token($token) {
+    if (empty($_SESSION['csrf_token']) || empty($token)) {
+        return false;
+    }
+    return hash_equals($_SESSION['csrf_token'], $token);
+}
+
 function get_env_var($keys, $default = '') {
     if (!is_array($keys)) $keys = [$keys];
     
@@ -120,20 +143,51 @@ function generate_auth_token($username, $password) {
     return hash_hmac('sha256', $username . '::' . $password, AUTH_SECRET_KEY);
 }
 
+function verify_and_upgrade_password($conn, $settings_id, $input_password, $stored_hash) {
+    if (password_verify($input_password, $stored_hash)) {
+        if (password_needs_rehash($stored_hash, PASSWORD_BCRYPT)) {
+            $new_hash = password_hash($input_password, PASSWORD_BCRYPT);
+            $stmt = $conn->prepare("UPDATE settings SET admin_password = ? WHERE id = ?");
+            if ($stmt) {
+                $stmt->bind_param("si", $new_hash, $settings_id);
+                $stmt->execute();
+                $stmt->close();
+            }
+        }
+        return true;
+    } elseif ($input_password === $stored_hash) {
+        // Automatically upgrade legacy plaintext password to secure bcrypt hash
+        $new_hash = password_hash($input_password, PASSWORD_BCRYPT);
+        $stmt = $conn->prepare("UPDATE settings SET admin_password = ? WHERE id = ?");
+        if ($stmt) {
+            $stmt->bind_param("si", $new_hash, $settings_id);
+            $stmt->execute();
+            $stmt->close();
+        }
+        return true;
+    }
+    return false;
+}
+
 // Auto-relogin via Persistent Cookie if Session Expired (e.g. Vercel serverless idle spin-down)
 if ((!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) && isset($_COOKIE['emutz_auth_remember'])) {
     $decoded = base64_decode($_COOKIE['emutz_auth_remember']);
     if ($decoded && strpos($decoded, ':') !== false) {
         list($c_user, $c_token) = explode(':', $decoded, 2);
-        $c_user_safe = $conn->real_escape_string($c_user);
-        $q_auth = @$conn->query("SELECT admin_username, admin_password FROM settings WHERE admin_username = '$c_user_safe' LIMIT 1");
-        if ($q_auth && $q_auth->num_rows > 0) {
-            $auth_row = $q_auth->fetch_assoc();
-            $expected_token = generate_auth_token($auth_row['admin_username'], $auth_row['admin_password']);
-            if (hash_equals($expected_token, $c_token)) {
-                $_SESSION['is_logged_in'] = true;
-                $_SESSION['admin_user'] = $auth_row['admin_username'];
+        $stmt_auth = $conn->prepare("SELECT id, admin_username, admin_password FROM settings WHERE admin_username = ? LIMIT 1");
+        if ($stmt_auth) {
+            $stmt_auth->bind_param("s", $c_user);
+            $stmt_auth->execute();
+            $res_auth = $stmt_auth->get_result();
+            if ($res_auth && $res_auth->num_rows > 0) {
+                $auth_row = $res_auth->fetch_assoc();
+                $expected_token = generate_auth_token($auth_row['admin_username'], $auth_row['admin_password']);
+                if (hash_equals($expected_token, $c_token)) {
+                    $_SESSION['is_logged_in'] = true;
+                    $_SESSION['admin_user'] = $auth_row['admin_username'];
+                }
             }
+            $stmt_auth->close();
         }
     }
 }

@@ -3,10 +3,21 @@ require 'config.php';
 
 // Handle stock update
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_stok'])) {
-    foreach ($_POST['stok'] as $id => $jumlah) {
-        $id = (int)$id;
-        $jumlah = (int)$jumlah;
-        $conn->query("UPDATE stok_mutz SET jumlah_stok = $jumlah WHERE id = $id");
+    $csrf_token = $_POST['csrf_token'] ?? '';
+    if (!verify_csrf_token($csrf_token)) {
+        header("Location: stok.php?error_msg=" . urlencode("Token keamanan CSRF tidak valid. Silakan muat ulang halaman."));
+        exit;
+    }
+
+    $stmt = $conn->prepare("UPDATE stok_mutz SET jumlah_stok = ? WHERE id = ?");
+    if ($stmt && isset($_POST['stok']) && is_array($_POST['stok'])) {
+        foreach ($_POST['stok'] as $id => $jumlah) {
+            $id_int = (int)$id;
+            $jumlah_int = (int)$jumlah;
+            $stmt->bind_param("ii", $jumlah_int, $id_int);
+            $stmt->execute();
+        }
+        $stmt->close();
     }
     header("Location: stok.php?notif=edit_sukses");
     exit;
@@ -79,6 +90,7 @@ $tot_p = $q_tot_p->fetch_assoc()['tot'] ?? 0;
             </div>
             
             <form method="POST">
+                <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
                 <input type="hidden" name="update_stok" value="1">
                 <div class="table-responsive">
                     <table>

@@ -8,21 +8,53 @@ $settings = $q_settings->fetch_assoc();
 $msg = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $conn->real_escape_string($_POST['admin_username']);
-    $password = $_POST['admin_password'];
-    $harga_biasa = (int)$_POST['harga_biasa'];
-    $harga_kepala = (int)$_POST['harga_kepala'];
-
-    if (!empty($password)) {
-        // If password is provided, update it (we store it plain text as per current system, though in production it should be hashed)
-        $password_safe = $conn->real_escape_string($password);
-        $sql = "UPDATE settings SET admin_username = '$username', admin_password = '$password_safe', harga_biasa = $harga_biasa, harga_kepala = $harga_kepala WHERE id = " . $settings['id'];
-    } else {
-        // Don't update password if it's left blank
-        $sql = "UPDATE settings SET admin_username = '$username', harga_biasa = $harga_biasa, harga_kepala = $harga_kepala WHERE id = " . $settings['id'];
+    $csrf_token = $_POST['csrf_token'] ?? '';
+    if (!verify_csrf_token($csrf_token)) {
+        header("Location: pengaturan.php?error_msg=" . urlencode("Token keamanan CSRF tidak valid. Silakan muat ulang halaman."));
+        exit;
     }
 
-    if ($conn->query($sql) === TRUE) {
+    $username = trim($_POST['admin_username'] ?? '');
+    $password = $_POST['admin_password'] ?? '';
+    $harga_biasa = (int)($_POST['harga_biasa'] ?? 55000);
+    $harga_kepala = (int)($_POST['harga_kepala'] ?? 150000);
+
+    if (!empty($password)) {
+        // Hash the new password securely with bcrypt
+        $password_hash = password_hash($password, PASSWORD_BCRYPT);
+        $stmt = $conn->prepare("UPDATE settings SET admin_username = ?, admin_password = ?, harga_biasa = ?, harga_kepala = ? WHERE id = ?");
+        if ($stmt) {
+            $stmt->bind_param("ssiii", $username, $password_hash, $harga_biasa, $harga_kepala, $settings['id']);
+            $success = $stmt->execute();
+            $stmt->close();
+        }
+    } else {
+        // Keep existing password
+        $stmt = $conn->prepare("UPDATE settings SET admin_username = ?, harga_biasa = ?, harga_kepala = ? WHERE id = ?");
+        if ($stmt) {
+            $stmt->bind_param("siii", $username, $harga_biasa, $harga_kepala, $settings['id']);
+            $success = $stmt->execute();
+            $stmt->close();
+        }
+    }
+
+    if (!empty($success)) {
+        // Update persistent cookie token if username/password changed
+        if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true) {
+            $_SESSION['admin_user'] = $username;
+            $token_pwd = !empty($password) ? $password_hash : $settings['admin_password'];
+            $token = generate_auth_token($username, $token_pwd);
+            $cookie_val = base64_encode($username . ':' . $token);
+            $is_https = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+            setcookie('emutz_auth_remember', $cookie_val, [
+                'expires' => time() + (86400 * 30),
+                'path' => '/',
+                'secure' => $is_https,
+                'httponly' => true,
+                'samesite' => 'Lax'
+            ]);
+        }
+
         header("Location: pengaturan.php?notif=pengaturan_sukses");
         exit;
     } else {
@@ -83,6 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         
         <form method="POST">
+            <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
             <div class="settings-grid">
                 <!-- Authentication Settings -->
                 <div class="form-section">

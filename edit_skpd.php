@@ -10,20 +10,38 @@ if ($id == 0) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['nama_skpd'])) {
-    $nama = $conn->real_escape_string($_POST['nama_skpd']);
-
-    $sql = "UPDATE skpd SET nama_skpd = '$nama' WHERE id = $id";
-    
-    if ($conn->query($sql)) {
-        header("Location: edit_skpd.php?id=$id&notif=edit_sukses");
-        exit;
-    } else {
-        header("Location: edit_skpd.php?id=$id&error_msg=" . urlencode("Gagal mengupdate SKPD: " . $conn->error));
+    $csrf_token = $_POST['csrf_token'] ?? '';
+    if (!verify_csrf_token($csrf_token)) {
+        header("Location: edit_skpd.php?id=$id&error_msg=" . urlencode("Token keamanan CSRF tidak valid. Silakan muat ulang halaman."));
         exit;
     }
+
+    $nama = trim($_POST['nama_skpd'] ?? '');
+    if (!empty($nama)) {
+        $stmt = $conn->prepare("UPDATE skpd SET nama_skpd = ? WHERE id = ?");
+        if ($stmt) {
+            $stmt->bind_param("si", $nama, $id);
+            $success = $stmt->execute();
+            $stmt->close();
+            if ($success) {
+                header("Location: edit_skpd.php?id=$id&notif=edit_sukses");
+                exit;
+            }
+        }
+    }
+    header("Location: edit_skpd.php?id=$id&error_msg=" . urlencode("Gagal mengupdate SKPD"));
+    exit;
 }
 
-$skpd = $conn->query("SELECT * FROM skpd WHERE id = $id")->fetch_assoc();
+$stmt_find = $conn->prepare("SELECT * FROM skpd WHERE id = ? LIMIT 1");
+$skpd = null;
+if ($stmt_find) {
+    $stmt_find->bind_param("i", $id);
+    $stmt_find->execute();
+    $res_find = $stmt_find->get_result();
+    $skpd = $res_find->fetch_assoc();
+    $stmt_find->close();
+}
 if (!$skpd) {
     echo "SKPD tidak ditemukan.";
     exit;
@@ -53,6 +71,7 @@ if (!$skpd) {
             </div>
             
             <form method="POST">
+                <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
                 <div class="form-group">
                     <label>Nama SKPD</label>
                     <input type="text" name="nama_skpd" value="<?= htmlspecialchars($skpd['nama_skpd']) ?>" placeholder="Masukkan Nama SKPD" required>

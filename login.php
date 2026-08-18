@@ -6,40 +6,94 @@ if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true) {
     exit;
 }
 
+// Anti Brute-Force Rate Limiting Settings
+$max_attempts = 5;
+$lockout_time = 300; // 5 minutes in seconds
+
+if (!isset($_SESSION['login_attempts'])) {
+    $_SESSION['login_attempts'] = 0;
+    $_SESSION['last_failed_login'] = 0;
+}
+
+// Check if locked out
+$is_locked_out = false;
+$seconds_remaining = 0;
+if ($_SESSION['login_attempts'] >= $max_attempts) {
+    $time_passed = time() - $_SESSION['last_failed_login'];
+    if ($time_passed < $lockout_time) {
+        $is_locked_out = true;
+        $seconds_remaining = $lockout_time - $time_passed;
+    } else {
+        // Reset after lockout time expires
+        $_SESSION['login_attempts'] = 0;
+    }
+}
+
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'] ?? '';
-    $password = $_POST['password'] ?? '';
-
-    $username_safe = $conn->real_escape_string($username);
-    $q = $conn->query("SELECT admin_password FROM settings WHERE admin_username = '$username_safe' LIMIT 1");
-    
-    if ($q && $q->num_rows > 0) {
-        $row = $q->fetch_assoc();
-        if ($password === $row['admin_password']) {
-            $_SESSION['is_logged_in'] = true;
-            $_SESSION['admin_user'] = $username;
-
-            // Set 30-day Persistent Auth Cookie for seamless reconnection
-            $token = generate_auth_token($username, $row['admin_password']);
-            $cookie_val = base64_encode($username . ':' . $token);
-            $is_https = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
-            
-            setcookie('emutz_auth_remember', $cookie_val, [
-                'expires' => time() + (86400 * 30),
-                'path' => '/',
-                'secure' => $is_https,
-                'httponly' => true,
-                'samesite' => 'Lax'
-            ]);
-
-            header("Location: index.php");
-            exit;
-        } else {
-            $error = "Password salah!";
-        }
+    $csrf_token = $_POST['csrf_token'] ?? '';
+    if (!verify_csrf_token($csrf_token)) {
+        $error = "Token keamanan tidak valid atau telah kedaluwarsa. Silakan muat ulang halaman.";
+    } elseif ($is_locked_out) {
+        $error = "Terlalu banyak percobaan gagal! Akun dikunci sementara demi keamanan. Coba lagi dalam {$seconds_remaining} detik.";
     } else {
-        $error = "Username tidak ditemukan!";
+        $username = trim($_POST['username'] ?? '');
+        $password = $_POST['password'] ?? '';
+
+        $stmt = $conn->prepare("SELECT id, admin_username, admin_password FROM settings WHERE admin_username = ? LIMIT 1");
+        if ($stmt) {
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result && $result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                if (verify_and_upgrade_password($conn, $row['id'], $password, $row['admin_password'])) {
+                    // Reset login attempts on success
+                    $_SESSION['login_attempts'] = 0;
+                    $_SESSION['is_logged_in'] = true;
+                    $_SESSION['admin_user'] = $row['admin_username'];
+
+                    // Set 30-day Persistent Auth Cookie for seamless reconnection
+                    $token = generate_auth_token($row['admin_username'], $row['admin_password']);
+                    $cookie_val = base64_encode($row['admin_username'] . ':' . $token);
+                    $is_https = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+                    
+                    setcookie('emutz_auth_remember', $cookie_val, [
+                        'expires' => time() + (86400 * 30),
+                        'path' => '/',
+                        'secure' => $is_https,
+                        'httponly' => true,
+                        'samesite' => 'Lax'
+                    ]);
+
+                    $stmt->close();
+                    header("Location: index.php");
+                    exit;
+                } else {
+                    $_SESSION['login_attempts']++;
+                    $_SESSION['last_failed_login'] = time();
+                    $remaining = $max_attempts - $_SESSION['login_attempts'];
+                    if ($remaining > 0) {
+                        $error = "Password salah! Sisa percobaan: {$remaining} kali.";
+                    } else {
+                        $error = "Terlalu banyak percobaan gagal! Akun dikunci sementara selama 5 menit.";
+                    }
+                }
+            } else {
+                $_SESSION['login_attempts']++;
+                $_SESSION['last_failed_login'] = time();
+                $remaining = $max_attempts - $_SESSION['login_attempts'];
+                if ($remaining > 0) {
+                    $error = "Username tidak ditemukan! Sisa percobaan: {$remaining} kali.";
+                } else {
+                    $error = "Terlalu banyak percobaan gagal! Akun dikunci sementara selama 5 menit.";
+                }
+            }
+            $stmt->close();
+        } else {
+            $error = "Terjadi kesalahan pada sistem database.";
+        }
     }
 }
 ?>
@@ -444,6 +498,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php endif; ?>
 
             <form method="POST" id="loginForm" autocomplete="off">
+                <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
                 <div class="form-group">
                     <label class="form-label">Username</label>
                     <div class="input-group">
