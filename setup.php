@@ -2,7 +2,7 @@
 $skip_db_select = true;
 require 'config.php';
 
-$db_name = getenv('DB_NAME') ?: "rekap_mutz_asn";
+$db_name = isset($db) ? $db : (getenv('DB_NAME') ?: "test");
 
 // Create database if permitted, then select
 @$conn->query("CREATE DATABASE IF NOT EXISTS `$db_name`");
