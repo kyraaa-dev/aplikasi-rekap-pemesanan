@@ -164,8 +164,8 @@ $pesanans = $conn->query("
         </div>
 
         
-        <div class="panel" style="background-color: var(--white); border: 1px solid var(--gray-light); box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--light); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+        <div class="panel" style="max-width: 820px; margin: 1.5rem 0; padding: 2rem; border-radius: 16px; background: var(--white); box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid var(--gray-light);">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gray-light); padding-bottom: 1.25rem; margin-bottom: 1.5rem;">
                 <h2 style="margin: 0; font-size: 1.25rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 8px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                     Form Input Pesanan Baru
@@ -260,9 +260,9 @@ $pesanans = $conn->query("
                     <input type="text" name="catatan" placeholder="Contoh: Titip ke bagian admin, minta dikemas terpisah, dsb.">
                 </div>
 
-                <div style="display: flex; justify-content: flex-end; margin-top: 1rem;">
-                    <button type="submit" style="padding: 0.85rem 1.75rem; border-radius: 12px; font-size: 1.05rem; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                <div style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+                    <button type="submit" class="btn-card-primary" style="padding: 0.85rem 1.75rem; border-radius: 12px; font-size: 1.05rem; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                         Simpan Pesanan
                     </button>
                 </div>
