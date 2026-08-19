@@ -346,18 +346,18 @@ if ($q_all_orders) {
                             
                             <div class="skpd-card-actions">
                                 <button type="button" class="btn-card-primary btn-detail-skpd" 
-                                        onclick="openSkpdModal('<?= addslashes($nama) ?>', <?= (int)$current_skpd_id ?>, '<?= $status ?>', '<?= $status_color ?>', '<?= $status_bg ?>', '<?= $status_ambil ?>', '<?= $ambil_color ?>', '<?= $ambil_bg ?>', '<?= $total_item ?>', 'Rp <?= number_format($total_rupiah, 0, ',', '.') ?>')"
-                                        data-skpd="<?= htmlspecialchars($nama, ENT_QUOTES) ?>" 
-                                        data-skpd-id="<?= $current_skpd_id ?>"
-                                        data-status="<?= $status ?>"
+                                        onclick="window.openSkpdFromButton(this)"
+                                        data-skpd="<?= htmlspecialchars($nama, ENT_QUOTES, 'UTF-8') ?>" 
+                                        data-skpd-id="<?= (int)$current_skpd_id ?>"
+                                        data-status="<?= htmlspecialchars($status, ENT_QUOTES, 'UTF-8') ?>"
                                         data-status-color="<?= $status_color ?>"
                                         data-status-bg="<?= $status_bg ?>"
-                                        data-status-ambil="<?= $status_ambil ?>"
+                                        data-status-ambil="<?= htmlspecialchars($status_ambil, ENT_QUOTES, 'UTF-8') ?>"
                                         data-status-ambil-color="<?= $ambil_color ?>"
                                         data-status-ambil-bg="<?= $ambil_bg ?>"
-                                        data-total-qty="<?= $total_item ?>"
+                                        data-total-qty="<?= (int)$total_item ?>"
                                         data-total-rp="Rp <?= number_format($total_rupiah, 0, ',', '.') ?>">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 backward" style="display:none"></path><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                     Lihat Detail Pesanan
                                 </button>
                                 
@@ -486,6 +486,22 @@ if ($q_all_orders) {
             window.skpdOrdersById = <?= json_encode($skpd_order_items_by_id, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) ?>;
             window.skpdWaData = <?= json_encode($skpd_wa_map, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) ?>;
 
+            window.openSkpdFromButton = function(btn) {
+                if (!btn) return;
+                const skpdName = btn.getAttribute('data-skpd') || '';
+                const skpdId = btn.getAttribute('data-skpd-id') || '0';
+                const status = btn.getAttribute('data-status') || '-';
+                const statusColor = btn.getAttribute('data-status-color') || '#374151';
+                const statusBg = btn.getAttribute('data-status-bg') || '#F3F4F6';
+                const statusAmbil = btn.getAttribute('data-status-ambil') || 'Belum Diambil';
+                const statusAmbilColor = btn.getAttribute('data-status-ambil-color') || '#374151';
+                const statusAmbilBg = btn.getAttribute('data-status-ambil-bg') || '#F3F4F6';
+                const totalQty = btn.getAttribute('data-total-qty') || '0';
+                const totalRp = btn.getAttribute('data-total-rp') || 'Rp 0';
+                
+                window.openSkpdModal(skpdName, skpdId, status, statusColor, statusBg, statusAmbil, statusAmbilColor, statusAmbilBg, totalQty, totalRp);
+            };
+
             window.openSkpdModal = function(skpdName, skpdId, status, statusColor, statusBg, statusAmbil, statusAmbilColor, statusAmbilBg, totalQty, totalRp) {
                 const modalDetailSkpd = document.getElementById('modalDetailSkpd');
                 const modalSkpdName = document.getElementById('modalSkpdName');
@@ -499,32 +515,38 @@ if ($q_all_orders) {
 
                 if (!modalDetailSkpd) return;
 
-                if (modalSkpdName) modalSkpdName.innerText = skpdName || '-';
+                const cleanName = (skpdName || '').trim();
+                const cleanId = String(skpdId || '');
+
+                if (modalSkpdName) modalSkpdName.innerText = cleanName || '-';
                 
                 // Set Badges
                 if (modalSkpdBadges) {
                     modalSkpdBadges.innerHTML = `
-                        <span style="background: #e0e7ff; color: #4338ca; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Total: ${totalQty} buah</span>
-                        <span style="background: #fef3c7; color: #b45309; padding: 4px 8px; border-radius: 4px; font-weight: 600;">${totalRp}</span>
-                        <span style="background: ${statusBg}; color: ${statusColor}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Bayar: ${status}</span>
-                        <span style="background: ${statusAmbilBg}; color: ${statusAmbilColor}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Ambil: ${statusAmbil}</span>
+                        <span style="background: #e0e7ff; color: #4338ca; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Total: ${totalQty || 0} buah</span>
+                        <span style="background: #fef3c7; color: #b45309; padding: 4px 8px; border-radius: 4px; font-weight: 600;">${totalRp || 'Rp 0'}</span>
+                        <span style="background: ${statusBg || '#F3F4F6'}; color: ${statusColor || '#374151'}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Bayar: ${status || '-'}</span>
+                        <span style="background: ${statusAmbilBg || '#F3F4F6'}; color: ${statusAmbilColor || '#374151'}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Ambil: ${statusAmbil || '-'}</span>
                     `;
                 }
                 
                 // Set Action Link
                 if (btnFilterKePesanan) {
-                    btnFilterKePesanan.href = `pesanan.php?filter_skpd=${skpdId}`;
+                    btnFilterKePesanan.href = `pesanan.php?filter_skpd=${encodeURIComponent(cleanId)}`;
                 }
 
                 // Set WhatsApp Modal Link
                 if (btnModalWa) {
-                    const targetWa = (window.skpdWaData && (window.skpdWaData[skpdId] || window.skpdWaData[skpdName])) || '';
-                    btnModalWa.setAttribute('data-skpd', skpdName);
+                    let targetWa = '';
+                    if (window.skpdWaData) {
+                        targetWa = window.skpdWaData[cleanId] || window.skpdWaData[cleanName] || '';
+                    }
+                    btnModalWa.setAttribute('data-skpd', cleanName);
                     btnModalWa.setAttribute('data-wa', targetWa);
-                    btnModalWa.setAttribute('data-total-qty', totalQty);
-                    btnModalWa.setAttribute('data-total-rp', totalRp);
-                    btnModalWa.setAttribute('data-status-bayar', status);
-                    btnModalWa.setAttribute('data-status-ambil', statusAmbil);
+                    btnModalWa.setAttribute('data-total-qty', totalQty || '0');
+                    btnModalWa.setAttribute('data-total-rp', totalRp || 'Rp 0');
+                    btnModalWa.setAttribute('data-status-bayar', status || '-');
+                    btnModalWa.setAttribute('data-status-ambil', statusAmbil || '-');
                 }
 
                 // Set Bulk Lunas Action Link
@@ -533,8 +555,8 @@ if ($q_all_orders) {
                         btnModalLunasSemua.style.display = 'none';
                     } else {
                         btnModalLunasSemua.style.display = 'inline-flex';
-                        btnModalLunasSemua.href = `index.php?lunas_semua_skpd=${skpdId}`;
-                        btnModalLunasSemua.setAttribute('data-confirm-text', `Tandai SEMUA pesanan dari ${skpdName} sebagai LUNAS?`);
+                        btnModalLunasSemua.href = `index.php?lunas_semua_skpd=${encodeURIComponent(cleanId)}`;
+                        btnModalLunasSemua.setAttribute('data-confirm-text', `Tandai SEMUA pesanan dari ${cleanName} sebagai LUNAS?`);
                     }
                 }
 
@@ -544,22 +566,29 @@ if ($q_all_orders) {
                         btnModalAmbilSemua.style.display = 'none';
                     } else {
                         btnModalAmbilSemua.style.display = 'inline-flex';
-                        btnModalAmbilSemua.href = `index.php?ambil_semua_skpd=${skpdId}`;
-                        btnModalAmbilSemua.setAttribute('data-confirm-text', `Tandai SEMUA pesanan dari ${skpdName} sebagai SUDAH DIAMBIL?`);
+                        btnModalAmbilSemua.href = `index.php?ambil_semua_skpd=${encodeURIComponent(cleanId)}`;
+                        btnModalAmbilSemua.setAttribute('data-confirm-text', `Tandai SEMUA pesanan dari ${cleanName} sebagai SUDAH DIAMBIL?`);
                     }
                 }
                 
-                // Populate Table
+                // Populate Table (Multi-strategy lookup)
                 let items = [];
-                if (window.skpdOrdersById && window.skpdOrdersById[skpdId]) {
-                    items = window.skpdOrdersById[skpdId];
-                } else if (window.skpdOrdersData && window.skpdOrdersData[skpdName]) {
-                    items = window.skpdOrdersData[skpdName];
+                if (window.skpdOrdersById && window.skpdOrdersById[cleanId] && window.skpdOrdersById[cleanId].length > 0) {
+                    items = window.skpdOrdersById[cleanId];
+                } else if (window.skpdOrdersData && window.skpdOrdersData[cleanName] && window.skpdOrdersData[cleanName].length > 0) {
+                    items = window.skpdOrdersData[cleanName];
+                } else if (window.skpdOrdersData) {
+                    for (let k in window.skpdOrdersData) {
+                        if (k.trim().toLowerCase() === cleanName.toLowerCase()) {
+                            items = window.skpdOrdersData[k];
+                            break;
+                        }
+                    }
                 }
 
                 if (modalSkpdTableBody) {
                     if (!items || items.length === 0) {
-                        modalSkpdTableBody.innerHTML = `<tr><td colspan="10" style="text-align: center; padding: 20px; color: var(--gray);">Tidak ada rincian data pemesan untuk SKPD ini.</td></tr>`;
+                        modalSkpdTableBody.innerHTML = `<tr><td colspan="10" style="text-align: center; padding: 24px; color: var(--gray);">Tidak ada rincian data pemesan untuk SKPD ini.</td></tr>`;
                     } else {
                         let html = '';
                         items.forEach((item, index) => {
@@ -575,6 +604,7 @@ if ($q_all_orders) {
                             const subtotalFormatted = 'Rp ' + parseInt(item.subtotal || 0).toLocaleString('id-ID');
                             const pemesan = item.nama_pemesan && item.nama_pemesan.trim() !== '' ? item.nama_pemesan : '-';
                             const catatan = item.catatan && item.catatan.trim() !== '' ? item.catatan : '-';
+                            const mutzLabel = item.jenis_mutz || 'Biasa';
 
                             html += `
                                 <tr style="border-bottom: 1px solid var(--gray-light);">
@@ -584,7 +614,7 @@ if ($q_all_orders) {
                                         <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background-color:${genderColor}; margin-right:4px;"></span>
                                         ${item.jenis_kelamin}
                                     </td>
-                                    <td style="padding: 10px 12px; text-align: center;"><span style="font-size:0.8rem; background:var(--light); padding:2px 6px; border-radius:4px;">${item.jenis_mutz}</span></td>
+                                    <td style="padding: 10px 12px; text-align: center;"><span style="font-size:0.8rem; background:var(--light); padding:2px 6px; border-radius:4px;">${mutzLabel}</span></td>
                                     <td style="padding: 10px 12px; text-align: center; font-weight: 600;">${item.ukuran}</td>
                                     <td style="padding: 10px 12px; text-align: center; font-weight: 600;">${item.jumlah}</td>
                                     <td style="padding: 10px 12px; text-align: right; font-weight: 600; color:#B45309;">${subtotalFormatted}</td>
@@ -603,7 +633,7 @@ if ($q_all_orders) {
                 }
                 
                 if (modalSkpdFooterSummary) {
-                    modalSkpdFooterSummary.innerText = `Menampilkan ${items.length} rincian pemesan (${totalQty} buah mutz)`;
+                    modalSkpdFooterSummary.innerText = `Menampilkan ${items.length} rincian pemesan (${totalQty || 0} buah mutz)`;
                 }
                 
                 modalDetailSkpd.style.display = 'flex';

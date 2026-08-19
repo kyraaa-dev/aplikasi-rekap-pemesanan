@@ -137,13 +137,21 @@
             });
         });
 
-        // 3. Re-run execute inline script tags inside new page
+        // 3. Re-run execute inline script tags inside new page safely
         const scripts = container.querySelectorAll('script');
         scripts.forEach(oldScript => {
-            const newScript = document.createElement('script');
-            Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
-            newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-            oldScript.parentNode.replaceChild(newScript, oldScript);
+            try {
+                const newScript = document.createElement('script');
+                Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                if (oldScript.innerHTML) {
+                    newScript.text = oldScript.innerHTML;
+                }
+                if (oldScript.parentNode) {
+                    oldScript.parentNode.replaceChild(newScript, oldScript);
+                }
+            } catch (err) {
+                console.warn('Script execution error:', err);
+            }
         });
 
         // 4. Animate fade-up elements
