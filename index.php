@@ -198,15 +198,10 @@ if ($q_all_orders) {
     <?php include 'sidebar.php'; ?>
 
     <main class="main-content">
-        <div class="header" style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem;">
+        <div class="header">
             <div>
                 <h1>Dashboard</h1>
                 <p style="margin: 4px 0 0 0; color: var(--gray); font-size: 0.875rem;">Ringkasan pemesanan topi mutz dan status SKPD terkini</p>
-            </div>
-            <div class="header-search-bar" data-open-spotlight onclick="window.openSpotlight && window.openSpotlight()" title="Cari cepat (Ctrl+K / ⌘K)">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                <span class="search-text">Cari pesanan, SKPD, nomor WA, ukuran...</span>
-                <kbd>⌘K</kbd>
             </div>
         </div>
 

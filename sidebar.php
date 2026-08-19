@@ -251,6 +251,115 @@
     text-align: center !important;
     color: #6B7280 !important;
 }
+
+/* =========================================================
+   Desktop Floating Controls (Search Bar & Theme Toggle)
+   ========================================================= */
+.desktop-floating-actions {
+    position: fixed !important;
+    top: 1.5rem !important;
+    right: 2rem !important;
+    z-index: 1000 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    pointer-events: auto !important;
+}
+
+.floating-search-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    background: #FFFFFF !important;
+    color: #4B5563 !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 30px !important;
+    padding: 8px 18px !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    height: 44px !important;
+    box-sizing: border-box !important;
+}
+
+.floating-search-btn:hover {
+    border-color: #4F46E5 !important;
+    color: #4F46E5 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.18) !important;
+}
+
+.floating-search-btn svg {
+    color: #4F46E5 !important;
+    flex-shrink: 0 !important;
+}
+
+.floating-search-text {
+    font-size: 0.85rem !important;
+    white-space: nowrap !important;
+}
+
+.floating-search-kbd {
+    background: #F3F4F6 !important;
+    color: #6B7280 !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 6px !important;
+    padding: 2px 6px !important;
+    font-size: 0.725rem !important;
+    font-weight: 700 !important;
+}
+
+.floating-theme-btn {
+    background: #FFFFFF !important;
+    color: #1F2937 !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 50% !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-sizing: border-box !important;
+}
+
+.floating-theme-btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12) !important;
+    border-color: #4F46E5 !important;
+    color: #4F46E5 !important;
+}
+
+[data-theme="dark"] .floating-search-btn {
+    background: #1E293B !important;
+    color: #E2E8F0 !important;
+    border-color: #334155 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+}
+[data-theme="dark"] .floating-search-kbd {
+    background: #0F172A !important;
+    color: #94A3B8 !important;
+    border-color: #334155 !important;
+}
+[data-theme="dark"] .floating-theme-btn {
+    background: #1E293B !important;
+    color: #F8FAFC !important;
+    border-color: #334155 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+@media (max-width: 991px) {
+    .desktop-floating-actions {
+        display: none !important;
+    }
+}
 </style>
 <script>
     if(localStorage.getItem('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
@@ -390,9 +499,16 @@
 <!-- Backdrop Overlay for Mobile Drawer -->
 <div class="sidebar-overlay hide-on-print" id="sidebarOverlay"></div>
 
-<!-- Desktop Floating Theme Toggle -->
-<button id="themeToggle" title="Ganti Tema (Terang/Gelap)" class="hide-on-print" type="button" style="position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; background-color: var(--white); color: var(--dark); border: 1px solid var(--gray-light); border-radius: 50%; width: 45px; height: 45px; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); padding: 0; transition: transform 0.2s;">
-</button>
+<!-- Desktop Floating Controls (Search Bar & Theme Toggle - Fixed on Top-Right on All Pages) -->
+<div class="desktop-floating-actions hide-on-print">
+    <button id="btnSpotlightTrigger" class="floating-search-btn" title="Pencarian Cepat (Ctrl + K / ⌘K)" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <span class="floating-search-text">Cari Pesanan / SKPD...</span>
+        <kbd class="floating-search-kbd">⌘K</kbd>
+    </button>
+    <button id="themeToggle" class="floating-theme-btn" title="Ganti Tema (Terang/Gelap)" type="button">
+    </button>
+</div>
 
 <!-- Spotlight Quick Search Modal (Command Palette) -->
 <div id="spotlightModal" class="spotlight-overlay hide-on-print" style="display: none;">
@@ -821,12 +937,14 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(spotlightModal);
     }
 
+    const btnSpotlightTrigger = document.getElementById('btnSpotlightTrigger');
+    if (btnSpotlightTrigger) btnSpotlightTrigger.addEventListener('click', openSpotlight);
     if (btnSpotlightTriggerMobile) btnSpotlightTriggerMobile.addEventListener('click', openSpotlight);
     if (btnSpotlightClose) btnSpotlightClose.addEventListener('click', closeSpotlight);
 
-    // Global click delegate for any search bar in headers or dashboard
+    // Global click delegate for floating search button or any header search bar
     document.addEventListener('click', (e) => {
-        if (e.target.closest('.header-search-bar') || e.target.closest('[data-open-spotlight]')) {
+        if (e.target.closest('.floating-search-btn') || e.target.closest('.header-search-bar') || e.target.closest('[data-open-spotlight]')) {
             e.preventDefault();
             openSpotlight();
         }
