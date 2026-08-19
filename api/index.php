@@ -25,6 +25,12 @@ if (file_exists($target) && is_file($target)) {
     chdir(__DIR__ . '/..');
     require $target . '.php';
 } else {
-    chdir(__DIR__ . '/..');
-    require __DIR__ . '/../index.php';
+    // Return 404 instead of silent fallback to dashboard
+    http_response_code(404);
+    echo "<div style='font-family:sans-serif; padding:20px; text-align:center;'>";
+    echo "<h1>404 Not Found</h1>";
+    echo "<p>Halaman yang Anda cari tidak ditemukan: " . htmlspecialchars($file) . "</p>";
+    echo "<a href='/'>Kembali ke Dashboard</a>";
+    echo "</div>";
+    exit;
 }

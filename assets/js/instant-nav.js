@@ -43,7 +43,10 @@
     async function prefetchUrl(url) {
         if (pageCache.has(url)) return pageCache.get(url);
         try {
-            const response = await fetch(url, { headers: { 'X-Requested-With': 'InstantNav' } });
+            const response = await fetch(url, { 
+                headers: { 'X-Requested-With': 'InstantNav' },
+                credentials: 'same-origin'
+            });
             if (response.ok) {
                 const html = await response.text();
                 pageCache.set(url, html);
@@ -184,6 +187,7 @@
         startProgress();
         // Immediately restore body scroll and dismiss any active modals before swap
         document.body.style.overflow = '';
+        document.body.classList.remove('swal2-shown', 'swal2-height-auto'); // In case SweetAlert got stuck
         document.documentElement.style.overflow = '';
         document.querySelectorAll('.modal-skpd-overlay, .spotlight-overlay, .sidebar-overlay').forEach(el => {
             el.classList.remove('active');
@@ -199,6 +203,7 @@
             // Always fetch fresh HTML from server to ensure live database state
             const response = await fetch(url, { 
                 headers: { 'X-Requested-With': 'InstantNav' },
+                credentials: 'same-origin',
                 cache: 'no-cache'
             });
             if (!response.ok) {

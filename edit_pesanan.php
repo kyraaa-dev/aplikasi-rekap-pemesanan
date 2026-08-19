@@ -127,10 +127,13 @@ $skpds = $conn->query("SELECT * FROM skpd ORDER BY nama_skpd ASC");
             <form method="POST">
                 <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.25rem; margin-bottom: 1.25rem;">
+                <div class="form-grid">
                     <div class="form-group" style="margin-bottom: 0;">
-                        <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">SKPD / Instansi <span style="color: #DC2626;">*</span></label>
-                        <select name="skpd_id" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 0.85rem; font-size: 0.9rem;">
+                        <label class="form-label-with-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            SKPD / Instansi <span style="color: #DC2626;">*</span>
+                        </label>
+                        <select name="skpd_id" required>
                             <option value="">-- Pilih SKPD --</option>
                             <?php while($s = $skpds->fetch_assoc()): ?>
                                 <option value="<?= $s['id'] ?>" <?= $pesanan['skpd_id'] == $s['id'] ? 'selected' : '' ?>>
@@ -141,53 +144,74 @@ $skpds = $conn->query("SELECT * FROM skpd ORDER BY nama_skpd ASC");
                     </div>
 
                     <div class="form-group" style="margin-bottom: 0;">
-                        <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Nama Pemesan <span style="color: var(--gray); font-weight: 400; font-size: 0.78rem;">(Opsional)</span></label>
-                        <input type="text" name="nama_pemesan" value="<?= htmlspecialchars($pesanan['nama_pemesan'] ?? '') ?>" placeholder="Masukkan nama pemesan" style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 0.85rem; font-size: 0.9rem; box-sizing: border-box;">
+                        <label class="form-label-with-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            Nama Pemesan <span style="color: var(--gray); font-weight: 400;">(Opsional)</span>
+                        </label>
+                        <input type="text" name="nama_pemesan" value="<?= htmlspecialchars($pesanan['nama_pemesan'] ?? '') ?>" placeholder="Masukkan nama pemesan">
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-bottom: 1.25rem;">
+                <div class="form-grid-3">
                     <div class="form-group" style="margin-bottom: 0;">
-                        <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Jenis Kelamin <span style="color: #DC2626;">*</span></label>
-                        <select name="jenis_kelamin" id="jenis_kelamin" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 0.85rem; font-size: 0.9rem;">
+                        <label class="form-label-with-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            Jenis Kelamin <span style="color: #DC2626;">*</span>
+                        </label>
+                        <select name="jenis_kelamin" id="jenis_kelamin" required>
                             <option value="Laki-laki" <?= $pesanan['jenis_kelamin'] == 'Laki-laki' ? 'selected' : '' ?>>Laki-laki</option>
                             <option value="Perempuan" <?= $pesanan['jenis_kelamin'] == 'Perempuan' ? 'selected' : '' ?>>Perempuan</option>
                         </select>
                     </div>
 
                     <div class="form-group" style="margin-bottom: 0;">
-                        <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Ukuran Mutz <span style="color: #DC2626;">*</span></label>
-                        <select name="ukuran" id="ukuran" data-selected="<?= $pesanan['ukuran'] ?>" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 0.85rem; font-size: 0.9rem;">
+                        <label class="form-label-with-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                            Ukuran Mutz <span style="color: #DC2626;">*</span>
+                        </label>
+                        <select name="ukuran" id="ukuran" data-selected="<?= $pesanan['ukuran'] ?>" required>
                             <!-- Akan diisi oleh JavaScript berdasarkan pilihan Jenis Kelamin -->
                         </select>
                     </div>
 
                     <div class="form-group" style="margin-bottom: 0;">
-                        <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Jenis Mutz <span style="color: #DC2626;">*</span></label>
-                        <select name="jenis_mutz" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 0.85rem; font-size: 0.9rem;">
+                        <label class="form-label-with-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="4"></line><line x1="8" y1="4" x2="16" y2="4"></line></svg>
+                            Jenis Mutz <span style="color: #DC2626;">*</span>
+                        </label>
+                        <select name="jenis_mutz" required>
                             <option value="Biasa" <?= (isset($pesanan['jenis_mutz']) && $pesanan['jenis_mutz'] == 'Biasa') ? 'selected' : '' ?>>Biasa (Rp 55.000)</option>
                             <option value="Kepala SKPD" <?= (isset($pesanan['jenis_mutz']) && $pesanan['jenis_mutz'] == 'Kepala SKPD') ? 'selected' : '' ?>>Kepala SKPD (Rp 150.000)</option>
                         </select>
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-bottom: 1.25rem;">
+                <div class="form-grid-3">
                     <div class="form-group" style="margin-bottom: 0;">
-                        <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Jumlah Pesanan <span style="color: #DC2626;">*</span></label>
-                        <input type="number" name="jumlah" value="<?= $pesanan['jumlah'] ?>" min="1" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 0.85rem; font-size: 0.9rem; box-sizing: border-box;">
+                        <label class="form-label-with-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>
+                            Jumlah Pesanan <span style="color: #DC2626;">*</span>
+                        </label>
+                        <input type="number" name="jumlah" value="<?= $pesanan['jumlah'] ?>" min="1" required>
                     </div>
 
                     <div class="form-group" style="margin-bottom: 0;">
-                        <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Status Pembayaran <span style="color: #DC2626;">*</span></label>
-                        <select name="status_bayar" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 0.85rem; font-size: 0.9rem;">
+                        <label class="form-label-with-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                            Status Pembayaran <span style="color: #DC2626;">*</span>
+                        </label>
+                        <select name="status_bayar" required>
                             <option value="Belum Lunas" <?= $pesanan['status_bayar'] == 'Belum Lunas' ? 'selected' : '' ?>>🔴 Belum Lunas</option>
                             <option value="Lunas" <?= $pesanan['status_bayar'] == 'Lunas' ? 'selected' : '' ?>>🟢 Lunas</option>
                         </select>
                     </div>
 
                     <div class="form-group" style="margin-bottom: 0;">
-                        <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Status Pengambilan <span style="color: #DC2626;">*</span></label>
-                        <select name="status_pengambilan" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 0.85rem; font-size: 0.9rem;">
+                        <label class="form-label-with-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            Status Pengambilan <span style="color: #DC2626;">*</span>
+                        </label>
+                        <select name="status_pengambilan" required>
                             <option value="Menunggu Diproses" <?= $pesanan['status_pengambilan'] == 'Menunggu Diproses' ? 'selected' : '' ?>>⏳ Menunggu Diproses</option>
                             <option value="Sedang Dibuat" <?= $pesanan['status_pengambilan'] == 'Sedang Dibuat' ? 'selected' : '' ?>>✂️ Sedang Dibuat</option>
                             <option value="Siap Diambil" <?= $pesanan['status_pengambilan'] == 'Siap Diambil' ? 'selected' : '' ?>>📦 Siap Diambil</option>
@@ -197,8 +221,11 @@ $skpds = $conn->query("SELECT * FROM skpd ORDER BY nama_skpd ASC");
                 </div>
 
                 <div class="form-group" style="margin-bottom: 1.75rem;">
-                    <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Catatan Tambahan <span style="color: var(--gray); font-weight: 400; font-size: 0.78rem;">(Opsional)</span></label>
-                    <input type="text" name="catatan" value="<?= htmlspecialchars($pesanan['catatan'] ?? '') ?>" placeholder="Contoh: Titip ke bagian admin atau catatan ukuran khusus" style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 0.85rem; font-size: 0.9rem; box-sizing: border-box;">
+                    <label class="form-label-with-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        Catatan Tambahan <span style="color: var(--gray); font-weight: 400;">(Opsional)</span>
+                    </label>
+                    <input type="text" name="catatan" value="<?= htmlspecialchars($pesanan['catatan'] ?? '') ?>" placeholder="Contoh: Titip ke bagian admin">
                 </div>
 
                 <div style="display: flex; gap: 12px; justify-content: flex-end; align-items: center; border-top: 1px solid var(--gray-light); padding-top: 1.5rem;">

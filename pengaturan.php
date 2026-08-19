@@ -134,12 +134,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         Kredensial Login
                     </h3>
                     <div class="form-group">
-                        <label>Username Admin</label>
+                        <label class="form-label-with-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            Username Admin
+                        </label>
                         <input type="text" name="admin_username" value="<?= htmlspecialchars($settings['admin_username'] ?? '') ?>" required>
                     </div>
                     <div class="form-group">
-                        <label>Password Baru (Kosongkan jika tidak ingin mengubah)</label>
-                        <input type="password" name="admin_password" placeholder="Masukkan password baru...">
+                        <label class="form-label-with-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            Password Baru <span style="color: var(--gray); font-weight: 400;">(Kosongkan jika tidak ingin mengubah)</span>
+                        </label>
+                        <input type="password" name="admin_password" placeholder="Masukkan password baru..." style="width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--gray-light); border-radius: 12px; font-size: 0.95rem; box-sizing: border-box;">
                     </div>
                     <p style="font-size: 0.85rem; color: var(--gray);">Catatan: Harap simpan kredensial ini dengan baik. Jika Anda lupa, Anda harus mengatur ulang via Database (phpMyAdmin).</p>
                 </div>
@@ -151,11 +157,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         Harga Pesanan Mutz
                     </h3>
                     <div class="form-group">
-                        <label>Harga Mutz Biasa (Rp)</label>
+                        <label class="form-label-with-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                            Harga Mutz Biasa (Rp)
+                        </label>
                         <input type="number" name="harga_biasa" value="<?= htmlspecialchars($settings['harga_biasa'] ?? '55000') ?>" required>
                     </div>
                     <div class="form-group">
-                        <label>Harga Mutz Kepala SKPD (Rp)</label>
+                        <label class="form-label-with-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                            Harga Mutz Kepala SKPD (Rp)
+                        </label>
                         <input type="number" name="harga_kepala" value="<?= htmlspecialchars($settings['harga_kepala'] ?? '150000') ?>" required>
                     </div>
                     <p style="font-size: 0.85rem; color: var(--gray);">Catatan: Perubahan harga ini akan mempengaruhi kueri total tagihan di menu Dashboard dan Cetak Laporan.</p>
@@ -183,8 +195,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
             
-            <div style="margin-top: 2rem;">
-                <button type="submit" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.1rem; border-radius: 8px; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);">Simpan Pengaturan</button>
+            <div style="margin-top: 2rem; display: flex; justify-content: flex-end;">
+                <button type="submit" class="btn-card-primary" style="padding: 0.85rem 1.75rem; border-radius: 12px; font-size: 1.05rem; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                    Simpan Pengaturan
+                </button>
             </div>
         </form>
     </main>
