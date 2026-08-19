@@ -100,7 +100,10 @@
         <img src="assets/images/logo.png?v=2" alt="Logo" style="width: 32px; height: 32px; object-fit: contain;">
         <span>E-MutZ KORPRI</span>
     </a>
-    <div class="mobile-topbar-actions">
+    <div class="mobile-topbar-actions" style="display: flex; align-items: center; gap: 6px;">
+        <button id="btnSpotlightTriggerMobile" class="btn-hamburger" title="Pencarian Cepat" aria-label="Pencarian Cepat">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
         <button id="themeToggleMobile" class="btn-hamburger" title="Ganti Tema" aria-label="Ganti Tema">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
         </button>
@@ -110,9 +113,53 @@
 <!-- Backdrop Overlay for Mobile Drawer -->
 <div class="sidebar-overlay hide-on-print" id="sidebarOverlay"></div>
 
+<!-- Desktop Floating Spotlight Search Button -->
+<button id="btnSpotlightTrigger" class="spotlight-trigger-btn hide-on-print" title="Pencarian Cepat (Ctrl + K / ⌘K)">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    <span>Cari Pesanan / SKPD...</span>
+    <kbd class="spotlight-kbd">⌘K</kbd>
+</button>
+
 <!-- Desktop Floating Theme Toggle -->
 <button id="themeToggle" title="Ganti Tema (Terang/Gelap)" class="hide-on-print" style="position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; background-color: var(--white); color: var(--dark); border: 1px solid var(--gray-light); border-radius: 50%; width: 45px; height: 45px; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); padding: 0; transition: transform 0.2s;">
 </button>
+
+<!-- Spotlight Quick Search Modal (Command Palette) -->
+<div id="spotlightModal" class="spotlight-overlay hide-on-print">
+    <div class="spotlight-dialog" role="dialog" aria-modal="true">
+        <!-- Search Header -->
+        <div class="spotlight-header">
+            <svg class="spotlight-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="spotlightInput" class="spotlight-input" placeholder="Ketik nama pemesan, SKPD, nomor WA, ukuran, atau menu..." autocomplete="off" spellcheck="false">
+            <button id="btnSpotlightClose" class="spotlight-close-btn" title="Tutup Pencarian (Esc)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+
+        <!-- Filter Tags -->
+        <div class="spotlight-filters">
+            <button class="spotlight-filter-btn active" data-filter="all">Semua</button>
+            <button class="spotlight-filter-btn" data-filter="pesanan">👤 Pemesan</button>
+            <button class="spotlight-filter-btn" data-filter="skpd">🏛️ SKPD</button>
+            <button class="spotlight-filter-btn" data-filter="menus">⚡ Menu Cepat</button>
+        </div>
+
+        <!-- Results List -->
+        <div id="spotlightResults" class="spotlight-results">
+            <!-- Rendered dynamically via JS -->
+        </div>
+
+        <!-- Footer -->
+        <div class="spotlight-footer">
+            <div class="spotlight-shortcuts">
+                <span><kbd>↑</kbd><kbd>↓</kbd> Pilih</span>
+                <span><kbd>↵</kbd> Buka</span>
+                <span><kbd>Esc</kbd> Tutup</span>
+            </div>
+            <span>E-MutZ Spotlight</span>
+        </div>
+    </div>
+</div>
 
 <aside class="sidebar">
     <div class="brand">
@@ -504,5 +551,301 @@ document.addEventListener('DOMContentLoaded', function() {
             confirmButtonColor: '#10B981'
         });
     });
+
+    // 6. Global Spotlight Search Controller (Ctrl + K / ⌘K)
+    const spotlightModal = document.getElementById('spotlightModal');
+    const spotlightInput = document.getElementById('spotlightInput');
+    const spotlightResults = document.getElementById('spotlightResults');
+    const btnSpotlightClose = document.getElementById('btnSpotlightClose');
+    const btnSpotlightTrigger = document.getElementById('btnSpotlightTrigger');
+    const btnSpotlightTriggerMobile = document.getElementById('btnSpotlightTriggerMobile');
+    const filterBtns = document.querySelectorAll('.spotlight-filter-btn');
+
+    let currentFilter = 'all';
+    let searchDebounceTimer = null;
+    let cachedData = null;
+    let selectedIndex = -1;
+
+    function openSpotlight() {
+        if (!spotlightModal) return;
+        spotlightModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        if (spotlightInput) {
+            spotlightInput.value = '';
+            setTimeout(() => spotlightInput.focus(), 50);
+            renderDefaultShortcuts();
+        }
+    }
+
+    function closeSpotlight() {
+        if (!spotlightModal) return;
+        spotlightModal.classList.remove('active');
+        document.body.style.overflow = '';
+        selectedIndex = -1;
+    }
+
+    if (btnSpotlightTrigger) btnSpotlightTrigger.addEventListener('click', openSpotlight);
+    if (btnSpotlightTriggerMobile) btnSpotlightTriggerMobile.addEventListener('click', openSpotlight);
+    if (btnSpotlightClose) btnSpotlightClose.addEventListener('click', closeSpotlight);
+
+    if (spotlightModal) {
+        spotlightModal.addEventListener('click', (e) => {
+            if (e.target === spotlightModal) closeSpotlight();
+        });
+    }
+
+    // Keyboard Shortcuts (Ctrl + K / ⌘K & Esc)
+    document.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+            e.preventDefault();
+            if (spotlightModal && spotlightModal.classList.contains('active')) {
+                closeSpotlight();
+            } else {
+                openSpotlight();
+            }
+        } else if (e.key === 'Escape' && spotlightModal && spotlightModal.classList.contains('active')) {
+            closeSpotlight();
+        }
+    });
+
+    // Filter Buttons Click
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentFilter = this.getAttribute('data-filter') || 'all';
+            if (cachedData) {
+                renderSearchResults(cachedData);
+            } else {
+                renderDefaultShortcuts();
+            }
+        });
+    });
+
+    // Default Shortcuts when input is empty
+    function renderDefaultShortcuts() {
+        if (!spotlightResults) return;
+        cachedData = null;
+        spotlightResults.innerHTML = `
+            <div class="spotlight-group-title">⚡ Pintasan Cepat</div>
+            <a href="pesanan.php" class="spotlight-item" data-type="menu">
+                <div class="spotlight-item-left">
+                    <div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div>
+                    <div class="spotlight-item-info">
+                        <div class="spotlight-item-title">Input Pesanan Baru</div>
+                        <div class="spotlight-item-subtitle">Tambah pesanan topi mutz baru per anggota SKPD</div>
+                    </div>
+                </div>
+                <span class="spotlight-item-badge" style="background:#EEF2FF; color:#4F46E5;">Buka</span>
+            </a>
+            <a href="rekap.php" class="spotlight-item" data-type="menu">
+                <div class="spotlight-item-left">
+                    <div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></div>
+                    <div class="spotlight-item-info">
+                        <div class="spotlight-item-title">Rekapitulasi Matriks Ukuran</div>
+                        <div class="spotlight-item-subtitle">Tabel rekapitulasi ukuran 55-60 L/P dan cetak invoice</div>
+                    </div>
+                </div>
+                <span class="spotlight-item-badge" style="background:#EEF2FF; color:#4F46E5;">Buka</span>
+            </a>
+            <a href="stok.php" class="spotlight-item" data-type="menu">
+                <div class="spotlight-item-left">
+                    <div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg></div>
+                    <div class="spotlight-item-info">
+                        <div class="spotlight-item-title">Manajemen Stok Topi</div>
+                        <div class="spotlight-item-subtitle">Kelola stok fisik per ukuran dan peringatan minimum</div>
+                    </div>
+                </div>
+                <span class="spotlight-item-badge" style="background:#EEF2FF; color:#4F46E5;">Buka</span>
+            </a>
+            <a href="skpd.php" class="spotlight-item" data-type="menu">
+                <div class="spotlight-item-left">
+                    <div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div>
+                    <div class="spotlight-item-info">
+                        <div class="spotlight-item-title">Daftar Instansi SKPD & Kontak WA</div>
+                        <div class="spotlight-item-subtitle">Kelola kontak WhatsApp narahubung dinas</div>
+                    </div>
+                </div>
+                <span class="spotlight-item-badge" style="background:#EEF2FF; color:#4F46E5;">Buka</span>
+            </a>
+        `;
+    }
+
+    // Perform Live Search
+    if (spotlightInput) {
+        spotlightInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            clearTimeout(searchDebounceTimer);
+
+            if (query.length === 0) {
+                renderDefaultShortcuts();
+                return;
+            }
+
+            spotlightResults.innerHTML = `
+                <div class="spotlight-empty">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 0.8s linear infinite; margin-bottom: 8px; color: var(--primary);"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
+                    <div>Mencari data secara instan...</div>
+                </div>
+            `;
+
+            searchDebounceTimer = setTimeout(async () => {
+                try {
+                    const res = await fetch(`api_search.php?q=${encodeURIComponent(query)}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        cachedData = data;
+                        renderSearchResults(data);
+                    }
+                } catch (e) {
+                    console.error('Search fetch error:', e);
+                }
+            }, 140);
+        });
+
+        // Arrow Key Navigation
+        spotlightInput.addEventListener('keydown', function(e) {
+            const items = spotlightResults.querySelectorAll('.spotlight-item');
+            if (items.length === 0) return;
+
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                selectedIndex = (selectedIndex + 1) % items.length;
+                updateSelectedItem(items);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+                updateSelectedItem(items);
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (selectedIndex >= 0 && items[selectedIndex]) {
+                    items[selectedIndex].click();
+                } else if (items.length > 0) {
+                    items[0].click();
+                }
+            }
+        });
+    }
+
+    function updateSelectedItem(items) {
+        items.forEach((item, idx) => {
+            if (idx === selectedIndex) {
+                item.classList.add('active');
+                item.scrollIntoView({ block: 'nearest' });
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+
+    // Render Search Results
+    function renderSearchResults(data) {
+        if (!spotlightResults) return;
+        selectedIndex = -1;
+
+        let html = '';
+        let totalMatches = 0;
+
+        const showPesanan = (currentFilter === 'all' || currentFilter === 'pesanan') && data.pesanan && data.pesanan.length > 0;
+        const showSkpd = (currentFilter === 'all' || currentFilter === 'skpd') && data.skpd && data.skpd.length > 0;
+        const showMenus = (currentFilter === 'all' || currentFilter === 'menus') && data.menus && data.menus.length > 0;
+
+        // 1. Pesanan Items
+        if (showPesanan) {
+            html += `<div class="spotlight-group-title">👤 Hasil Pemesan (${data.pesanan.length})</div>`;
+            data.pesanan.forEach(item => {
+                totalMatches++;
+                const bayarBg = item.status_bayar === 'Lunas' ? '#DCFCE7' : '#FEE2E2';
+                const bayarColor = item.status_bayar === 'Lunas' ? '#166534' : '#991B1B';
+                const ambilBg = item.status_pengambilan === 'Sudah Diambil' ? '#DCFCE7' : '#FEF3C7';
+                const ambilColor = item.status_pengambilan === 'Sudah Diambil' ? '#166534' : '#92400E';
+
+                html += `
+                    <a href="pesanan.php?filter_skpd=${item.skpd_id}" class="spotlight-item" data-type="pesanan" onclick="document.getElementById('spotlightModal').classList.remove('active');">
+                        <div class="spotlight-item-left">
+                            <div class="spotlight-item-icon" style="background:#EEF2FF; color:#4F46E5;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            </div>
+                            <div class="spotlight-item-info">
+                                <div class="spotlight-item-title">${escapeHtml(item.nama_pemesan)} <span style="font-weight:400; color:var(--gray); font-size:0.8rem;">(${escapeHtml(item.nama_skpd)})</span></div>
+                                <div class="spotlight-item-subtitle">${item.jenis_kelamin} Uk. <b>${item.ukuran}</b> (${item.jumlah} pcs) &bull; ${item.subtotal_formatted}</div>
+                            </div>
+                        </div>
+                        <div style="display:flex; gap:6px; align-items:center;">
+                            <span class="spotlight-item-badge" style="background:${bayarBg}; color:${bayarColor};">${item.status_bayar}</span>
+                            <span class="spotlight-item-badge" style="background:${ambilBg}; color:${ambilColor};">${item.status_pengambilan}</span>
+                        </div>
+                    </a>
+                `;
+            });
+        }
+
+        // 2. SKPD Items
+        if (showSkpd) {
+            html += `<div class="spotlight-group-title">🏛️ Hasil Instansi SKPD (${data.skpd.length})</div>`;
+            data.skpd.forEach(skpd => {
+                totalMatches++;
+                const statusBadge = skpd.total_belum_lunas === 0 ? 
+                    '<span class="spotlight-item-badge" style="background:#DCFCE7; color:#166534;">Semua Lunas</span>' : 
+                    `<span class="spotlight-item-badge" style="background:#FEE2E2; color:#991B1B;">${skpd.total_belum_lunas} Belum Lunas</span>`;
+
+                html += `
+                    <a href="pesanan.php?filter_skpd=${skpd.id}" class="spotlight-item" data-type="skpd" onclick="document.getElementById('spotlightModal').classList.remove('active');">
+                        <div class="spotlight-item-left">
+                            <div class="spotlight-item-icon" style="background:#F0FDF4; color:#10B981;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            </div>
+                            <div class="spotlight-item-info">
+                                <div class="spotlight-item-title">${escapeHtml(skpd.nama_skpd)}</div>
+                                <div class="spotlight-item-subtitle">Total: <b>${skpd.total_qty} pcs</b> (${skpd.total_rp_formatted}) ${skpd.no_wa ? ' &bull; WA: ' + escapeHtml(skpd.no_wa) : ''}</div>
+                            </div>
+                        </div>
+                        ${statusBadge}
+                    </a>
+                `;
+            });
+        }
+
+        // 3. Navigation Menus
+        if (showMenus) {
+            html += `<div class="spotlight-group-title">⚡ Navigasi Menu</div>`;
+            data.menus.forEach(menu => {
+                totalMatches++;
+                html += `
+                    <a href="${menu.url}" class="spotlight-item" data-type="menu" onclick="document.getElementById('spotlightModal').classList.remove('active');">
+                        <div class="spotlight-item-left">
+                            <div class="spotlight-item-icon" style="background:#EEF2FF; color:#4F46E5;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            </div>
+                            <div class="spotlight-item-info">
+                                <div class="spotlight-item-title">${escapeHtml(menu.title)}</div>
+                                <div class="spotlight-item-subtitle">${escapeHtml(menu.desc)}</div>
+                            </div>
+                        </div>
+                        <span class="spotlight-item-badge" style="background:#F1F5F9; color:#475569;">Buka</span>
+                    </a>
+                `;
+            });
+        }
+
+        if (totalMatches === 0) {
+            html = `
+                <div class="spotlight-empty">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gray); margin-bottom:10px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <div style="font-weight:600; color:var(--dark); margin-bottom:4px;">Tidak ada hasil ditemukan</div>
+                    <div style="font-size:0.825rem;">Coba cari dengan kata kunci lain seperti nama SKPD, nama anggota, nomor WA, atau ukuran.</div>
+                </div>
+            `;
+        }
+
+        spotlightResults.innerHTML = html;
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
 });
 </script>

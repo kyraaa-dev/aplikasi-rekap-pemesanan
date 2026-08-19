@@ -763,3 +763,279 @@ tr:hover {
         transform: translateY(0);
     }
 }
+
+/* =========================================================
+   Spotlight Quick Search (Ctrl+K Command Palette) Styles
+   ========================================================= */
+.spotlight-trigger-btn {
+    position: fixed;
+    top: 1.5rem;
+    right: 5.5rem;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--white);
+    color: var(--gray);
+    border: 1px solid var(--gray-light);
+    border-radius: 30px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: all 0.25s ease;
+}
+.spotlight-trigger-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.15);
+}
+.spotlight-kbd {
+    background: var(--light);
+    color: var(--gray);
+    border: 1px solid var(--gray-light);
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-size: 0.725rem;
+    font-family: inherit;
+    font-weight: 700;
+}
+
+/* Spotlight Overlay Modal */
+.spotlight-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100001;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 16px 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+.spotlight-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Spotlight Dialog Box */
+.spotlight-dialog {
+    width: 100%;
+    max-width: 660px;
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 80vh;
+    transform: scale(0.96) translateY(-10px);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid var(--gray-light);
+}
+.spotlight-overlay.active .spotlight-dialog {
+    transform: scale(1) translateY(0);
+}
+
+/* Search Header */
+.spotlight-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--gray-light);
+    gap: 12px;
+    background: var(--white);
+}
+.spotlight-icon {
+    color: var(--primary);
+    flex-shrink: 0;
+}
+.spotlight-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 1.05rem;
+    background: transparent;
+    color: var(--dark);
+    font-family: inherit;
+}
+.spotlight-input::placeholder {
+    color: var(--gray);
+    font-size: 0.95rem;
+}
+.spotlight-close-btn {
+    background: none;
+    border: none;
+    color: var(--gray);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.spotlight-close-btn:hover {
+    color: var(--danger);
+    background: #FEE2E2;
+}
+
+/* Filter Pills */
+.spotlight-filters {
+    display: flex;
+    gap: 6px;
+    padding: 8px 1.25rem;
+    border-bottom: 1px solid var(--gray-light);
+    background: var(--light);
+    overflow-x: auto;
+}
+.spotlight-filter-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gray);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+}
+.spotlight-filter-btn:hover, .spotlight-filter-btn.active {
+    background: var(--white);
+    color: var(--primary);
+    border-color: var(--gray-light);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Results Body */
+.spotlight-results {
+    padding: 8px;
+    overflow-y: auto;
+    flex: 1;
+    max-height: 460px;
+}
+.spotlight-group-title {
+    font-size: 0.725rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray);
+    padding: 8px 12px 4px;
+}
+.spotlight-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--dark);
+    margin-bottom: 4px;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+    gap: 12px;
+}
+.spotlight-item:hover, .spotlight-item.active {
+    background-color: rgba(79, 70, 229, 0.08);
+    color: var(--primary);
+}
+.spotlight-item-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+}
+.spotlight-item-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: var(--light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    flex-shrink: 0;
+}
+.spotlight-item-info {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.spotlight-item-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--dark);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.spotlight-item-subtitle {
+    font-size: 0.78rem;
+    color: var(--gray);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.spotlight-item-badge {
+    font-size: 0.725rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+/* Empty & Loading States */
+.spotlight-empty {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    color: var(--gray);
+    font-size: 0.9rem;
+}
+
+/* Footer */
+.spotlight-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 1.25rem;
+    border-top: 1px solid var(--gray-light);
+    background: var(--light);
+    font-size: 0.75rem;
+    color: var(--gray);
+}
+.spotlight-shortcuts {
+    display: flex;
+    gap: 12px;
+}
+.spotlight-shortcuts span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.spotlight-shortcuts kbd {
+    background: var(--white);
+    border: 1px solid var(--gray-light);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+@media (max-width: 991px) {
+    .spotlight-trigger-btn {
+        display: none;
+    }
+    .spotlight-overlay {
+        padding: 12px 10px;
+    }
+    .spotlight-dialog {
+        max-height: 92vh;
+    }
+}
+
