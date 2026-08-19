@@ -937,7 +937,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(spotlightModal);
     }
 
-    const btnSpotlightTrigger = document.getElementById('btnSpotlightTrigger');
     if (btnSpotlightTrigger) btnSpotlightTrigger.addEventListener('click', openSpotlight);
     if (btnSpotlightTriggerMobile) btnSpotlightTriggerMobile.addEventListener('click', openSpotlight);
     if (btnSpotlightClose) btnSpotlightClose.addEventListener('click', closeSpotlight);
