@@ -252,6 +252,159 @@
     color: #6B7280 !important;
 }
 
+/* Premium Search Loading Animation */
+@keyframes searchSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes orbitDot {
+    0% { transform: rotate(0deg) translateX(18px) rotate(0deg); opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { transform: rotate(360deg) translateX(18px) rotate(-360deg); opacity: 0.3; }
+}
+@keyframes pulseRing {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.2; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+}
+@keyframes textShift {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+.search-loading-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 2rem 1.5rem !important;
+    gap: 1.25rem !important;
+    animation: fadeInUp 0.3s ease !important;
+}
+.search-orbit-loader {
+    position: relative !important;
+    width: 48px !important;
+    height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.search-orbit-ring {
+    position: absolute !important;
+    inset: 0 !important;
+    border: 2.5px solid transparent !important;
+    border-top-color: #4F46E5 !important;
+    border-right-color: #818CF8 !important;
+    border-radius: 50% !important;
+    animation: searchSpin 0.9s cubic-bezier(0.5, 0, 0.5, 1) infinite !important;
+}
+.search-orbit-ring-inner {
+    position: absolute !important;
+    inset: 6px !important;
+    border: 2px solid transparent !important;
+    border-bottom-color: #C084FC !important;
+    border-left-color: #A78BFA !important;
+    border-radius: 50% !important;
+    animation: searchSpin 0.6s cubic-bezier(0.5, 0, 0.5, 1) infinite reverse !important;
+}
+.search-orbit-dot {
+    position: absolute !important;
+    width: 6px !important;
+    height: 6px !important;
+    background: #4F46E5 !important;
+    border-radius: 50% !important;
+    animation: orbitDot 1.2s linear infinite !important;
+    box-shadow: 0 0 6px rgba(79, 70, 229, 0.5) !important;
+}
+.search-orbit-dot:nth-child(2) { animation-delay: -0.4s !important; background: #818CF8 !important; }
+.search-orbit-dot:nth-child(3) { animation-delay: -0.8s !important; background: #C084FC !important; }
+.search-orbit-core {
+    width: 10px !important;
+    height: 10px !important;
+    background: linear-gradient(135deg, #4F46E5, #A78BFA) !important;
+    border-radius: 50% !important;
+    animation: pulseRing 1.2s ease-in-out infinite !important;
+    box-shadow: 0 0 12px rgba(79, 70, 229, 0.4) !important;
+}
+.search-loading-text {
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    color: #4F46E5 !important;
+    animation: textShift 1.5s ease-in-out infinite !important;
+    letter-spacing: 0.01em !important;
+}
+.search-loading-sub {
+    font-size: 0.75rem !important;
+    color: #9CA3AF !important;
+    margin-top: -6px !important;
+}
+.search-skeleton {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    padding: 0 1.25rem !important;
+    box-sizing: border-box !important;
+}
+.search-skeleton-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 10px 0 !important;
+    animation: fadeInUp 0.4s ease both !important;
+}
+.search-skeleton-row:nth-child(1) { animation-delay: 0.05s !important; }
+.search-skeleton-row:nth-child(2) { animation-delay: 0.12s !important; }
+.search-skeleton-row:nth-child(3) { animation-delay: 0.19s !important; }
+.search-skeleton-avatar {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 8px !important;
+    background: linear-gradient(90deg, #E5E7EB 25%, #F3F4F6 50%, #E5E7EB 75%) !important;
+    background-size: 200% 100% !important;
+    animation: shimmer 1.5s ease-in-out infinite !important;
+    flex-shrink: 0 !important;
+}
+.search-skeleton-lines {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+}
+.search-skeleton-line {
+    height: 10px !important;
+    border-radius: 5px !important;
+    background: linear-gradient(90deg, #E5E7EB 25%, #F3F4F6 50%, #E5E7EB 75%) !important;
+    background-size: 200% 100% !important;
+    animation: shimmer 1.5s ease-in-out infinite !important;
+}
+.search-skeleton-line.w-75 { width: 75% !important; }
+.search-skeleton-line.w-50 { width: 50% !important; }
+.search-skeleton-line.w-60 { width: 60% !important; }
+.search-skeleton-line.w-40 { width: 40% !important; }
+.search-skeleton-badge {
+    width: 56px !important;
+    height: 22px !important;
+    border-radius: 6px !important;
+    background: linear-gradient(90deg, #E5E7EB 25%, #F3F4F6 50%, #E5E7EB 75%) !important;
+    background-size: 200% 100% !important;
+    animation: shimmer 1.5s ease-in-out infinite !important;
+    flex-shrink: 0 !important;
+}
+[data-theme="dark"] .search-skeleton-avatar,
+[data-theme="dark"] .search-skeleton-line,
+[data-theme="dark"] .search-skeleton-badge {
+    background: linear-gradient(90deg, #334155 25%, #475569 50%, #334155 75%) !important;
+    background-size: 200% 100% !important;
+}
+[data-theme="dark"] .search-loading-text { color: #A78BFA !important; }
+
 /* =========================================================
    Desktop Floating Controls (Search Bar & Theme Toggle)
    ========================================================= */
@@ -1054,9 +1207,43 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             spotlightResults.innerHTML = `
-                <div class="spotlight-empty">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 0.8s linear infinite; margin-bottom: 8px; color: var(--primary);"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
-                    <div>Mencari data secara instan...</div>
+                <div class="search-loading-container">
+                    <div class="search-orbit-loader">
+                        <div class="search-orbit-ring"></div>
+                        <div class="search-orbit-ring-inner"></div>
+                        <div class="search-orbit-dot"></div>
+                        <div class="search-orbit-dot"></div>
+                        <div class="search-orbit-dot"></div>
+                        <div class="search-orbit-core"></div>
+                    </div>
+                    <div class="search-loading-text">Mencari data instan...</div>
+                    <div class="search-loading-sub">Mencocokkan "<b>${query}</b>" ke seluruh database</div>
+                </div>
+                <div class="search-skeleton">
+                    <div class="search-skeleton-row">
+                        <div class="search-skeleton-avatar"></div>
+                        <div class="search-skeleton-lines">
+                            <div class="search-skeleton-line w-75"></div>
+                            <div class="search-skeleton-line w-50"></div>
+                        </div>
+                        <div class="search-skeleton-badge"></div>
+                    </div>
+                    <div class="search-skeleton-row">
+                        <div class="search-skeleton-avatar"></div>
+                        <div class="search-skeleton-lines">
+                            <div class="search-skeleton-line w-60"></div>
+                            <div class="search-skeleton-line w-40"></div>
+                        </div>
+                        <div class="search-skeleton-badge"></div>
+                    </div>
+                    <div class="search-skeleton-row">
+                        <div class="search-skeleton-avatar"></div>
+                        <div class="search-skeleton-lines">
+                            <div class="search-skeleton-line w-75"></div>
+                            <div class="search-skeleton-line w-50"></div>
+                        </div>
+                        <div class="search-skeleton-badge"></div>
+                    </div>
                 </div>
             `;
 
