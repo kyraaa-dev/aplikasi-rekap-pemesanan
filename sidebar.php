@@ -1195,57 +1195,46 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
 
-    // Perform Live Search
+    // Pre-build loading skeleton template once (avoid re-creating on every keystroke)
+    const loadingSkeletonTpl = `<div class="search-skeleton">
+        <div class="search-skeleton-row"><div class="search-skeleton-avatar"></div><div class="search-skeleton-lines"><div class="search-skeleton-line w-75"></div><div class="search-skeleton-line w-50"></div></div><div class="search-skeleton-badge"></div></div>
+        <div class="search-skeleton-row"><div class="search-skeleton-avatar"></div><div class="search-skeleton-lines"><div class="search-skeleton-line w-60"></div><div class="search-skeleton-line w-40"></div></div><div class="search-skeleton-badge"></div></div>
+        <div class="search-skeleton-row"><div class="search-skeleton-avatar"></div><div class="search-skeleton-lines"><div class="search-skeleton-line w-75"></div><div class="search-skeleton-line w-50"></div></div><div class="search-skeleton-badge"></div></div>
+    </div>`;
+
+    // Perform Live Search (INP-optimized: yield to browser before DOM write)
     if (spotlightInput) {
+        let pendingRAF = null;
         spotlightInput.addEventListener('input', function() {
             const query = this.value.trim();
             clearTimeout(searchDebounceTimer);
 
             if (query.length === 0) {
+                if (pendingRAF) { cancelAnimationFrame(pendingRAF); pendingRAF = null; }
                 renderDefaultShortcuts();
                 return;
             }
 
-            spotlightResults.innerHTML = `
-                <div class="search-loading-container">
-                    <div class="search-orbit-loader">
-                        <div class="search-orbit-ring"></div>
-                        <div class="search-orbit-ring-inner"></div>
-                        <div class="search-orbit-dot"></div>
-                        <div class="search-orbit-dot"></div>
-                        <div class="search-orbit-dot"></div>
-                        <div class="search-orbit-core"></div>
-                    </div>
-                    <div class="search-loading-text">Mencari data instan...</div>
-                    <div class="search-loading-sub">Mencocokkan "<b>${query}</b>" ke seluruh database</div>
-                </div>
-                <div class="search-skeleton">
-                    <div class="search-skeleton-row">
-                        <div class="search-skeleton-avatar"></div>
-                        <div class="search-skeleton-lines">
-                            <div class="search-skeleton-line w-75"></div>
-                            <div class="search-skeleton-line w-50"></div>
+            // Defer DOM write to next animation frame to unblock the input event
+            if (pendingRAF) cancelAnimationFrame(pendingRAF);
+            pendingRAF = requestAnimationFrame(() => {
+                pendingRAF = null;
+                spotlightResults.innerHTML = `
+                    <div class="search-loading-container">
+                        <div class="search-orbit-loader">
+                            <div class="search-orbit-ring"></div>
+                            <div class="search-orbit-ring-inner"></div>
+                            <div class="search-orbit-dot"></div>
+                            <div class="search-orbit-dot"></div>
+                            <div class="search-orbit-dot"></div>
+                            <div class="search-orbit-core"></div>
                         </div>
-                        <div class="search-skeleton-badge"></div>
+                        <div class="search-loading-text">Mencari data instan...</div>
+                        <div class="search-loading-sub">Mencocokkan "<b>${query}</b>" ke seluruh database</div>
                     </div>
-                    <div class="search-skeleton-row">
-                        <div class="search-skeleton-avatar"></div>
-                        <div class="search-skeleton-lines">
-                            <div class="search-skeleton-line w-60"></div>
-                            <div class="search-skeleton-line w-40"></div>
-                        </div>
-                        <div class="search-skeleton-badge"></div>
-                    </div>
-                    <div class="search-skeleton-row">
-                        <div class="search-skeleton-avatar"></div>
-                        <div class="search-skeleton-lines">
-                            <div class="search-skeleton-line w-75"></div>
-                            <div class="search-skeleton-line w-50"></div>
-                        </div>
-                        <div class="search-skeleton-badge"></div>
-                    </div>
-                </div>
-            `;
+                    ${loadingSkeletonTpl}
+                `;
+            });
 
             searchDebounceTimer = setTimeout(async () => {
                 try {
