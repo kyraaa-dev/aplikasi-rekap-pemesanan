@@ -589,6 +589,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (btnSpotlightTriggerMobile) btnSpotlightTriggerMobile.addEventListener('click', openSpotlight);
     if (btnSpotlightClose) btnSpotlightClose.addEventListener('click', closeSpotlight);
 
+    if (spotlightResults) {
+        spotlightResults.addEventListener('click', (e) => {
+            if (e.target.closest('a')) closeSpotlight();
+        });
+    }
+
     if (spotlightModal) {
         spotlightModal.addEventListener('click', (e) => {
             if (e.target === spotlightModal) closeSpotlight();

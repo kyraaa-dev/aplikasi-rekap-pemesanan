@@ -167,13 +167,29 @@
             if (overlay) overlay.classList.remove('active');
         }
 
-        // 6. Trigger global custom event for any listeners
+        // 6. Guarantee unlock scroll & dismiss lingering modals
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+        document.querySelectorAll('.modal-skpd-overlay, .spotlight-overlay, .sidebar-overlay').forEach(el => {
+            el.classList.remove('active');
+            el.style.display = 'none';
+        });
+
+        // 7. Trigger global custom event for any listeners
         document.dispatchEvent(new CustomEvent('page:loaded', { detail: { url: window.location.href } }));
     }
 
     // Perform Instant Navigation
     async function navigateTo(url, pushState = true) {
         startProgress();
+        // Immediately restore body scroll and dismiss any active modals before swap
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+        document.querySelectorAll('.modal-skpd-overlay, .spotlight-overlay, .sidebar-overlay').forEach(el => {
+            el.classList.remove('active');
+            el.style.display = 'none';
+        });
+
         const mainContent = document.querySelector('main.main-content');
         if (mainContent) {
             mainContent.classList.add('page-loading');
@@ -230,7 +246,9 @@
                 window.history.pushState({ url }, doc.title, url);
             }
 
-            // Scroll to top
+            // Restore scroll and scroll to top
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
             window.scrollTo({ top: 0, behavior: 'instant' });
 
             // Reinitialize dynamic elements
