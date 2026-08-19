@@ -664,101 +664,103 @@ if ($q_all_orders) {
         <!-- 2. SCRIPT CHART.JS & STATISTIK ANIMASI -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            try {
-                // Data from PHP
-                const t_l = <?= (int)$t_l ?>;
-                const t_p = <?= (int)$t_p ?>;
-                const skpdLabels = <?= json_encode($top_skpd_labels) ?>;
-                const skpdData = <?= json_encode($top_skpd_data) ?>;
-                const sizeLabels = <?= json_encode($size_labels) ?>;
-                const sizeData = <?= json_encode($size_data) ?>;
+            (function() {
+                try {
+                    // Data from PHP
+                    const t_l = <?= (int)$t_l ?>;
+                    const t_p = <?= (int)$t_p ?>;
+                    const skpdLabels = <?= json_encode($top_skpd_labels) ?>;
+                    const skpdData = <?= json_encode($top_skpd_data) ?>;
+                    const sizeLabels = <?= json_encode($size_labels) ?>;
+                    const sizeData = <?= json_encode($size_data) ?>;
 
-                if (typeof Chart !== 'undefined') {
-                    // Destroy existing canvas charts if any
-                    const exG = Chart.getChart('genderChart'); if (exG) exG.destroy();
-                    const exS = Chart.getChart('topSkpdChart'); if (exS) exS.destroy();
-                    const exZ = Chart.getChart('sizeChart'); if (exZ) exZ.destroy();
+                    if (typeof Chart !== 'undefined') {
+                        // Destroy existing canvas charts if any
+                        const exG = Chart.getChart('genderChart'); if (exG) exG.destroy();
+                        const exS = Chart.getChart('topSkpdChart'); if (exS) exS.destroy();
+                        const exZ = Chart.getChart('sizeChart'); if (exZ) exZ.destroy();
 
-                    // Render Pie Chart
-                    const genderCanvas = document.getElementById('genderChart');
-                    if (genderCanvas) {
-                        new Chart(genderCanvas.getContext('2d'), {
-                            type: 'doughnut',
-                            data: {
-                                labels: ['Laki-laki', 'Perempuan'],
-                                datasets: [{
-                                    data: [t_l, t_p],
-                                    backgroundColor: ['#4F46E5', '#EC4899'],
-                                    borderWidth: 0
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                plugins: {
-                                    legend: { position: 'bottom' },
-                                    title: { display: true, text: 'Proporsi per Jenis Kelamin', font: { size: 16 } }
-                                }
-                            }
-                        });
-                    }
-
-                    // Render Bar Chart
-                    const topSkpdCanvas = document.getElementById('topSkpdChart');
-                    if (topSkpdCanvas) {
-                        new Chart(topSkpdCanvas.getContext('2d'), {
-                            type: 'bar',
-                            data: {
-                                labels: skpdLabels,
-                                datasets: [{
-                                    label: 'Total Topi',
-                                    data: skpdData,
-                                    backgroundColor: '#10B981',
-                                    borderRadius: 6
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                plugins: {
-                                    legend: { display: false },
-                                    title: { display: true, text: '5 SKPD dengan Pesanan Terbanyak', font: { size: 16 } }
+                        // Render Pie Chart
+                        const genderCanvas = document.getElementById('genderChart');
+                        if (genderCanvas) {
+                            new Chart(genderCanvas.getContext('2d'), {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ['Laki-laki', 'Perempuan'],
+                                    datasets: [{
+                                        data: [t_l, t_p],
+                                        backgroundColor: ['#4F46E5', '#EC4899'],
+                                        borderWidth: 0
+                                    }]
                                 },
-                                scales: {
-                                    y: { beginAtZero: true, ticks: { precision: 0 } }
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: { position: 'bottom' },
+                                        title: { display: true, text: 'Proporsi per Jenis Kelamin', font: { size: 16 } }
+                                    }
                                 }
-                            }
-                        });
-                    }
+                            });
+                        }
 
-                    // Render Size Chart
-                    const sizeCanvas = document.getElementById('sizeChart');
-                    if (sizeCanvas) {
-                        new Chart(sizeCanvas.getContext('2d'), {
-                            type: 'bar',
-                            data: {
-                                labels: sizeLabels,
-                                datasets: [{
-                                    label: 'Total Topi',
-                                    data: sizeData,
-                                    backgroundColor: '#F59E0B',
-                                    borderRadius: 6
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                plugins: {
-                                    legend: { display: false },
-                                    title: { display: true, text: 'Distribusi Ukuran Mutz Terlaris', font: { size: 16 } }
+                        // Render Bar Chart
+                        const topSkpdCanvas = document.getElementById('topSkpdChart');
+                        if (topSkpdCanvas) {
+                            new Chart(topSkpdCanvas.getContext('2d'), {
+                                type: 'bar',
+                                data: {
+                                    labels: skpdLabels,
+                                    datasets: [{
+                                        label: 'Total Topi',
+                                        data: skpdData,
+                                        backgroundColor: '#10B981',
+                                        borderRadius: 6
+                                    }]
                                 },
-                                scales: {
-                                    y: { beginAtZero: true, ticks: { precision: 0 } }
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: { display: false },
+                                        title: { display: true, text: '5 SKPD dengan Pesanan Terbanyak', font: { size: 16 } }
+                                    },
+                                    scales: {
+                                        y: { beginAtZero: true, ticks: { precision: 0 } }
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
+
+                        // Render Size Chart
+                        const sizeCanvas = document.getElementById('sizeChart');
+                        if (sizeCanvas) {
+                            new Chart(sizeCanvas.getContext('2d'), {
+                                type: 'bar',
+                                data: {
+                                    labels: sizeLabels,
+                                    datasets: [{
+                                        label: 'Total Topi',
+                                        data: sizeData,
+                                        backgroundColor: '#F59E0B',
+                                        borderRadius: 6
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: { display: false },
+                                        title: { display: true, text: 'Distribusi Ukuran Mutz Terlaris', font: { size: 16 } }
+                                    },
+                                    scales: {
+                                        y: { beginAtZero: true, ticks: { precision: 0 } }
+                                    }
+                                }
+                            });
+                        }
                     }
+                } catch (err) {
+                    console.warn('Chart rendering caught error:', err);
                 }
-            } catch (err) {
-                console.warn('Chart rendering caught error:', err);
-            }
+            })();
 
             // Chart Toggle Logic
             const chartContainer = document.getElementById('chartContainer');
