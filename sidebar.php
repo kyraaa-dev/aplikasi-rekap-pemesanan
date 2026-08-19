@@ -164,13 +164,6 @@
     <!-- Backdrop Overlay for Mobile Drawer -->
     <div class="sidebar-overlay hide-on-print" id="sidebarOverlay"></div>
 
-    <!-- Desktop Floating Spotlight Search Button -->
-    <button id="btnSpotlightTrigger" class="spotlight-trigger-btn hide-on-print" title="Pencarian Cepat (Ctrl + K / ⌘K)" type="button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <span>Cari Pesanan / SKPD...</span>
-        <kbd class="spotlight-kbd">⌘K</kbd>
-    </button>
-
     <!-- Desktop Floating Theme Toggle -->
     <button id="themeToggle" title="Ganti Tema (Terang/Gelap)" class="hide-on-print" type="button" style="position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; background-color: var(--white); color: var(--dark); border: 1px solid var(--gray-light); border-radius: 50%; width: 45px; height: 45px; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); padding: 0; transition: transform 0.2s;">
     </button>
@@ -585,9 +578,19 @@ document.addEventListener('DOMContentLoaded', function() {
         selectedIndex = -1;
     }
 
-    if (btnSpotlightTrigger) btnSpotlightTrigger.addEventListener('click', openSpotlight);
+    window.openSpotlight = openSpotlight;
+    window.closeSpotlight = closeSpotlight;
+
     if (btnSpotlightTriggerMobile) btnSpotlightTriggerMobile.addEventListener('click', openSpotlight);
     if (btnSpotlightClose) btnSpotlightClose.addEventListener('click', closeSpotlight);
+
+    // Global click delegate for any search bar in headers or dashboard
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.header-search-bar') || e.target.closest('[data-open-spotlight]')) {
+            e.preventDefault();
+            openSpotlight();
+        }
+    });
 
     if (spotlightResults) {
         spotlightResults.addEventListener('click', (e) => {

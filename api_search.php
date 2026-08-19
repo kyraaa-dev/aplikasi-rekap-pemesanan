@@ -22,9 +22,13 @@ if (strlen($query) < 1) {
 
 $search_term = "%$query%";
 
+$harga_kepala = defined('HARGA_KEPALA') ? HARGA_KEPALA : 150000;
+$harga_biasa = defined('HARGA_BIASA') ? HARGA_BIASA : 55000;
+
 // 1. Search Pesanan (by nama_pemesan, nama_skpd, catatan, status)
 $pesanan_stmt = $conn->prepare("
-    SELECT p.id, p.nama_pemesan, p.jenis_kelamin, p.ukuran, p.jumlah, p.subtotal, 
+    SELECT p.id, p.nama_pemesan, p.jenis_kelamin, p.ukuran, p.jumlah, p.jenis_mutz,
+           (CASE WHEN p.jenis_mutz = 'Kepala SKPD' THEN p.jumlah * $harga_kepala ELSE p.jumlah * $harga_biasa END) as subtotal, 
            p.status_bayar, p.status_pengambilan, p.catatan, p.created_at,
            s.id as skpd_id, s.nama_skpd, s.no_wa
     FROM pesanan p
@@ -32,7 +36,7 @@ $pesanan_stmt = $conn->prepare("
     WHERE p.nama_pemesan LIKE ? 
        OR s.nama_skpd LIKE ? 
        OR p.catatan LIKE ? 
-       OR p.ukuran LIKE ?
+       OR CAST(p.ukuran AS CHAR) LIKE ?
     ORDER BY p.id DESC
     LIMIT 15
 ");
@@ -41,23 +45,25 @@ $pesanan_stmt->execute();
 $pesanan_res = $pesanan_stmt->get_result();
 
 $pesanan_list = [];
-while ($row = $pesanan_res->fetch_assoc()) {
-    $pesanan_list[] = [
-        'id' => (int)$row['id'],
-        'nama_pemesan' => $row['nama_pemesan'] ? $row['nama_pemesan'] : 'Umum / Tanpa Nama',
-        'nama_skpd' => $row['nama_skpd'],
-        'skpd_id' => (int)$row['skpd_id'],
-        'no_wa' => $row['no_wa'],
-        'jenis_kelamin' => $row['jenis_kelamin'],
-        'ukuran' => $row['ukuran'],
-        'jumlah' => (int)$row['jumlah'],
-        'subtotal' => (int)$row['subtotal'],
-        'subtotal_formatted' => 'Rp ' . number_format($row['subtotal'], 0, ',', '.'),
-        'status_bayar' => $row['status_bayar'],
-        'status_pengambilan' => $row['status_pengambilan'],
-        'catatan' => $row['catatan'],
-        'created_at' => $row['created_at'] ? date('d/m/Y', strtotime($row['created_at'])) : '-'
-    ];
+if ($pesanan_res) {
+    while ($row = $pesanan_res->fetch_assoc()) {
+        $pesanan_list[] = [
+            'id' => (int)$row['id'],
+            'nama_pemesan' => $row['nama_pemesan'] ? $row['nama_pemesan'] : 'Umum / Tanpa Nama',
+            'nama_skpd' => $row['nama_skpd'],
+            'skpd_id' => (int)$row['skpd_id'],
+            'no_wa' => $row['no_wa'],
+            'jenis_kelamin' => $row['jenis_kelamin'],
+            'ukuran' => $row['ukuran'],
+            'jumlah' => (int)$row['jumlah'],
+            'subtotal' => (int)$row['subtotal'],
+            'subtotal_formatted' => 'Rp ' . number_format((int)$row['subtotal'], 0, ',', '.'),
+            'status_bayar' => $row['status_bayar'],
+            'status_pengambilan' => $row['status_pengambilan'],
+            'catatan' => $row['catatan'],
+            'created_at' => $row['created_at'] ? date('d/m/Y', strtotime($row['created_at'])) : '-'
+        ];
+    }
 }
 $pesanan_stmt->close();
 
@@ -66,7 +72,7 @@ $skpd_stmt = $conn->prepare("
     SELECT s.id, s.nama_skpd, s.no_wa,
            (SELECT COUNT(*) FROM pesanan WHERE skpd_id = s.id) as total_pesanan,
            (SELECT COALESCE(SUM(jumlah), 0) FROM pesanan WHERE skpd_id = s.id) as total_qty,
-           (SELECT COALESCE(SUM(subtotal), 0) FROM pesanan WHERE skpd_id = s.id) as total_rp,
+           (SELECT COALESCE(SUM(CASE WHEN jenis_mutz = 'Kepala SKPD' THEN jumlah * $harga_kepala ELSE jumlah * $harga_biasa END), 0) FROM pesanan WHERE skpd_id = s.id) as total_rp,
            (SELECT COUNT(*) FROM pesanan WHERE skpd_id = s.id AND status_bayar = 'Belum Lunas') as total_belum_lunas
     FROM skpd s
     WHERE s.nama_skpd LIKE ? OR s.no_wa LIKE ?
@@ -78,16 +84,18 @@ $skpd_stmt->execute();
 $skpd_res = $skpd_stmt->get_result();
 
 $skpd_list = [];
-while ($row = $skpd_res->fetch_assoc()) {
-    $skpd_list[] = [
-        'id' => (int)$row['id'],
-        'nama_skpd' => $row['nama_skpd'],
-        'no_wa' => $row['no_wa'],
-        'total_pesanan' => (int)$row['total_pesanan'],
-        'total_qty' => (int)$row['total_qty'],
-        'total_rp_formatted' => 'Rp ' . number_format($row['total_rp'], 0, ',', '.'),
-        'total_belum_lunas' => (int)$row['total_belum_lunas']
-    ];
+if ($skpd_res) {
+    while ($row = $skpd_res->fetch_assoc()) {
+        $skpd_list[] = [
+            'id' => (int)$row['id'],
+            'nama_skpd' => $row['nama_skpd'],
+            'no_wa' => $row['no_wa'],
+            'total_pesanan' => (int)$row['total_pesanan'],
+            'total_qty' => (int)$row['total_qty'],
+            'total_rp_formatted' => 'Rp ' . number_format((int)$row['total_rp'], 0, ',', '.'),
+            'total_belum_lunas' => (int)$row['total_belum_lunas']
+        ];
+    }
 }
 $skpd_stmt->close();
 
