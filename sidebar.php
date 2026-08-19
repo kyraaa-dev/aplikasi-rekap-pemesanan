@@ -1146,94 +1146,61 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Default Shortcuts when input is empty
+    // Default Shortcuts when input is empty (pre-cached HTML)
+    const defaultShortcutsHtml = `
+        <div class="spotlight-group-title">⚡ Pintasan Cepat</div>
+        <a href="pesanan.php" class="spotlight-item" data-type="menu"><div class="spotlight-item-left"><div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div><div class="spotlight-item-info"><div class="spotlight-item-title">Input Pesanan Baru</div><div class="spotlight-item-subtitle">Tambah pesanan topi mutz baru per anggota SKPD</div></div></div><span class="spotlight-item-badge" style="background:#EEF2FF; color:#4F46E5;">Buka</span></a>
+        <a href="rekap.php" class="spotlight-item" data-type="menu"><div class="spotlight-item-left"><div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></div><div class="spotlight-item-info"><div class="spotlight-item-title">Rekapitulasi Matriks Ukuran</div><div class="spotlight-item-subtitle">Tabel rekapitulasi ukuran 55-60 L/P dan cetak invoice</div></div></div><span class="spotlight-item-badge" style="background:#EEF2FF; color:#4F46E5;">Buka</span></a>
+        <a href="stok.php" class="spotlight-item" data-type="menu"><div class="spotlight-item-left"><div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg></div><div class="spotlight-item-info"><div class="spotlight-item-title">Manajemen Stok Topi</div><div class="spotlight-item-subtitle">Kelola stok fisik per ukuran dan peringatan minimum</div></div></div><span class="spotlight-item-badge" style="background:#EEF2FF; color:#4F46E5;">Buka</span></a>
+        <a href="skpd.php" class="spotlight-item" data-type="menu"><div class="spotlight-item-left"><div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div><div class="spotlight-item-info"><div class="spotlight-item-title">Daftar Instansi SKPD & Kontak WA</div><div class="spotlight-item-subtitle">Kelola kontak WhatsApp narahubung dinas</div></div></div><span class="spotlight-item-badge" style="background:#EEF2FF; color:#4F46E5;">Buka</span></a>
+    `;
+
     function renderDefaultShortcuts() {
         if (!spotlightResults) return;
         cachedData = null;
-        spotlightResults.innerHTML = `
-            <div class="spotlight-group-title">⚡ Pintasan Cepat</div>
-            <a href="pesanan.php" class="spotlight-item" data-type="menu">
-                <div class="spotlight-item-left">
-                    <div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div>
-                    <div class="spotlight-item-info">
-                        <div class="spotlight-item-title">Input Pesanan Baru</div>
-                        <div class="spotlight-item-subtitle">Tambah pesanan topi mutz baru per anggota SKPD</div>
-                    </div>
-                </div>
-                <span class="spotlight-item-badge" style="background:#EEF2FF; color:#4F46E5;">Buka</span>
-            </a>
-            <a href="rekap.php" class="spotlight-item" data-type="menu">
-                <div class="spotlight-item-left">
-                    <div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></div>
-                    <div class="spotlight-item-info">
-                        <div class="spotlight-item-title">Rekapitulasi Matriks Ukuran</div>
-                        <div class="spotlight-item-subtitle">Tabel rekapitulasi ukuran 55-60 L/P dan cetak invoice</div>
-                    </div>
-                </div>
-                <span class="spotlight-item-badge" style="background:#EEF2FF; color:#4F46E5;">Buka</span>
-            </a>
-            <a href="stok.php" class="spotlight-item" data-type="menu">
-                <div class="spotlight-item-left">
-                    <div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg></div>
-                    <div class="spotlight-item-info">
-                        <div class="spotlight-item-title">Manajemen Stok Topi</div>
-                        <div class="spotlight-item-subtitle">Kelola stok fisik per ukuran dan peringatan minimum</div>
-                    </div>
-                </div>
-                <span class="spotlight-item-badge" style="background:#EEF2FF; color:#4F46E5;">Buka</span>
-            </a>
-            <a href="skpd.php" class="spotlight-item" data-type="menu">
-                <div class="spotlight-item-left">
-                    <div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div>
-                    <div class="spotlight-item-info">
-                        <div class="spotlight-item-title">Daftar Instansi SKPD & Kontak WA</div>
-                        <div class="spotlight-item-subtitle">Kelola kontak WhatsApp narahubung dinas</div>
-                    </div>
-                </div>
-                <span class="spotlight-item-badge" style="background:#EEF2FF; color:#4F46E5;">Buka</span>
-            </a>
-        `;
+        spotlightResults.innerHTML = defaultShortcutsHtml;
     }
 
-    // Pre-build loading skeleton template once (avoid re-creating on every keystroke)
-    const loadingSkeletonTpl = `<div class="search-skeleton">
-        <div class="search-skeleton-row"><div class="search-skeleton-avatar"></div><div class="search-skeleton-lines"><div class="search-skeleton-line w-75"></div><div class="search-skeleton-line w-50"></div></div><div class="search-skeleton-badge"></div></div>
-        <div class="search-skeleton-row"><div class="search-skeleton-avatar"></div><div class="search-skeleton-lines"><div class="search-skeleton-line w-60"></div><div class="search-skeleton-line w-40"></div></div><div class="search-skeleton-badge"></div></div>
-        <div class="search-skeleton-row"><div class="search-skeleton-avatar"></div><div class="search-skeleton-lines"><div class="search-skeleton-line w-75"></div><div class="search-skeleton-line w-50"></div></div><div class="search-skeleton-badge"></div></div>
-    </div>`;
+    // Pre-build loading skeleton template once
+    const loadingSkeletonTpl = '<div class="search-skeleton"><div class="search-skeleton-row"><div class="search-skeleton-avatar"></div><div class="search-skeleton-lines"><div class="search-skeleton-line w-75"></div><div class="search-skeleton-line w-50"></div></div><div class="search-skeleton-badge"></div></div><div class="search-skeleton-row"><div class="search-skeleton-avatar"></div><div class="search-skeleton-lines"><div class="search-skeleton-line w-60"></div><div class="search-skeleton-line w-40"></div></div><div class="search-skeleton-badge"></div></div><div class="search-skeleton-row"><div class="search-skeleton-avatar"></div><div class="search-skeleton-lines"><div class="search-skeleton-line w-75"></div><div class="search-skeleton-line w-50"></div></div><div class="search-skeleton-badge"></div></div></div>';
 
-    // Perform Live Search (INP-optimized: yield to browser before DOM write)
+    // Perform Live Search (INP-optimized: all DOM writes deferred via scheduler)
     if (spotlightInput) {
         let pendingRAF = null;
+        let lastQuery = '';
+
         spotlightInput.addEventListener('input', function() {
             const query = this.value.trim();
             clearTimeout(searchDebounceTimer);
 
+            // Skip if query hasn't changed
+            if (query === lastQuery) return;
+            lastQuery = query;
+
             if (query.length === 0) {
                 if (pendingRAF) { cancelAnimationFrame(pendingRAF); pendingRAF = null; }
-                renderDefaultShortcuts();
+                // Defer even the default shortcuts render
+                requestAnimationFrame(() => renderDefaultShortcuts());
                 return;
             }
 
-            // Defer DOM write to next animation frame to unblock the input event
+            // Defer loading UI to next frame — lets browser paint input immediately
             if (pendingRAF) cancelAnimationFrame(pendingRAF);
             pendingRAF = requestAnimationFrame(() => {
                 pendingRAF = null;
-                spotlightResults.innerHTML = `
-                    <div class="search-loading-container">
-                        <div class="search-orbit-loader">
-                            <div class="search-orbit-ring"></div>
-                            <div class="search-orbit-ring-inner"></div>
-                            <div class="search-orbit-dot"></div>
-                            <div class="search-orbit-dot"></div>
-                            <div class="search-orbit-dot"></div>
-                            <div class="search-orbit-core"></div>
-                        </div>
-                        <div class="search-loading-text">Mencari data instan...</div>
-                        <div class="search-loading-sub">Mencocokkan "<b>${query}</b>" ke seluruh database</div>
-                    </div>
-                    ${loadingSkeletonTpl}
-                `;
+                spotlightResults.innerHTML =
+                    '<div class="search-loading-container">' +
+                        '<div class="search-orbit-loader">' +
+                            '<div class="search-orbit-ring"></div>' +
+                            '<div class="search-orbit-ring-inner"></div>' +
+                            '<div class="search-orbit-dot"></div>' +
+                            '<div class="search-orbit-dot"></div>' +
+                            '<div class="search-orbit-dot"></div>' +
+                            '<div class="search-orbit-core"></div>' +
+                        '</div>' +
+                        '<div class="search-loading-text">Mencari data instan...</div>' +
+                        '<div class="search-loading-sub">Mencocokkan "<b>' + query + '</b>" ke seluruh database</div>' +
+                    '</div>' + loadingSkeletonTpl;
             });
 
             searchDebounceTimer = setTimeout(async () => {
@@ -1245,29 +1212,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (res.ok) {
                         const data = await res.json();
                         cachedData = data;
-                        renderSearchResults(data);
+                        // Defer result rendering to next frame
+                        requestAnimationFrame(() => renderSearchResults(data));
                     } else {
-                        spotlightResults.innerHTML = `
-                            <div class="spotlight-empty">
-                                <div style="color:var(--danger); font-weight:600;">Gagal memuat data pencarian</div>
-                                <div style="font-size:0.8rem; color:var(--gray);">Status respons: ${res.status}. Silakan coba lagi.</div>
-                            </div>
-                        `;
+                        spotlightResults.innerHTML = '<div class="spotlight-empty"><div style="color:var(--danger);font-weight:600;">Gagal memuat data</div><div style="font-size:0.8rem;color:var(--gray);">Status: ' + res.status + '</div></div>';
                     }
                 } catch (e) {
-                    console.error('Search fetch error:', e);
-                    spotlightResults.innerHTML = `
-                        <div class="spotlight-empty">
-                            <div style="color:var(--danger); font-weight:600;">Terjadi kesalahan koneksi</div>
-                            <div style="font-size:0.8rem; color:var(--gray);">Periksa jaringan Anda dan coba lagi.</div>
-                        </div>
-                    `;
+                    console.error('Search error:', e);
+                    spotlightResults.innerHTML = '<div class="spotlight-empty"><div style="color:var(--danger);font-weight:600;">Kesalahan koneksi</div><div style="font-size:0.8rem;color:var(--gray);">Periksa jaringan Anda.</div></div>';
                 }
-            }, 120);
+            }, 150);
         });
 
-        // Arrow Key Navigation
+        // Arrow Key Navigation (only handle navigation keys, skip for typing)
         spotlightInput.addEventListener('keydown', function(e) {
+            if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'Enter') return;
+
             const items = spotlightResults.querySelectorAll('.spotlight-item');
             if (items.length === 0) return;
 
