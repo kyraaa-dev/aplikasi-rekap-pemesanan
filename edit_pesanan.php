@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['skpd_id'])) {
                 }
             }
 
-            header("Location: edit_pesanan.php?id=$id&notif=edit_sukses");
+            header("Location: pesanan.php?notif=edit_sukses");
             exit;
         } else {
             header("Location: edit_pesanan.php?id=$id&error_msg=" . urlencode("Gagal mengupdate pesanan: " . $conn->error));
@@ -103,119 +103,152 @@ $skpds = $conn->query("SELECT * FROM skpd ORDER BY nama_skpd ASC");
     <?php include 'sidebar.php'; ?>
     <main class="main-content">
         <div class="header">
-            <h1>Edit Pesanan Mutz</h1>
+            <div>
+                <h1>Edit Pesanan Mutz</h1>
+                <p style="margin: 4px 0 0 0; color: var(--gray); font-size: 0.875rem;">Perbarui data rincian pemesanan mutz ASN & KORPRI</p>
+            </div>
+            <a href="pesanan.php" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Kembali ke Daftar
+            </a>
         </div>
 
-        
-        <div class="panel">
-            <div class="flex justify-between items-center mb-4">
-                <h2>Form Edit Pesanan</h2>
-                <a href="pesanan.php" class="btn btn-sm btn-secondary">Kembali</a>
+        <div class="panel" style="max-width: 820px; margin: 1.5rem 0; padding: 2rem; border-radius: 16px; background: var(--white); box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid var(--gray-light);">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gray-light); padding-bottom: 1.25rem; margin-bottom: 1.5rem;">
+                <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--primary); margin: 0; display: flex; align-items: center; gap: 8px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    Formulir Edit Pesanan #<?= $pesanan['id'] ?>
+                </h2>
+                <span style="font-size: 0.8rem; background: #EEF2FF; color: #4338CA; padding: 4px 10px; border-radius: 20px; font-weight: 600;">
+                    ID: <?= $pesanan['id'] ?>
+                </span>
             </div>
             
             <form method="POST">
                 <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
-                <div class="form-group">
-                    <label>SKPD</label>
-                    <select name="skpd_id" required>
-                        <option value="">-- Pilih SKPD --</option>
-                        <?php while($s = $skpds->fetch_assoc()): ?>
-                            <option value="<?= $s['id'] ?>" <?= $pesanan['skpd_id'] == $s['id'] ? 'selected' : '' ?>>
-                                <?= htmlspecialchars($s['nama_skpd']) ?>
-                            </option>
-                        <?php endwhile; ?>
-                    </select>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.25rem; margin-bottom: 1.25rem;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">SKPD / Instansi <span style="color: #DC2626;">*</span></label>
+                        <select name="skpd_id" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 0.85rem; font-size: 0.9rem;">
+                            <option value="">-- Pilih SKPD --</option>
+                            <?php while($s = $skpds->fetch_assoc()): ?>
+                                <option value="<?= $s['id'] ?>" <?= $pesanan['skpd_id'] == $s['id'] ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($s['nama_skpd']) ?>
+                                </option>
+                            <?php endwhile; ?>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Nama Pemesan <span style="color: var(--gray); font-weight: 400; font-size: 0.78rem;">(Opsional)</span></label>
+                        <input type="text" name="nama_pemesan" value="<?= htmlspecialchars($pesanan['nama_pemesan'] ?? '') ?>" placeholder="Masukkan nama pemesan" style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 0.85rem; font-size: 0.9rem; box-sizing: border-box;">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Nama Pemesan (Opsional)</label>
-                    <input type="text" name="nama_pemesan" value="<?= htmlspecialchars($pesanan['nama_pemesan'] ?? '') ?>" placeholder="Masukkan nama pemesan (jika ada)">
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-bottom: 1.25rem;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Jenis Kelamin <span style="color: #DC2626;">*</span></label>
+                        <select name="jenis_kelamin" id="jenis_kelamin" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 0.85rem; font-size: 0.9rem;">
+                            <option value="Laki-laki" <?= $pesanan['jenis_kelamin'] == 'Laki-laki' ? 'selected' : '' ?>>Laki-laki</option>
+                            <option value="Perempuan" <?= $pesanan['jenis_kelamin'] == 'Perempuan' ? 'selected' : '' ?>>Perempuan</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Ukuran Mutz <span style="color: #DC2626;">*</span></label>
+                        <select name="ukuran" id="ukuran" data-selected="<?= $pesanan['ukuran'] ?>" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 0.85rem; font-size: 0.9rem;">
+                            <!-- Akan diisi oleh JavaScript berdasarkan pilihan Jenis Kelamin -->
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Jenis Mutz <span style="color: #DC2626;">*</span></label>
+                        <select name="jenis_mutz" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 0.85rem; font-size: 0.9rem;">
+                            <option value="Biasa" <?= (isset($pesanan['jenis_mutz']) && $pesanan['jenis_mutz'] == 'Biasa') ? 'selected' : '' ?>>Biasa (Rp 55.000)</option>
+                            <option value="Kepala SKPD" <?= (isset($pesanan['jenis_mutz']) && $pesanan['jenis_mutz'] == 'Kepala SKPD') ? 'selected' : '' ?>>Kepala SKPD (Rp 150.000)</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Jenis Kelamin</label>
-                    <select name="jenis_kelamin" id="jenis_kelamin" required>
-                        <option value="Laki-laki" <?= $pesanan['jenis_kelamin'] == 'Laki-laki' ? 'selected' : '' ?>>Laki-laki</option>
-                        <option value="Perempuan" <?= $pesanan['jenis_kelamin'] == 'Perempuan' ? 'selected' : '' ?>>Perempuan</option>
-                    </select>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-bottom: 1.25rem;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Jumlah Pesanan <span style="color: #DC2626;">*</span></label>
+                        <input type="number" name="jumlah" value="<?= $pesanan['jumlah'] ?>" min="1" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 0.85rem; font-size: 0.9rem; box-sizing: border-box;">
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Status Pembayaran <span style="color: #DC2626;">*</span></label>
+                        <select name="status_bayar" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 0.85rem; font-size: 0.9rem;">
+                            <option value="Belum Lunas" <?= $pesanan['status_bayar'] == 'Belum Lunas' ? 'selected' : '' ?>>🔴 Belum Lunas</option>
+                            <option value="Lunas" <?= $pesanan['status_bayar'] == 'Lunas' ? 'selected' : '' ?>>🟢 Lunas</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Status Pengambilan <span style="color: #DC2626;">*</span></label>
+                        <select name="status_pengambilan" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 0.85rem; font-size: 0.9rem;">
+                            <option value="Menunggu Diproses" <?= $pesanan['status_pengambilan'] == 'Menunggu Diproses' ? 'selected' : '' ?>>⏳ Menunggu Diproses</option>
+                            <option value="Sedang Dibuat" <?= $pesanan['status_pengambilan'] == 'Sedang Dibuat' ? 'selected' : '' ?>>✂️ Sedang Dibuat</option>
+                            <option value="Siap Diambil" <?= $pesanan['status_pengambilan'] == 'Siap Diambil' ? 'selected' : '' ?>>📦 Siap Diambil</option>
+                            <option value="Sudah Diambil" <?= $pesanan['status_pengambilan'] == 'Sudah Diambil' ? 'selected' : '' ?>>✅ Sudah Diambil</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Ukuran Mutz</label>
-                    <select name="ukuran" id="ukuran" data-selected="<?= $pesanan['ukuran'] ?>" required>
-                        <!-- Akan diisi oleh JavaScript berdasarkan pilihan Jenis Kelamin -->
-                    </select>
+
+                <div class="form-group" style="margin-bottom: 1.75rem;">
+                    <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Catatan Tambahan <span style="color: var(--gray); font-weight: 400; font-size: 0.78rem;">(Opsional)</span></label>
+                    <input type="text" name="catatan" value="<?= htmlspecialchars($pesanan['catatan'] ?? '') ?>" placeholder="Contoh: Titip ke bagian admin atau catatan ukuran khusus" style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 0.85rem; font-size: 0.9rem; box-sizing: border-box;">
                 </div>
-                <div class="form-group">
-                    <label>Jenis Mutz</label>
-                    <select name="jenis_mutz" required>
-                        <option value="Biasa" <?= (isset($pesanan['jenis_mutz']) && $pesanan['jenis_mutz'] == 'Biasa') ? 'selected' : '' ?>>Biasa (Rp 55.000)</option>
-                        <option value="Kepala SKPD" <?= (isset($pesanan['jenis_mutz']) && $pesanan['jenis_mutz'] == 'Kepala SKPD') ? 'selected' : '' ?>>Kepala SKPD (Rp 150.000)</option>
-                    </select>
+
+                <div style="display: flex; gap: 12px; justify-content: flex-end; align-items: center; border-top: 1px solid var(--gray-light); padding-top: 1.5rem;">
+                    <a href="pesanan.php" class="btn btn-secondary" style="padding: 0.7rem 1.5rem; text-decoration: none; border-radius: 8px; font-weight: 600;">
+                        Batal
+                    </a>
+                    <button type="submit" class="btn btn-primary" style="padding: 0.7rem 2rem; border-radius: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                        Simpan Perubahan
+                    </button>
                 </div>
-                <div class="form-group">
-                    <label>Jumlah Pesanan</label>
-                    <input type="number" name="jumlah" value="<?= $pesanan['jumlah'] ?>" min="1" required>
-                </div>
-                <div class="form-group">
-                    <label>Status Pembayaran</label>
-                    <select name="status_bayar" required>
-                        <option value="Belum Lunas" <?= $pesanan['status_bayar'] == 'Belum Lunas' ? 'selected' : '' ?>>Belum Lunas</option>
-                        <option value="Lunas" <?= $pesanan['status_bayar'] == 'Lunas' ? 'selected' : '' ?>>Lunas</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Status Pengambilan</label>
-                    <select name="status_pengambilan" required>
-                        <option value="Menunggu Diproses" <?= $pesanan['status_pengambilan'] == 'Menunggu Diproses' ? 'selected' : '' ?>>Menunggu Diproses</option>
-                        <option value="Sedang Dibuat" <?= $pesanan['status_pengambilan'] == 'Sedang Dibuat' ? 'selected' : '' ?>>Sedang Dibuat</option>
-                        <option value="Siap Diambil" <?= $pesanan['status_pengambilan'] == 'Siap Diambil' ? 'selected' : '' ?>>Siap Diambil</option>
-                        <option value="Sudah Diambil" <?= $pesanan['status_pengambilan'] == 'Sudah Diambil' ? 'selected' : '' ?>>Sudah Diambil</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Catatan Tambahan (Opsional)</label>
-                    <input type="text" name="catatan" value="<?= htmlspecialchars($pesanan['catatan'] ?? '') ?>" placeholder="Contoh: Titip ke bagian admin">
-                </div>
-                <button type="submit">Update Pesanan</button>
             </form>
         </div>
     </main>
     <script>
-        // Modifikasi script.js khusus untuk halaman edit agar bisa auto-select ukuran
-        document.addEventListener('DOMContentLoaded', function() {
+        (function initEditPesananForm() {
             const jkSelect = document.getElementById('jenis_kelamin');
             const ukuranSelect = document.getElementById('ukuran');
+            if (!jkSelect || !ukuranSelect) return;
+            
             const selectedSize = ukuranSelect.getAttribute('data-selected');
             
-            if (jkSelect && ukuranSelect) {
-                function updateUkuranOptions() {
-                    const jk = jkSelect.value;
-                    ukuranSelect.innerHTML = '';
-                    
-                    let options = [];
-                    if (jk === 'Laki-laki') {
-                        options = [55, 56, 57, 58, 59, 60];
-                    } else if (jk === 'Perempuan') {
-                        options = [58, 59, 60];
-                    } else {
-                        ukuranSelect.innerHTML = '<option value="">-- Pilih Jenis Kelamin Dahulu --</option>';
-                        return;
-                    }
-                    
-                    options.forEach(size => {
-                        const opt = document.createElement('option');
-                        opt.value = size;
-                        opt.textContent = size;
-                        // Select jika size sama dengan selectedSize
-                        if (size.toString() === selectedSize.toString()) {
-                            opt.selected = true;
-                        }
-                        ukuranSelect.appendChild(opt);
-                    });
+            function updateUkuranOptions() {
+                const jk = jkSelect.value;
+                ukuranSelect.innerHTML = '';
+                
+                let options = [];
+                if (jk === 'Laki-laki') {
+                    options = [55, 56, 57, 58, 59, 60];
+                } else if (jk === 'Perempuan') {
+                    options = [58, 59, 60];
+                } else {
+                    ukuranSelect.innerHTML = '<option value="">-- Pilih Jenis Kelamin Dahulu --</option>';
+                    return;
                 }
-
-                updateUkuranOptions();
-                jkSelect.addEventListener('change', updateUkuranOptions);
+                
+                options.forEach(size => {
+                    const opt = document.createElement('option');
+                    opt.value = size;
+                    opt.textContent = size;
+                    if (selectedSize && size.toString() === selectedSize.toString()) {
+                        opt.selected = true;
+                    }
+                    ukuranSelect.appendChild(opt);
+                });
             }
-        });
+
+            updateUkuranOptions();
+            jkSelect.addEventListener('change', updateUkuranOptions);
+        })();
     </script>
 </body>
 </html>

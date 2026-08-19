@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['nama_skpd'])) {
             $success = $stmt->execute();
             $stmt->close();
             if ($success) {
-                header("Location: edit_skpd.php?id=$id&notif=edit_sukses");
+                header("Location: skpd.php?notif=edit_sukses");
                 exit;
             }
         }
@@ -68,38 +68,55 @@ if (!$skpd) {
     <?php include 'sidebar.php'; ?>
     <main class="main-content">
         <div class="header">
-            <h1>Edit SKPD</h1>
+            <div>
+                <h1>Edit SKPD</h1>
+                <p style="margin: 4px 0 0 0; color: var(--gray); font-size: 0.875rem;">Perbarui data instansi atau kontak narahubung WhatsApp</p>
+            </div>
+            <a href="skpd.php" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Kembali ke Daftar SKPD
+            </a>
         </div>
 
-        
-        <div class="panel" style="background: var(--white); border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid var(--gray-light); max-width: 600px;">
-            <div class="flex justify-between items-center mb-4">
-                <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--primary); margin: 0; display: flex; align-items: center; gap: 8px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                    Form Edit SKPD
+        <div class="panel" style="max-width: 620px; margin: 1.5rem 0; padding: 2rem; border-radius: 16px; background: var(--white); box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid var(--gray-light);">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gray-light); padding-bottom: 1.25rem; margin-bottom: 1.5rem;">
+                <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--primary); margin: 0; display: flex; align-items: center; gap: 8px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    Formulir Edit SKPD
                 </h2>
-                <a href="skpd.php" class="btn btn-sm btn-secondary" style="padding: 6px 12px; border-radius: 8px; font-size: 0.825rem; text-decoration: none;">← Kembali</a>
+                <span style="font-size: 0.8rem; background: #EEF2FF; color: #4338CA; padding: 4px 10px; border-radius: 20px; font-weight: 600;">
+                    ID: <?= $skpd['id'] ?>
+                </span>
             </div>
             
             <form method="POST">
                 <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
-                <div class="form-group" style="margin-bottom: 1rem;">
-                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--dark);">Nama SKPD / Instansi <span style="color: #DC2626;">*</span></label>
-                    <input type="text" name="nama_skpd" value="<?= htmlspecialchars($skpd['nama_skpd']) ?>" placeholder="Masukkan Nama SKPD" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 1rem; box-sizing: border-box;">
+                
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label style="display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 6px; color: var(--dark);">Nama SKPD / Instansi <span style="color: #DC2626;">*</span></label>
+                    <input type="text" name="nama_skpd" value="<?= htmlspecialchars($skpd['nama_skpd']) ?>" placeholder="Masukkan Nama SKPD" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.7rem 1rem; box-sizing: border-box; font-size: 0.9rem;">
                 </div>
-                <div class="form-group" style="margin-bottom: 1.5rem;">
-                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--dark);">
+
+                <div class="form-group" style="margin-bottom: 1.75rem;">
+                    <label style="display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 6px; color: var(--dark);">
                         <span style="display: inline-flex; align-items: center; gap: 5px; color: #059669;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                            No. WhatsApp / Kontak Narahubung
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                            No. WhatsApp Narahubung
                         </span>
-                        <span style="font-size:0.75rem; color:var(--gray); font-weight:400;">(Opsional)</span>
+                        <span style="font-size:0.75rem; color:var(--gray); font-weight:400; margin-left: 4px;">(Opsional)</span>
                     </label>
-                    <input type="text" name="no_wa" value="<?= htmlspecialchars($skpd['no_wa'] ?? '') ?>" placeholder="Contoh: 08123456789" style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.65rem 1rem; box-sizing: border-box;">
+                    <input type="text" name="no_wa" value="<?= htmlspecialchars($skpd['no_wa'] ?? '') ?>" placeholder="Contoh: 08123456789 atau 628123456789" style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.7rem 1rem; box-sizing: border-box; font-size: 0.9rem;">
                 </div>
-                <button type="submit" class="btn-card-primary" style="padding: 0.75rem 1.5rem; width: 100%;">
-                    💾 Update SKPD
-                </button>
+
+                <div style="display: flex; gap: 12px; justify-content: flex-end; align-items: center; border-top: 1px solid var(--gray-light); padding-top: 1.5rem;">
+                    <a href="skpd.php" class="btn btn-secondary" style="padding: 0.7rem 1.5rem; text-decoration: none; border-radius: 8px; font-weight: 600;">
+                        Batal
+                    </a>
+                    <button type="submit" class="btn btn-primary" style="padding: 0.7rem 2rem; border-radius: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                        Simpan Perubahan
+                    </button>
+                </div>
             </form>
         </div>
     </main>
