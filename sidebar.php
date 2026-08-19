@@ -165,8 +165,9 @@
     </ul>
 </aside>
 
-<!-- SweetAlert2 -->
+<!-- SweetAlert2 & Instant Navigation Engine -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="assets/js/instant-nav.js?v=<?= time() ?>"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // 1. URL Notification Parsing

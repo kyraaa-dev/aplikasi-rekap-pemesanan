@@ -741,3 +741,25 @@ tr:hover {
 .swal2-container {
     z-index: 100000 !important;
 }
+
+/* Instant SPA Page Transitions */
+.main-content {
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    will-change: opacity, transform;
+}
+.main-content.page-loading {
+    opacity: 0.75;
+}
+.main-content.page-enter {
+    animation: pageFadeSlide 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes pageFadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
