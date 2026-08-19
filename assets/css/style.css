@@ -190,7 +190,8 @@ input:focus, select:focus {
     box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
 }
 
-button, .btn {
+button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.spotlight-close-btn):not(.sidebar-close-btn):not(.spotlight-filter-btn),
+.btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -206,11 +207,13 @@ button, .btn {
     transition: background-color 0.3s, transform 0.1s;
 }
 
-button:hover, .btn:hover {
+button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.spotlight-close-btn):not(.sidebar-close-btn):not(.spotlight-filter-btn):hover,
+.btn:hover {
     background-color: var(--primary-hover);
 }
 
-button:active, .btn:active {
+button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.spotlight-close-btn):not(.sidebar-close-btn):not(.spotlight-filter-btn):active,
+.btn:active {
     transform: scale(0.98);
 }
 
