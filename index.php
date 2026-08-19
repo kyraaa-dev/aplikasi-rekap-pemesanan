@@ -138,6 +138,7 @@ $q_all_orders = $conn->query("
 ");
 
 $skpd_order_items = [];
+$skpd_order_items_by_id = [];
 $skpd_id_map = [];
 $skpd_wa_map = [];
 
@@ -146,6 +147,7 @@ $q_skpd_meta = $conn->query("SELECT id, nama_skpd, no_wa FROM skpd");
 if ($q_skpd_meta) {
     while ($sm = $q_skpd_meta->fetch_assoc()) {
         $skpd_wa_map[$sm['nama_skpd']] = $sm['no_wa'] ?? '';
+        $skpd_wa_map[$sm['id']] = $sm['no_wa'] ?? '';
         $skpd_id_map[$sm['nama_skpd']] = $sm['id'];
     }
 }
@@ -153,6 +155,7 @@ if ($q_skpd_meta) {
 if ($q_all_orders) {
     while ($row = $q_all_orders->fetch_assoc()) {
         $skpd_order_items[$row['nama_skpd']][] = $row;
+        $skpd_order_items_by_id[$row['skpd_id']][] = $row;
         if (!isset($skpd_id_map[$row['nama_skpd']])) {
             $skpd_id_map[$row['nama_skpd']] = $row['skpd_id'];
         }
@@ -409,21 +412,20 @@ if ($q_all_orders) {
                 <?php endif; ?>
             </div>
         </div>
-    </main>
 
-    <!-- Modal Detail Rincian Pesanan per SKPD -->
-    <div id="modalDetailSkpd" class="modal-skpd-overlay" style="display: none;">
-        <div class="modal-skpd-content">
-            <!-- Modal Header -->
-            <div style="padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--gray-light); display: flex; justify-content: space-between; align-items: flex-start; background: var(--light);">
-                <div>
-                    <h3 id="modalSkpdName" style="margin: 0; color: var(--dark); font-size: 1.2rem; font-weight: 700;">-</h3>
-                    <div style="display: flex; gap: 8px; margin-top: 8px; font-size: 0.825rem; flex-wrap: wrap;" id="modalSkpdBadges">
-                        <!-- Badges -->
+        <!-- Modal Detail Rincian Pesanan per SKPD -->
+        <div id="modalDetailSkpd" class="modal-skpd-overlay" style="display: none;">
+            <div class="modal-skpd-content">
+                <!-- Modal Header -->
+                <div style="padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--gray-light); display: flex; justify-content: space-between; align-items: flex-start; background: var(--light);">
+                    <div>
+                        <h3 id="modalSkpdName" style="margin: 0; color: var(--dark); font-size: 1.2rem; font-weight: 700;">-</h3>
+                        <div style="display: flex; gap: 8px; margin-top: 8px; font-size: 0.825rem; flex-wrap: wrap;" id="modalSkpdBadges">
+                            <!-- Badges -->
+                        </div>
                     </div>
+                    <button id="closeModalSkpd" type="button" onclick="closeSkpdModal()" title="Tutup" style="background: transparent; border: none; font-size: 1.6rem; line-height: 1; color: var(--gray); cursor: pointer; padding: 4px 8px; border-radius: 6px; transition: color 0.2s;">&times;</button>
                 </div>
-                <button id="closeModalSkpd" type="button" title="Tutup" style="background: transparent; border: none; font-size: 1.5rem; line-height: 1; color: var(--gray); cursor: pointer; padding: 4px 8px; border-radius: 6px; transition: color 0.2s;">&times;</button>
-            </div>
 
             <!-- Modal Body Table -->
             <div style="padding: 1.25rem 1.5rem; overflow-y: auto; flex: 1;">
@@ -642,37 +644,45 @@ if ($q_all_orders) {
         });
 
         // Detail Rincian Pesanan per SKPD Modal Logic
-        const skpdOrdersData = <?= json_encode($skpd_order_items, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) ?>;
-        const skpdWaData = <?= json_encode($skpd_wa_map, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) ?>;
-        const modalDetailSkpd = document.getElementById('modalDetailSkpd');
-        const closeModalSkpd = document.getElementById('closeModalSkpd');
-        const modalSkpdName = document.getElementById('modalSkpdName');
-        const modalSkpdBadges = document.getElementById('modalSkpdBadges');
-        const modalSkpdTableBody = document.getElementById('modalSkpdTableBody');
-        const modalSkpdFooterSummary = document.getElementById('modalSkpdFooterSummary');
-        const btnFilterKePesanan = document.getElementById('btnFilterKePesanan');
-        const btnModalAmbilSemua = document.getElementById('btnModalAmbilSemua');
-        const btnModalLunasSemua = document.getElementById('btnModalLunasSemua');
-        const btnModalWa = document.getElementById('btnModalWa');
+        window.skpdOrdersData = <?= json_encode($skpd_order_items, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) ?>;
+        window.skpdOrdersById = <?= json_encode($skpd_order_items_by_id, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) ?>;
+        window.skpdWaData = <?= json_encode($skpd_wa_map, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) ?>;
 
-        function openSkpdModal(skpdName, skpdId, status, statusColor, statusBg, statusAmbil, statusAmbilColor, statusAmbilBg, totalQty, totalRp) {
-            modalSkpdName.innerText = skpdName;
+        window.openSkpdModal = function(skpdName, skpdId, status, statusColor, statusBg, statusAmbil, statusAmbilColor, statusAmbilBg, totalQty, totalRp) {
+            const modalDetailSkpd = document.getElementById('modalDetailSkpd');
+            const modalSkpdName = document.getElementById('modalSkpdName');
+            const modalSkpdBadges = document.getElementById('modalSkpdBadges');
+            const modalSkpdTableBody = document.getElementById('modalSkpdTableBody');
+            const modalSkpdFooterSummary = document.getElementById('modalSkpdFooterSummary');
+            const btnFilterKePesanan = document.getElementById('btnFilterKePesanan');
+            const btnModalAmbilSemua = document.getElementById('btnModalAmbilSemua');
+            const btnModalLunasSemua = document.getElementById('btnModalLunasSemua');
+            const btnModalWa = document.getElementById('btnModalWa');
+
+            if (!modalDetailSkpd) return;
+
+            if (modalSkpdName) modalSkpdName.innerText = skpdName;
             
             // Set Badges
-            modalSkpdBadges.innerHTML = `
-                <span style="background: #e0e7ff; color: #4338ca; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Total: ${totalQty} buah</span>
-                <span style="background: #fef3c7; color: #b45309; padding: 4px 8px; border-radius: 4px; font-weight: 600;">${totalRp}</span>
-                <span style="background: ${statusBg}; color: ${statusColor}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Bayar: ${status}</span>
-                <span style="background: ${statusAmbilBg}; color: ${statusAmbilColor}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Ambil: ${statusAmbil}</span>
-            `;
+            if (modalSkpdBadges) {
+                modalSkpdBadges.innerHTML = `
+                    <span style="background: #e0e7ff; color: #4338ca; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Total: ${totalQty} buah</span>
+                    <span style="background: #fef3c7; color: #b45309; padding: 4px 8px; border-radius: 4px; font-weight: 600;">${totalRp}</span>
+                    <span style="background: ${statusBg}; color: ${statusColor}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Bayar: ${status}</span>
+                    <span style="background: ${statusAmbilBg}; color: ${statusAmbilColor}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Ambil: ${statusAmbil}</span>
+                `;
+            }
             
             // Set Action Link
-            btnFilterKePesanan.href = `pesanan.php?filter_skpd=${skpdId}`;
+            if (btnFilterKePesanan) {
+                btnFilterKePesanan.href = `pesanan.php?filter_skpd=${skpdId}`;
+            }
 
             // Set WhatsApp Modal Link
             if (btnModalWa) {
+                const targetWa = (window.skpdWaData && (window.skpdWaData[skpdId] || window.skpdWaData[skpdName])) || '';
                 btnModalWa.setAttribute('data-skpd', skpdName);
-                btnModalWa.setAttribute('data-wa', skpdWaData[skpdName] || '');
+                btnModalWa.setAttribute('data-wa', targetWa);
                 btnModalWa.setAttribute('data-total-qty', totalQty);
                 btnModalWa.setAttribute('data-total-rp', totalRp);
                 btnModalWa.setAttribute('data-status-bayar', status);
@@ -701,91 +711,110 @@ if ($q_all_orders) {
                 }
             }
             
-            // Populate Table
-            const items = skpdOrdersData[skpdName] || [];
-            if (items.length === 0) {
-                modalSkpdTableBody.innerHTML = `<tr><td colspan="10" style="text-align: center; padding: 20px; color: var(--gray);">Tidak ada rincian data pemesan untuk SKPD ini.</td></tr>`;
-            } else {
-                let html = '';
-                items.forEach((item, index) => {
-                    const genderColor = item.jenis_kelamin === 'Laki-laki' ? 'var(--primary)' : '#EC4899';
-                    const bayarBg = item.status_bayar === 'Lunas' ? '#DCFCE7' : '#FEE2E2';
-                    const bayarColor = item.status_bayar === 'Lunas' ? '#15803D' : '#B91C1C';
-                    
-                    let ambilBg = '#F3F4F6', ambilColor = '#374151';
-                    if (item.status_pengambilan === 'Sudah Diambil') { ambilBg = '#DCFCE7'; ambilColor = '#15803D'; }
-                    else if (item.status_pengambilan === 'Siap Diambil') { ambilBg = '#E0E7FF'; ambilColor = '#4338CA'; }
-                    else if (item.status_pengambilan === 'Sedang Dibuat') { ambilBg = '#FEF3C7'; ambilColor = '#D97706'; }
+            // Populate Table (check by ID first, then by name)
+            let items = [];
+            if (window.skpdOrdersById && window.skpdOrdersById[skpdId]) {
+                items = window.skpdOrdersById[skpdId];
+            } else if (window.skpdOrdersData && window.skpdOrdersData[skpdName]) {
+                items = window.skpdOrdersData[skpdName];
+            }
 
-                    const subtotalFormatted = 'Rp ' + parseInt(item.subtotal || 0).toLocaleString('id-ID');
-                    const pemesan = item.nama_pemesan && item.nama_pemesan.trim() !== '' ? item.nama_pemesan : '-';
-                    const catatan = item.catatan && item.catatan.trim() !== '' ? item.catatan : '-';
+            if (modalSkpdTableBody) {
+                if (!items || items.length === 0) {
+                    modalSkpdTableBody.innerHTML = `<tr><td colspan="10" style="text-align: center; padding: 20px; color: var(--gray);">Tidak ada rincian data pemesan untuk SKPD ini.</td></tr>`;
+                } else {
+                    let html = '';
+                    items.forEach((item, index) => {
+                        const genderColor = item.jenis_kelamin === 'Laki-laki' ? 'var(--primary)' : '#EC4899';
+                        const bayarBg = item.status_bayar === 'Lunas' ? '#DCFCE7' : '#FEE2E2';
+                        const bayarColor = item.status_bayar === 'Lunas' ? '#15803D' : '#B91C1C';
+                        
+                        let ambilBg = '#F3F4F6', ambilColor = '#374151';
+                        if (item.status_pengambilan === 'Sudah Diambil') { ambilBg = '#DCFCE7'; ambilColor = '#15803D'; }
+                        else if (item.status_pengambilan === 'Siap Diambil') { ambilBg = '#E0E7FF'; ambilColor = '#4338CA'; }
+                        else if (item.status_pengambilan === 'Sedang Dibuat') { ambilBg = '#FEF3C7'; ambilColor = '#D97706'; }
 
-                    html += `
-                        <tr style="border-bottom: 1px solid var(--gray-light);">
-                            <td style="padding: 10px 12px; text-align: center; color: var(--gray);">${index + 1}</td>
-                            <td style="padding: 10px 12px; font-weight: 600; color: var(--dark);">${pemesan}</td>
-                            <td style="padding: 10px 12px; text-align: center;">
-                                <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background-color:${genderColor}; margin-right:4px;"></span>
-                                ${item.jenis_kelamin}
-                            </td>
-                            <td style="padding: 10px 12px; text-align: center;"><span style="font-size:0.8rem; background:var(--light); padding:2px 6px; border-radius:4px;">${item.jenis_mutz}</span></td>
-                            <td style="padding: 10px 12px; text-align: center; font-weight: 600;">${item.ukuran}</td>
-                            <td style="padding: 10px 12px; text-align: center; font-weight: 600;">${item.jumlah}</td>
-                            <td style="padding: 10px 12px; text-align: right; font-weight: 600; color:#B45309;">${subtotalFormatted}</td>
-                            <td style="padding: 10px 12px; text-align: center;">
-                                <span style="background:${bayarBg}; color:${bayarColor}; padding:3px 8px; border-radius:12px; font-size:0.75rem; font-weight:700;">${item.status_bayar}</span>
-                            </td>
-                            <td style="padding: 10px 12px; text-align: center;">
-                                <span style="background:${ambilBg}; color:${ambilColor}; padding:3px 8px; border-radius:12px; font-size:0.75rem; font-weight:600;">${item.status_pengambilan}</span>
-                            </td>
-                            <td style="padding: 10px 12px; font-size:0.8rem; color:var(--gray);">${catatan}</td>
-                        </tr>
-                    `;
-                });
-                modalSkpdTableBody.innerHTML = html;
+                        const subtotalFormatted = 'Rp ' + parseInt(item.subtotal || 0).toLocaleString('id-ID');
+                        const pemesan = item.nama_pemesan && item.nama_pemesan.trim() !== '' ? item.nama_pemesan : '-';
+                        const catatan = item.catatan && item.catatan.trim() !== '' ? item.catatan : '-';
+
+                        html += `
+                            <tr style="border-bottom: 1px solid var(--gray-light);">
+                                <td style="padding: 10px 12px; text-align: center; color: var(--gray);">${index + 1}</td>
+                                <td style="padding: 10px 12px; font-weight: 600; color: var(--dark);">${pemesan}</td>
+                                <td style="padding: 10px 12px; text-align: center;">
+                                    <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background-color:${genderColor}; margin-right:4px;"></span>
+                                    ${item.jenis_kelamin}
+                                </td>
+                                <td style="padding: 10px 12px; text-align: center;"><span style="font-size:0.8rem; background:var(--light); padding:2px 6px; border-radius:4px;">${item.jenis_mutz}</span></td>
+                                <td style="padding: 10px 12px; text-align: center; font-weight: 600;">${item.ukuran}</td>
+                                <td style="padding: 10px 12px; text-align: center; font-weight: 600;">${item.jumlah}</td>
+                                <td style="padding: 10px 12px; text-align: right; font-weight: 600; color:#B45309;">${subtotalFormatted}</td>
+                                <td style="padding: 10px 12px; text-align: center;">
+                                    <span style="background:${bayarBg}; color:${bayarColor}; padding:3px 8px; border-radius:12px; font-size:0.75rem; font-weight:700;">${item.status_bayar}</span>
+                                </td>
+                                <td style="padding: 10px 12px; text-align: center;">
+                                    <span style="background:${ambilBg}; color:${ambilColor}; padding:3px 8px; border-radius:12px; font-size:0.75rem; font-weight:600;">${item.status_pengambilan}</span>
+                                </td>
+                                <td style="padding: 10px 12px; font-size:0.8rem; color:var(--gray);">${catatan}</td>
+                            </tr>
+                        `;
+                    });
+                    modalSkpdTableBody.innerHTML = html;
+                }
             }
             
-            modalSkpdFooterSummary.innerText = `Menampilkan ${items.length} rincian pemesan (${totalQty} buah mutz)`;
+            if (modalSkpdFooterSummary) {
+                modalSkpdFooterSummary.innerText = `Menampilkan ${items.length} rincian pemesan (${totalQty} buah mutz)`;
+            }
             
             modalDetailSkpd.style.display = 'flex';
             document.body.style.overflow = 'hidden';
-        }
+        };
 
-        function closeSkpdModal() {
-            modalDetailSkpd.style.display = 'none';
+        window.closeSkpdModal = function() {
+            const modal = document.getElementById('modalDetailSkpd');
+            if (modal) {
+                modal.style.display = 'none';
+            }
             document.body.style.overflow = '';
-        }
+        };
 
-        document.querySelectorAll('.btn-detail-skpd').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const skpdName = this.getAttribute('data-skpd');
-                const skpdId = this.getAttribute('data-skpd-id');
-                const status = this.getAttribute('data-status');
-                const statusColor = this.getAttribute('data-status-color');
-                const statusBg = this.getAttribute('data-status-bg');
-                const statusAmbil = this.getAttribute('data-status-ambil');
-                const statusAmbilColor = this.getAttribute('data-status-ambil-color');
-                const statusAmbilBg = this.getAttribute('data-status-ambil-bg');
-                const totalQty = this.getAttribute('data-total-qty');
-                const totalRp = this.getAttribute('data-total-rp');
-                openSkpdModal(skpdName, skpdId, status, statusColor, statusBg, statusAmbil, statusAmbilColor, statusAmbilBg, totalQty, totalRp);
-            });
+        // Resilient Event Delegation for Dynamic / SPA elements
+        document.addEventListener('click', function(e) {
+            // 1. Close modal if close button or backdrop is clicked
+            if (e.target.closest('#closeModalSkpd') || e.target.id === 'modalDetailSkpd') {
+                window.closeSkpdModal();
+                return;
+            }
+
+            // 2. Open modal if detail button is clicked
+            const btn = e.target.closest('.btn-detail-skpd');
+            if (btn) {
+                e.preventDefault();
+                const skpdName = btn.getAttribute('data-skpd');
+                const skpdId = btn.getAttribute('data-skpd-id');
+                const status = btn.getAttribute('data-status');
+                const statusColor = btn.getAttribute('data-status-color');
+                const statusBg = btn.getAttribute('data-status-bg');
+                const statusAmbil = btn.getAttribute('data-status-ambil');
+                const statusAmbilColor = btn.getAttribute('data-status-ambil-color');
+                const statusAmbilBg = btn.getAttribute('data-status-ambil-bg');
+                const totalQty = btn.getAttribute('data-total-qty');
+                const totalRp = btn.getAttribute('data-total-rp');
+                window.openSkpdModal(skpdName, skpdId, status, statusColor, statusBg, statusAmbil, statusAmbilColor, statusAmbilBg, totalQty, totalRp);
+            }
         });
 
-        if (closeModalSkpd) closeModalSkpd.addEventListener('click', closeSkpdModal);
-        if (modalDetailSkpd) {
-            modalDetailSkpd.addEventListener('click', function(e) {
-                if (e.target === modalDetailSkpd) {
-                    closeSkpdModal();
-                }
-            });
-        }
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && modalDetailSkpd && modalDetailSkpd.style.display === 'flex') {
-                closeSkpdModal();
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('modalDetailSkpd');
+                if (modal && modal.style.display === 'flex') {
+                    window.closeSkpdModal();
+                }
             }
         });
     </script>
+</main>
 </body>
 </html>
