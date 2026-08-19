@@ -102,7 +102,20 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    position: sticky;
+    top: -2rem;
+    padding-top: 1rem;
+    padding-bottom: 0.75rem;
+    background: rgba(248, 249, 250, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 90;
+    transition: background-color 0.2s;
+}
+
+[data-theme="dark"] .header {
+    background: rgba(15, 23, 42, 0.92);
 }
 
 h1 {
@@ -825,7 +838,7 @@ tr:hover {
     bottom: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
-    z-index: 100001 !important;
+    z-index: 999999 !important;
     background: rgba(15, 23, 42, 0.6) !important;
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
