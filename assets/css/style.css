@@ -801,23 +801,27 @@ tr:hover {
 
 /* Spotlight Overlay Modal */
 .spotlight-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 100001;
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 60px 16px 20px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
+    position: fixed !important;
+    inset: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 100001 !important;
+    background: rgba(15, 23, 42, 0.6) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    display: none;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    padding: 60px 16px 20px !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
 }
 .spotlight-overlay.active {
-    opacity: 1;
-    visibility: visible;
+    display: flex !important;
 }
 
 /* Spotlight Dialog Box */

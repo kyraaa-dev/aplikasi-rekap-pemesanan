@@ -92,75 +92,6 @@
 </script>
 
 <!-- Mobile Top Navbar -->
-<header class="mobile-topbar hide-on-print">
-    <button id="sidebarToggle" class="btn-hamburger" title="Buka Menu" aria-label="Buka Menu">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-    </button>
-    <a href="index.php" class="mobile-topbar-brand">
-        <img src="assets/images/logo.png?v=2" alt="Logo" style="width: 32px; height: 32px; object-fit: contain;">
-        <span>E-MutZ KORPRI</span>
-    </a>
-    <div class="mobile-topbar-actions" style="display: flex; align-items: center; gap: 6px;">
-        <button id="btnSpotlightTriggerMobile" class="btn-hamburger" title="Pencarian Cepat" aria-label="Pencarian Cepat">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        </button>
-        <button id="themeToggleMobile" class="btn-hamburger" title="Ganti Tema" aria-label="Ganti Tema">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-        </button>
-    </div>
-</header>
-
-<!-- Backdrop Overlay for Mobile Drawer -->
-<div class="sidebar-overlay hide-on-print" id="sidebarOverlay"></div>
-
-<!-- Desktop Floating Spotlight Search Button -->
-<button id="btnSpotlightTrigger" class="spotlight-trigger-btn hide-on-print" title="Pencarian Cepat (Ctrl + K / ⌘K)">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-    <span>Cari Pesanan / SKPD...</span>
-    <kbd class="spotlight-kbd">⌘K</kbd>
-</button>
-
-<!-- Desktop Floating Theme Toggle -->
-<button id="themeToggle" title="Ganti Tema (Terang/Gelap)" class="hide-on-print" style="position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; background-color: var(--white); color: var(--dark); border: 1px solid var(--gray-light); border-radius: 50%; width: 45px; height: 45px; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); padding: 0; transition: transform 0.2s;">
-</button>
-
-<!-- Spotlight Quick Search Modal (Command Palette) -->
-<div id="spotlightModal" class="spotlight-overlay hide-on-print">
-    <div class="spotlight-dialog" role="dialog" aria-modal="true">
-        <!-- Search Header -->
-        <div class="spotlight-header">
-            <svg class="spotlight-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" id="spotlightInput" class="spotlight-input" placeholder="Ketik nama pemesan, SKPD, nomor WA, ukuran, atau menu..." autocomplete="off" spellcheck="false">
-            <button id="btnSpotlightClose" class="spotlight-close-btn" title="Tutup Pencarian (Esc)">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-        </div>
-
-        <!-- Filter Tags -->
-        <div class="spotlight-filters">
-            <button class="spotlight-filter-btn active" data-filter="all">Semua</button>
-            <button class="spotlight-filter-btn" data-filter="pesanan">👤 Pemesan</button>
-            <button class="spotlight-filter-btn" data-filter="skpd">🏛️ SKPD</button>
-            <button class="spotlight-filter-btn" data-filter="menus">⚡ Menu Cepat</button>
-        </div>
-
-        <!-- Results List -->
-        <div id="spotlightResults" class="spotlight-results">
-            <!-- Rendered dynamically via JS -->
-        </div>
-
-        <!-- Footer -->
-        <div class="spotlight-footer">
-            <div class="spotlight-shortcuts">
-                <span><kbd>↑</kbd><kbd>↓</kbd> Pilih</span>
-                <span><kbd>↵</kbd> Buka</span>
-                <span><kbd>Esc</kbd> Tutup</span>
-            </div>
-            <span>E-MutZ Spotlight</span>
-        </div>
-    </div>
-</div>
-
 <aside class="sidebar">
     <div class="brand">
         <div style="display: flex; align-items: center; gap: 10px;">
@@ -211,6 +142,76 @@
         </li>
     </ul>
 </aside>
+
+<!-- Mobile Top Navbar -->
+<header class="mobile-topbar hide-on-print">
+    <button id="sidebarToggle" class="btn-hamburger" title="Buka Menu" aria-label="Buka Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+    <a href="index.php" class="mobile-topbar-brand">
+        <img src="assets/images/logo.png?v=2" alt="Logo" style="width: 32px; height: 32px; object-fit: contain;">
+        <span>E-MutZ KORPRI</span>
+    </a>
+    <div class="mobile-topbar-actions" style="display: flex; align-items: center; gap: 6px;">
+        <button id="btnSpotlightTriggerMobile" class="btn-hamburger" title="Pencarian Cepat" aria-label="Pencarian Cepat">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+        <button id="themeToggleMobile" class="btn-hamburger" title="Ganti Tema" aria-label="Ganti Tema">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+    </div>
+</header>
+
+<!-- Backdrop Overlay for Mobile Drawer -->
+<div class="sidebar-overlay hide-on-print" id="sidebarOverlay"></div>
+
+<!-- Desktop Floating Spotlight Search Button -->
+<button id="btnSpotlightTrigger" class="spotlight-trigger-btn hide-on-print" title="Pencarian Cepat (Ctrl + K / ⌘K)">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    <span>Cari Pesanan / SKPD...</span>
+    <kbd class="spotlight-kbd">⌘K</kbd>
+</button>
+
+<!-- Desktop Floating Theme Toggle -->
+<button id="themeToggle" title="Ganti Tema (Terang/Gelap)" class="hide-on-print" style="position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; background-color: var(--white); color: var(--dark); border: 1px solid var(--gray-light); border-radius: 50%; width: 45px; height: 45px; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); padding: 0; transition: transform 0.2s;">
+</button>
+
+<!-- Spotlight Quick Search Modal (Command Palette) -->
+<div id="spotlightModal" class="spotlight-overlay hide-on-print" style="display: none;">
+    <div class="spotlight-dialog" role="dialog" aria-modal="true">
+        <!-- Search Header -->
+        <div class="spotlight-header">
+            <svg class="spotlight-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="spotlightInput" class="spotlight-input" placeholder="Ketik nama pemesan, SKPD, nomor WA, ukuran, atau menu..." autocomplete="off" spellcheck="false">
+            <button id="btnSpotlightClose" class="spotlight-close-btn" title="Tutup Pencarian (Esc)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+
+        <!-- Filter Tags -->
+        <div class="spotlight-filters">
+            <button class="spotlight-filter-btn active" data-filter="all">Semua</button>
+            <button class="spotlight-filter-btn" data-filter="pesanan">👤 Pemesan</button>
+            <button class="spotlight-filter-btn" data-filter="skpd">🏛️ SKPD</button>
+            <button class="spotlight-filter-btn" data-filter="menus">⚡ Menu Cepat</button>
+        </div>
+
+        <!-- Results List -->
+        <div id="spotlightResults" class="spotlight-results">
+            <!-- Rendered dynamically via JS -->
+        </div>
+
+        <!-- Footer -->
+        <div class="spotlight-footer">
+            <div class="spotlight-shortcuts">
+                <span><kbd>↑</kbd><kbd>↓</kbd> Pilih</span>
+                <span><kbd>↵</kbd> Buka</span>
+                <span><kbd>Esc</kbd> Tutup</span>
+            </div>
+            <span>E-MutZ Spotlight</span>
+        </div>
+    </div>
+</div>
 
 <!-- SweetAlert2 & Instant Navigation Engine -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
