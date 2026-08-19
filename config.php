@@ -74,6 +74,9 @@ if (($host === "localhost" || $host === "127.0.0.1") && (isset($_SERVER['VERCEL'
     $detected_db   = get_env_var('DB_NAME', '(tidak terdeteksi)');
     $has_pass      = get_env_var('DB_PASS') !== '' ? '✅ Terisi' : '❌ Kosong';
 
+    $env_keys = implode(', ', array_keys($_ENV));
+    $server_keys = implode(', ', array_keys($_SERVER));
+
     die("<div style='font-family:sans-serif; padding:24px; background:#fff; color:#333; border:1px solid #ddd; border-radius:12px; max-width:650px; margin:40px auto; box-shadow:0 4px 20px rgba(0,0,0,0.08); line-height:1.6;'>
         <h2 style='color:#d97706; margin-top:0;'>⚠️ Environment Variables Belum Terhubung</h2>
         <p>Aplikasi berjalan di Vercel, tetapi variabel database dari TiDB Cloud belum terdeteksi oleh sistem.</p>
@@ -89,6 +92,12 @@ if (($host === "localhost" || $host === "127.0.0.1") && (isset($_SERVER['VERCEL'
             <tr><td style='padding:8px; border:1px solid #e5e7eb;'><code>DB_NAME</code></td><td style='padding:8px; border:1px solid #e5e7eb;'>$detected_db</td></tr>
             <tr><td style='padding:8px; border:1px solid #e5e7eb;'><code>DB_PASS</code></td><td style='padding:8px; border:1px solid #e5e7eb;'>$has_pass</td></tr>
         </table>
+
+        <div style='background:#f1f5f9; padding:12px; font-size:12px; overflow-wrap: break-word;'>
+            <strong>Debug Info:</strong><br>
+            ENV Keys: $env_keys<br>
+            SERVER Keys: $server_keys
+        </div>
 
         <h3 style='margin-bottom:8px;'>Langkah Solusi di Vercel:</h3>
         <ol style='padding-left:20px; color:#4b5563;'>
