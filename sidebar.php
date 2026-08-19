@@ -712,16 +712,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
             searchDebounceTimer = setTimeout(async () => {
                 try {
-                    const res = await fetch(`api_search.php?q=${encodeURIComponent(query)}`);
+                    const res = await fetch(`api_search.php?q=${encodeURIComponent(query)}`, {
+                        credentials: 'same-origin',
+                        headers: { 'Accept': 'application/json' }
+                    });
                     if (res.ok) {
                         const data = await res.json();
                         cachedData = data;
                         renderSearchResults(data);
+                    } else {
+                        spotlightResults.innerHTML = `
+                            <div class="spotlight-empty">
+                                <div style="color:var(--danger); font-weight:600;">Gagal memuat data pencarian</div>
+                                <div style="font-size:0.8rem; color:var(--gray);">Status respons: ${res.status}. Silakan coba lagi.</div>
+                            </div>
+                        `;
                     }
                 } catch (e) {
                     console.error('Search fetch error:', e);
+                    spotlightResults.innerHTML = `
+                        <div class="spotlight-empty">
+                            <div style="color:var(--danger); font-weight:600;">Terjadi kesalahan koneksi</div>
+                            <div style="font-size:0.8rem; color:var(--gray);">Periksa jaringan Anda dan coba lagi.</div>
+                        </div>
+                    `;
                 }
-            }, 140);
+            }, 120);
         });
 
         // Arrow Key Navigation

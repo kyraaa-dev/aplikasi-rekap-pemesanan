@@ -4,7 +4,7 @@ require_once 'config.php';
 header('Content-Type: application/json; charset=utf-8');
 
 // Ensure user is logged in
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
     http_response_code(401);
     echo json_encode(['error' => 'Unauthorized']);
     exit;
@@ -25,7 +25,7 @@ $search_term = "%$query%";
 $harga_kepala = defined('HARGA_KEPALA') ? HARGA_KEPALA : 150000;
 $harga_biasa = defined('HARGA_BIASA') ? HARGA_BIASA : 55000;
 
-// 1. Search Pesanan (by nama_pemesan, nama_skpd, catatan, status)
+// 1. Search Pesanan (by nama_pemesan, nama_skpd, catatan, ukuran, jenis_kelamin, status_bayar, status_pengambilan, no_wa)
 $pesanan_stmt = $conn->prepare("
     SELECT p.id, p.nama_pemesan, p.jenis_kelamin, p.ukuran, p.jumlah, p.jenis_mutz,
            (CASE WHEN p.jenis_mutz = 'Kepala SKPD' THEN p.jumlah * $harga_kepala ELSE p.jumlah * $harga_biasa END) as subtotal, 
@@ -37,10 +37,14 @@ $pesanan_stmt = $conn->prepare("
        OR s.nama_skpd LIKE ? 
        OR p.catatan LIKE ? 
        OR CAST(p.ukuran AS CHAR) LIKE ?
+       OR p.jenis_kelamin LIKE ?
+       OR p.status_bayar LIKE ?
+       OR p.status_pengambilan LIKE ?
+       OR s.no_wa LIKE ?
     ORDER BY p.id DESC
-    LIMIT 15
+    LIMIT 20
 ");
-$pesanan_stmt->bind_param("ssss", $search_term, $search_term, $search_term, $search_term);
+$pesanan_stmt->bind_param("ssssssss", $search_term, $search_term, $search_term, $search_term, $search_term, $search_term, $search_term, $search_term);
 $pesanan_stmt->execute();
 $pesanan_res = $pesanan_stmt->get_result();
 
