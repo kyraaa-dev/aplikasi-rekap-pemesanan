@@ -175,7 +175,7 @@ if ($q_all_orders) {
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="E-MutZ KORPRI">
     <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=<?= time() ?>">
     <link rel="icon" type="image/png" href="assets/images/logo.png">
     <style>
         .fade-up {

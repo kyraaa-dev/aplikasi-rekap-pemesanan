@@ -5,7 +5,7 @@
 }
 .nav-links a:hover {
     transform: translateX(6px);
-    background-color: rgba(79, 70, 229, 0.08) !important; /* Biru transparan elegan */
+    background-color: rgba(79, 70, 229, 0.08) !important;
 }
 .nav-links a svg {
     transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -22,9 +22,234 @@
     transform: scale(1.15) rotate(-6deg);
 }
 
-/* SweetAlert2 Highest Layer Guarantee */
+/* SweetAlert2 Layer Guarantee */
 .swal2-container {
     z-index: 100000 !important;
+}
+
+/* =========================================================
+   Standalone Bulletproof Spotlight Modal CSS
+   ========================================================= */
+.spotlight-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 999999 !important;
+    background: rgba(15, 23, 42, 0.65) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    display: none;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    padding: 60px 16px 20px !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+}
+.spotlight-overlay.active {
+    display: flex !important;
+}
+.spotlight-dialog {
+    width: 100% !important;
+    max-width: 660px !important;
+    background: #FFFFFF !important;
+    border-radius: 16px !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    max-height: 80vh !important;
+    border: 1px solid #E5E7EB !important;
+    animation: spotlightPop 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+@keyframes spotlightPop {
+    from { opacity: 0; transform: scale(0.95) translateY(-10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+[data-theme="dark"] .spotlight-dialog {
+    background: #1E293B !important;
+    border-color: #334155 !important;
+}
+.spotlight-header {
+    display: flex !important;
+    align-items: center !important;
+    padding: 1rem 1.25rem !important;
+    border-bottom: 1px solid #E5E7EB !important;
+    gap: 12px !important;
+    background: inherit !important;
+}
+.spotlight-icon {
+    color: #4F46E5 !important;
+    flex-shrink: 0 !important;
+}
+.spotlight-input {
+    flex: 1 !important;
+    border: none !important;
+    outline: none !important;
+    font-size: 1.05rem !important;
+    background: transparent !important;
+    color: inherit !important;
+    font-family: inherit !important;
+}
+.spotlight-close-btn {
+    background: transparent !important;
+    border: none !important;
+    color: #6B7280 !important;
+    cursor: pointer !important;
+    padding: 6px !important;
+    border-radius: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.spotlight-close-btn:hover {
+    background: rgba(0,0,0,0.05) !important;
+    color: #111827 !important;
+}
+.spotlight-filters {
+    display: flex !important;
+    gap: 8px !important;
+    padding: 10px 1.25rem !important;
+    background: #F9FAFB !important;
+    border-bottom: 1px solid #E5E7EB !important;
+    overflow-x: auto !important;
+}
+[data-theme="dark"] .spotlight-filters {
+    background: #0F172A !important;
+    border-color: #334155 !important;
+}
+.spotlight-filter-btn {
+    background: #FFFFFF !important;
+    border: 1px solid #E5E7EB !important;
+    color: #4B5563 !important;
+    padding: 6px 14px !important;
+    border-radius: 20px !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    transition: all 0.2s !important;
+}
+.spotlight-filter-btn:hover {
+    border-color: #4F46E5 !important;
+    color: #4F46E5 !important;
+}
+.spotlight-filter-btn.active {
+    background: #4F46E5 !important;
+    color: #FFFFFF !important;
+    border-color: #4F46E5 !important;
+}
+.spotlight-results {
+    padding: 10px 0 !important;
+    overflow-y: auto !important;
+    max-height: 52vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+.spotlight-group-title {
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    color: #6B7280 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    padding: 8px 1.25rem 4px !important;
+}
+.spotlight-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 10px 1.25rem !important;
+    text-decoration: none !important;
+    color: inherit !important;
+    transition: background 0.15s !important;
+    border-left: 3px solid transparent !important;
+    cursor: pointer !important;
+}
+.spotlight-item:hover, .spotlight-item.active {
+    background: rgba(79, 70, 229, 0.06) !important;
+    border-left-color: #4F46E5 !important;
+}
+.spotlight-item-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+.spotlight-item-icon {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 8px !important;
+    background: #EEF2FF !important;
+    color: #4F46E5 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+}
+.spotlight-item-info {
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+.spotlight-item-title {
+    font-weight: 600 !important;
+    font-size: 0.925rem !important;
+    color: #111827 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+[data-theme="dark"] .spotlight-item-title {
+    color: #F8FAFC !important;
+}
+.spotlight-item-subtitle {
+    font-size: 0.8rem !important;
+    color: #6B7280 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+.spotlight-item-badge {
+    font-size: 0.725rem !important;
+    font-weight: 600 !important;
+    padding: 3px 8px !important;
+    border-radius: 6px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+}
+.spotlight-footer {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 10px 1.25rem !important;
+    background: #F9FAFB !important;
+    border-top: 1px solid #E5E7EB !important;
+    font-size: 0.75rem !important;
+    color: #6B7280 !important;
+}
+[data-theme="dark"] .spotlight-footer {
+    background: #0F172A !important;
+    border-color: #334155 !important;
+}
+.spotlight-shortcuts {
+    display: flex !important;
+    gap: 12px !important;
+}
+.spotlight-shortcuts kbd {
+    background: #E5E7EB !important;
+    color: #374151 !important;
+    padding: 1px 5px !important;
+    border-radius: 4px !important;
+    font-size: 0.7rem !important;
+    font-weight: 600 !important;
+}
+.spotlight-empty {
+    padding: 2.5rem 1.5rem !important;
+    text-align: center !important;
+    color: #6B7280 !important;
 }
 </style>
 <script>
@@ -562,7 +787,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function openSpotlight() {
         if (!spotlightModal) return;
-        spotlightModal.style.display = 'flex';
+        if (spotlightModal.parentElement !== document.body) {
+            document.body.appendChild(spotlightModal);
+        }
+        spotlightModal.style.setProperty('display', 'flex', 'important');
         spotlightModal.classList.add('active');
         document.body.style.overflow = 'hidden';
         document.documentElement.style.overflow = 'hidden';
@@ -578,7 +806,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function closeSpotlight() {
         if (!spotlightModal) return;
-        spotlightModal.style.display = 'none';
+        spotlightModal.style.setProperty('display', 'none', 'important');
         spotlightModal.classList.remove('active');
         document.body.style.overflow = '';
         document.documentElement.style.overflow = '';
@@ -587,6 +815,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.openSpotlight = openSpotlight;
     window.closeSpotlight = closeSpotlight;
+
+    // Immediately detach modal to body root to prevent flex column displacement
+    if (spotlightModal && spotlightModal.parentElement !== document.body) {
+        document.body.appendChild(spotlightModal);
+    }
 
     if (btnSpotlightTriggerMobile) btnSpotlightTriggerMobile.addEventListener('click', openSpotlight);
     if (btnSpotlightClose) btnSpotlightClose.addEventListener('click', closeSpotlight);
