@@ -636,6 +636,7 @@ if ($q_all_orders) {
                     modalSkpdFooterSummary.innerText = `Menampilkan ${items.length} rincian pemesan (${totalQty || 0} buah mutz)`;
                 }
                 
+                modalDetailSkpd.classList.add('active');
                 modalDetailSkpd.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
             };
@@ -643,6 +644,7 @@ if ($q_all_orders) {
             window.closeSkpdModal = function() {
                 const modal = document.getElementById('modalDetailSkpd');
                 if (modal) {
+                    modal.classList.remove('active');
                     modal.style.display = 'none';
                 }
                 document.body.style.overflow = '';
