@@ -20,12 +20,40 @@ if (strlen($query) < 1) {
     exit;
 }
 
-$search_term = "%$query%";
+$q_clean = strtolower(trim($query));
+$words = preg_split('/\s+/', $q_clean, -1, PREG_SPLIT_NO_EMPTY);
+if (empty($words)) {
+    echo json_encode(['pesanan' => [], 'skpd' => [], 'menus' => []]);
+    exit;
+}
 
 $harga_kepala = defined('HARGA_KEPALA') ? HARGA_KEPALA : 150000;
 $harga_biasa = defined('HARGA_BIASA') ? HARGA_BIASA : 55000;
 
 // 1. Search Pesanan (by nama_pemesan, nama_skpd, catatan, ukuran, jenis_kelamin, status_bayar, status_pengambilan, no_wa)
+$pesanan_where = [];
+$pesanan_params = [];
+$pesanan_types = '';
+
+foreach ($words as $word) {
+    $w_term = "%$word%";
+    $pesanan_where[] = "(
+        LOWER(p.nama_pemesan) LIKE ? OR
+        LOWER(s.nama_skpd) LIKE ? OR
+        LOWER(COALESCE(p.catatan, '')) LIKE ? OR
+        CAST(p.ukuran AS CHAR) LIKE ? OR
+        LOWER(p.jenis_kelamin) LIKE ? OR
+        LOWER(p.status_bayar) LIKE ? OR
+        LOWER(p.status_pengambilan) LIKE ? OR
+        LOWER(COALESCE(s.no_wa, '')) LIKE ?
+    )";
+    for ($i = 0; $i < 8; $i++) {
+        $pesanan_params[] = $w_term;
+        $pesanan_types .= 's';
+    }
+}
+$pesanan_where_sql = implode(' AND ', $pesanan_where);
+
 $pesanan_stmt = $conn->prepare("
     SELECT p.id, p.nama_pemesan, p.jenis_kelamin, p.ukuran, p.jumlah, p.jenis_mutz,
            (CASE WHEN p.jenis_mutz = 'Kepala SKPD' THEN p.jumlah * $harga_kepala ELSE p.jumlah * $harga_biasa END) as subtotal, 
@@ -33,18 +61,13 @@ $pesanan_stmt = $conn->prepare("
            s.id as skpd_id, s.nama_skpd, s.no_wa
     FROM pesanan p
     JOIN skpd s ON p.skpd_id = s.id
-    WHERE p.nama_pemesan LIKE ? 
-       OR s.nama_skpd LIKE ? 
-       OR p.catatan LIKE ? 
-       OR CAST(p.ukuran AS CHAR) LIKE ?
-       OR p.jenis_kelamin LIKE ?
-       OR p.status_bayar LIKE ?
-       OR p.status_pengambilan LIKE ?
-       OR s.no_wa LIKE ?
+    WHERE $pesanan_where_sql
     ORDER BY p.id DESC
-    LIMIT 20
+    LIMIT 25
 ");
-$pesanan_stmt->bind_param("ssssssss", $search_term, $search_term, $search_term, $search_term, $search_term, $search_term, $search_term, $search_term);
+if (!empty($pesanan_params)) {
+    $pesanan_stmt->bind_param($pesanan_types, ...$pesanan_params);
+}
 $pesanan_stmt->execute();
 $pesanan_res = $pesanan_stmt->get_result();
 
@@ -72,6 +95,19 @@ if ($pesanan_res) {
 $pesanan_stmt->close();
 
 // 2. Search SKPD (by nama_skpd or no_wa)
+$skpd_where = [];
+$skpd_params = [];
+$skpd_types = '';
+
+foreach ($words as $word) {
+    $w_term = "%$word%";
+    $skpd_where[] = "(LOWER(s.nama_skpd) LIKE ? OR LOWER(COALESCE(s.no_wa, '')) LIKE ?)";
+    $skpd_params[] = $w_term;
+    $skpd_params[] = $w_term;
+    $skpd_types .= 'ss';
+}
+$skpd_where_sql = implode(' AND ', $skpd_where);
+
 $skpd_stmt = $conn->prepare("
     SELECT s.id, s.nama_skpd, s.no_wa,
            (SELECT COUNT(*) FROM pesanan WHERE skpd_id = s.id) as total_pesanan,
@@ -79,11 +115,13 @@ $skpd_stmt = $conn->prepare("
            (SELECT COALESCE(SUM(CASE WHEN jenis_mutz = 'Kepala SKPD' THEN jumlah * $harga_kepala ELSE jumlah * $harga_biasa END), 0) FROM pesanan WHERE skpd_id = s.id) as total_rp,
            (SELECT COUNT(*) FROM pesanan WHERE skpd_id = s.id AND status_bayar = 'Belum Lunas') as total_belum_lunas
     FROM skpd s
-    WHERE s.nama_skpd LIKE ? OR s.no_wa LIKE ?
+    WHERE $skpd_where_sql
     ORDER BY s.nama_skpd ASC
-    LIMIT 8
+    LIMIT 12
 ");
-$skpd_stmt->bind_param("ss", $search_term, $search_term);
+if (!empty($skpd_params)) {
+    $skpd_stmt->bind_param($skpd_types, ...$skpd_params);
+}
 $skpd_stmt->execute();
 $skpd_res = $skpd_stmt->get_result();
 
