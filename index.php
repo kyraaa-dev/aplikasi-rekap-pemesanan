@@ -205,23 +205,23 @@ if ($q_all_orders) {
         <div class="card-grid">
             <div class="card fade-up delay-1">
                 <h3>Total SKPD Terdaftar</h3>
-                <div class="value count-up" data-target="<?= $t_skpd ?>">0</div>
+                <div class="value count-up" data-target="<?= (int)$t_skpd ?>"><?= number_format((int)$t_skpd, 0, ',', '.') ?></div>
             </div>
             <div class="card fade-up delay-2">
                 <h3>Total Pesanan Mutz Laki-laki</h3>
-                <div class="value count-up" data-target="<?= $t_l ?>">0</div>
+                <div class="value count-up" data-target="<?= (int)$t_l ?>"><?= number_format((int)$t_l, 0, ',', '.') ?></div>
             </div>
             <div class="card perempuan fade-up delay-3">
                 <h3>Total Pesanan Mutz Perempuan</h3>
-                <div class="value count-up" data-target="<?= $t_p ?>">0</div>
+                <div class="value count-up" data-target="<?= (int)$t_p ?>"><?= number_format((int)$t_p, 0, ',', '.') ?></div>
             </div>
             <div class="card fade-up delay-4" style="background: var(--dark); color: var(--light);">
                 <h3 style="color: var(--light); opacity: 0.9;">Total Keseluruhan (Pcs)</h3>
-                <div class="value count-up" data-target="<?= $t_all ?>" style="color: var(--light);">0</div>
+                <div class="value count-up" data-target="<?= (int)$t_all ?>" style="color: var(--light);"><?= number_format((int)$t_all, 0, ',', '.') ?></div>
             </div>
             <div class="card fade-up delay-5" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border: 1px solid #FCD34D;">
                 <h3 style="color: #92400E;">Total Tagihan (Rp)</h3>
-                <div class="value" style="color: #B45309;">Rp <span class="count-up-money" data-target="<?= $t_tagihan ?>">0</span></div>
+                <div class="value" style="color: #B45309;">Rp <span class="count-up-money" data-target="<?= (float)$t_tagihan ?>"><?= number_format((float)$t_tagihan, 0, ',', '.') ?></span></div>
             </div>
         </div>
         

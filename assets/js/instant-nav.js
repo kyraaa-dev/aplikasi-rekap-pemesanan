@@ -196,16 +196,16 @@
         }
 
         try {
-            let html = pageCache.get(url);
-            if (!html) {
-                const response = await fetch(url, { headers: { 'X-Requested-With': 'InstantNav' } });
-                if (!response.ok) {
-                    window.location.href = url; // Fallback
-                    return;
-                }
-                html = await response.text();
-                pageCache.set(url, html);
+            // Always fetch fresh HTML from server to ensure live database state
+            const response = await fetch(url, { 
+                headers: { 'X-Requested-With': 'InstantNav' },
+                cache: 'no-cache'
+            });
+            if (!response.ok) {
+                window.location.href = url; // Fallback
+                return;
             }
+            const html = await response.text();
 
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
