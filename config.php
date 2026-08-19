@@ -59,11 +59,11 @@ if (!empty($db_url) && $parsed = parse_url($db_url)) {
     $pass = $parsed['pass'] ?? '';
     $db   = isset($parsed['path']) ? ltrim($parsed['path'], '/') : 'rekap_mutz_asn';
 } else {
-    $host = get_env_var(['DB_HOST', 'DATABASE_HOST', 'MYSQL_HOST', 'TIDB_HOST'], 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com');
-    $user = get_env_var(['DB_USER', 'DB_USERNAME', 'DATABASE_USER', 'MYSQL_USER', 'TIDB_USER'], '4J75fkYqnQjcSSW.root');
-    $pass = get_env_var(['DB_PASS', 'DB_PASSWORD', 'DATABASE_PASSWORD', 'MYSQL_PASSWORD'], '7Y3R2Vazfvg7LKFg');
-    $db   = get_env_var(['DB_NAME', 'DB_DATABASE', 'DATABASE_NAME', 'MYSQL_DATABASE', 'TIDB_DATABASE'], 'test');
-    $port = (int)get_env_var(['DB_PORT', 'DATABASE_PORT', 'MYSQL_PORT', 'TIDB_PORT'], '4000');
+    $host = get_env_var(['DB_HOST', 'DATABASE_HOST', 'MYSQL_HOST', 'TIDB_HOST'], 'localhost');
+    $user = get_env_var(['DB_USER', 'DB_USERNAME', 'DATABASE_USER', 'MYSQL_USER', 'TIDB_USER'], 'root');
+    $pass = get_env_var(['DB_PASS', 'DB_PASSWORD', 'DATABASE_PASSWORD', 'MYSQL_PASSWORD'], '');
+    $db   = get_env_var(['DB_NAME', 'DB_DATABASE', 'DATABASE_NAME', 'MYSQL_DATABASE', 'TIDB_DATABASE'], 'rekap_mutz_asn');
+    $port = (int)get_env_var(['DB_PORT', 'DATABASE_PORT', 'MYSQL_PORT', 'TIDB_PORT'], '3306');
 }
 
 // Cek apakah berjalan di Vercel tapi env DB_HOST belum terdeteksi
@@ -142,7 +142,7 @@ if (!isset($skip_db_select)) {
 }
 
 // Authentication Check & Persistent Session
-define('AUTH_SECRET_KEY', 'emutz_korpri_secret_auth_token_key_2026');
+define('AUTH_SECRET_KEY', get_env_var(['AUTH_SECRET', 'JWT_SECRET'], 'emutz_korpri_secret_auth_token_key_' . date('Y')));
 
 function generate_auth_token($username, $password) {
     return hash_hmac('sha256', $username . '::' . $password, AUTH_SECRET_KEY);
