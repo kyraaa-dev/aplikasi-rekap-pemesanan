@@ -1282,5 +1282,73 @@ tr:hover {
         border-radius: 12px;
     }
 }
+}
 
+/* =========================================================
+   UI/UX Premium Enhancements
+   ========================================================= */
 
+/* 1. Custom Webkit Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.4);
+    border-radius: 10px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(107, 114, 128, 0.7);
+    border: 3px solid transparent;
+    background-clip: padding-box;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: rgba(75, 85, 99, 0.5);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: rgba(107, 114, 128, 0.8);
+}
+
+/* 2. Premium Form Focus Rings */
+input:focus-visible, 
+select:focus-visible, 
+textarea:focus-visible {
+    outline: none !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.25) !important;
+    transition: box-shadow 0.2s ease-out, border-color 0.2s ease-out !important;
+}
+
+[data-theme="dark"] input:focus-visible, 
+[data-theme="dark"] select:focus-visible, 
+[data-theme="dark"] textarea:focus-visible {
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.4) !important;
+}
+
+/* 3. Skeleton Shimmer Loading */
+@keyframes shimmerPulse {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+.skeleton-shimmer {
+    background: linear-gradient(90deg, rgba(255,255,255,0) 25%, rgba(0,0,0,0.05) 50%, rgba(255,255,255,0) 75%);
+    background-size: 1000px 100%;
+    animation: shimmerPulse 2s infinite linear;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+[data-theme="dark"] .skeleton-shimmer {
+    background: linear-gradient(90deg, rgba(30,41,59,0) 25%, rgba(255,255,255,0.05) 50%, rgba(30,41,59,0) 75%);
+}

@@ -449,7 +449,18 @@ $pesanans = $conn->query("
                         </tr>
                         <?php endwhile; ?>
                         <?php if($pesanans->num_rows == 0): ?>
-                        <tr><td colspan="9" style="text-align:center;">Belum ada data pesanan.</td></tr>
+                        <tr>
+                            <td colspan="13" style="text-align: center; padding: 4rem 1rem;">
+                                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0.7;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--gray); margin-bottom: 1rem;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><path d="M13 8h4"></path><path d="M13 12h4"></path></svg>
+                                    <h3 style="font-size: 1.1rem; color: var(--dark); margin-bottom: 0.5rem; font-weight: 600;">Data Kosong</h3>
+                                    <p style="color: var(--gray); font-size: 0.9rem; max-width: 300px; margin: 0 auto;">Belum ada pesanan yang sesuai dengan filter Anda, atau data memang belum tersedia.</p>
+                                    <?php if($filter_skpd > 0 || $filter_status != '' || $filter_ambil != ''): ?>
+                                    <a href="pesanan.php" style="margin-top: 1.5rem; display: inline-block; background: var(--primary); color: white; padding: 0.5rem 1.25rem; border-radius: 8px; text-decoration: none; font-weight: 500; transition: transform 0.2s; box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);">Reset Filter</a>
+                                    <?php endif; ?>
+                                </div>
+                            </td>
+                        </tr>
                         <?php endif; ?>
                     </tbody>
                 </table>
@@ -457,95 +468,5 @@ $pesanans = $conn->query("
         </div>
     </main>
     <script src="assets/js/script.js?v=<?= time() ?>"></script>
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-    document.querySelectorAll('.btn-bayar').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const url = this.getAttribute('href');
-            Swal.fire({
-                title: 'Konfirmasi Pembayaran',
-                text: "Anda yakin ingin menandai pesanan ini sebagai Lunas?",
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#10B981',
-                cancelButtonColor: '#6B7280',
-                confirmButtonText: 'Ya, Lunas!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = url;
-                }
-            });
-        });
-    });
-
-    document.querySelectorAll('.btn-hapus').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const url = this.getAttribute('href');
-            Swal.fire({
-                title: 'Hapus Pesanan?',
-                text: "Data pesanan ini tidak dapat dikembalikan!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#EF4444',
-                cancelButtonColor: '#6B7280',
-                confirmButtonText: 'Ya, Hapus!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = url;
-                }
-            });
-        });
-    });
-
-    <?php if(isset($_GET['notif']) && $_GET['notif'] == 'bayar_sukses'): ?>
-    
-    // Mainkan efek suara notifikasi pembayaran digital modern (seperti e-Wallet/Apple Pay)
-    try {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (AudioContext) {
-            const ctx = new AudioContext();
-            const playTone = (freq, type, startTime, duration) => {
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.type = type;
-                osc.frequency.setValueAtTime(freq, ctx.currentTime + startTime);
-                
-                // Envelope suara lembut (fast attack, exponential decay)
-                gain.gain.setValueAtTime(0, ctx.currentTime + startTime);
-                gain.gain.linearRampToValueAtTime(0.3, ctx.currentTime + startTime + 0.02);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + startTime + duration);
-                
-                osc.start(ctx.currentTime + startTime);
-                osc.stop(ctx.currentTime + startTime + duration);
-            };
-            
-            // Dua nada cepat yang naik (F5 lalu A5) memberikan kesan sukses yang elegan
-            playTone(698.46, 'sine', 0, 0.4);   // F5
-            playTone(880.00, 'sine', 0.1, 0.6); // A5
-        }
-    } catch(e) {
-        console.log("Audio API tidak didukung browser ini.");
-    }
-
-    Swal.fire({
-        title: 'Pembayaran Berhasil!',
-        text: 'Pesanan ini sekarang telah lunas.',
-        icon: 'success',
-        confirmButtonColor: '#10B981',
-        timer: 2500,
-        timerProgressBar: true,
-        showConfirmButton: false
-    });
-    // Membersihkan URL agar notifikasi tidak muncul lagi saat di-refresh
-    window.history.replaceState({}, document.title, window.location.pathname);
-    <?php endif; ?>
-    </script>
 </body>
 </html>

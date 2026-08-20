@@ -705,6 +705,19 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="assets/js/instant-nav.js?v=<?= time() ?>"></script>
 <script>
+// Global Toast Configuration for Premium UI
+window.Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     // 1. URL Notification Parsing
     const urlParams = new URLSearchParams(window.location.search);
@@ -724,7 +737,7 @@ document.addEventListener('DOMContentLoaded', function() {
             case 'edit_sukses': text = 'Data berhasil diperbarui!'; break;
             case 'pengaturan_sukses': text = 'Pengaturan berhasil disimpan!'; break;
         }
-        Swal.fire({ title: title, text: text, icon: icon, confirmButtonColor: 'var(--primary)', customClass: { popup: 'swal-custom-popup' } });
+        window.Toast.fire({ icon: icon, title: text });
         // Clean URL
         window.history.replaceState(null, null, window.location.pathname);
     }

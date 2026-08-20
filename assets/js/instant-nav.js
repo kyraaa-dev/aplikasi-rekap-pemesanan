@@ -196,7 +196,7 @@
 
         const mainContent = document.querySelector('main.main-content');
         if (mainContent) {
-            mainContent.classList.add('page-loading');
+            mainContent.classList.add('page-loading', 'skeleton-shimmer');
         }
 
         try {
