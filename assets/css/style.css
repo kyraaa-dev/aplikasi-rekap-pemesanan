@@ -219,21 +219,22 @@ label {
     height: 16px;
 }
 
-input[type="text"], input[type="number"], select {
+input[type="text"], input[type="number"], select, textarea {
     width: 100%;
     padding: 0.75rem 1rem;
     border: 1px solid var(--gray-light);
     border-radius: 12px;
     font-size: 0.95rem;
     background-color: var(--white);
+    color: var(--dark);
     transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
 }
 
-input:focus, select:focus {
+input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
-    background-color: #FAFAFA;
+    background-color: var(--bg-color);
 }
 
 button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.spotlight-close-btn):not(.sidebar-close-btn):not(.spotlight-filter-btn),
