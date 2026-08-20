@@ -212,7 +212,7 @@ while ($t = $res_tagihan->fetch_assoc()) {
                         if (!empty($end_date)) $excel_url .= "&end_date=" . urlencode($end_date);
                         if (!empty($status_filter)) $excel_url .= "&status_filter=" . urlencode($status_filter);
                     ?>
-                    <a href="<?= $excel_url ?>" download target="_blank" class="btn btn-primary" style="padding: 0.7rem 1.4rem; font-size: 1.05rem; font-weight: 600; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); border-radius: 10px; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none;">
+                    <a href="<?= $excel_url ?>" download target="_blank" onclick="window.Toast.fire({icon: 'success', title: 'File Excel sedang diunduh!'})" class="btn btn-primary" style="padding: 0.7rem 1.4rem; font-size: 1.05rem; font-weight: 600; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); border-radius: 10px; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                         Unduh Excel
                     </a>
@@ -305,7 +305,7 @@ while ($t = $res_tagihan->fetch_assoc()) {
                         ?>
                         <tr class="<?= $empty_class ?>">
                             <?php if ($is_first): ?>
-                            <td class="row-number" rowspan="<?= $rowspan ?>"></td>
+                            <td class="row-number" rowspan="<?= $rowspan ?>"><?= $no++ ?></td>
                             <td class="td-skpd" rowspan="<?= $rowspan ?>">
                                 <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
                                     <strong><?= htmlspecialchars($nama) ?></strong>
