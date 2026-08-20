@@ -225,15 +225,18 @@ while ($t = $res_tagihan->fetch_assoc()) {
             
             <div class="table-responsive">
                 <div class="print-only-header" style="display: none;">
-                    <div style="text-align: center; border-bottom: 4px solid black; padding-bottom: 15px; margin-bottom: 15px;">
-                        <!-- Pastikan logo KORPRI disimpan di folder assets/img/ dengan nama logo-korpri.png -->
-                        <img src="assets/img/logo-korpri.png" alt="Logo KORPRI" style="width: 90px; height: auto; margin-bottom: 10px;" onerror="this.style.display='none'">
-                        <h2 style="font-size: 18pt; margin: 0; color: black; font-weight: bold;">DEWAN PENGURUS KORPRI</h2>
-                        <h2 style="font-size: 18pt; margin: 0; color: black; font-weight: bold;">KABUPATEN BANJAR</h2>
-                        <p style="margin: 6px 0 0 0; font-size: 11pt; color: black;">Jl. A. Yani No. 2 Martapura</p>
-                        <p style="margin: 2px 0 0 0; font-size: 11pt; color: black;">Email: kabbanjarkorpri@gmail.com</p>
+                    <div style="display: flex; align-items: center; border-bottom: 4px solid black; padding-bottom: 15px; margin-bottom: 15px; width: 100%;">
+                        <div style="flex: 0 0 120px; display: flex; justify-content: center;">
+                            <img src="assets/img/logo-korpri.png" alt="Logo KORPRI" style="width: 90px; height: auto;" onerror="this.style.display='none'">
+                        </div>
+                        <div style="flex: 1; text-align: center; padding-right: 120px;">
+                            <h2 style="font-size: 18pt; margin: 0; color: black; font-weight: bold; line-height: 1.2;">DEWAN PENGURUS KORPRI</h2>
+                            <h2 style="font-size: 18pt; margin: 0 0 8px 0; color: black; font-weight: bold; line-height: 1.2;">KABUPATEN BANJAR</h2>
+                            <p style="margin: 0; font-size: 11pt; color: black;">Jl. A. Yani No. 2 Martapura</p>
+                            <p style="margin: 2px 0 0 0; font-size: 11pt; color: black;">Email: kabbanjarkorpri@gmail.com</p>
+                        </div>
                     </div>
-                    <h3 style="font-size: 14pt; text-align: center; margin-top: 0; margin-bottom: 15px; color: black;">REKAPITULASI PESANAN MUTZ ASN PER SKPD</h3>
+                    <h3 style="font-size: 14pt; text-align: center; margin-top: 0; margin-bottom: 15px; color: black; font-weight: bold; text-decoration: underline;">REKAPITULASI PESANAN MUTZ ASN PER SKPD</h3>
                 </div>
                 <table class="table-rekap">
                     <thead>
