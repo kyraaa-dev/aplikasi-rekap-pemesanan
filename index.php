@@ -291,10 +291,10 @@ if ($q_all_orders) {
                                 $total_rupiah += $d['total_tagihan'];
                             }
                         ?>
-                        <div class="fade-up skpd-card" style="padding: 16px; border-radius: 12px; background: var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.04);">
+                        <div class="fade-up skpd-card">
                             <div class="skpd-card-header">
-                                <h4 style="color: var(--primary); margin: 0; font-size: 0.98rem; font-weight: 700; display: flex; align-items: center; gap: 6px; line-height: 1.3;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M3 21h18"></path><path d="M9 8h1"></path><path d="M9 12h1"></path><path d="M9 16h1"></path><path d="M14 8h1"></path><path d="M14 12h1"></path><path d="M14 16h1"></path><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path></svg>
+                                <h4 class="skpd-card-title">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M9 8h1"></path><path d="M9 12h1"></path><path d="M9 16h1"></path><path d="M14 8h1"></path><path d="M14 12h1"></path><path d="M14 16h1"></path><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path></svg>
                                     <span><?= htmlspecialchars($nama) ?></span>
                                 </h4>
                                 <?php if (!empty($skpd_wa_map[$nama])): ?>
@@ -313,9 +313,9 @@ if ($q_all_orders) {
                                 <?php endif; ?>
                             </div>
 
-                            <ul style="list-style-type: none; margin-left: 0; padding-left: 0; font-size: 0.875rem;">
+                            <ul class="skpd-card-list">
                                 <?php foreach($details as $d): ?>
-                                    <li style="display: flex; justify-content: space-between; margin-bottom: 5px; border-bottom: 1px dashed #f0f0f0; padding-bottom: 4px;">
+                                    <li class="skpd-card-list-item">
                                         <span>
                                             <span style="display:inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: <?= $d['jenis_kelamin'] == 'Laki-laki' ? 'var(--primary)' : '#EC4899' ?>; margin-right: 5px;"></span>
                                             <?= $d['jenis_kelamin'] ?> (Uk: <?= $d['ukuran'] ?>) - <span style="font-size: 0.78rem; color: var(--gray);"><?= $d['jenis_mutz'] ?></span>
@@ -323,26 +323,29 @@ if ($q_all_orders) {
                                         <strong><?= $d['total_jumlah'] ?> buah</strong>
                                     </li>
                                 <?php endforeach; ?>
-                                <li style="display: flex; justify-content: space-between; margin-top: 8px; font-weight: 600;">
+                                <li style="display: flex; justify-content: space-between; margin-top: 10px; font-weight: 700; font-size: 0.95rem;">
                                     <span>Total Pesanan:</span>
-                                    <span><?= $total_item ?> buah</span>
+                                    <span style="color: var(--primary);"><?= $total_item ?> buah</span>
                                 </li>
-                                <li style="display: flex; justify-content: space-between; margin-top: 5px; font-weight: 700; color: #B45309; background: rgba(245, 158, 11, 0.1); padding: 5px 8px; border-radius: 6px; font-size: 0.85rem;">
+                                <li style="display: flex; justify-content: space-between; margin-top: 6px; font-weight: 800; color: #B45309; background: rgba(245, 158, 11, 0.12); padding: 6px 10px; border-radius: 8px; font-size: 0.95rem;">
                                     <span>Total Tagihan:</span>
                                     <span>Rp <?= number_format($total_rupiah, 0, ',', '.') ?></span>
                                 </li>
-                                <li style="display: flex; justify-content: space-between; margin-top: 4px; font-weight: 700; color: <?= $status_color ?>; background: <?= $status_bg ?>; padding: 5px 8px; border-radius: 6px; font-size: 0.825rem;">
+                                <li style="display: flex; justify-content: space-between; margin-top: 6px; font-weight: 700; color: <?= $status_color ?>; background: <?= $status_bg ?>; padding: 6px 10px; border-radius: 8px; font-size: 0.85rem;">
                                     <span>Status Bayar:</span>
                                     <span><?= $status ?></span>
                                 </li>
-                                <li style="display: flex; justify-content: space-between; margin-top: 4px; font-weight: 700; color: <?= $ambil_color ?>; background: <?= $ambil_bg ?>; padding: 5px 8px; border-radius: 6px; font-size: 0.825rem;">
+                                <li style="display: flex; justify-content: space-between; margin-top: 6px; font-weight: 700; color: <?= $ambil_color ?>; background: <?= $ambil_bg ?>; padding: 6px 10px; border-radius: 8px; font-size: 0.85rem;">
                                     <span>Status Pengambilan:</span>
                                     <span><?= $status_ambil ?></span>
                                 </li>
                                 <?php if (!empty($catatan_skpd[$nama])): ?>
-                                <li style="margin-top: 8px; font-size: 0.825rem; color: var(--gray); background: var(--light); padding: 6px 8px; border-radius: 6px; border: 1px solid var(--gray-light);">
-                                    <strong style="display: block; margin-bottom: 2px; color: var(--dark); font-size: 0.75rem;">Catatan:</strong>
-                                    <span style="font-style: italic;"><?= htmlspecialchars($catatan_skpd[$nama]) ?></span>
+                                <li style="margin-top: 10px; font-size: 0.825rem; color: var(--gray); background: var(--light); padding: 8px 10px; border-radius: 8px; border: 1px solid var(--gray-light);">
+                                    <strong style="display: flex; align-items: center; gap: 4px; margin-bottom: 4px; color: var(--dark); font-size: 0.75rem;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                        Catatan:
+                                    </strong>
+                                    <span style="font-style: italic; display: block; line-height: 1.4;"><?= htmlspecialchars($catatan_skpd[$nama]) ?></span>
                                 </li>
                                 <?php endif; ?>
                             </ul>
