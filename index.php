@@ -177,7 +177,6 @@ if ($q_all_orders) {
     <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
     <link rel="stylesheet" href="assets/css/style.css?v=<?= time() ?>">
     <link rel="icon" type="image/png" href="assets/images/logo.png">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .fade-up {
             opacity: 0;
@@ -762,13 +761,13 @@ if ($q_all_orders) {
                 }
             })();
 
-            // Chart Toggle Logic
-            const chartContainer = document.getElementById('chartContainer');
-            const chartBtnText = document.getElementById('chartBtnText');
-            const chartIconOn = document.getElementById('chartIconOn');
-            const chartIconOff = document.getElementById('chartIconOff');
-            
-            function setChartVisibility(show) {
+            // Chart Toggle Logic (Global for inline onclick)
+            window.setChartVisibility = function(show) {
+                const chartContainer = document.getElementById('chartContainer');
+                const chartBtnText = document.getElementById('chartBtnText');
+                const chartIconOn = document.getElementById('chartIconOn');
+                const chartIconOff = document.getElementById('chartIconOff');
+                
                 if (!chartContainer) return;
                 if (show) {
                     chartContainer.style.display = 'flex';
@@ -781,21 +780,24 @@ if ($q_all_orders) {
                     if (chartIconOn) chartIconOn.style.display = 'none';
                     if (chartIconOff) chartIconOff.style.display = 'block';
                 }
-            }
+            };
 
-            function toggleCharts() {
+            window.toggleCharts = function() {
+                const chartContainer = document.getElementById('chartContainer');
                 if (!chartContainer) return;
                 const isCurrentlyVisible = chartContainer.style.display !== 'none';
-                setChartVisibility(!isCurrentlyVisible);
+                window.setChartVisibility(!isCurrentlyVisible);
                 localStorage.setItem('showCharts', !isCurrentlyVisible);
-            }
+            };
 
-            const savedPreference = localStorage.getItem('showCharts');
-            if (savedPreference === 'false') {
-                setChartVisibility(false);
-            } else {
-                setChartVisibility(true);
-            }
+            (function() {
+                const savedPreference = localStorage.getItem('showCharts');
+                if (savedPreference === 'false') {
+                    window.setChartVisibility(false);
+                } else {
+                    window.setChartVisibility(true);
+                }
+            })();
 
             // Animasi Data Muncul Perlahan & Angka Bergerak
             (function initCountersAndFade() {

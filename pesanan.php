@@ -296,8 +296,8 @@ $pesanans = $conn->query("
         <div class="panel">
             <div class="flex justify-between items-center mb-4" style="flex-wrap: wrap; gap: 10px;">
                 <h2>Daftar Pesanan Mutz</h2>
-                <form method="GET" action="pesanan.php" style="display: flex; gap: 10px; align-items: center; background: #F9FAFB; padding: 10px 15px; border-radius: 12px; border: 1px solid var(--gray-light);">
-                    <select name="filter_skpd" style="padding: 0.4rem; border-radius: 6px; border: 1px solid #d1d5db; outline: none;">
+                <form method="GET" action="pesanan.php" style="display: flex; gap: 10px; align-items: center; background: var(--light, #F9FAFB); padding: 10px 15px; border-radius: 12px; border: 1px solid var(--gray-light, #E5E7EB);">
+                    <select name="filter_skpd" style="padding: 0.4rem; border-radius: 6px; border: 1px solid var(--gray-light, #d1d5db); outline: none; background: var(--white); color: var(--dark);">
                         <option value="0">- Semua SKPD -</option>
                         <?php 
                         // Reset pointer SKPD for filter dropdown
@@ -307,12 +307,12 @@ $pesanans = $conn->query("
                             <option value="<?= $s['id'] ?>" <?= $filter_skpd == $s['id'] ? 'selected' : '' ?>><?= htmlspecialchars($s['nama_skpd']) ?></option>
                         <?php endwhile; ?>
                     </select>
-                    <select name="filter_status" style="padding: 0.4rem; border-radius: 6px; border: 1px solid #d1d5db; outline: none;">
+                    <select name="filter_status" style="padding: 0.4rem; border-radius: 6px; border: 1px solid var(--gray-light, #d1d5db); outline: none; background: var(--white); color: var(--dark);">
                         <option value="">- Semua Pembayaran -</option>
                         <option value="Lunas" <?= $filter_status == 'Lunas' ? 'selected' : '' ?>>Lunas</option>
                         <option value="Belum Lunas" <?= $filter_status == 'Belum Lunas' ? 'selected' : '' ?>>Belum Lunas</option>
                     </select>
-                    <select name="filter_ambil" style="padding: 0.4rem; border-radius: 6px; border: 1px solid #d1d5db; outline: none;">
+                    <select name="filter_ambil" style="padding: 0.4rem; border-radius: 6px; border: 1px solid var(--gray-light, #d1d5db); outline: none; background: var(--white); color: var(--dark);">
                         <option value="">- Semua Pengambilan -</option>
                         <option value="Menunggu Diproses" <?= $filter_ambil == 'Menunggu Diproses' ? 'selected' : '' ?>>Menunggu Diproses</option>
                         <option value="Sedang Dibuat" <?= $filter_ambil == 'Sedang Dibuat' ? 'selected' : '' ?>>Sedang Dibuat</option>
@@ -327,12 +327,12 @@ $pesanans = $conn->query("
             </div>
             
             <?php if($filter_skpd > 0 || $filter_status != '' || $filter_ambil != ''): ?>
-            <div style="background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF; padding: 12px 16px; border-radius: 10px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: var(--primary); padding: 12px 16px; border-radius: 10px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                     <strong>Mode Filter Aktif:</strong> Anda sedang melihat rincian pesanan yang difilter (Tampilan Terbatas).
                 </div>
-                <a href="pesanan.php" style="background: #FFFFFF; color: #DC2626; border: 1px solid #FCA5A5; padding: 6px 14px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; transition: all 0.2s;">
+                <a href="pesanan.php" style="background: var(--white); color: #EF4444; border: 1px solid #FCA5A5; padding: 6px 14px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; transition: all 0.2s;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     Hapus Filter
                 </a>
@@ -381,12 +381,12 @@ $pesanans = $conn->query("
                             </td>
                             <td>
                                 <?php if($row['status_bayar'] == 'Lunas'): ?>
-                                    <span style="display: inline-flex; align-items: center; gap: 4px; background-color: #F0FDF4; color: #15803D; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: 1px solid #BBF7D0; letter-spacing: 0.5px;">
+                                    <span style="display: inline-flex; align-items: center; gap: 4px; background-color: rgba(16, 185, 129, 0.1); color: #10B981; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: 1px solid rgba(16, 185, 129, 0.3); letter-spacing: 0.5px;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                         Lunas
                                     </span>
                                 <?php else: ?>
-                                    <span style="display: inline-flex; align-items: center; gap: 4px; background-color: #FEF2F2; color: #B91C1C; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: 1px solid #FECACA; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(185, 28, 28, 0.1);">
+                                    <span style="display: inline-flex; align-items: center; gap: 4px; background-color: rgba(239, 68, 68, 0.1); color: #EF4444; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: 1px solid rgba(239, 68, 68, 0.3); letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(239, 68, 68, 0.1);">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                                         Belum Lunas
                                     </span>
@@ -398,13 +398,13 @@ $pesanans = $conn->query("
                                     <?php 
                                         $st = $row['status_pengambilan'];
                                         if($st == 'Menunggu Diproses') {
-                                            $bg = '#F3F4F6'; $color = '#4B5563'; $border = '#D1D5DB';
+                                            $bg = 'rgba(75, 85, 99, 0.1)'; $color = 'var(--gray)'; $border = 'var(--gray-light)';
                                         } elseif($st == 'Sedang Dibuat') {
-                                            $bg = '#EFF6FF'; $color = '#1D4ED8'; $border = '#BFDBFE';
+                                            $bg = 'rgba(59, 130, 246, 0.1)'; $color = 'var(--primary)'; $border = 'rgba(59, 130, 246, 0.3)';
                                         } elseif($st == 'Siap Diambil') {
-                                            $bg = '#FEF3C7'; $color = '#B45309'; $border = '#FDE68A';
+                                            $bg = 'rgba(245, 158, 11, 0.1)'; $color = '#F59E0B'; $border = 'rgba(245, 158, 11, 0.3)';
                                         } else { // Sudah Diambil
-                                            $bg = '#F0FDF4'; $color = '#15803D'; $border = '#BBF7D0';
+                                            $bg = 'rgba(16, 185, 129, 0.1)'; $color = '#10B981'; $border = 'rgba(16, 185, 129, 0.3)';
                                         }
                                     ?>
                                     <select name="status" onchange="this.form.submit()" style="padding: 0.35rem 0.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border-radius: 20px; border: 1px solid <?= $border ?>; background-color: <?= $bg ?>; color: <?= $color ?>; cursor: pointer; outline: none; letter-spacing: 0.5px;">
