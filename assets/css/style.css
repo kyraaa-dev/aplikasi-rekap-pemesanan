@@ -778,10 +778,12 @@ tr:hover {
         min-height: auto;
         padding: 15mm !important;
         color: black !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        color-adjust: exact;
     }
     
     * {
-        color: black !important;
         text-shadow: none !important;
         box-shadow: none !important;
     }
@@ -813,12 +815,12 @@ tr:hover {
     table {
         font-size: 9pt;
         background: white !important;
+        color: black !important;
     }
     
     th, td {
         padding: 0.25rem !important;
-        background-color: transparent !important;
-        border-color: #000 !important;
+        border: 1px solid #000 !important;
     }
 }
 
