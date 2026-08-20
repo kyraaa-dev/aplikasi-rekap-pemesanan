@@ -355,7 +355,7 @@ $pesanans = $conn->query("
                             <th>Pengambilan</th>
                             <th>Catatan</th>
                             <th>Tanggal Input</th>
-                            <th>Aksi</th>
+                            <th style="position: sticky; right: 0; background: var(--light, #F9FAFB); z-index: 2; border-left: 1px solid var(--gray-light, #E5E7EB); box-shadow: -4px 0 10px rgba(0,0,0,0.05);">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -413,7 +413,7 @@ $pesanans = $conn->query("
                             <td style="font-size: 0.8rem; color: var(--gray); white-space: nowrap;">
                                 <?= date('d/m/Y H:i', strtotime($row['created_at'])) ?>
                             </td>
-                            <td style="white-space: nowrap;">
+                            <td style="white-space: nowrap; position: sticky; right: 0; background: var(--white); z-index: 1; border-left: 1px solid var(--gray-light, #E5E7EB); box-shadow: -4px 0 10px rgba(0,0,0,0.05);">
                                 <?php if($row['status_bayar'] == 'Belum Lunas'): ?>
                                 <a href="pesanan.php?lunas=<?= $row['id'] ?>" class="btn btn-sm btn-success btn-bayar btn-confirm" data-confirm-title="Konfirmasi Pembayaran" data-confirm-text="Tandai pesanan ini sebagai Lunas?" data-confirm-btn="Ya, Lunas" data-confirm-color="#10B981" style="display: inline-flex; align-items: center; gap: 4px; margin-right: 5px; padding: 0.35rem 0.7rem; font-weight: 500; border-radius: 6px; background-color: #10B981; color: white; border: none; text-decoration: none;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
