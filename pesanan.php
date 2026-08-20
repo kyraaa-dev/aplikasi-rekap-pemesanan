@@ -350,10 +350,10 @@ $pesanans = $conn->query("
                             <th>Ukuran</th>
                             <th>Jenis Mutz</th>
                             <th>Jml</th>
-                            <th>Total Harga</th>
-                            <th>Status Bayar</th>
-                            <th>Pengambilan</th>
-                            <th>Catatan</th>
+                            <th style="white-space: nowrap;">Total Harga</th>
+                            <th style="min-width: 130px; white-space: nowrap;">Status Bayar</th>
+                            <th style="min-width: 160px; white-space: nowrap;">Pengambilan</th>
+                            <th style="min-width: 150px;">Catatan</th>
                             <th>Tanggal Input</th>
                             <th style="position: sticky; right: 0; background: var(--light, #F9FAFB); z-index: 2; border-left: 1px solid var(--gray-light, #E5E7EB); box-shadow: -4px 0 10px rgba(0,0,0,0.05);">Aksi</th>
                         </tr>
@@ -407,7 +407,7 @@ $pesanans = $conn->query("
                                             $bg = 'rgba(16, 185, 129, 0.1)'; $color = '#10B981'; $border = 'rgba(16, 185, 129, 0.3)';
                                         }
                                     ?>
-                                    <select name="status" onchange="this.form.submit()" style="padding: 0.35rem 0.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border-radius: 20px; border: 1px solid <?= $border ?>; background-color: <?= $bg ?>; color: <?= $color ?>; cursor: pointer; outline: none; letter-spacing: 0.5px;">
+                                    <select name="status" onchange="this.form.submit()" style="width: 100%; padding: 0.35rem 0.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border-radius: 20px; border: 1px solid <?= $border ?>; background-color: <?= $bg ?>; color: <?= $color ?>; cursor: pointer; outline: none; letter-spacing: 0.2px;">
                                         <option value="Menunggu Diproses" <?= $st == 'Menunggu Diproses' ? 'selected' : '' ?>>⏳ Menunggu Diproses</option>
                                         <option value="Sedang Dibuat" <?= $st == 'Sedang Dibuat' ? 'selected' : '' ?>>✂️ Sedang Dibuat</option>
                                         <option value="Siap Diambil" <?= $st == 'Siap Diambil' ? 'selected' : '' ?>>📦 Siap Diambil</option>
