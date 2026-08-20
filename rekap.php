@@ -245,10 +245,10 @@ while ($t = $res_tagihan->fetch_assoc()) {
                             <th rowspan="2" class="total-col bg-blue">Total L</th>
                             <th colspan="3" class="bg-pink" style="color: #EC4899;">Perempuan</th>
                             <th rowspan="2" class="total-col bg-pink">Total P</th>
-                            <th rowspan="2" class="total-col" style="background:#E5E7EB;">TOTAL KESELURUHAN</th>
-                            <th rowspan="2" class="total-col" style="background:#FEF3C7; color: #92400E;">Tagihan (Rp)</th>
-                            <th rowspan="2" class="total-col" style="background:#F3F4F6;">Status Bayar</th>
-                            <th rowspan="2" class="total-col" style="background:#EFF6FF;">Status Ambil</th>
+                            <th rowspan="2" class="total-col" style="background: var(--light);">TOTAL KESELURUHAN</th>
+                            <th rowspan="2" class="total-col" style="background: rgba(245, 158, 11, 0.15); color: #D97706;">Tagihan (Rp)</th>
+                            <th rowspan="2" class="total-col" style="background: var(--light);">Status Bayar</th>
+                            <th rowspan="2" class="total-col" style="background: rgba(59, 130, 246, 0.1); color: var(--primary);">Status Ambil</th>
                         </tr>
                         <tr>
                             <!-- Laki-laki -->
@@ -341,10 +341,10 @@ while ($t = $res_tagihan->fetch_assoc()) {
                             <?php endforeach; ?>
                             <td class="total-col" style="color: #EC4899;"><?= $total_P > 0 ? $total_P : '-' ?></td>
                             
-                            <td class="total-col" style="background:#F3F4F6;"><?= $total_All > 0 ? $total_All : '-' ?></td>
+                            <td class="total-col" style="background: var(--light); font-weight: bold;"><?= $total_All > 0 ? $total_All : '-' ?></td>
                             
                             <?php if ($is_first): ?>
-                            <td class="total-col" rowspan="<?= $rowspan ?>" style="background:#FEF3C7; color: #92400E; text-align: right; padding-right: 1rem;">
+                            <td class="total-col" rowspan="<?= $rowspan ?>" style="background: rgba(245, 158, 11, 0.15); color: #D97706; text-align: right; padding-right: 1rem; font-weight: bold;">
                                 <?= $tagihan > 0 ? number_format($tagihan, 0, ',', '.') : '-' ?>
                             </td>
                             

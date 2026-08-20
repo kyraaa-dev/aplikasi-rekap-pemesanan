@@ -760,10 +760,30 @@ tr:hover {
         margin: 0; /* Hides browser default URL/Title headers */
     }
     
+    /* Force Light Mode Variables for Print */
+    :root, [data-theme="dark"] {
+        --bg: #F8FAFC !important;
+        --panel-bg: #FFFFFF !important;
+        --text: #000000 !important;
+        --text-light: #64748B !important;
+        --border: #E2E8F0 !important;
+        --dark: #000000 !important;
+        --light: #F1F5F9 !important;
+        --white: #ffffff !important;
+        --primary: #4F46E5 !important;
+    }
+    
     body {
         background-color: white !important;
         min-height: auto;
         padding: 15mm !important;
+        color: black !important;
+    }
+    
+    * {
+        color: black !important;
+        text-shadow: none !important;
+        box-shadow: none !important;
     }
     
     .sidebar, .mobile-topbar, .sidebar-overlay, button, .btn, .header, .hide-on-print {
@@ -779,6 +799,7 @@ tr:hover {
         margin: 0 !important;
         width: 100% !important;
         flex: none;
+        background: white !important;
     }
     
     .panel {
@@ -786,14 +807,18 @@ tr:hover {
         border: none !important;
         padding: 0 !important;
         margin: 0 !important;
+        background: white !important;
     }
 
     table {
         font-size: 9pt;
+        background: white !important;
     }
     
     th, td {
         padding: 0.25rem !important;
+        background-color: transparent !important;
+        border-color: #000 !important;
     }
 }
 
