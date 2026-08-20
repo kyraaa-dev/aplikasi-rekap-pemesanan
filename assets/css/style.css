@@ -812,15 +812,22 @@ tr:hover {
         background: white !important;
     }
 
+    .table-responsive {
+        overflow: visible !important;
+    }
+
     table {
-        font-size: 9pt;
+        font-size: 7.5pt !important; /* Sangat kecil agar 18 kolom muat */
+        width: 100% !important;
+        table-layout: auto !important;
         background: white !important;
         color: black !important;
     }
     
     th, td {
-        padding: 0.25rem !important;
+        padding: 2px 4px !important;
         border: 1px solid #000 !important;
+        word-wrap: break-word;
     }
 }
 
