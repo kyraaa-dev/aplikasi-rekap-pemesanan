@@ -766,23 +766,40 @@ document.addEventListener('DOMContentLoaded', function() {
     // 3. Animated Logout & Cache Clearing Handler
     function performAnimatedLogout(url) {
         Swal.fire({
-            title: 'Membersihkan Sesi & Cache...',
+            title: '',
             html: `
-                <div style="padding: 10px 0;">
-                    <div id="swal-step-text" style="font-size: 0.9rem; font-weight: 600; color: #4F46E5; margin-bottom: 14px;">
-                        🧹 Menghapus cache lokal browser...
-                    </div>
-                    <div style="width: 100%; height: 8px; background: #E5E7EB; border-radius: 999px; overflow: hidden;">
-                        <div id="swal-progress-bar" style="width: 20%; height: 100%; background: linear-gradient(90deg, #4F46E5 0%, #06B6D4 50%, #10B981 100%); border-radius: 999px; transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);"></div>
+                <style>
+                @keyframes spinFast { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+                @keyframes gradientGlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+                @keyframes popIn { 0% { opacity: 0; transform: scale(0.9) translateY(10px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+                .swal-logout-container { padding: 10px; display: flex; flex-direction: column; align-items: center; animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+                .swal-spinner-ring { width: 64px; height: 64px; border-radius: 50%; border: 4px solid var(--gray-light); border-top-color: var(--primary); animation: spinFast 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite; margin-bottom: 24px; position: relative; }
+                .swal-spinner-ring::after { content: ''; position: absolute; top: -4px; left: -4px; right: -4px; bottom: -4px; border-radius: 50%; border: 4px solid transparent; border-bottom-color: #EC4899; animation: spinFast 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite reverse; }
+                .swal-step-title { font-size: 1.25rem; font-weight: 800; color: var(--dark); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+                .swal-step-desc { font-size: 0.95rem; font-weight: 500; color: var(--gray); margin-bottom: 24px; height: 22px; transition: color 0.3s; }
+                .swal-progress-track { width: 100%; height: 8px; background: var(--gray-light); border-radius: 999px; overflow: hidden; box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); }
+                .swal-progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #4F46E5, #06B6D4, #EC4899, #4F46E5); background-size: 300% 100%; border-radius: 999px; transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); animation: gradientGlow 2s linear infinite; }
+                </style>
+                <div class="swal-logout-container">
+                    <div class="swal-spinner-ring" id="swal-spinner"></div>
+                    <div class="swal-step-title" id="swal-step-title">MEMUTUS KONEKSI</div>
+                    <div class="swal-step-desc" id="swal-step-text">Menginisialisasi penutupan sesi...</div>
+                    <div class="swal-progress-track">
+                        <div id="swal-progress-bar" class="swal-progress-fill"></div>
                     </div>
                 </div>
             `,
             allowOutsideClick: false,
             allowEscapeKey: false,
             showConfirmButton: false,
+            background: 'var(--white)',
+            color: 'var(--dark)',
+            backdrop: `rgba(15, 23, 42, 0.85) backdrop-filter: blur(8px)`,
             didOpen: () => {
                 const progressBar = document.getElementById('swal-progress-bar');
                 const stepText = document.getElementById('swal-step-text');
+                const stepTitle = document.getElementById('swal-step-title');
+                const spinner = document.getElementById('swal-spinner');
                 
                 // Bersihkan client storage
                 try {
@@ -800,22 +817,32 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error(err);
                 }
 
-                // Step 2: Menghapus token & sesi
                 setTimeout(() => {
-                    if (progressBar) progressBar.style.width = '65%';
-                    if (stepText) stepText.innerHTML = '🔒 Menghapus token autentikasi & sesi...';
-                }, 400);
+                    if (progressBar) progressBar.style.width = '35%';
+                    if (stepText) stepText.innerHTML = '🧹 Menghapus cache & rekam jejak lokal...';
+                    if (stepTitle) stepTitle.innerHTML = 'MEMBERSIHKAN CACHE';
+                }, 300);
 
-                // Step 3: Penyelesaian
+                setTimeout(() => {
+                    if (progressBar) progressBar.style.width = '75%';
+                    if (stepText) stepText.innerHTML = '🔒 Mencabut token autentikasi & mengunci sesi...';
+                    if (stepTitle) stepTitle.innerHTML = 'MENGUNCI AKSES';
+                }, 800);
+
                 setTimeout(() => {
                     if (progressBar) progressBar.style.width = '100%';
-                    if (stepText) stepText.innerHTML = '✨ Selesai! Mengalihkan ke halaman login...';
-                }, 850);
+                    if (stepText) { stepText.innerHTML = '✨ Sesi Anda telah sepenuhnya ditutup.'; stepText.style.color = '#10B981'; }
+                    if (stepTitle) { stepTitle.innerHTML = 'LOGOUT BERHASIL'; stepTitle.style.color = '#10B981'; }
+                    if (spinner) {
+                        spinner.style.animation = 'none';
+                        spinner.style.border = 'none';
+                        spinner.innerHTML = `<svg style="width:100%; height:100%; color:#10B981; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`;
+                    }
+                }, 1400);
 
-                // Step 4: Redirect
                 setTimeout(() => {
                     window.location.href = url;
-                }, 1200);
+                }, 2200);
             }
         });
     }
@@ -826,22 +853,32 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const url = this.getAttribute('href') || 'logout.php';
             Swal.fire({
-                title: 'Konfirmasi Keluar',
+                title: '',
                 html: `
-                    <div style="margin-top: 8px; font-size: 0.95rem; color: var(--dark); line-height: 1.5;">
-                        Apakah Anda yakin ingin keluar dari sistem <strong>E-MutZ KORPRI</strong>?
+                    <div style="display:flex; flex-direction:column; align-items:center; margin-bottom: 20px;">
+                        <div style="width: 72px; height: 72px; border-radius: 24px; background: rgba(239, 68, 68, 0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; border: 1px solid rgba(239, 68, 68, 0.2); box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.3);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        </div>
+                        <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--dark); margin: 0 0 8px 0;">Konfirmasi Keluar</h2>
+                        <div style="font-size: 0.95rem; color: var(--gray); line-height: 1.5; text-align: center; padding: 0 10px;">
+                            Apakah Anda yakin ingin keluar dari sistem <strong>E-MutZ KORPRI</strong>?
+                        </div>
                     </div>
-                    <div style="margin-top: 14px; padding: 10px 14px; background: #FEF3C7; border: 1px solid #FDE68A; border-radius: 8px; font-size: 0.825rem; color: #92400E; text-align: left; display: flex; align-items: center; gap: 8px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                        <span>Sistem akan menutup sesi aman Anda dan membersihkan cache sementara browser.</span>
+                    <div style="padding: 12px 16px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; font-size: 0.85rem; color: #D97706; text-align: left; display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        <span style="font-weight: 500; line-height: 1.4;">Sistem akan memutus koneksi aman Anda dan membersihkan memori sementara browser.</span>
                     </div>
                 `,
-                icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#DC2626',
-                cancelButtonColor: '#6B7280',
-                confirmButtonText: '<span style="display:inline-flex; align-items:center; gap:6px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> Ya, Bersihkan & Keluar</span>',
-                cancelButtonText: 'Batal',
+                confirmButtonColor: '#EF4444',
+                cancelButtonColor: 'var(--gray-light)',
+                background: 'var(--white)',
+                backdrop: `rgba(15, 23, 42, 0.65) backdrop-filter: blur(4px)`,
+                customClass: {
+                    cancelButton: 'swal2-cancel-custom'
+                },
+                confirmButtonText: '<span style="font-weight: 700; letter-spacing: 0.5px;">YA, KELUAR SISTEM</span>',
+                cancelButtonText: '<span style="font-weight: 600; color: var(--dark);">Batal</span>',
                 reverseButtons: true,
                 focusCancel: true
             }).then((result) => {
