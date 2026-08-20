@@ -481,7 +481,7 @@ tr {
 }
 
 tr:hover {
-    background-color: #F8FAFC;
+    background-color: var(--light);
 }
 
 .flex { display: flex; }
