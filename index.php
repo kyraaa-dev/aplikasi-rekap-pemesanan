@@ -262,25 +262,25 @@ if ($q_all_orders) {
                     <?php foreach($rincian_skpd as $nama => $details): ?>
                         <?php 
                             $status = isset($status_skpd[$nama]) ? $status_skpd[$nama] : '-';
-                            $status_bg = '#F3F4F6';
-                            $status_color = '#374151';
+                            $status_bg = 'rgba(107, 114, 128, 0.1)';
+                            $status_color = 'var(--gray)';
                             if ($status == 'Lunas') {
-                                $status_bg = '#DCFCE7'; $status_color = '#15803D';
+                                $status_bg = 'rgba(21, 128, 61, 0.1)'; $status_color = '#15803D';
                             } elseif ($status == 'Sebagian Lunas') {
-                                $status_bg = '#FEF3C7'; $status_color = '#D97706';
+                                $status_bg = 'rgba(217, 119, 6, 0.1)'; $status_color = '#D97706';
                             } elseif ($status == 'Belum Lunas') {
-                                $status_bg = '#FEE2E2'; $status_color = '#B91C1C';
+                                $status_bg = 'rgba(220, 38, 38, 0.1)'; $status_color = '#DC2626';
                             }
 
                             $status_ambil = isset($status_ambil_skpd[$nama]) ? $status_ambil_skpd[$nama] : 'Belum Diambil';
-                            $ambil_bg = '#F3F4F6';
-                            $ambil_color = '#374151';
+                            $ambil_bg = 'rgba(107, 114, 128, 0.1)';
+                            $ambil_color = 'var(--gray)';
                             if ($status_ambil == 'Sudah Diambil') {
-                                $ambil_bg = '#DCFCE7'; $ambil_color = '#15803D';
+                                $ambil_bg = 'rgba(21, 128, 61, 0.1)'; $ambil_color = '#15803D';
                             } elseif ($status_ambil == 'Sebagian Diambil') {
-                                $ambil_bg = '#DBEAFE'; $ambil_color = '#1D4ED8';
+                                $ambil_bg = 'rgba(37, 99, 235, 0.1)'; $ambil_color = '#2563EB';
                             } else {
-                                $ambil_bg = '#F3F4F6'; $ambil_color = '#6B7280';
+                                $ambil_bg = 'rgba(107, 114, 128, 0.1)'; $ambil_color = 'var(--gray)';
                             }
                             $current_skpd_id = $skpd_id_map[$nama] ?? 0;
 
@@ -327,7 +327,7 @@ if ($q_all_orders) {
                                     <span>Total Pesanan:</span>
                                     <span><?= $total_item ?> buah</span>
                                 </li>
-                                <li style="display: flex; justify-content: space-between; margin-top: 5px; font-weight: 700; color: #B45309; background: #FEF3C7; padding: 5px 8px; border-radius: 6px; font-size: 0.85rem;">
+                                <li style="display: flex; justify-content: space-between; margin-top: 5px; font-weight: 700; color: #B45309; background: rgba(245, 158, 11, 0.1); padding: 5px 8px; border-radius: 6px; font-size: 0.85rem;">
                                     <span>Total Tagihan:</span>
                                     <span>Rp <?= number_format($total_rupiah, 0, ',', '.') ?></span>
                                 </li>
@@ -340,7 +340,7 @@ if ($q_all_orders) {
                                     <span><?= $status_ambil ?></span>
                                 </li>
                                 <?php if (!empty($catatan_skpd[$nama])): ?>
-                                <li style="margin-top: 8px; font-size: 0.825rem; color: var(--gray); background: #F9FAFB; padding: 6px 8px; border-radius: 6px; border: 1px solid var(--gray-light);">
+                                <li style="margin-top: 8px; font-size: 0.825rem; color: var(--gray); background: var(--light); padding: 6px 8px; border-radius: 6px; border: 1px solid var(--gray-light);">
                                     <strong style="display: block; margin-bottom: 2px; color: var(--dark); font-size: 0.75rem;">Catatan:</strong>
                                     <span style="font-style: italic;"><?= htmlspecialchars($catatan_skpd[$nama]) ?></span>
                                 </li>
@@ -526,10 +526,10 @@ if ($q_all_orders) {
                 // Set Badges
                 if (modalSkpdBadges) {
                     modalSkpdBadges.innerHTML = `
-                        <span style="background: #e0e7ff; color: #4338ca; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Total: ${totalQty || 0} buah</span>
-                        <span style="background: #fef3c7; color: #b45309; padding: 4px 8px; border-radius: 4px; font-weight: 600;">${totalRp || 'Rp 0'}</span>
-                        <span style="background: ${statusBg || '#F3F4F6'}; color: ${statusColor || '#374151'}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Bayar: ${status || '-'}</span>
-                        <span style="background: ${statusAmbilBg || '#F3F4F6'}; color: ${statusAmbilColor || '#374151'}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Ambil: ${statusAmbil || '-'}</span>
+                        <span style="background: rgba(67, 56, 202, 0.1); color: var(--primary); padding: 4px 8px; border-radius: 4px; font-weight: 600;">Total: ${totalQty || 0} buah</span>
+                        <span style="background: rgba(180, 83, 9, 0.1); color: #B45309; padding: 4px 8px; border-radius: 4px; font-weight: 600;">${totalRp || 'Rp 0'}</span>
+                        <span style="background: ${statusBg || 'rgba(107, 114, 128, 0.1)'}; color: ${statusColor || 'var(--gray)'}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Bayar: ${status || '-'}</span>
+                        <span style="background: ${statusAmbilBg || 'rgba(107, 114, 128, 0.1)'}; color: ${statusAmbilColor || 'var(--gray)'}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Ambil: ${statusAmbil || '-'}</span>
                     `;
                 }
                 
@@ -596,13 +596,13 @@ if ($q_all_orders) {
                         let html = '';
                         items.forEach((item, index) => {
                             const genderColor = item.jenis_kelamin === 'Laki-laki' ? 'var(--primary)' : '#EC4899';
-                            const bayarBg = item.status_bayar === 'Lunas' ? '#DCFCE7' : '#FEE2E2';
-                            const bayarColor = item.status_bayar === 'Lunas' ? '#15803D' : '#B91C1C';
+                            const bayarBg = item.status_bayar === 'Lunas' ? 'rgba(21, 128, 61, 0.1)' : 'rgba(220, 38, 38, 0.1)';
+                            const bayarColor = item.status_bayar === 'Lunas' ? '#15803D' : '#DC2626';
                             
-                            let ambilBg = '#F3F4F6', ambilColor = '#374151';
-                            if (item.status_pengambilan === 'Sudah Diambil') { ambilBg = '#DCFCE7'; ambilColor = '#15803D'; }
-                            else if (item.status_pengambilan === 'Siap Diambil') { ambilBg = '#E0E7FF'; ambilColor = '#4338CA'; }
-                            else if (item.status_pengambilan === 'Sedang Dibuat') { ambilBg = '#FEF3C7'; ambilColor = '#D97706'; }
+                            let ambilBg = 'rgba(107, 114, 128, 0.1)', ambilColor = 'var(--gray)';
+                            if (item.status_pengambilan === 'Sudah Diambil') { ambilBg = 'rgba(21, 128, 61, 0.1)'; ambilColor = '#15803D'; }
+                            else if (item.status_pengambilan === 'Siap Diambil') { ambilBg = 'rgba(67, 56, 202, 0.1)'; ambilColor = 'var(--primary)'; }
+                            else if (item.status_pengambilan === 'Sedang Dibuat') { ambilBg = 'rgba(217, 119, 6, 0.1)'; ambilColor = '#D97706'; }
 
                             const subtotalFormatted = 'Rp ' + parseInt(item.subtotal || 0).toLocaleString('id-ID');
                             const pemesan = item.nama_pemesan && item.nama_pemesan.trim() !== '' ? item.nama_pemesan : '-';
