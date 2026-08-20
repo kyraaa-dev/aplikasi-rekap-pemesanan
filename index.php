@@ -177,6 +177,7 @@ if ($q_all_orders) {
     <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
     <link rel="stylesheet" href="assets/css/style.css?v=<?= time() ?>">
     <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .fade-up {
             opacity: 0;
@@ -662,7 +663,6 @@ if ($q_all_orders) {
         </script>
 
         <!-- 2. SCRIPT CHART.JS & STATISTIK ANIMASI -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             (function() {
                 try {
