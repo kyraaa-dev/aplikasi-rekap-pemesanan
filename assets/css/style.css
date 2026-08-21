@@ -315,9 +315,9 @@ button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.sp
 }
 
 .btn-wa-pill {
-    background: #25D366;
-    color: #ffffff;
-    border: none;
+    background: #25D366 !important;
+    color: #ffffff !important;
+    border: none !important;
     border-radius: 20px;
     padding: 4px 10px;
     font-size: 0.75rem;
@@ -331,8 +331,8 @@ button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.sp
 }
 
 .btn-wa-pill:hover {
-    background: #128C7E;
-    color: #ffffff;
+    background: #128C7E !important;
+    color: #ffffff !important;
     box-shadow: 0 4px 8px rgba(37, 211, 102, 0.35);
     transform: scale(1.05);
 }
