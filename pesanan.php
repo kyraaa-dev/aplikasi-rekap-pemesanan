@@ -164,11 +164,11 @@ $pesanans = $conn->query("
         </div>
 
         
-        <div class="panel" style="margin: 1.5rem 0; padding: 0; border-radius: 16px; background: var(--white); box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid var(--gray-light); overflow: hidden;">
+        <div class="panel" style="margin: 1.5rem 0; padding: 0; border-radius: 6px; background: var(--white); box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid var(--gray-light); overflow: hidden;">
             <div style="display: flex; flex-wrap: wrap;">
                 <!-- Kiri: Deskripsi & Instruksi -->
                 <div style="flex: 1; min-width: 300px; padding: 2.5rem; background: var(--white); border-right: 1px solid var(--gray-light);">
-                    <div style="display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: rgba(37, 99, 235, 0.1); color: var(--primary); margin-bottom: 1.5rem;">
+                    <div style="display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 6px; background: rgba(37, 99, 235, 0.1); color: var(--primary); margin-bottom: 1.5rem;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                     </div>
                     <h2 style="margin: 0 0 0.5rem 0; font-size: 1.5rem; font-weight: 700; color: var(--dark);">Form Input Pesanan Baru</h2>
@@ -283,7 +283,7 @@ $pesanans = $conn->query("
                         </div>
 
                         <div style="display: flex; justify-content: flex-end; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--gray-light);">
-                            <button type="submit" class="btn-card-primary" style="padding: 0.85rem 2rem; border-radius: 6px; font-size: 1.05rem; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">
+                            <button type="submit" class="btn-card-primary" style="padding: 0.85rem 2rem; border-radius: 6px; font-size: 1.05rem; ;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                                 Simpan Pesanan
                             </button>
@@ -296,7 +296,7 @@ $pesanans = $conn->query("
         <div class="panel">
             <div class="flex justify-between items-center mb-4" style="flex-wrap: wrap; gap: 10px;">
                 <h2>Daftar Pesanan Mutz</h2>
-                <form method="GET" action="pesanan.php" style="display: flex; gap: 10px; align-items: center; background: var(--light, #F9FAFB); padding: 10px 15px; border-radius: 12px; border: 1px solid var(--gray-light, #E5E7EB);">
+                <form method="GET" action="pesanan.php" style="display: flex; gap: 10px; align-items: center; background: var(--light, #F9FAFB); padding: 10px 15px; border-radius: 6px; border: 1px solid var(--gray-light, #E5E7EB);">
                     <select name="filter_skpd" style="padding: 0.4rem; border-radius: 6px; border: 1px solid var(--gray-light, #d1d5db); outline: none; background: var(--white); color: var(--dark);">
                         <option value="0">- Semua SKPD -</option>
                         <?php 
@@ -327,7 +327,7 @@ $pesanans = $conn->query("
             </div>
             
             <?php if($filter_skpd > 0 || $filter_status != '' || $filter_ambil != ''): ?>
-            <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: var(--primary); padding: 12px 16px; border-radius: 10px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: var(--primary); padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                     <strong>Mode Filter Aktif:</strong> Anda sedang melihat rincian pesanan yang difilter (Tampilan Terbatas).
@@ -381,12 +381,12 @@ $pesanans = $conn->query("
                             </td>
                             <td>
                                 <?php if($row['status_bayar'] == 'Lunas'): ?>
-                                    <span style="display: inline-flex; align-items: center; gap: 4px; background-color: rgba(16, 185, 129, 0.1); color: #10B981; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: 1px solid rgba(16, 185, 129, 0.3); letter-spacing: 0.5px;">
+                                    <span style="display: inline-flex; align-items: center; gap: 4px; background-color: rgba(16, 185, 129, 0.1); color: #10B981; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: 1px solid rgba(16, 185, 129, 0.3); letter-spacing: 0.5px;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                         Lunas
                                     </span>
                                 <?php else: ?>
-                                    <span style="display: inline-flex; align-items: center; gap: 4px; background-color: rgba(239, 68, 68, 0.1); color: #EF4444; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: 1px solid rgba(239, 68, 68, 0.3); letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(239, 68, 68, 0.1);">
+                                    <span style="display: inline-flex; align-items: center; gap: 4px; background-color: rgba(239, 68, 68, 0.1); color: #EF4444; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: 1px solid rgba(239, 68, 68, 0.3); letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(239, 68, 68, 0.1);">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                                         Belum Lunas
                                     </span>
@@ -407,7 +407,7 @@ $pesanans = $conn->query("
                                             $bg = 'rgba(16, 185, 129, 0.1)'; $color = '#10B981'; $border = 'rgba(16, 185, 129, 0.3)';
                                         }
                                     ?>
-                                    <select name="status" onchange="this.form.submit()" style="width: 100%; padding: 0.35rem 0.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border-radius: 20px; border: 1px solid <?= $border ?>; background-color: <?= $bg ?>; color: <?= $color ?>; cursor: pointer; outline: none; letter-spacing: 0.2px;">
+                                    <select name="status" onchange="this.form.submit()" style="width: 100%; padding: 0.35rem 0.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border-radius: 6px; border: 1px solid <?= $border ?>; background-color: <?= $bg ?>; color: <?= $color ?>; cursor: pointer; outline: none; letter-spacing: 0.2px;">
                                         <option value="Menunggu Diproses" <?= $st == 'Menunggu Diproses' ? 'selected' : '' ?>>⏳ Menunggu Diproses</option>
                                         <option value="Sedang Dibuat" <?= $st == 'Sedang Dibuat' ? 'selected' : '' ?>>✂️ Sedang Dibuat</option>
                                         <option value="Siap Diambil" <?= $st == 'Siap Diambil' ? 'selected' : '' ?>>📦 Siap Diambil</option>
@@ -422,26 +422,26 @@ $pesanans = $conn->query("
                             <td style="white-space: nowrap; position: sticky; right: 0; background: var(--white); z-index: 1; border-left: 1px solid var(--gray-light, #E5E7EB); box-shadow: -4px 0 10px rgba(0,0,0,0.05);">
                                 <div style="display: flex; gap: 6px; align-items: center; justify-content: center;">
                                     <?php if($row['status_bayar'] == 'Belum Lunas'): ?>
-                                    <a href="pesanan.php?lunas=<?= $row['id'] ?>" class="btn-confirm" data-confirm-title="Konfirmasi Pembayaran" data-confirm-text="Tandai pesanan ini sebagai Lunas?" data-confirm-btn="Ya, Lunas" data-confirm-color="#10B981" title="Tandai Lunas" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 8px; background: #10B981; color: white; text-decoration: none; transition: transform 0.2s;">
+                                    <a href="pesanan.php?lunas=<?= $row['id'] ?>" class="btn-confirm" data-confirm-title="Konfirmasi Pembayaran" data-confirm-text="Tandai pesanan ini sebagai Lunas?" data-confirm-btn="Ya, Lunas" data-confirm-color="#10B981" title="Tandai Lunas" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 6px; background: #10B981; color: white; text-decoration: none; transition: transform 0.2s;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                     </a>
                                     <?php else: ?>
-                                    <a href="cetak_kwitansi.php?id=<?= $row['id'] ?>" target="_blank" title="Cetak Kwitansi" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 8px; background: #3B82F6; color: white; text-decoration: none; transition: transform 0.2s;">
+                                    <a href="cetak_kwitansi.php?id=<?= $row['id'] ?>" target="_blank" title="Cetak Kwitansi" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 6px; background: #3B82F6; color: white; text-decoration: none; transition: transform 0.2s;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                                     </a>
                                     <?php endif; ?>
                                     
-                                    <a href="edit_pesanan.php?id=<?= $row['id'] ?>" title="Edit Pesanan" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 8px; background: #6B7280; color: white; text-decoration: none; transition: transform 0.2s;">
+                                    <a href="edit_pesanan.php?id=<?= $row['id'] ?>" title="Edit Pesanan" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 6px; background: #6B7280; color: white; text-decoration: none; transition: transform 0.2s;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                     </a>
                                     
                                     <?php if($row['status_pengambilan'] == 'Sudah Diambil'): ?>
-                                    <a href="proses_retur.php?id=<?= $row['id'] ?>" title="Proses Retur" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 8px; background: #F59E0B; color: white; text-decoration: none; transition: transform 0.2s;">
+                                    <a href="proses_retur.php?id=<?= $row['id'] ?>" title="Proses Retur" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 6px; background: #F59E0B; color: white; text-decoration: none; transition: transform 0.2s;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path><path d="M3 22v-6h6"></path><path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path></svg>
                                     </a>
                                     <?php endif; ?>
                                     
-                                    <a href="pesanan.php?del=<?= $row['id'] ?>" class="btn-confirm" data-confirm-title="Hapus Pesanan" data-confirm-text="Apakah Anda yakin ingin menghapus pesanan ini secara permanen?" data-confirm-btn="Ya, Hapus" data-confirm-color="#EF4444" title="Hapus Pesanan" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 8px; background: #EF4444; color: white; text-decoration: none; transition: transform 0.2s;">
+                                    <a href="pesanan.php?del=<?= $row['id'] ?>" class="btn-confirm" data-confirm-title="Hapus Pesanan" data-confirm-text="Apakah Anda yakin ingin menghapus pesanan ini secara permanen?" data-confirm-btn="Ya, Hapus" data-confirm-color="#EF4444" title="Hapus Pesanan" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 6px; background: #EF4444; color: white; text-decoration: none; transition: transform 0.2s;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                     </a>
                                 </div>

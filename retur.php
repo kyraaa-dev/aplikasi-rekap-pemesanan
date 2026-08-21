@@ -97,7 +97,7 @@ if (isset($_GET['del_retur'])) {
                                         $bg = '#FEE2E2'; $color = '#B91C1C'; $border = '#FECACA';
                                     }
                                 ?>
-                                <span style="display: inline-flex; align-items: center; gap: 4px; background-color: <?= $bg ?>; color: <?= $color ?>; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: 1px solid <?= $border ?>; letter-spacing: 0.5px; white-space: nowrap;">
+                                <span style="display: inline-flex; align-items: center; gap: 4px; background-color: <?= $bg ?>; color: <?= $color ?>; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: 1px solid <?= $border ?>; letter-spacing: 0.5px; white-space: nowrap;">
                                     <?= $cur_status ?>
                                 </span>
                             </td>

@@ -90,7 +90,7 @@ $skpds = $conn->query("
             </div>
         </div>
 
-        <div class="panel" style="background: var(--white); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid var(--gray-light);">
+        <div class="panel" style="background: var(--white); border-radius: 6px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid var(--gray-light);">
             <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.25rem; color: var(--primary); display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--light); padding-bottom: 1rem;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7.5" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
                 Tambah SKPD / Instansi Baru
@@ -119,7 +119,7 @@ $skpds = $conn->query("
                 </div>
 
                 <div style="display: flex; justify-content: flex-end; margin-top: 1rem;">
-                    <button type="submit" class="btn-card-primary" style="padding: 0.85rem 1.75rem; border-radius: 6px; font-size: 1.05rem; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">
+                    <button type="submit" class="btn-card-primary" style="padding: 0.85rem 1.75rem; border-radius: 6px; font-size: 1.05rem; ;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         Simpan SKPD Baru
                     </button>
@@ -127,10 +127,10 @@ $skpds = $conn->query("
             </form>
         </div>
         
-        <div class="panel" style="margin-top: 1.5rem; background: var(--white); border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid var(--gray-light);">
+        <div class="panel" style="margin-top: 1.5rem; background: var(--white); border-radius: 6px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid var(--gray-light);">
             <div class="flex justify-between items-center mb-4" style="flex-wrap: wrap; gap: 10px;">
                 <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--dark); margin: 0;">Daftar SKPD Terdaftar</h2>
-                <input type="text" id="searchSkpd" onkeyup="filterTable('searchSkpd', 'skpdTable')" placeholder="🔍 Cari nama SKPD..." style="width: 250px; padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid var(--gray-light); font-size: 0.85rem;">
+                <input type="text" id="searchSkpd" onkeyup="filterTable('searchSkpd', 'skpdTable')" placeholder="🔍 Cari nama SKPD..." style="width: 250px; padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid var(--gray-light); font-size: 0.85rem;">
             </div>
             <div class="table-responsive">
                 <table id="skpdTable">
@@ -168,7 +168,7 @@ $skpds = $conn->query("
                                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
                                         </button>
                                     <?php else: ?>
-                                        <button type="button" class="btn-quick-wa" data-id="<?= $row['id'] ?>" data-name="<?= htmlspecialchars($row['nama_skpd'], ENT_QUOTES) ?>" data-wa="" style="background: #ECFDF5; border: 1px dashed #10B981; color: #059669; font-size: 0.78rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; transition: all 0.15s ease;">
+                                        <button type="button" class="btn-quick-wa" data-id="<?= $row['id'] ?>" data-name="<?= htmlspecialchars($row['nama_skpd'], ENT_QUOTES) ?>" data-wa="" style="background: #ECFDF5; border: 1px dashed #10B981; color: #059669; font-size: 0.78rem; font-weight: 600; padding: 4px 10px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; transition: all 0.15s ease;">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg>
                                             + Tambah WA
                                         </button>
@@ -176,13 +176,13 @@ $skpds = $conn->query("
                                 </div>
                             </td>
                             <td>
-                                <span style="display: inline-flex; align-items: center; gap: 4px; background-color: #F0FDF4; color: #15803D; padding: 3px 8px; border-radius: 20px; font-weight: 700; font-size: 0.75rem; border: 1px solid #BBF7D0;">
+                                <span style="display: inline-flex; align-items: center; gap: 4px; background-color: #F0FDF4; color: #15803D; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 0.75rem; border: 1px solid #BBF7D0;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                     <?= $row['total_lunas'] ?> Lunas
                                 </span>
                             </td>
                             <td>
-                                <span style="display: inline-flex; align-items: center; gap: 4px; background-color: <?= $row['total_belum'] > 0 ? '#FEF2F2' : '#F3F4F6' ?>; color: <?= $row['total_belum'] > 0 ? '#B91C1C' : '#6B7280' ?>; padding: 3px 8px; border-radius: 20px; font-weight: 700; font-size: 0.75rem; border: 1px solid <?= $row['total_belum'] > 0 ? '#FECACA' : '#E5E7EB' ?>; <?= $row['total_belum'] > 0 ? 'box-shadow: 0 2px 4px rgba(185, 28, 28, 0.1);' : '' ?>">
+                                <span style="display: inline-flex; align-items: center; gap: 4px; background-color: <?= $row['total_belum'] > 0 ? '#FEF2F2' : '#F3F4F6' ?>; color: <?= $row['total_belum'] > 0 ? '#B91C1C' : '#6B7280' ?>; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 0.75rem; border: 1px solid <?= $row['total_belum'] > 0 ? '#FECACA' : '#E5E7EB' ?>; <?= $row['total_belum'] > 0 ? 'box-shadow: 0 2px 4px rgba(185, 28, 28, 0.1);' : '' ?>">
                                     <?php if($row['total_belum'] > 0): ?>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                                     <?php endif; ?>

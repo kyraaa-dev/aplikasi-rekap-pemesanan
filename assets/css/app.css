@@ -1,26 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --primary: #2563EB;
-    --primary-hover: #1D4ED8;
-    --secondary: #10B981;
-    --secondary-hover: #059669;
-    --dark: #1F2937;
-    --light: #F3F4F6;
+    --primary: #09090B;
+    --primary-hover: #27272A;
+    --secondary: #E4E4E7;
+    --secondary-hover: #D4D4D8;
+    --dark: #09090B;
+    --light: #F4F4F5;
     --white: #FFFFFF;
-    --gray: #9CA3AF;
-    --gray-light: #E5E7EB;
+    --gray: #71717A;
+    --gray-light: #E4E4E7;
     --danger: #EF4444;
-    --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.1);
-    --border-radius: 8px;
+    --shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --border-radius: 6px;
 }
 
 [data-theme="dark"] {
-    --dark: #F9FAFB;
-    --light: #111827;
-    --white: #1F2937;
-    --gray-light: #374151;
+    --primary: #FAFAFA;
+    --primary-hover: #E4E4E7;
+    --secondary: #27272A;
+    --secondary-hover: #3F3F46;
+    --dark: #FAFAFA;
+    --light: #000000;
+    --white: #09090B;
+    --gray: #A1A1AA;
+    --gray-light: #27272A;
 }
 
 [data-theme="dark"] .brand img {
@@ -48,7 +53,7 @@ body {
 .sidebar {
     width: 280px;
     background-color: var(--white);
-    box-shadow: var(--shadow);
+    border-right: 1px solid var(--gray-light);
     padding: 2rem 0;
     display: flex;
     flex-direction: column;
@@ -78,17 +83,24 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 1rem 2rem;
+    padding: 0.85rem 1.5rem;
+    margin: 0 1rem;
+    border-radius: var(--border-radius);
     text-decoration: none;
-    color: var(--dark);
+    color: var(--gray);
     font-weight: 500;
-    transition: all 0.3s ease;
+    transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-.nav-links a:hover, .nav-links a.active {
+.nav-links a:hover {
+    background-color: var(--light);
+    color: var(--dark);
+}
+
+.nav-links a.active {
     background-color: var(--light);
     color: var(--primary);
-    border-right: 4px solid var(--primary);
+    font-weight: 600;
 }
 
 /* Main Content */
@@ -135,14 +147,10 @@ h1 {
     background-color: var(--white);
     padding: 1.5rem;
     border-radius: var(--border-radius);
+    border: 1px solid var(--gray-light);
     box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
-    transition: box-shadow 0.2s ease;
-}
-
-.card:hover {
-    box-shadow: var(--shadow-lg);
 }
 
 .card h3 {
@@ -231,8 +239,7 @@ input[type="text"], input[type="number"], select, textarea {
 
 input:focus, select:focus, textarea:focus {
     outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    border-color: var(--dark);
     background-color: var(--bg-color);
 }
 
@@ -265,10 +272,12 @@ button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.sp
 
 .btn-secondary {
     background-color: var(--secondary);
+    color: var(--dark);
 }
 
 .btn-secondary:hover {
     background-color: var(--secondary-hover);
+    color: var(--dark);
 }
 
 .btn-danger {

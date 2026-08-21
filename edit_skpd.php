@@ -72,19 +72,19 @@ if (!$skpd) {
                 <h1>Edit SKPD</h1>
                 <p style="margin: 4px 0 0 0; color: var(--gray); font-size: 0.875rem;">Perbarui data instansi atau kontak narahubung WhatsApp</p>
             </div>
-            <a href="skpd.php" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600;">
+            <a href="skpd.php" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 Kembali ke Daftar SKPD
             </a>
         </div>
 
-        <div class="panel" style="max-width: 620px; margin: 1.5rem 0; padding: 2rem; border-radius: 16px; background: var(--white); box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid var(--gray-light);">
+        <div class="panel" style="max-width: 620px; margin: 1.5rem 0; padding: 2rem; border-radius: 6px; background: var(--white); box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid var(--gray-light);">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gray-light); padding-bottom: 1.25rem; margin-bottom: 1.5rem;">
                 <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--primary); margin: 0; display: flex; align-items: center; gap: 8px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
                     Formulir Edit SKPD
                 </h2>
-                <span style="font-size: 0.8rem; background: #EEF2FF; color: #1D4ED8; padding: 4px 10px; border-radius: 20px; font-weight: 600;">
+                <span style="font-size: 0.8rem; background: #EEF2FF; color: #1D4ED8; padding: 4px 10px; border-radius: 6px; font-weight: 600;">
                     ID: <?= $skpd['id'] ?>
                 </span>
             </div>
@@ -97,7 +97,7 @@ if (!$skpd) {
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                         Nama SKPD / Instansi <span style="color: #DC2626;">*</span>
                     </label>
-                    <input type="text" name="nama_skpd" value="<?= htmlspecialchars($skpd['nama_skpd']) ?>" placeholder="Masukkan Nama SKPD" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.7rem 1rem; box-sizing: border-box; font-size: 0.9rem;">
+                    <input type="text" name="nama_skpd" value="<?= htmlspecialchars($skpd['nama_skpd']) ?>" placeholder="Masukkan Nama SKPD" required style="width: 100%; border-radius: 6px; border: 1px solid var(--gray-light); padding: 0.7rem 1rem; box-sizing: border-box; font-size: 0.9rem;">
                 </div>
 
                 <div class="form-group" style="margin-bottom: 1.75rem;">
@@ -107,14 +107,14 @@ if (!$skpd) {
                         </span>
                         No. WhatsApp Narahubung <span style="color: var(--gray); font-weight: 400;">(Opsional)</span>
                     </label>
-                    <input type="text" name="no_wa" value="<?= htmlspecialchars($skpd['no_wa'] ?? '') ?>" placeholder="Contoh: 08123456789 atau 628123456789" style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.7rem 1rem; box-sizing: border-box; font-size: 0.9rem;">
+                    <input type="text" name="no_wa" value="<?= htmlspecialchars($skpd['no_wa'] ?? '') ?>" placeholder="Contoh: 08123456789 atau 628123456789" style="width: 100%; border-radius: 6px; border: 1px solid var(--gray-light); padding: 0.7rem 1rem; box-sizing: border-box; font-size: 0.9rem;">
                 </div>
 
                 <div style="display: flex; gap: 12px; justify-content: flex-end; align-items: center; border-top: 1px solid var(--gray-light); padding-top: 1.5rem;">
-                    <a href="skpd.php" class="btn btn-secondary" style="padding: 0.7rem 1.5rem; text-decoration: none; border-radius: 8px; font-weight: 600;">
+                    <a href="skpd.php" class="btn btn-secondary" style="padding: 0.7rem 1.5rem; text-decoration: none; border-radius: 6px; font-weight: 600;">
                         Batal
                     </a>
-                    <button type="submit" class="btn btn-primary" style="padding: 0.7rem 2rem; border-radius: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
+                    <button type="submit" class="btn btn-primary" style="padding: 0.7rem 2rem; border-radius: 6px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                         Simpan Perubahan
                     </button>

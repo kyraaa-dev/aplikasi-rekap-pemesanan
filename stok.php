@@ -78,15 +78,15 @@ $tot_p = $q_tot_p->fetch_assoc()['tot'] ?? 0;
         
         <div class="panel">
             <div style="display: flex; gap: 15px; margin-bottom: 20px;">
-                <div style="flex: 1; background: var(--white); border: 1px solid var(--gray-light); padding: 15px; border-radius: 8px; border-left: 4px solid #2563EB;">
+                <div style="flex: 1; background: var(--white); border: 1px solid var(--gray-light); padding: 15px; border-radius: 6px; border-left: 4px solid #2563EB;">
                     <h3 style="margin: 0 0 5px 0; font-size: 0.95rem; color: var(--gray);">Total Stok Laki-laki</h3>
                     <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark);"><?= number_format($tot_l) ?> <span style="font-size: 1rem; font-weight: 400;">Pcs</span></div>
                 </div>
-                <div style="flex: 1; background: var(--white); border: 1px solid var(--gray-light); padding: 15px; border-radius: 8px; border-left: 4px solid #EC4899;">
+                <div style="flex: 1; background: var(--white); border: 1px solid var(--gray-light); padding: 15px; border-radius: 6px; border-left: 4px solid #EC4899;">
                     <h3 style="margin: 0 0 5px 0; font-size: 0.95rem; color: var(--gray);">Total Stok Perempuan</h3>
                     <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark);"><?= number_format($tot_p) ?> <span style="font-size: 1rem; font-weight: 400;">Pcs</span></div>
                 </div>
-                <div style="flex: 1; background: var(--white); border: 1px solid var(--gray-light); padding: 15px; border-radius: 8px; border-left: 4px solid #10B981;">
+                <div style="flex: 1; background: var(--white); border: 1px solid var(--gray-light); padding: 15px; border-radius: 6px; border-left: 4px solid #10B981;">
                     <h3 style="margin: 0 0 5px 0; font-size: 0.95rem; color: var(--gray);">Total Keseluruhan</h3>
                     <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark);"><?= number_format($tot_l + $tot_p) ?> <span style="font-size: 1rem; font-weight: 400;">Pcs</span></div>
                 </div>
@@ -137,7 +137,7 @@ $tot_p = $q_tot_p->fetch_assoc()['tot'] ?? 0;
                 </div>
                 
                 <div style="margin-top: 1.5rem; text-align: right; display: flex; justify-content: flex-end;">
-                    <button type="submit" class="btn-card-primary" style="padding: 0.85rem 1.75rem; border-radius: 6px; font-size: 1.05rem; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">
+                    <button type="submit" class="btn-card-primary" style="padding: 0.85rem 1.75rem; border-radius: 6px; font-size: 1.05rem; ;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                         Simpan Perubahan Stok
                     </button>

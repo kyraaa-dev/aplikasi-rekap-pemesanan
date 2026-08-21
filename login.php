@@ -131,48 +131,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.88) 0%, rgba(29, 78, 216, 0.85) 50%, rgba(30, 64, 175, 0.9) 100%), url('assets/images/bg-bupati-new.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background-color: var(--light);
         }
         
         [data-theme="dark"] body {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(30, 27, 75, 0.94) 50%, rgba(49, 46, 129, 0.92) 100%), url('assets/images/bg-bupati-new.jpg');
-            background-size: cover;
-            background-position: center;
+            background-color: var(--dark);
         }
 
-        /* Ambient Glow Blobs */
-        .ambient-blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: 1;
-            pointer-events: none;
-            opacity: 0.5;
-        }
-        .blob-1 {
-            width: 380px;
-            height: 380px;
-            background: #ec4899;
-            top: -100px;
-            left: -100px;
-            animation: pulseGlow 12s infinite alternate ease-in-out;
-        }
-        .blob-2 {
-            width: 420px;
-            height: 420px;
-            background: #3b82f6;
-            bottom: -120px;
-            right: -100px;
-            animation: pulseGlow 15s infinite alternate-reverse ease-in-out;
-        }
-
-        @keyframes pulseGlow {
-            0% { transform: scale(1) translate(0, 0); opacity: 0.4; }
-            100% { transform: scale(1.15) translate(30px, -20px); opacity: 0.65; }
-        }
 
         /* Top Bar Actions (Theme Switcher) */
         .login-topbar {
@@ -182,30 +147,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             z-index: 50;
         }
         .btn-theme-login {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: #ffffff;
+            background: var(--white);
+            border: 1px solid var(--gray-light);
+            color: var(--dark);
             width: 42px;
             height: 42px;
-            border-radius: 50%;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.25s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.15s ease;
+            box-shadow: var(--shadow);
         }
         .btn-theme-login:hover {
-            background: rgba(255, 255, 255, 0.4);
-            transform: scale(1.05);
+            background: var(--light);
         }
-        [data-theme="dark"] .btn-theme-login {
-            background: rgba(30, 41, 59, 0.6);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
         /* Login Container & Card */
         .login-wrapper {
             width: 100%;
@@ -216,38 +173,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .login-card {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 2.25rem 2rem 2rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 6px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-light);
             position: relative;
             overflow: hidden;
-            animation: cardAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: cardAppear 0.3s ease-out forwards;
         }
 
         @keyframes cardAppear {
-            from { opacity: 0; transform: translateY(18px) scale(0.98); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        [data-theme="dark"] .login-card {
-            background: rgba(15, 23, 42, 0.88);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
-        }
-
-        /* Gradient Top Strip */
-        .login-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #10b981, #3b82f6, #8b5cf6);
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Header / Logo */
@@ -345,7 +283,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             color: #1e293b !important;
             background: #f8fafc !important;
             border: 1.5px solid #e2e8f0 !important;
-            border-radius: 10px !important;
+            border-radius: 6px !important;
             transition: all 0.2s ease !important;
             outline: none !important;
             box-sizing: border-box !important;
@@ -363,16 +301,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .input-group input[type="text"]:focus,
         .input-group input[type="password"]:focus,
         .form-input:focus {
-            background: #ffffff !important;
-            border-color: #2563EB !important;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+            background: var(--white) !important;
+            border-color: var(--dark) !important;
         }
         [data-theme="dark"] .input-group input[type="text"]:focus,
         [data-theme="dark"] .input-group input[type="password"]:focus,
         [data-theme="dark"] .form-input:focus {
-            background: #0f172a !important;
-            border-color: #3B82F6 !important;
-            box-shadow: 0 0 0 3.5px rgba(99, 102, 241, 0.25) !important;
+            background: #09090B !important;
+            border-color: #E4E4E7 !important;
         }
         .input-group:focus-within .input-icon-left {
             color: #2563EB !important;
@@ -408,10 +344,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             width: 100%;
             height: 44px;
             margin-top: 0.75rem;
-            background: #2563EB;
-            color: #ffffff;
+            background: var(--primary);
+            color: var(--white);
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 0.95rem;
             font-weight: 600;
             display: inline-flex;
@@ -419,13 +355,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             justify-content: center;
             gap: 8px;
             cursor: pointer;
-            transition: background-color 0.15s ease;
+            transition: background-color 0.15s ease, opacity 0.15s ease;
         }
         .btn-submit:hover {
-            background: #1D4ED8;
+            opacity: 0.9;
         }
         .btn-submit:active {
-            background: #1E40AF;
+            opacity: 0.8;
         }
         .btn-submit.loading {
             pointer-events: none;
@@ -467,9 +403,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if(localStorage.getItem('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
     </script>
     
-    <!-- Ambient Blur Shapes -->
-    <div class="ambient-blob blob-1"></div>
-    <div class="ambient-blob blob-2"></div>
+    <!-- Removed Ambient Blur Shapes -->
 
     <!-- Theme Toggle -->
     <div class="login-topbar">

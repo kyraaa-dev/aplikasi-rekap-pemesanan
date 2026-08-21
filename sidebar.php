@@ -5,7 +5,7 @@
     transition: all 0.15s ease !important;
 }
 .nav-links a:hover {
-    background-color: rgba(37, 99, 235, 0.06) !important;
+    background-color: var(--light) !important;
 }
 
 /* SweetAlert2 Layer Guarantee */
@@ -42,7 +42,7 @@
     width: 100% !important;
     max-width: 660px !important;
     background: #FFFFFF !important;
-    border-radius: 16px !important;
+    border-radius: 6px !important;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1) !important;
     overflow: hidden !important;
     display: flex !important;
@@ -112,7 +112,7 @@
     border: 1px solid #E5E7EB !important;
     color: #4B5563 !important;
     padding: 6px 14px !important;
-    border-radius: 20px !important;
+    border-radius: 6px !important;
     font-size: 0.8rem !important;
     font-weight: 600 !important;
     cursor: pointer !important;
@@ -155,7 +155,7 @@
     cursor: pointer !important;
 }
 .spotlight-item:hover, .spotlight-item.active {
-    background: rgba(37, 99, 235, 0.06) !important;
+    background: var(--light) !important;
     border-left-color: #2563EB !important;
 }
 .spotlight-item-left {
@@ -168,7 +168,7 @@
 .spotlight-item-icon {
     width: 36px !important;
     height: 36px !important;
-    border-radius: 8px !important;
+    border-radius: 6px !important;
     background: #EEF2FF !important;
     color: #2563EB !important;
     display: flex !important;
@@ -259,70 +259,19 @@
 @keyframes pulseRing {
     0% { transform: scale(0.8); opacity: 0.5; }
     50% { transform: scale(1.1); opacity: 0.2; }
-    100% { transform: scale(0.8); opacity: 0.5; }
-}
-@keyframes textShift {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-}
-.search-loading-container {
+/* Minimalist Loading Spinner */
+.search-loading-wrapper {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    padding: 2rem 1.5rem !important;
-    gap: 1.25rem !important;
-    animation: fadeInUp 0.3s ease !important;
-}
-.search-orbit-loader {
-    position: relative !important;
-    width: 48px !important;
-    height: 48px !important;
-    display: flex !important;
-    align-items: center !important;
     justify-content: center !important;
-}
-.search-orbit-ring {
-    position: absolute !important;
-    inset: 0 !important;
-    border: 2.5px solid transparent !important;
-    border-top-color: #2563EB !important;
-    border-right-color: #818CF8 !important;
-    border-radius: 50% !important;
-    animation: searchSpin 0.9s cubic-bezier(0.5, 0, 0.5, 1) infinite !important;
-}
-.search-orbit-ring-inner {
-    position: absolute !important;
-    inset: 6px !important;
-    border: 2px solid transparent !important;
-    border-bottom-color: #C084FC !important;
-    border-left-color: #A78BFA !important;
-    border-radius: 50% !important;
-    animation: searchSpin 0.6s cubic-bezier(0.5, 0, 0.5, 1) infinite reverse !important;
-}
-.search-orbit-dot {
-    position: absolute !important;
-    width: 6px !important;
-    height: 6px !important;
-    background: #2563EB !important;
-    border-radius: 50% !important;
-    animation: orbitDot 1.2s linear infinite !important;
-    box-shadow: 0 0 6px rgba(37, 99, 235, 0.5) !important;
-}
-.search-orbit-dot:nth-child(2) { animation-delay: -0.4s !important; background: #818CF8 !important; }
-.search-orbit-dot:nth-child(3) { animation-delay: -0.8s !important; background: #C084FC !important; }
-.search-orbit-core {
-    width: 10px !important;
-    height: 10px !important;
-    background: #2563EB !important;
-    border-radius: 50% !important;
-    animation: pulseRing 1.2s ease-in-out infinite !important;
-    box-shadow: 0 0 8px rgba(37, 99, 235, 0.3) !important;
+    padding: 3rem 0 !important;
+    gap: 12px !important;
 }
 .search-loading-text {
     font-size: 0.85rem !important;
     font-weight: 600 !important;
-    color: #2563EB !important;
-    animation: textShift 1.5s ease-in-out infinite !important;
+    color: var(--dark) !important;
     letter-spacing: 0.01em !important;
 }
 .search-loading-sub {
@@ -351,7 +300,7 @@
 .search-skeleton-avatar {
     width: 36px !important;
     height: 36px !important;
-    border-radius: 8px !important;
+    border-radius: 6px !important;
     background: linear-gradient(90deg, #E5E7EB 25%, #F3F4F6 50%, #E5E7EB 75%) !important;
     background-size: 200% 100% !important;
     animation: shimmer 1.5s ease-in-out infinite !important;
@@ -426,8 +375,7 @@
 .floating-search-btn:hover {
     border-color: #2563EB !important;
     color: #2563EB !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.18) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
 }
 
 .floating-search-btn svg {
@@ -568,7 +516,7 @@
 <aside class="sidebar">
     <div class="brand">
         <div style="display: flex; align-items: center; gap: 10px;">
-            <img src="assets/images/logo.png?v=2" alt="Logo E-MutZ" style="width: 48px; height: 48px; object-fit: contain; border-radius: 8px;">
+            <img src="assets/images/logo.png?v=2" alt="Logo E-MutZ" style="width: 48px; height: 48px; object-fit: contain; border-radius: 6px;">
             <span>E-MutZ KORPRI</span>
         </div>
         <button class="sidebar-close-btn" id="sidebarCloseBtn" title="Tutup Menu">
@@ -605,7 +553,7 @@
             Pengaturan</a>
         </li>
         <li id="pwaInstallItem" style="margin-top: 0.75rem;">
-            <a href="#" id="btnPwaInstall" style="background: rgba(37, 99, 235, 0.08); color: var(--primary); font-weight: 600; border-radius: 8px; border: 1px dashed rgba(37, 99, 235, 0.4);">
+            <a href="#" id="btnPwaInstall" style="background: var(--light); color: var(--dark); font-weight: 600; border-radius: 6px; border: 1px dashed var(--gray);">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line><polyline points="9 9 12 12 15 9"></polyline><line x1="12" y1="6" x2="12" y2="12"></line></svg>
                 📲 Pasang Aplikasi</a>
         </li>
@@ -771,15 +719,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 @keyframes gradientGlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
                 @keyframes popIn { 0% { opacity: 0; transform: scale(0.9) translateY(10px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
                 .swal-logout-container { padding: 10px; display: flex; flex-direction: column; align-items: center; animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-                .swal-spinner-ring { width: 64px; height: 64px; border-radius: 50%; border: 4px solid var(--gray-light); border-top-color: var(--primary); animation: spinFast 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite; margin-bottom: 24px; position: relative; }
-                .swal-spinner-ring::after { content: ''; position: absolute; top: -4px; left: -4px; right: -4px; bottom: -4px; border-radius: 50%; border: 4px solid transparent; border-bottom-color: #EC4899; animation: spinFast 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite reverse; }
                 .swal-step-title { font-size: 1.25rem; font-weight: 800; color: var(--dark); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
                 .swal-step-desc { font-size: 0.95rem; font-weight: 500; color: var(--gray); margin-bottom: 24px; height: 22px; transition: color 0.3s; }
                 .swal-progress-track { width: 100%; height: 8px; background: var(--gray-light); border-radius: 999px; overflow: hidden; box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); }
                 .swal-progress-fill { width: 0%; height: 100%; background: #2563EB; border-radius: 999px; transition: width 0.3s ease; }
                 </style>
                 <div class="swal-logout-container">
-                    <div class="swal-spinner-ring" id="swal-spinner"></div>
                     <div class="swal-step-title" id="swal-step-title">MEMUTUS KONEKSI</div>
                     <div class="swal-step-desc" id="swal-step-text">Menginisialisasi penutupan sesi...</div>
                     <div class="swal-progress-track">
@@ -862,7 +807,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             Apakah Anda yakin ingin keluar dari sistem <strong>E-MutZ KORPRI</strong>?
                         </div>
                     </div>
-                    <div style="padding: 12px 16px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; font-size: 0.85rem; color: #D97706; text-align: left; display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+                    <div style="padding: 12px 16px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 6px; font-size: 0.85rem; color: #D97706; text-align: left; display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                         <span style="font-weight: 500; line-height: 1.4;">Sistem akan memutus koneksi aman Anda dan membersihkan memori sementara browser.</span>
                     </div>
@@ -907,7 +852,7 @@ document.addEventListener('DOMContentLoaded', function() {
             title: '<span style="display:inline-flex; align-items:center; gap:8px; color:#059669;"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg> Notifikasi WhatsApp</span>',
             html: `
                 <div style="text-align: left; font-size: 0.9rem;">
-                    <div style="margin-bottom: 12px; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 10px 14px; border-radius: 8px; color: #065F46;">
+                    <div style="margin-bottom: 12px; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 10px 14px; border-radius: 6px; color: #065F46;">
                         <strong style="font-size: 1rem;">${skpdName}</strong><br>
                         <span style="font-size: 0.825rem; color: #047857;">Pesanan: <b>${totalQty} pcs</b> | Total: <b>${totalRp}</b> | Bayar: <b>${statusBayar}</b></span>
                     </div>

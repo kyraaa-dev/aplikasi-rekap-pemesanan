@@ -115,24 +115,24 @@ if ($pesanan['jenis_kelamin'] == 'Laki-laki') {
                 <h1>Proses Retur Pesanan</h1>
                 <p style="margin: 4px 0 0 0; color: var(--gray); font-size: 0.875rem;">Proses penukaran ukuran atau pengembalian barang cacat ke penjahit</p>
             </div>
-            <a href="pesanan.php" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600;">
+            <a href="pesanan.php" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 Kembali ke Pesanan
             </a>
         </div>
         
-        <div class="panel" style="max-width: 720px; margin: 1.5rem 0; padding: 2rem; border-radius: 16px; background: var(--white); box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid var(--gray-light);">
+        <div class="panel" style="max-width: 720px; margin: 1.5rem 0; padding: 2rem; border-radius: 6px; background: var(--white); box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid var(--gray-light);">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gray-light); padding-bottom: 1.25rem; margin-bottom: 1.5rem;">
                 <h2 style="font-size: 1.25rem; font-weight: 700; color: #D97706; margin: 0; display: flex; align-items: center; gap: 8px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path><path d="M3 22v-6h6"></path><path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path></svg>
                     Formulir Retur Barang #<?= $pesanan['id'] ?>
                 </h2>
-                <span style="font-size: 0.8rem; background: #FEF3C7; color: #B45309; padding: 4px 10px; border-radius: 20px; font-weight: 600;">
+                <span style="font-size: 0.8rem; background: #FEF3C7; color: #B45309; padding: 4px 10px; border-radius: 6px; font-weight: 600;">
                     ID Pesanan: <?= $pesanan['id'] ?>
                 </span>
             </div>
             
-            <div style="background: #F9FAFB; padding: 16px; border-radius: 12px; border: 1px solid #E5E7EB; margin-bottom: 1.5rem;">
+            <div style="background: #F9FAFB; padding: 16px; border-radius: 6px; border: 1px solid #E5E7EB; margin-bottom: 1.5rem;">
                 <h3 style="margin: 0 0 10px 0; color: var(--dark); font-size: 0.95rem; font-weight: 700;">Informasi Pesanan Saat Ini</h3>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.875rem;">
                     <div><span style="color: var(--gray);">SKPD:</span> <strong style="color: var(--dark);"><?= htmlspecialchars($pesanan['nama_skpd']) ?></strong></div>
@@ -146,7 +146,7 @@ if ($pesanan['jenis_kelamin'] == 'Laki-laki') {
                 <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
                 <div class="form-group" style="margin-bottom: 1.25rem;">
                     <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Alasan Retur <span style="color: #DC2626;">*</span></label>
-                    <select name="alasan" id="alasan" required onchange="toggleAlasanLainnya()" style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.7rem 1rem; font-size: 0.9rem;">
+                    <select name="alasan" id="alasan" required onchange="toggleAlasanLainnya()" style="width: 100%; border-radius: 6px; border: 1px solid var(--gray-light); padding: 0.7rem 1rem; font-size: 0.9rem;">
                         <option value="">-- Pilih Alasan Retur --</option>
                         <option value="Kekecilan">Kekecilan</option>
                         <option value="Kebesaran">Kebesaran</option>
@@ -157,12 +157,12 @@ if ($pesanan['jenis_kelamin'] == 'Laki-laki') {
                 
                 <div class="form-group" id="alasan_lainnya_group" style="display: none; margin-bottom: 1.25rem;">
                     <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Tuliskan Alasan Lainnya <span style="color: #DC2626;">*</span></label>
-                    <input type="text" name="alasan_lainnya" id="alasan_lainnya" placeholder="Contoh: Salah kirim jenis mutz" style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.7rem 1rem; font-size: 0.9rem; box-sizing: border-box;">
+                    <input type="text" name="alasan_lainnya" id="alasan_lainnya" placeholder="Contoh: Salah kirim jenis mutz" style="width: 100%; border-radius: 6px; border: 1px solid var(--gray-light); padding: 0.7rem 1rem; font-size: 0.9rem; box-sizing: border-box;">
                 </div>
                 
                 <div class="form-group" style="margin-bottom: 1.75rem;">
                     <label style="font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 6px; display: block;">Ukuran Pengganti Baru <span style="color: #DC2626;">*</span></label>
-                    <select name="ukuran_baru" required style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-light); padding: 0.7rem 1rem; font-size: 0.9rem;">
+                    <select name="ukuran_baru" required style="width: 100%; border-radius: 6px; border: 1px solid var(--gray-light); padding: 0.7rem 1rem; font-size: 0.9rem;">
                         <option value="">-- Pilih Ukuran Baru --</option>
                         <?php foreach($options as $opt): ?>
                             <option value="<?= $opt ?>" <?= $pesanan['ukuran'] == $opt ? 'selected' : '' ?>><?= $opt ?></option>
@@ -172,10 +172,10 @@ if ($pesanan['jenis_kelamin'] == 'Laki-laki') {
                 </div>
                 
                 <div style="display: flex; gap: 12px; justify-content: flex-end; align-items: center; border-top: 1px solid var(--gray-light); padding-top: 1.5rem;">
-                    <a href="pesanan.php" class="btn btn-secondary" style="padding: 0.7rem 1.5rem; text-decoration: none; border-radius: 8px; font-weight: 600;">
+                    <a href="pesanan.php" class="btn btn-secondary" style="padding: 0.7rem 1.5rem; text-decoration: none; border-radius: 6px; font-weight: 600;">
                         Batal
                     </a>
-                    <button type="submit" class="btn-card-amber" style="padding: 0.7rem 2rem; border-radius: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer;">
+                    <button type="submit" class="btn-card-amber" style="padding: 0.7rem 2rem; border-radius: 6px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path><path d="M3 22v-6h6"></path><path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path></svg>
                         Simpan & Kembalikan ke Penjahit
                     </button>

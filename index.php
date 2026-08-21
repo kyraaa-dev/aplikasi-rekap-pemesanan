@@ -218,13 +218,13 @@ if ($q_all_orders) {
                 <h3>Total Pesanan Mutz Perempuan</h3>
                 <div class="value count-up" data-target="<?= (int)$t_p ?>"><?= number_format((int)$t_p, 0, ',', '.') ?></div>
             </div>
-            <div class="card fade-up delay-4" style="background: var(--dark); color: var(--light);">
+            <div class="card fade-up delay-4" style="background: var(--dark); color: var(--light); border: 1px solid var(--dark);">
                 <h3 style="color: var(--light); opacity: 0.9;">Total Keseluruhan (Pcs)</h3>
                 <div class="value count-up" data-target="<?= (int)$t_all ?>" style="color: var(--light);"><?= number_format((int)$t_all, 0, ',', '.') ?></div>
             </div>
-            <div class="card fade-up delay-5" style="background: #FEF3C7; border: 1px solid #FCD34D;">
-                <h3 style="color: #92400E;">Total Tagihan (Rp)</h3>
-                <div class="value" style="color: #B45309;">Rp <span class="count-up-money" data-target="<?= (float)$t_tagihan ?>"><?= number_format((float)$t_tagihan, 0, ',', '.') ?></span></div>
+            <div class="card fade-up delay-5">
+                <h3>Total Tagihan (Rp)</h3>
+                <div class="value">Rp <span class="count-up-money" data-target="<?= (float)$t_tagihan ?>"><?= number_format((float)$t_tagihan, 0, ',', '.') ?></span></div>
             </div>
         </div>
         
@@ -236,7 +236,7 @@ if ($q_all_orders) {
         <div class="panel fade-up delay-1">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                 <h2 style="margin-bottom: 0;">Statistik Pemesanan Mutz</h2>
-                <button id="toggleChartBtn" onclick="toggleCharts()" class="btn btn-secondary" style="display: flex; align-items: center; gap: 6px; padding: 0.35rem 0.8rem; font-size: 0.8rem; border-radius: 20px; font-weight: 600;">
+                <button id="toggleChartBtn" onclick="toggleCharts()" class="btn btn-secondary" style="display: flex; align-items: center; gap: 6px; padding: 0.35rem 0.8rem; font-size: 0.8rem; border-radius: 6px; font-weight: 600;">
                     <svg id="chartIconOff" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
                     <svg id="chartIconOn" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     <span id="chartBtnText">Sembunyikan Grafik</span>
@@ -327,20 +327,20 @@ if ($q_all_orders) {
                                     <span>Total Pesanan:</span>
                                     <span style="color: var(--primary);"><?= $total_item ?> buah</span>
                                 </li>
-                                <li style="display: flex; justify-content: space-between; margin-top: 6px; font-weight: 800; color: #B45309; background: rgba(245, 158, 11, 0.12); padding: 6px 10px; border-radius: 8px; font-size: 0.95rem;">
+                                <li style="display: flex; justify-content: space-between; margin-top: 6px; font-weight: 800; color: #B45309; background: rgba(245, 158, 11, 0.12); padding: 6px 10px; border-radius: 6px; font-size: 0.95rem;">
                                     <span>Total Tagihan:</span>
                                     <span>Rp <?= number_format($total_rupiah, 0, ',', '.') ?></span>
                                 </li>
-                                <li style="display: flex; justify-content: space-between; margin-top: 6px; font-weight: 700; color: <?= $status_color ?>; background: <?= $status_bg ?>; padding: 6px 10px; border-radius: 8px; font-size: 0.85rem;">
+                                <li style="display: flex; justify-content: space-between; margin-top: 6px; font-weight: 700; color: <?= $status_color ?>; background: <?= $status_bg ?>; padding: 6px 10px; border-radius: 6px; font-size: 0.85rem;">
                                     <span>Status Bayar:</span>
                                     <span><?= $status ?></span>
                                 </li>
-                                <li style="display: flex; justify-content: space-between; margin-top: 6px; font-weight: 700; color: <?= $ambil_color ?>; background: <?= $ambil_bg ?>; padding: 6px 10px; border-radius: 8px; font-size: 0.85rem;">
+                                <li style="display: flex; justify-content: space-between; margin-top: 6px; font-weight: 700; color: <?= $ambil_color ?>; background: <?= $ambil_bg ?>; padding: 6px 10px; border-radius: 6px; font-size: 0.85rem;">
                                     <span>Status Pengambilan:</span>
                                     <span><?= $status_ambil ?></span>
                                 </li>
                                 <?php if (!empty($catatan_skpd[$nama])): ?>
-                                <li style="margin-top: 10px; font-size: 0.825rem; color: var(--gray); background: var(--light); padding: 8px 10px; border-radius: 8px; border: 1px solid var(--gray-light);">
+                                <li style="margin-top: 10px; font-size: 0.825rem; color: var(--gray); background: var(--light); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--gray-light);">
                                     <strong style="display: flex; align-items: center; gap: 4px; margin-bottom: 4px; color: var(--dark); font-size: 0.75rem;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                         Catatan:
@@ -405,7 +405,7 @@ if ($q_all_orders) {
                                             Set Diambil
                                         </a>
                                     <?php else: ?>
-                                        <div style="background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; border-radius: 8px; font-size: 0.78rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 4px; padding: 6px 8px;">
+                                        <div style="background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; border-radius: 6px; font-size: 0.78rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 4px; padding: 6px 8px;">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                             Selesai
                                         </div>
@@ -436,7 +436,7 @@ if ($q_all_orders) {
 
                 <!-- Modal Body Table -->
                 <div style="padding: 1.25rem 1.5rem; overflow-y: auto; flex: 1;">
-                    <div class="table-responsive" style="margin-top: 0; border: 1px solid var(--gray-light); border-radius: 8px;">
+                    <div class="table-responsive" style="margin-top: 0; border: 1px solid var(--gray-light); border-radius: 6px;">
                         <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem; margin-top: 0;">
                             <thead>
                                 <tr style="background: var(--light);">

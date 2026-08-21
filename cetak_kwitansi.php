@@ -97,7 +97,7 @@ function terbilang($x) {
             color: rgba(16, 185, 129, 0.1);
             border: 8px solid rgba(16, 185, 129, 0.1);
             padding: 20px 40px;
-            border-radius: 20px;
+            border-radius: 6px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 15px;
@@ -120,7 +120,7 @@ function terbilang($x) {
             display: flex; align-items: center; justify-content: center; gap: 8px;
             width: 200px; margin: 0 auto 20px; padding: 12px;
             background-color: #2563EB; color: white; text-align: center;
-            text-decoration: none; font-weight: 600; border-radius: 8px; cursor: pointer; border: none;
+            text-decoration: none; font-weight: 600; border-radius: 6px; cursor: pointer; border: none;
             font-size: 16px; transition: background 0.2s;
         }
         .btn-print:hover { background-color: #1D4ED8; }
