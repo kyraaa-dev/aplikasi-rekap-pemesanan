@@ -218,9 +218,9 @@ if ($q_all_orders) {
                 <h3>Total Pesanan Mutz Perempuan</h3>
                 <div class="value count-up" data-target="<?= (int)$t_p ?>"><?= number_format((int)$t_p, 0, ',', '.') ?></div>
             </div>
-            <div class="card fade-up delay-4" style="background: var(--dark); color: var(--light); border: 1px solid var(--dark);">
-                <h3 style="color: var(--light); opacity: 0.9;">Total Keseluruhan (Pcs)</h3>
-                <div class="value count-up" data-target="<?= (int)$t_all ?>" style="color: var(--light);"><?= number_format((int)$t_all, 0, ',', '.') ?></div>
+            <div class="card fade-up delay-4">
+                <h3>Total Keseluruhan (Pcs)</h3>
+                <div class="value count-up" data-target="<?= (int)$t_all ?>"><?= number_format((int)$t_all, 0, ',', '.') ?></div>
             </div>
             <div class="card fade-up delay-5">
                 <h3>Total Tagihan (Rp)</h3>

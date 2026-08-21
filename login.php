@@ -131,13 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: var(--light);
         }
-        
-        [data-theme="dark"] body {
-            background-color: var(--dark);
-        }
-
 
         /* Top Bar Actions (Theme Switcher) */
         .login-topbar {
@@ -173,11 +167,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .login-card {
-            background: var(--white);
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             padding: 2.5rem;
-            border-radius: 6px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--gray-light);
+            border-radius: 12px;
+            box-shadow: var(--glass-shadow);
+            border: 1px solid var(--glass-border);
             position: relative;
             overflow: hidden;
             animation: cardAppear 0.3s ease-out forwards;
