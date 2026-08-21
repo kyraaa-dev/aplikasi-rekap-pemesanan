@@ -155,7 +155,7 @@
     cursor: pointer !important;
 }
 .spotlight-item:hover, .spotlight-item.active {
-    background: rgba(79, 70, 229, 0.06) !important;
+    background: rgba(37, 99, 235, 0.06) !important;
     border-left-color: #2563EB !important;
 }
 .spotlight-item-left {
@@ -306,7 +306,7 @@
     background: #2563EB !important;
     border-radius: 50% !important;
     animation: orbitDot 1.2s linear infinite !important;
-    box-shadow: 0 0 6px rgba(79, 70, 229, 0.5) !important;
+    box-shadow: 0 0 6px rgba(37, 99, 235, 0.5) !important;
 }
 .search-orbit-dot:nth-child(2) { animation-delay: -0.4s !important; background: #818CF8 !important; }
 .search-orbit-dot:nth-child(3) { animation-delay: -0.8s !important; background: #C084FC !important; }
@@ -427,7 +427,7 @@
     border-color: #2563EB !important;
     color: #2563EB !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.18) !important;
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.18) !important;
 }
 
 .floating-search-btn svg {
@@ -605,7 +605,7 @@
             Pengaturan</a>
         </li>
         <li id="pwaInstallItem" style="margin-top: 0.75rem;">
-            <a href="#" id="btnPwaInstall" style="background: rgba(79, 70, 229, 0.08); color: var(--primary); font-weight: 600; border-radius: 8px; border: 1px dashed rgba(79, 70, 229, 0.4);">
+            <a href="#" id="btnPwaInstall" style="background: rgba(37, 99, 235, 0.08); color: var(--primary); font-weight: 600; border-radius: 8px; border: 1px dashed rgba(37, 99, 235, 0.4);">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line><polyline points="9 9 12 12 15 9"></polyline><line x1="12" y1="6" x2="12" y2="12"></line></svg>
                 📲 Pasang Aplikasi</a>
         </li>

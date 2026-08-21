@@ -168,7 +168,7 @@ $pesanans = $conn->query("
             <div style="display: flex; flex-wrap: wrap;">
                 <!-- Kiri: Deskripsi & Instruksi -->
                 <div style="flex: 1; min-width: 300px; padding: 2.5rem; background: var(--white); border-right: 1px solid var(--gray-light);">
-                    <div style="display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: rgba(79, 70, 229, 0.1); color: var(--primary); margin-bottom: 1.5rem;">
+                    <div style="display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: rgba(37, 99, 235, 0.1); color: var(--primary); margin-bottom: 1.5rem;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                     </div>
                     <h2 style="margin: 0 0 0.5rem 0; font-size: 1.5rem; font-weight: 700; color: var(--dark);">Form Input Pesanan Baru</h2>
@@ -283,7 +283,7 @@ $pesanans = $conn->query("
                         </div>
 
                         <div style="display: flex; justify-content: flex-end; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--gray-light);">
-                            <button type="submit" class="btn-card-primary" style="padding: 0.85rem 2rem; border-radius: 12px; font-size: 1.05rem; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);">
+                            <button type="submit" class="btn-card-primary" style="padding: 0.85rem 2rem; border-radius: 6px; font-size: 1.05rem; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                                 Simpan Pesanan
                             </button>
@@ -456,7 +456,7 @@ $pesanans = $conn->query("
                                     <h3 style="font-size: 1.1rem; color: var(--dark); margin-bottom: 0.5rem; font-weight: 600;">Data Kosong</h3>
                                     <p style="color: var(--gray); font-size: 0.9rem; max-width: 300px; margin: 0 auto;">Belum ada pesanan yang sesuai dengan filter Anda, atau data memang belum tersedia.</p>
                                     <?php if($filter_skpd > 0 || $filter_status != '' || $filter_ambil != ''): ?>
-                                    <a href="pesanan.php" style="margin-top: 1.5rem; display: inline-block; background: var(--primary); color: white; padding: 0.5rem 1.25rem; border-radius: 8px; text-decoration: none; font-weight: 500; transition: transform 0.2s; box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);">Reset Filter</a>
+                                    <a href="pesanan.php" style="margin-top: 1.5rem; display: inline-block; background: var(--primary); color: white; padding: 0.5rem 1.25rem; border-radius: 6px; text-decoration: none; font-weight: 500; transition: transform 0.2s; box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);">Reset Filter</a>
                                     <?php endif; ?>
                                 </div>
                             </td>

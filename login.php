@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, rgba(79, 70, 229, 0.88) 0%, rgba(99, 102, 241, 0.85) 50%, rgba(139, 92, 246, 0.9) 100%), url('assets/images/bg-bupati-new.jpg');
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.88) 0%, rgba(29, 78, 216, 0.85) 50%, rgba(30, 64, 175, 0.9) 100%), url('assets/images/bg-bupati-new.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -266,7 +266,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             align-items: center;
             justify-content: center;
             padding: 10px;
-            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease;
         }
         .logo-wrap:hover {
@@ -365,7 +365,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .form-input:focus {
             background: #ffffff !important;
             border-color: #2563EB !important;
-            box-shadow: 0 0 0 3.5px rgba(79, 70, 229, 0.15) !important;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
         }
         [data-theme="dark"] .input-group input[type="text"]:focus,
         [data-theme="dark"] .input-group input[type="password"]:focus,
