@@ -128,10 +128,16 @@ function terbilang($x) {
     <link rel="icon" type="image/png" href="assets/images/logo.png">
 </head>
 <body>
-    <button class="btn-print" onclick="window.print()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-        Cetak Kwitansi
-    </button>
+    <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 20px;" class="hide-on-print">
+        <button class="btn-print" onclick="window.print()" style="margin: 0;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            Cetak Kwitansi
+        </button>
+        <button class="btn-print" onclick="downloadPDF()" style="margin: 0; background-color: #DC2626;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            Unduh PDF
+        </button>
+    </div>
     <div class="kwitansi-container">
         <div class="cap-lunas">LUNAS</div>
         <div class="header">
@@ -185,5 +191,60 @@ function terbilang($x) {
             </div>
         </div>
     </div>
+
+
+    <!-- Script HTML2PDF & SweetAlert2 for Toast -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            background: 'var(--panel-bg)',
+            color: 'var(--text)'
+        });
+
+        function downloadPDF() {
+            Toast.fire({
+                icon: 'info',
+                title: 'Sedang memproses PDF...',
+                timer: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            const element = document.querySelector('.kwitansi-container');
+            const noKwitansi = "<?= str_pad($row['id'], 5, '0', STR_PAD_LEFT) ?>";
+
+            const opt = {
+                margin:       [10, 10, 10, 10], // mm
+                filename:     `Kwitansi_Korpri_#${noKwitansi}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a5', orientation: 'landscape' }
+            };
+
+            setTimeout(() => {
+                html2pdf().set(opt).from(element).save().then(() => {
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Kwitansi PDF berhasil diunduh!'
+                    });
+                }).catch(err => {
+                    console.error(err);
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Gagal membuat PDF.'
+                    });
+                });
+            }, 100);
+        }
+    </script>
 </body>
 </html>

@@ -216,6 +216,10 @@ while ($t = $res_tagihan->fetch_assoc()) {
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                         Unduh Excel
                     </a>
+                    <button onclick="downloadPDF()" class="btn btn-primary" style="padding: 0.7rem 1.4rem; font-size: 1.05rem; font-weight: 600; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3); background-color: #DC2626; border-color: #DC2626; border-radius: 10px; transition: transform 0.2s, box-shadow 0.2s; color: white;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Unduh PDF
+                    </button>
                     <button onclick="window.print()" class="btn btn-secondary" style="padding: 0.7rem 1.4rem; font-size: 1.05rem; font-weight: 600; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3); border-radius: 10px; transition: transform 0.2s, box-shadow 0.2s;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                         Cetak Halaman
@@ -417,6 +421,9 @@ while ($t = $res_tagihan->fetch_assoc()) {
             </div>
         </div>
     </main>
+    <!-- Script HTML2PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
     <script>
         function togglePrintFilter() {
             const filter = document.getElementById('printFilter').value;
@@ -428,6 +435,65 @@ while ($t = $res_tagihan->fetch_assoc()) {
         }
         // Initialize on load
         document.addEventListener('DOMContentLoaded', togglePrintFilter);
+
+        function downloadPDF() {
+            // Show loading toast
+            window.Toast.fire({
+                icon: 'info',
+                title: 'Sedang memproses PDF...',
+                html: 'Mohon tunggu sebentar.',
+                timer: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            const element = document.querySelector('.table-responsive');
+            
+            // Backup current theme
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            
+            // Apply exporting class which triggers our print CSS styles
+            document.body.classList.add('exporting-pdf');
+            if(currentTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+
+            const opt = {
+                margin:       [10, 5, 10, 5], // mm
+                filename:     'Rekapitulasi_Pesanan_Korpri.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
+            };
+
+            // Let browser apply styles for a split second before capturing
+            setTimeout(() => {
+                html2pdf().set(opt).from(element).save().then(() => {
+                    // Revert classes and theme
+                    document.body.classList.remove('exporting-pdf');
+                    if(currentTheme === 'dark') {
+                        document.documentElement.setAttribute('data-theme', 'dark');
+                    }
+
+                    // Success notification
+                    window.Toast.fire({
+                        icon: 'success',
+                        title: 'PDF Berhasil Diunduh!'
+                    });
+                }).catch(err => {
+                    console.error(err);
+                    document.body.classList.remove('exporting-pdf');
+                    if(currentTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+                    
+                    window.Toast.fire({
+                        icon: 'error',
+                        title: 'Gagal membuat PDF.'
+                    });
+                });
+            }, 100);
+        }
     </script>
 </body>
 </html>

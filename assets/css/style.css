@@ -753,15 +753,17 @@ tr:hover {
     }
 }
 
-/* Print Styles */
+/* Print Styles & PDF Export */
 @media print {
     @page {
         size: landscape;
         margin: 0; /* Hides browser default URL/Title headers */
     }
-    
-    /* Force Light Mode Variables for Print */
-    :root, [data-theme="dark"] {
+}
+
+@media print, screen and (min-width: 0px) {
+    body.exporting-pdf,
+    .exporting-pdf :root, .exporting-pdf [data-theme="dark"] {
         --bg: #F8FAFC !important;
         --panel-bg: #FFFFFF !important;
         --text: #000000 !important;
@@ -772,7 +774,9 @@ tr:hover {
         --white: #ffffff !important;
         --primary: #4F46E5 !important;
     }
-    
+}
+
+@media print {
     body {
         background-color: white !important;
         min-height: auto;
@@ -834,6 +838,64 @@ tr:hover {
         white-space: normal !important;
     }
 }
+
+/* Specific for PDF Export (to match print behavior) */
+.exporting-pdf {
+    background-color: white !important;
+    color: black !important;
+}
+
+.exporting-pdf * {
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.exporting-pdf .sidebar, .exporting-pdf .mobile-topbar, .exporting-pdf .header, .exporting-pdf .hide-on-print {
+    display: none !important;
+}
+
+.exporting-pdf .print-only-header {
+    display: block !important;
+}
+
+.exporting-pdf .main-content {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    flex: none;
+    background: white !important;
+}
+
+.exporting-pdf .panel {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: white !important;
+}
+
+.exporting-pdf .table-responsive {
+    overflow: visible !important;
+}
+
+.exporting-pdf table {
+    font-size: 6pt !important;
+    width: 100% !important;
+    table-layout: auto !important;
+    background: white !important;
+    color: black !important;
+}
+
+.exporting-pdf th, .exporting-pdf td {
+    padding: 1px 2px !important;
+    border: 1px solid #000 !important;
+    word-wrap: break-word;
+}
+
+.exporting-pdf th {
+    white-space: normal !important;
+}
+
 
 /* SweetAlert2 Global Dark Mode Compatibility & Layering */
 .swal2-container {
