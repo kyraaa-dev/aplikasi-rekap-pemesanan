@@ -286,7 +286,7 @@ button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.sp
 
 /* WhatsApp Brand Buttons */
 .btn-wa {
-    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%) !important;
+    background: #25D366 !important;
     color: #ffffff !important;
     border: none !important;
     border-radius: 8px;
@@ -295,22 +295,18 @@ button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.sp
     align-items: center;
     justify-content: center;
     gap: 6px;
-    box-shadow: 0 2px 6px rgba(37, 211, 102, 0.28);
     cursor: pointer;
     text-decoration: none;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background-color 0.15s ease;
 }
 
 .btn-wa:hover {
-    background: linear-gradient(135deg, #20BD5A 0%, #0E7064 100%) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 14px rgba(37, 211, 102, 0.4);
+    background: #128C7E !important;
     color: #ffffff !important;
 }
 
 .btn-wa:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(37, 211, 102, 0.2);
+    background: #0E7064 !important;
 }
 
 .btn-wa-pill {
@@ -325,15 +321,12 @@ button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.sp
     align-items: center;
     gap: 4px;
     cursor: pointer;
-    transition: all 0.15s ease;
-    box-shadow: 0 2px 4px rgba(37, 211, 102, 0.2);
+    transition: background-color 0.15s ease;
 }
 
 .btn-wa-pill:hover {
     background: #128C7E !important;
     color: #ffffff !important;
-    box-shadow: 0 4px 8px rgba(37, 211, 102, 0.35);
-    transform: scale(1.05);
 }
 
 /* SKPD Card Modern Layout */
