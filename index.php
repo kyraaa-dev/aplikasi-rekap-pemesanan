@@ -206,24 +206,24 @@ if ($q_all_orders) {
         </div>
 
         <div class="card-grid">
-            <div class="card fade-up delay-1">
-                <h3>Total SKPD Terdaftar</h3>
+            <div class="card fade-up delay-1" style="background-color: #00E5FF;">
+                <h3>Total SKPD</h3>
                 <div class="value count-up" data-target="<?= (int)$t_skpd ?>"><?= number_format((int)$t_skpd, 0, ',', '.') ?></div>
             </div>
-            <div class="card fade-up delay-2">
-                <h3>Total Pesanan Mutz Laki-laki</h3>
+            <div class="card fade-up delay-2" style="background-color: #39FF14;">
+                <h3>Mutz Laki-laki</h3>
                 <div class="value count-up" data-target="<?= (int)$t_l ?>"><?= number_format((int)$t_l, 0, ',', '.') ?></div>
             </div>
-            <div class="card perempuan fade-up delay-3">
-                <h3>Total Pesanan Mutz Perempuan</h3>
+            <div class="card fade-up delay-3" style="background-color: #FF007F;">
+                <h3>Mutz Perempuan</h3>
                 <div class="value count-up" data-target="<?= (int)$t_p ?>"><?= number_format((int)$t_p, 0, ',', '.') ?></div>
             </div>
-            <div class="card fade-up delay-4">
-                <h3>Total Keseluruhan (Pcs)</h3>
+            <div class="card fade-up delay-4" style="background-color: #FFE600;">
+                <h3>Total (Pcs)</h3>
                 <div class="value count-up" data-target="<?= (int)$t_all ?>"><?= number_format((int)$t_all, 0, ',', '.') ?></div>
             </div>
-            <div class="card fade-up delay-5">
-                <h3>Total Tagihan (Rp)</h3>
+            <div class="card fade-up delay-5" style="background-color: #B4A0FF;">
+                <h3>Tagihan (Rp)</h3>
                 <div class="value">Rp <span class="count-up-money" data-target="<?= (float)$t_tagihan ?>"><?= number_format((float)$t_tagihan, 0, ',', '.') ?></span></div>
             </div>
         </div>

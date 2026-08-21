@@ -167,7 +167,7 @@ $pesanans = $conn->query("
         <div class="panel" style="margin: 1.5rem 0; padding: 0; overflow: hidden;">
             <div style="display: flex; flex-wrap: wrap;">
                 <!-- Kiri: Deskripsi & Instruksi -->
-                <div style="flex: 1.5; min-width: 350px; padding: 2.5rem; border-right: 1px solid var(--glass-border);">
+                <div style="flex: 1.5; min-width: 350px; padding: 2.5rem; border-right: var(--brutal-border);">
                     <div style="display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 6px; background: var(--light); color: var(--primary); margin-bottom: 1.5rem;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                     </div>
@@ -296,8 +296,8 @@ $pesanans = $conn->query("
         <div class="panel">
             <div class="flex justify-between items-center mb-4" style="flex-wrap: wrap; gap: 10px;">
                 <h2>Daftar Pesanan Mutz</h2>
-                <form method="GET" action="pesanan.php" style="display: flex; gap: 10px; align-items: center; background: transparent; padding: 10px 15px; border-radius: 12px; border: 1px solid var(--glass-border);">
-                    <select name="filter_skpd" style="padding: 0.4rem; border-radius: 6px; border: 1px solid var(--glass-border); outline: none; background: var(--glass-bg); color: var(--dark);">
+                <form method="GET" action="pesanan.php" style="display: flex; gap: 10px; align-items: center; background: transparent; padding: 10px 15px; border-radius: 12px; border: var(--brutal-border);">
+                    <select name="filter_skpd" style="padding: 0.4rem; border-radius: 0px; border: var(--brutal-border); outline: none; background: var(--white); color: var(--dark); box-shadow: 2px 2px 0px #000;">
                         <option value="0">- Semua SKPD -</option>
                         <?php 
                         // Reset pointer SKPD for filter dropdown
@@ -307,12 +307,12 @@ $pesanans = $conn->query("
                             <option value="<?= $s['id'] ?>" <?= $filter_skpd == $s['id'] ? 'selected' : '' ?>><?= htmlspecialchars($s['nama_skpd']) ?></option>
                         <?php endwhile; ?>
                     </select>
-                    <select name="filter_status" style="padding: 0.4rem; border-radius: 6px; border: 1px solid var(--glass-border); outline: none; background: var(--glass-bg); color: var(--dark);">
+                    <select name="filter_status" style="padding: 0.4rem; border-radius: 0px; border: var(--brutal-border); outline: none; background: var(--white); color: var(--dark); box-shadow: 2px 2px 0px #000;">
                         <option value="">- Semua Pembayaran -</option>
                         <option value="Lunas" <?= $filter_status == 'Lunas' ? 'selected' : '' ?>>Lunas</option>
                         <option value="Belum Lunas" <?= $filter_status == 'Belum Lunas' ? 'selected' : '' ?>>Belum Lunas</option>
                     </select>
-                    <select name="filter_ambil" style="padding: 0.4rem; border-radius: 6px; border: 1px solid var(--glass-border); outline: none; background: var(--glass-bg); color: var(--dark);">
+                    <select name="filter_ambil" style="padding: 0.4rem; border-radius: 0px; border: var(--brutal-border); outline: none; background: var(--white); color: var(--dark); box-shadow: 2px 2px 0px #000;">
                         <option value="">- Semua Pengambilan -</option>
                         <option value="Menunggu Diproses" <?= $filter_ambil == 'Menunggu Diproses' ? 'selected' : '' ?>>Menunggu Diproses</option>
                         <option value="Sedang Dibuat" <?= $filter_ambil == 'Sedang Dibuat' ? 'selected' : '' ?>>Sedang Dibuat</option>

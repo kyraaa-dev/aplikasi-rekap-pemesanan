@@ -167,13 +167,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .login-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            background: var(--white);
             padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: var(--glass-shadow);
-            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            border: var(--brutal-border);
             position: relative;
             overflow: hidden;
             animation: cardAppear 0.3s ease-out forwards;

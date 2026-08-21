@@ -78,15 +78,15 @@ $tot_p = $q_tot_p->fetch_assoc()['tot'] ?? 0;
         
         <div class="panel">
             <div style="display: flex; gap: 15px; margin-bottom: 20px;">
-                <div style="flex: 1; background: transparent; border: 1px solid var(--glass-border); padding: 15px; border-radius: 6px; border-left: 4px solid #2563EB;">
+                <div style="flex: 1; background: transparent; border: var(--brutal-border); padding: 15px; border-radius: 6px; border-left: 8px solid #2563EB; box-shadow: 4px 4px 0 #000;">
                     <h3 style="margin: 0 0 5px 0; font-size: 0.95rem; color: var(--gray);">Total Stok Laki-laki</h3>
                     <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark);"><?= number_format($tot_l) ?> <span style="font-size: 1rem; font-weight: 400;">Pcs</span></div>
                 </div>
-                <div style="flex: 1; background: transparent; border: 1px solid var(--glass-border); padding: 15px; border-radius: 6px; border-left: 4px solid #EC4899;">
+                <div style="flex: 1; background: transparent; border: var(--brutal-border); padding: 15px; border-radius: 6px; border-left: 8px solid #EC4899; box-shadow: 4px 4px 0 #000;">
                     <h3 style="margin: 0 0 5px 0; font-size: 0.95rem; color: var(--gray);">Total Stok Perempuan</h3>
                     <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark);"><?= number_format($tot_p) ?> <span style="font-size: 1rem; font-weight: 400;">Pcs</span></div>
                 </div>
-                <div style="flex: 1; background: transparent; border: 1px solid var(--glass-border); padding: 15px; border-radius: 6px; border-left: 4px solid #10B981;">
+                <div style="flex: 1; background: transparent; border: var(--brutal-border); padding: 15px; border-radius: 6px; border-left: 8px solid #10B981; box-shadow: 4px 4px 0 #000;">
                     <h3 style="margin: 0 0 5px 0; font-size: 0.95rem; color: var(--gray);">Total Keseluruhan</h3>
                     <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark);"><?= number_format($tot_l + $tot_p) ?> <span style="font-size: 1rem; font-weight: 400;">Pcs</span></div>
                 </div>

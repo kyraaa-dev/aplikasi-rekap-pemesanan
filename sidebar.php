@@ -41,16 +41,14 @@
 .spotlight-dialog {
     width: 100% !important;
     max-width: 660px !important;
-    background: var(--glass-bg) !important;
-    backdrop-filter: blur(24px) !important;
-    -webkit-backdrop-filter: blur(24px) !important;
-    border-radius: 16px !important;
-    box-shadow: var(--glass-shadow) !important;
+    background: var(--white) !important;
+    border-radius: var(--border-radius) !important;
+    box-shadow: 10px 10px 0px #000000 !important;
     overflow: hidden !important;
     display: flex !important;
     flex-direction: column !important;
     max-height: 80vh !important;
-    border: 1px solid var(--glass-border) !important;
+    border: var(--brutal-border) !important;
     animation: spotlightPop 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 @keyframes spotlightPop {
@@ -58,8 +56,8 @@
     to { opacity: 1; transform: scale(1) translateY(0); }
 }
 [data-theme="dark"] .spotlight-dialog {
-    background: var(--glass-bg) !important;
-    border-color: var(--glass-border) !important;
+    background: var(--brutal-bg) !important;
+    border: var(--brutal-border) !important;
 }
 .spotlight-header {
     display: flex !important;
