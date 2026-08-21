@@ -90,7 +90,7 @@ $skpds = $conn->query("SELECT * FROM skpd ORDER BY nama_skpd ASC");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Pesanan - E-MutZ KORPRI</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4F46E5">
+    <meta name="theme-color" content="#2563EB">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -119,7 +119,7 @@ $skpds = $conn->query("SELECT * FROM skpd ORDER BY nama_skpd ASC");
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                     Formulir Edit Pesanan #<?= $pesanan['id'] ?>
                 </h2>
-                <span style="font-size: 0.8rem; background: #EEF2FF; color: #4338CA; padding: 4px 10px; border-radius: 20px; font-weight: 600;">
+                <span style="font-size: 0.8rem; background: #EEF2FF; color: #1D4ED8; padding: 4px 10px; border-radius: 20px; font-weight: 600;">
                     ID: <?= $pesanan['id'] ?>
                 </span>
             </div>

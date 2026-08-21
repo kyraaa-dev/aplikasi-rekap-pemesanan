@@ -144,7 +144,7 @@ $pesanans = $conn->query("
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Input Pesanan Mutz - E-MutZ KORPRI</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4F46E5">
+    <meta name="theme-color" content="#2563EB">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -167,7 +167,7 @@ $pesanans = $conn->query("
         <div class="panel" style="margin: 1.5rem 0; padding: 0; border-radius: 16px; background: var(--white); box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid var(--gray-light); overflow: hidden;">
             <div style="display: flex; flex-wrap: wrap;">
                 <!-- Kiri: Deskripsi & Instruksi -->
-                <div style="flex: 1; min-width: 300px; padding: 2.5rem; background: linear-gradient(145deg, var(--white) 0%, var(--light) 100%); border-right: 1px solid var(--gray-light);">
+                <div style="flex: 1; min-width: 300px; padding: 2.5rem; background: var(--white); border-right: 1px solid var(--gray-light);">
                     <div style="display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: rgba(79, 70, 229, 0.1); color: var(--primary); margin-bottom: 1.5rem;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                     </div>

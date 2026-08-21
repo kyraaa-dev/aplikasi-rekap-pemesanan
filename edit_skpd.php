@@ -55,7 +55,7 @@ if (!$skpd) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit SKPD - E-MutZ KORPRI</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4F46E5">
+    <meta name="theme-color" content="#2563EB">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -84,7 +84,7 @@ if (!$skpd) {
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
                     Formulir Edit SKPD
                 </h2>
-                <span style="font-size: 0.8rem; background: #EEF2FF; color: #4338CA; padding: 4px 10px; border-radius: 20px; font-weight: 600;">
+                <span style="font-size: 0.8rem; background: #EEF2FF; color: #1D4ED8; padding: 4px 10px; border-radius: 20px; font-weight: 600;">
                     ID: <?= $skpd['id'] ?>
                 </span>
             </div>

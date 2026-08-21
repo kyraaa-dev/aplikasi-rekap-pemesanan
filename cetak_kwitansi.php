@@ -119,11 +119,11 @@ function terbilang($x) {
         .btn-print {
             display: flex; align-items: center; justify-content: center; gap: 8px;
             width: 200px; margin: 0 auto 20px; padding: 12px;
-            background-color: #4F46E5; color: white; text-align: center;
+            background-color: #2563EB; color: white; text-align: center;
             text-decoration: none; font-weight: 600; border-radius: 8px; cursor: pointer; border: none;
             font-size: 16px; transition: background 0.2s;
         }
-        .btn-print:hover { background-color: #4338CA; }
+        .btn-print:hover { background-color: #1D4ED8; }
     </style>
     <link rel="icon" type="image/png" href="assets/images/logo.png">
 </head>

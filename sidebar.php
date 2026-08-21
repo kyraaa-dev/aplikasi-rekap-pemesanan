@@ -1,26 +1,11 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-/* Efek Hover Mewah pada Menu */
+/* Menu Hover */
 .nav-links a {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition: all 0.15s ease !important;
 }
 .nav-links a:hover {
-    transform: translateX(6px);
-    background-color: rgba(79, 70, 229, 0.08) !important;
-}
-.nav-links a svg {
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.nav-links a:hover svg {
-    transform: scale(1.2) rotate(8deg);
-}
-
-/* Efek Animasi pada Logo */
-.brand img {
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.brand:hover img {
-    transform: scale(1.15) rotate(-6deg);
+    background-color: rgba(37, 99, 235, 0.06) !important;
 }
 
 /* SweetAlert2 Layer Guarantee */
@@ -83,7 +68,7 @@
     background: inherit !important;
 }
 .spotlight-icon {
-    color: #4F46E5 !important;
+    color: #2563EB !important;
     flex-shrink: 0 !important;
 }
 .spotlight-input {
@@ -135,13 +120,13 @@
     transition: all 0.2s !important;
 }
 .spotlight-filter-btn:hover {
-    border-color: #4F46E5 !important;
-    color: #4F46E5 !important;
+    border-color: #2563EB !important;
+    color: #2563EB !important;
 }
 .spotlight-filter-btn.active {
-    background: #4F46E5 !important;
+    background: #2563EB !important;
     color: #FFFFFF !important;
-    border-color: #4F46E5 !important;
+    border-color: #2563EB !important;
 }
 .spotlight-results {
     padding: 10px 0 !important;
@@ -171,7 +156,7 @@
 }
 .spotlight-item:hover, .spotlight-item.active {
     background: rgba(79, 70, 229, 0.06) !important;
-    border-left-color: #4F46E5 !important;
+    border-left-color: #2563EB !important;
 }
 .spotlight-item-left {
     display: flex !important;
@@ -185,7 +170,7 @@
     height: 36px !important;
     border-radius: 8px !important;
     background: #EEF2FF !important;
-    color: #4F46E5 !important;
+    color: #2563EB !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -300,7 +285,7 @@
     position: absolute !important;
     inset: 0 !important;
     border: 2.5px solid transparent !important;
-    border-top-color: #4F46E5 !important;
+    border-top-color: #2563EB !important;
     border-right-color: #818CF8 !important;
     border-radius: 50% !important;
     animation: searchSpin 0.9s cubic-bezier(0.5, 0, 0.5, 1) infinite !important;
@@ -318,7 +303,7 @@
     position: absolute !important;
     width: 6px !important;
     height: 6px !important;
-    background: #4F46E5 !important;
+    background: #2563EB !important;
     border-radius: 50% !important;
     animation: orbitDot 1.2s linear infinite !important;
     box-shadow: 0 0 6px rgba(79, 70, 229, 0.5) !important;
@@ -328,15 +313,15 @@
 .search-orbit-core {
     width: 10px !important;
     height: 10px !important;
-    background: linear-gradient(135deg, #4F46E5, #A78BFA) !important;
+    background: #2563EB !important;
     border-radius: 50% !important;
     animation: pulseRing 1.2s ease-in-out infinite !important;
-    box-shadow: 0 0 12px rgba(79, 70, 229, 0.4) !important;
+    box-shadow: 0 0 8px rgba(37, 99, 235, 0.3) !important;
 }
 .search-loading-text {
     font-size: 0.85rem !important;
     font-weight: 600 !important;
-    color: #4F46E5 !important;
+    color: #2563EB !important;
     animation: textShift 1.5s ease-in-out infinite !important;
     letter-spacing: 0.01em !important;
 }
@@ -439,14 +424,14 @@
 }
 
 .floating-search-btn:hover {
-    border-color: #4F46E5 !important;
-    color: #4F46E5 !important;
+    border-color: #2563EB !important;
+    color: #2563EB !important;
     transform: translateY(-2px) !important;
     box-shadow: 0 6px 18px rgba(79, 70, 229, 0.18) !important;
 }
 
 .floating-search-btn svg {
-    color: #4F46E5 !important;
+    color: #2563EB !important;
     flex-shrink: 0 !important;
 }
 
@@ -487,8 +472,8 @@
 .floating-theme-btn:hover {
     transform: translateY(-2px) !important;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12) !important;
-    border-color: #4F46E5 !important;
-    color: #4F46E5 !important;
+    border-color: #2563EB !important;
+    color: #2563EB !important;
 }
 
 [data-theme="dark"] .floating-search-btn {
@@ -791,7 +776,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .swal-step-title { font-size: 1.25rem; font-weight: 800; color: var(--dark); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
                 .swal-step-desc { font-size: 0.95rem; font-weight: 500; color: var(--gray); margin-bottom: 24px; height: 22px; transition: color 0.3s; }
                 .swal-progress-track { width: 100%; height: 8px; background: var(--gray-light); border-radius: 999px; overflow: hidden; box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); }
-                .swal-progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #4F46E5, #06B6D4, #EC4899, #4F46E5); background-size: 300% 100%; border-radius: 999px; transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); animation: gradientGlow 2s linear infinite; }
+                .swal-progress-fill { width: 0%; height: 100%; background: #2563EB; border-radius: 999px; transition: width 0.3s ease; }
                 </style>
                 <div class="swal-logout-container">
                     <div class="swal-spinner-ring" id="swal-spinner"></div>
@@ -1200,10 +1185,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Default Shortcuts when input is empty (pre-cached HTML)
     const defaultShortcutsHtml = `
         <div class="spotlight-group-title">⚡ Pintasan Cepat</div>
-        <a href="pesanan.php" class="spotlight-item" data-type="menu"><div class="spotlight-item-left"><div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div><div class="spotlight-item-info"><div class="spotlight-item-title">Input Pesanan Baru</div><div class="spotlight-item-subtitle">Tambah pesanan topi mutz baru per anggota SKPD</div></div></div><span class="spotlight-item-badge" style="background:#EEF2FF; color:#4F46E5;">Buka</span></a>
-        <a href="rekap.php" class="spotlight-item" data-type="menu"><div class="spotlight-item-left"><div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></div><div class="spotlight-item-info"><div class="spotlight-item-title">Rekapitulasi Matriks Ukuran</div><div class="spotlight-item-subtitle">Tabel rekapitulasi ukuran 55-60 L/P dan cetak invoice</div></div></div><span class="spotlight-item-badge" style="background:#EEF2FF; color:#4F46E5;">Buka</span></a>
-        <a href="stok.php" class="spotlight-item" data-type="menu"><div class="spotlight-item-left"><div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg></div><div class="spotlight-item-info"><div class="spotlight-item-title">Manajemen Stok Topi</div><div class="spotlight-item-subtitle">Kelola stok fisik per ukuran dan peringatan minimum</div></div></div><span class="spotlight-item-badge" style="background:#EEF2FF; color:#4F46E5;">Buka</span></a>
-        <a href="skpd.php" class="spotlight-item" data-type="menu"><div class="spotlight-item-left"><div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div><div class="spotlight-item-info"><div class="spotlight-item-title">Daftar Instansi SKPD & Kontak WA</div><div class="spotlight-item-subtitle">Kelola kontak WhatsApp narahubung dinas</div></div></div><span class="spotlight-item-badge" style="background:#EEF2FF; color:#4F46E5;">Buka</span></a>
+        <a href="pesanan.php" class="spotlight-item" data-type="menu"><div class="spotlight-item-left"><div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div><div class="spotlight-item-info"><div class="spotlight-item-title">Input Pesanan Baru</div><div class="spotlight-item-subtitle">Tambah pesanan topi mutz baru per anggota SKPD</div></div></div><span class="spotlight-item-badge" style="background:#EEF2FF; color:#2563EB;">Buka</span></a>
+        <a href="rekap.php" class="spotlight-item" data-type="menu"><div class="spotlight-item-left"><div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></div><div class="spotlight-item-info"><div class="spotlight-item-title">Rekapitulasi Matriks Ukuran</div><div class="spotlight-item-subtitle">Tabel rekapitulasi ukuran 55-60 L/P dan cetak invoice</div></div></div><span class="spotlight-item-badge" style="background:#EEF2FF; color:#2563EB;">Buka</span></a>
+        <a href="stok.php" class="spotlight-item" data-type="menu"><div class="spotlight-item-left"><div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg></div><div class="spotlight-item-info"><div class="spotlight-item-title">Manajemen Stok Topi</div><div class="spotlight-item-subtitle">Kelola stok fisik per ukuran dan peringatan minimum</div></div></div><span class="spotlight-item-badge" style="background:#EEF2FF; color:#2563EB;">Buka</span></a>
+        <a href="skpd.php" class="spotlight-item" data-type="menu"><div class="spotlight-item-left"><div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div><div class="spotlight-item-info"><div class="spotlight-item-title">Daftar Instansi SKPD & Kontak WA</div><div class="spotlight-item-subtitle">Kelola kontak WhatsApp narahubung dinas</div></div></div><span class="spotlight-item-badge" style="background:#EEF2FF; color:#2563EB;">Buka</span></a>
     `;
 
     function renderDefaultShortcuts() {
@@ -1337,7 +1322,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 html += `
                     <a href="pesanan.php?filter_skpd=${item.skpd_id}" class="spotlight-item" data-type="pesanan" onclick="document.getElementById('spotlightModal').classList.remove('active');">
                         <div class="spotlight-item-left">
-                            <div class="spotlight-item-icon" style="background:#EEF2FF; color:#4F46E5;">
+                            <div class="spotlight-item-icon" style="background:#EEF2FF; color:#2563EB;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                             </div>
                             <div class="spotlight-item-info">
@@ -1388,7 +1373,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 html += `
                     <a href="${menu.url}" class="spotlight-item" data-type="menu" onclick="document.getElementById('spotlightModal').classList.remove('active');">
                         <div class="spotlight-item-left">
-                            <div class="spotlight-item-icon" style="background:#EEF2FF; color:#4F46E5;">
+                            <div class="spotlight-item-icon" style="background:#EEF2FF; color:#2563EB;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                             </div>
                             <div class="spotlight-item-info">

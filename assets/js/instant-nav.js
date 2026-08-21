@@ -12,7 +12,7 @@
         if (!progressBar) {
             progressBar = document.createElement('div');
             progressBar.id = 'nprogress-bar';
-            progressBar.style.cssText = 'position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#4F46E5,#06B6D4,#10B981);z-index:9999999;transition:width 0.2s ease, opacity 0.2s ease;width:0%;opacity:0;pointer-events:none;box-shadow:0 0 10px rgba(79,70,229,0.7);';
+            progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:#2563EB;z-index:9999999;transition:width 0.2s ease, opacity 0.2s ease;width:0%;opacity:0;pointer-events:none;';
             document.body.appendChild(progressBar);
         }
     }

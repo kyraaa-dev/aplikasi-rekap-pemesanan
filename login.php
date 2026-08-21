@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>E-MutZ KORPRI - Login</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4F46E5">
+    <meta name="theme-color" content="#2563EB">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -364,18 +364,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .input-group input[type="password"]:focus,
         .form-input:focus {
             background: #ffffff !important;
-            border-color: #4f46e5 !important;
+            border-color: #2563EB !important;
             box-shadow: 0 0 0 3.5px rgba(79, 70, 229, 0.15) !important;
         }
         [data-theme="dark"] .input-group input[type="text"]:focus,
         [data-theme="dark"] .input-group input[type="password"]:focus,
         [data-theme="dark"] .form-input:focus {
             background: #0f172a !important;
-            border-color: #6366f1 !important;
+            border-color: #3B82F6 !important;
             box-shadow: 0 0 0 3.5px rgba(99, 102, 241, 0.25) !important;
         }
         .input-group:focus-within .input-icon-left {
-            color: #4f46e5 !important;
+            color: #2563EB !important;
         }
         [data-theme="dark"] .input-group:focus-within .input-icon-left {
             color: #818cf8 !important;
@@ -397,7 +397,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             transition: color 0.2s, transform 0.2s;
         }
         .toggle-password:hover {
-            color: #4f46e5;
+            color: #2563EB;
         }
         [data-theme="dark"] .toggle-password:hover {
             color: #818cf8;
@@ -408,10 +408,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             width: 100%;
             height: 44px;
             margin-top: 0.75rem;
-            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            background: #2563EB;
             color: #ffffff;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 0.95rem;
             font-weight: 600;
             display: inline-flex;
@@ -419,16 +419,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             justify-content: center;
             gap: 8px;
             cursor: pointer;
-            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
-            transition: all 0.2s ease;
+            transition: background-color 0.15s ease;
         }
         .btn-submit:hover {
-            background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);
-            transform: translateY(-1.5px);
-            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.45);
+            background: #1D4ED8;
         }
         .btn-submit:active {
-            transform: translateY(0);
+            background: #1E40AF;
         }
         .btn-submit.loading {
             pointer-events: none;
@@ -509,7 +506,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             title: 'Berhasil Keluar',
                             text: 'Sesi aman telah ditutup dan cache browser berhasil dibersihkan.',
                             icon: 'success',
-                            confirmButtonColor: '#4F46E5',
+                            confirmButtonColor: '#2563EB',
                             timer: 3000,
                             timerProgressBar: true
                         });
@@ -593,7 +590,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if (pwdInput.type === 'password') {
                     pwdInput.type = 'text';
                     eyeIcon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
-                    toggleBtn.style.color = '#4f46e5';
+                    toggleBtn.style.color = '#2563EB';
                 } else {
                     pwdInput.type = 'password';
                     eyeIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';

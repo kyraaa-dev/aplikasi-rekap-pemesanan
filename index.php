@@ -169,7 +169,7 @@ if ($q_all_orders) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - E-MutZ KORPRI</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4F46E5">
+    <meta name="theme-color" content="#2563EB">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -222,7 +222,7 @@ if ($q_all_orders) {
                 <h3 style="color: var(--light); opacity: 0.9;">Total Keseluruhan (Pcs)</h3>
                 <div class="value count-up" data-target="<?= (int)$t_all ?>" style="color: var(--light);"><?= number_format((int)$t_all, 0, ',', '.') ?></div>
             </div>
-            <div class="card fade-up delay-5" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border: 1px solid #FCD34D;">
+            <div class="card fade-up delay-5" style="background: #FEF3C7; border: 1px solid #FCD34D;">
                 <h3 style="color: #92400E;">Total Tagihan (Rp)</h3>
                 <div class="value" style="color: #B45309;">Rp <span class="count-up-money" data-target="<?= (float)$t_tagihan ?>"><?= number_format((float)$t_tagihan, 0, ',', '.') ?></span></div>
             </div>
@@ -691,7 +691,7 @@ if ($q_all_orders) {
                                     labels: ['Laki-laki', 'Perempuan'],
                                     datasets: [{
                                         data: [t_l, t_p],
-                                        backgroundColor: ['#4F46E5', '#EC4899'],
+                                        backgroundColor: ['#2563EB', '#EC4899'],
                                         borderWidth: 0
                                     }]
                                 },

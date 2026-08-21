@@ -40,7 +40,7 @@ $tot_p = $q_tot_p->fetch_assoc()['tot'] ?? 0;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manajemen Stok - E-MutZ KORPRI</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4F46E5">
+    <meta name="theme-color" content="#2563EB">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -78,7 +78,7 @@ $tot_p = $q_tot_p->fetch_assoc()['tot'] ?? 0;
         
         <div class="panel">
             <div style="display: flex; gap: 15px; margin-bottom: 20px;">
-                <div style="flex: 1; background: var(--white); border: 1px solid var(--gray-light); padding: 15px; border-radius: 8px; border-left: 4px solid #4F46E5;">
+                <div style="flex: 1; background: var(--white); border: 1px solid var(--gray-light); padding: 15px; border-radius: 8px; border-left: 4px solid #2563EB;">
                     <h3 style="margin: 0 0 5px 0; font-size: 0.95rem; color: var(--gray);">Total Stok Laki-laki</h3>
                     <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark);"><?= number_format($tot_l) ?> <span style="font-size: 1rem; font-weight: 400;">Pcs</span></div>
                 </div>

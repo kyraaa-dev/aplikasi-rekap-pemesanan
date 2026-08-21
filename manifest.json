@@ -6,7 +6,7 @@
   "id": "emutz-korpri-app",
   "display": "standalone",
   "background_color": "#F8FAFC",
-  "theme_color": "#4F46E5",
+  "theme_color": "#2563EB",
   "orientation": "portrait-primary",
   "icons": [
     {
