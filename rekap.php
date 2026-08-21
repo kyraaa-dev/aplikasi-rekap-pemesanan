@@ -212,11 +212,11 @@ while ($t = $res_tagihan->fetch_assoc()) {
                         if (!empty($end_date)) $excel_url .= "&end_date=" . urlencode($end_date);
                         if (!empty($status_filter)) $excel_url .= "&status_filter=" . urlencode($status_filter);
                     ?>
-                    <a href="<?= $excel_url ?>" download target="_blank" onclick="window.Toast.fire({icon: 'success', title: 'File Excel sedang diunduh!'})" class="btn btn-primary" style="padding: 0.7rem 1.4rem; font-size: 1.05rem; font-weight: 600; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); border-radius: 10px; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none;">
+                    <a href="<?= $excel_url ?>" download target="_blank" onclick="window.Toast.fire({icon: 'success', title: 'File Excel sedang diunduh!'})" class="btn" style="padding: 0.7rem 1.4rem; font-size: 1.05rem; font-weight: 600; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3); background-color: #10B981; border-color: #10B981; color: white; border-radius: 10px; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                         Unduh Excel
                     </a>
-                    <button onclick="downloadPDF()" class="btn btn-primary" style="padding: 0.7rem 1.4rem; font-size: 1.05rem; font-weight: 600; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3); background-color: #DC2626; border-color: #DC2626; border-radius: 10px; transition: transform 0.2s, box-shadow 0.2s; color: white;">
+                    <button onclick="window.downloadPDF()" class="btn btn-primary" style="padding: 0.7rem 1.4rem; font-size: 1.05rem; font-weight: 600; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3); background-color: #DC2626; border-color: #DC2626; border-radius: 10px; transition: transform 0.2s, box-shadow 0.2s; color: white;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                         Unduh PDF
                     </button>
@@ -436,7 +436,7 @@ while ($t = $res_tagihan->fetch_assoc()) {
         // Initialize on load
         document.addEventListener('DOMContentLoaded', togglePrintFilter);
 
-        function downloadPDF() {
+        window.downloadPDF = function() {
             // Show loading toast
             window.Toast.fire({
                 icon: 'info',

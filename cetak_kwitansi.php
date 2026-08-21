@@ -208,7 +208,7 @@ function terbilang($x) {
             color: 'var(--text)'
         });
 
-        function downloadPDF() {
+        window.downloadPDF = function() {
             Toast.fire({
                 icon: 'info',
                 title: 'Sedang memproses PDF...',
