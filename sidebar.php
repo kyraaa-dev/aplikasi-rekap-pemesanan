@@ -251,14 +251,19 @@
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
 }
-@keyframes orbitDot {
-    0% { transform: rotate(0deg) translateX(18px) rotate(0deg); opacity: 0.3; }
-    50% { opacity: 1; }
-    100% { transform: rotate(360deg) translateX(18px) rotate(-360deg); opacity: 0.3; }
+@keyframes brutalSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
-@keyframes pulseRing {
-    0% { transform: scale(0.8); opacity: 0.5; }
-    50% { transform: scale(1.1); opacity: 0.2; }
+.brutal-loader {
+    width: 40px !important;
+    height: 40px !important;
+    background-color: #FFE600 !important; /* Cyber Yellow */
+    border: 3px solid #000000 !important;
+    box-shadow: 4px 4px 0px #000000 !important;
+    animation: brutalSpin 1s linear infinite !important;
+    margin-bottom: 10px !important;
+}
 /* Minimalist Loading Spinner */
 .search-loading-wrapper {
     display: flex !important;
@@ -1180,15 +1185,8 @@ document.addEventListener('DOMContentLoaded', function() {
             pendingRAF = requestAnimationFrame(() => {
                 pendingRAF = null;
                 spotlightResults.innerHTML =
-                    '<div class="search-loading-container">' +
-                        '<div class="search-orbit-loader">' +
-                            '<div class="search-orbit-ring"></div>' +
-                            '<div class="search-orbit-ring-inner"></div>' +
-                            '<div class="search-orbit-dot"></div>' +
-                            '<div class="search-orbit-dot"></div>' +
-                            '<div class="search-orbit-dot"></div>' +
-                            '<div class="search-orbit-core"></div>' +
-                        '</div>' +
+                    '<div class="search-loading-wrapper">' +
+                        '<div class="brutal-loader"></div>' +
                         '<div class="search-loading-text">Mencari data instan...</div>' +
                         '<div class="search-loading-sub">Mencocokkan "<b>' + query + '</b>" ke seluruh database</div>' +
                     '</div>' + loadingSkeletonTpl;
