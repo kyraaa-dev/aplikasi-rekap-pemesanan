@@ -344,13 +344,9 @@
    Desktop Floating Controls (Search Bar & Theme Toggle)
    ========================================================= */
 .desktop-floating-actions {
-    position: fixed !important;
-    top: 1.5rem !important;
-    right: 2rem !important;
-    z-index: 1000 !important;
     display: flex !important;
     align-items: center !important;
-    gap: 10px !important;
+    gap: 15px !important;
     pointer-events: auto !important;
 }
 
@@ -359,23 +355,26 @@
     align-items: center !important;
     gap: 10px !important;
     background: #FFFFFF !important;
-    color: #4B5563 !important;
-    border: 1px solid #E5E7EB !important;
-    border-radius: 30px !important;
-    padding: 8px 18px !important;
-    font-size: 0.85rem !important;
-    font-weight: 500 !important;
+    color: #000000 !important;
+    border: 3px solid #000000 !important;
+    border-radius: 0px !important;
+    padding: 10px 20px !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
     cursor: pointer !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    height: 44px !important;
+    box-shadow: 4px 4px 0px #000000 !important;
+    transition: transform 0.1s, box-shadow 0.1s !important;
+    height: 48px !important;
     box-sizing: border-box !important;
 }
 
 .floating-search-btn:hover {
-    border-color: #2563EB !important;
-    color: #2563EB !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    transform: translate(-2px, -2px) !important;
+    box-shadow: 6px 6px 0px #000000 !important;
+}
+.floating-search-btn:active {
+    transform: translate(2px, 2px) !important;
+    box-shadow: 2px 2px 0px #000000 !important;
 }
 
 .floating-search-btn svg {
@@ -404,42 +403,46 @@
     border: 1px solid #E5E7EB !important;
     border-radius: 50% !important;
     width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    min-height: 44px !important;
-    cursor: pointer !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
-    padding: 0 !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    box-sizing: border-box !important;
+    width: 48px !important;
+    height: 48px !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    border: 3px solid #000000 !important;
+    border-radius: 0px !important;
+    cursor: pointer !important;
+    box-shadow: 4px 4px 0px #000000 !important;
+    transition: transform 0.1s, box-shadow 0.1s !important;
 }
 
 .floating-theme-btn:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12) !important;
-    border-color: #2563EB !important;
-    color: #2563EB !important;
+    transform: translate(-2px, -2px) !important;
+    box-shadow: 6px 6px 0px #000000 !important;
+}
+
+.floating-theme-btn:active {
+    transform: translate(2px, 2px) !important;
+    box-shadow: 2px 2px 0px #000000 !important;
 }
 
 [data-theme="dark"] .floating-search-btn {
-    background: #1E293B !important;
-    color: #E2E8F0 !important;
-    border-color: #334155 !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+    background: #121212 !important;
+    color: #FFFFFF !important;
+    border: 3px solid #FFFFFF !important;
+    box-shadow: 4px 4px 0px #FFFFFF !important;
 }
 [data-theme="dark"] .floating-search-kbd {
-    background: #0F172A !important;
-    color: #94A3B8 !important;
-    border-color: #334155 !important;
+    background: #000000 !important;
+    color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
 }
 [data-theme="dark"] .floating-theme-btn {
-    background: #1E293B !important;
-    color: #F8FAFC !important;
-    border-color: #334155 !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+    background: #121212 !important;
+    color: #FFFFFF !important;
+    border: 3px solid #FFFFFF !important;
+    box-shadow: 4px 4px 0px #FFFFFF !important;
 }
 
 @media (max-width: 991px) {
@@ -474,6 +477,13 @@
                 localStorage.setItem('theme', 'dark');
             }
             updateThemeIcons();
+        }
+
+        // Move desktop floating actions into header for perfect layout
+        const header = document.querySelector('.header');
+        const floatingActions = document.querySelector('.desktop-floating-actions');
+        if (header && floatingActions) {
+            header.appendChild(floatingActions);
         }
 
         if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
