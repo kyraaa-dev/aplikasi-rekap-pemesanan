@@ -1,5 +1,3 @@
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
 /* Menu Hover */
 .nav-links a {
     transition: all 0.15s ease !important;
@@ -349,10 +347,6 @@
    Desktop Floating Controls (Search Bar & Theme Toggle)
    ========================================================= */
 .desktop-floating-actions {
-    position: fixed !important;
-    top: 2rem !important;
-    right: 2rem !important;
-    z-index: 1000 !important;
     display: flex !important;
     align-items: center !important;
     gap: 15px !important;
@@ -459,15 +453,11 @@
         display: none !important;
     }
 }
-</style>
-<script>
     if(localStorage.getItem('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
 
     document.addEventListener('DOMContentLoaded', function() {
         const themeToggle = document.getElementById('themeToggle');
         const themeToggleMobile = document.getElementById('themeToggleMobile');
-        const svgDark = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block; margin:auto;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
-        const svgLight = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block; margin:auto;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
 
         function updateThemeIcons() {
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -486,6 +476,13 @@
                 localStorage.setItem('theme', 'dark');
             }
             updateThemeIcons();
+        }
+
+        // Move desktop floating actions into header for perfect layout
+        const header = document.querySelector('.header');
+        const floatingActions = document.querySelector('.desktop-floating-actions');
+        if (header && floatingActions) {
+            header.appendChild(floatingActions);
         }
 
         if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
@@ -522,134 +519,15 @@
             });
         });
     });
-</script>
 
-<!-- Mobile Top Navbar -->
-<aside class="sidebar">
-    <div class="brand">
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <img src="assets/images/logo.png?v=2" alt="Logo E-MutZ" style="width: 48px; height: 48px; object-fit: contain; border-radius: 6px;">
-            <span>E-MutZ KORPRI</span>
-        </div>
-        <button class="sidebar-close-btn" id="sidebarCloseBtn" title="Tutup Menu">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-    </div>
-    <ul class="nav-links">
-        <li><a href="index.php" class="<?= basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : '' ?>">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-            Dashboard</a>
-        </li>
-        <li><a href="skpd.php" class="<?= basename($_SERVER['PHP_SELF']) == 'skpd.php' ? 'active' : '' ?>">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            Data SKPD</a>
-        </li>
-        <li><a href="pesanan.php" class="<?= basename($_SERVER['PHP_SELF']) == 'pesanan.php' ? 'active' : '' ?>">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-            Input Pesanan</a>
-        </li>
-        <li><a href="rekap.php" class="<?= basename($_SERVER['PHP_SELF']) == 'rekap.php' ? 'active' : '' ?>">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-            Rekapitulasi</a>
-        </li>
-        <li><a href="retur.php" class="<?= basename($_SERVER['PHP_SELF']) == 'retur.php' ? 'active' : '' ?>">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path><path d="M3 22v-6h6"></path><path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path></svg>
-            Riwayat Retur</a>
-        </li>
-        <li><a href="stok.php" class="<?= basename($_SERVER['PHP_SELF']) == 'stok.php' ? 'active' : '' ?>">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-            Manajemen Stok</a>
-        </li>
-        <li><a href="pengaturan.php" class="<?= basename($_SERVER['PHP_SELF']) == 'pengaturan.php' ? 'active' : '' ?>">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-            Pengaturan</a>
-        </li>
-        <li id="pwaInstallItem" style="margin-top: 0.75rem;">
-            <a href="#" id="btnPwaInstall" style="background: var(--light); color: var(--dark); font-weight: 600; border-radius: 6px; border: 1px dashed var(--gray);">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line><polyline points="9 9 12 12 15 9"></polyline><line x1="12" y1="6" x2="12" y2="12"></line></svg>
-                📲 Pasang Aplikasi</a>
-        </li>
-        <li style="margin-top: 1.5rem;"><a href="logout.php" id="btnLogout" style="color: var(--danger);">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-            Keluar (Logout)</a>
-        </li>
-    </ul>
-</aside>
 
-<!-- Mobile Top Navbar (Fixed/Sticky on mobile) -->
-<header class="mobile-topbar hide-on-print">
-    <button id="sidebarToggle" class="btn-hamburger" title="Buka Menu" aria-label="Buka Menu" type="button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-    </button>
-    <a href="index.php" class="mobile-topbar-brand">
-        <img src="assets/images/logo.png?v=2" alt="Logo" style="width: 32px; height: 32px; object-fit: contain;">
-        <span>E-MutZ KORPRI</span>
-    </a>
-    <div class="mobile-topbar-actions" style="display: flex; align-items: center; gap: 6px;">
-        <button id="btnSpotlightTriggerMobile" class="btn-hamburger" title="Pencarian Cepat" aria-label="Pencarian Cepat" type="button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        </button>
-        <button id="themeToggleMobile" class="btn-hamburger" title="Ganti Tema" aria-label="Ganti Tema" type="button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-        </button>
-    </div>
-</header>
 
-<!-- Backdrop Overlay for Mobile Drawer -->
-<div class="sidebar-overlay hide-on-print" id="sidebarOverlay"></div>
 
-<!-- Desktop Floating Controls (Search Bar & Theme Toggle - Fixed on Top-Right on All Pages) -->
-<div class="desktop-floating-actions hide-on-print">
-    <button id="btnSpotlightTrigger" class="floating-search-btn" title="Pencarian Cepat (Ctrl + K / ⌘K)" type="button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <span class="floating-search-text">Cari Pesanan / SKPD...</span>
-        <kbd class="floating-search-kbd">⌘K</kbd>
-    </button>
-    <button id="themeToggle" class="floating-theme-btn" title="Ganti Tema (Terang/Gelap)" type="button">
-    </button>
-</div>
 
-<!-- Spotlight Quick Search Modal (Command Palette) -->
-<div id="spotlightModal" class="spotlight-overlay hide-on-print" style="display: none;">
-    <div class="spotlight-dialog" role="dialog" aria-modal="true">
-        <!-- Search Header -->
-        <div class="spotlight-header">
-            <svg class="spotlight-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" id="spotlightInput" class="spotlight-input" placeholder="Ketik nama pemesan, SKPD, nomor WA, ukuran, atau menu..." autocomplete="off" spellcheck="false">
-            <button id="btnSpotlightClose" class="spotlight-close-btn" title="Tutup Pencarian (Esc)" type="button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-        </div>
 
-        <!-- Filter Tags -->
-        <div class="spotlight-filters">
-            <button class="spotlight-filter-btn active" data-filter="all" type="button">Semua</button>
-            <button class="spotlight-filter-btn" data-filter="pesanan" type="button">👤 Pemesan</button>
-            <button class="spotlight-filter-btn" data-filter="skpd" type="button">🏛️ SKPD</button>
-            <button class="spotlight-filter-btn" data-filter="menus" type="button">⚡ Menu Cepat</button>
-        </div>
 
-        <!-- Results List -->
-        <div id="spotlightResults" class="spotlight-results">
-            <!-- Rendered dynamically via JS -->
-        </div>
 
-        <!-- Footer -->
-        <div class="spotlight-footer">
-            <div class="spotlight-shortcuts">
-                <span><kbd>↑</kbd><kbd>↓</kbd> Pilih</span>
-                <span><kbd>↵</kbd> Buka</span>
-                <span><kbd>Esc</kbd> Tutup</span>
-            </div>
-            <span>E-MutZ Spotlight</span>
-        </div>
-    </div>
-</div>
 
-<!-- SweetAlert2 & Instant Navigation Engine -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="assets/js/instant-nav.js?v=<?= time() ?>"></script>
-<script>
 // Global Toast Configuration for Premium UI
 window.Toast = Swal.mixin({
     toast: true,
@@ -726,7 +604,6 @@ document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
             title: '',
             html: `
-                <style>
                 @keyframes spinFast { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
                 @keyframes gradientGlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
                 @keyframes popIn { 0% { opacity: 0; transform: scale(0.9) translateY(10px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
@@ -735,14 +612,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 .swal-step-desc { font-size: 0.95rem; font-weight: 500; color: var(--gray); margin-bottom: 24px; height: 22px; transition: color 0.3s; }
                 .swal-progress-track { width: 100%; height: 8px; background: var(--gray-light); border-radius: 999px; overflow: hidden; box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); }
                 .swal-progress-fill { width: 0%; height: 100%; background: #2563EB; border-radius: 999px; transition: width 0.3s ease; }
-                </style>
-                <div class="swal-logout-container">
-                    <div class="swal-step-title" id="swal-step-title">MEMUTUS KONEKSI</div>
-                    <div class="swal-step-desc" id="swal-step-text">Menginisialisasi penutupan sesi...</div>
-                    <div class="swal-progress-track">
-                        <div id="swal-progress-bar" class="swal-progress-fill"></div>
-                    </div>
-                </div>
             `,
             allowOutsideClick: false,
             allowEscapeKey: false,
@@ -791,7 +660,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (spinner) {
                         spinner.style.animation = 'none';
                         spinner.style.border = 'none';
-                        spinner.innerHTML = `<svg style="width:100%; height:100%; color:#10B981; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`;
                     }
                 }, 1400);
 
@@ -802,27 +670,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    const logoutButtons = document.querySelectorAll('#btnLogout, a[href="logout.php"], .btn-logout');
     logoutButtons.forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
-            const url = this.getAttribute('href') || 'logout.php';
             Swal.fire({
                 title: '',
                 html: `
-                    <div style="display:flex; flex-direction:column; align-items:center; margin-bottom: 20px;">
-                        <div style="width: 72px; height: 72px; border-radius: 24px; background: rgba(239, 68, 68, 0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; border: 1px solid rgba(239, 68, 68, 0.2); box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.3);">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                        </div>
-                        <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--dark); margin: 0 0 8px 0;">Konfirmasi Keluar</h2>
-                        <div style="font-size: 0.95rem; color: var(--gray); line-height: 1.5; text-align: center; padding: 0 10px;">
-                            Apakah Anda yakin ingin keluar dari sistem <strong>E-MutZ KORPRI</strong>?
-                        </div>
-                    </div>
-                    <div style="padding: 12px 16px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 6px; font-size: 0.85rem; color: #D97706; text-align: left; display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                        <span style="font-weight: 500; line-height: 1.4;">Sistem akan memutus koneksi aman Anda dan membersihkan memori sementara browser.</span>
-                    </div>
                 `,
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
@@ -832,8 +685,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 customClass: {
                     cancelButton: 'swal2-cancel-custom'
                 },
-                confirmButtonText: '<span style="font-weight: 700; letter-spacing: 0.5px;">YA, KELUAR SISTEM</span>',
-                cancelButtonText: '<span style="font-weight: 600; color: var(--dark);">Batal</span>',
                 reverseButtons: true,
                 focusCancel: true
             }).then((result) => {
@@ -861,39 +712,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const tplCustom = `Yth. Pengurus *${skpdName}*,\n\n`;
 
         Swal.fire({
-            title: '<span style="display:inline-flex; align-items:center; gap:8px; color:#059669;"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg> Notifikasi WhatsApp</span>',
             html: `
-                <div style="text-align: left; font-size: 0.9rem;">
-                    <div style="margin-bottom: 12px; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 10px 14px; border-radius: 6px; color: #065F46;">
-                        <strong style="font-size: 1rem;">${skpdName}</strong><br>
-                        <span style="font-size: 0.825rem; color: #047857;">Pesanan: <b>${totalQty} pcs</b> | Total: <b>${totalRp}</b> | Bayar: <b>${statusBayar}</b></span>
-                    </div>
 
-                    <div style="margin-bottom: 12px;">
-                        <label style="font-weight: 600; display: block; margin-bottom: 4px; color: var(--dark); font-size: 0.85rem;">Nomor WhatsApp Tujuan:</label>
-                        <input type="text" id="swal-wa-phone" class="swal2-input" style="width: 100%; margin: 0; padding: 8px 12px; height: 38px; font-size: 0.9rem; box-sizing: border-box;" placeholder="Contoh: 08123456789 (Kosongkan jika ingin memilih kontak manual di WA)" value="${cleanWa}">
-                    </div>
 
-                    <div style="margin-bottom: 12px;">
-                        <label style="font-weight: 600; display: block; margin-bottom: 4px; color: var(--dark); font-size: 0.85rem;">Pilih Format Template Pesan:</label>
-                        <select id="swal-wa-tpl" class="swal2-select" style="width: 100%; margin: 0; padding: 8px 12px; height: 38px; font-size: 0.85rem; border-radius: 6px; box-sizing: border-box;">
-                            <option value="ready">📦 1. Pemberitahuan Siap Diambil</option>
-                            <option value="tagihan">💳 2. Pemberitahuan Tagihan Pembayaran</option>
-                            <option value="selesai">✅ 3. Konfirmasi Pesanan Selesai & Lunas</option>
-                            <option value="custom">✏️ 4. Tulis Pesan Bebas (Kustom)</option>
-                        </select>
-                    </div>
 
-                    <div style="margin-bottom: 4px;">
-                        <label style="font-weight: 600; display: block; margin-bottom: 4px; color: var(--dark); font-size: 0.85rem;">Pratinjau Pesan WhatsApp (Dapat Diedit):</label>
-                        <textarea id="swal-wa-text" class="swal2-textarea" style="width: 100%; margin: 0; padding: 10px; height: 130px; font-size: 0.825rem; font-family: monospace; line-height: 1.4; resize: vertical; border-radius: 6px; box-sizing: border-box;"></textarea>
-                    </div>
-                </div>
             `,
             showCancelButton: true,
             confirmButtonColor: '#25D366',
             cancelButtonColor: '#6B7280',
-            confirmButtonText: '<span style="display:inline-flex; align-items:center; gap:6px; font-weight:700;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg> Buka di WhatsApp</span>',
             cancelButtonText: 'Batal',
             didOpen: () => {
                 const selectTpl = document.getElementById('swal-wa-tpl');
@@ -991,27 +817,11 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 // Panduan interaktif jika dibuka di browser yang tidak trigger beforeinstallprompt (seperti Safari iOS)
                 Swal.fire({
-                    title: '<span style="display:inline-flex; align-items:center; gap:8px; color:var(--primary);"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line><polyline points="9 9 12 12 15 9"></polyline><line x1="12" y1="6" x2="12" y2="12"></line></svg> Pasang Aplikasi di HP</span>',
                     html: `
-                        <div style="text-align:left; font-size:0.875rem;">
-                            <p style="margin-bottom:12px; color:var(--dark);">Pasang <b>E-MutZ KORPRI</b> di layar utama HP / Tablet Anda agar dapat dibuka seperti aplikasi resmi tanpa perlu ketik link:</p>
                             
-                            <div style="background:#F0FDF4; border:1px solid #BBF7D0; padding:12px; border-radius:8px; margin-bottom:10px; color:#166534;">
-                                <strong style="display:flex; align-items:center; gap:5px; margin-bottom:4px; font-size:0.9rem;">
                                     🤖 Pengguna Android (Chrome / Edge):
-                                </strong>
-                                1. Ketuk menu titik tiga (<b>⋮</b>) di kanan atas browser.<br>
-                                2. Pilih menu <b>"Install app"</b> atau <b>"Tambahkan ke Layar Utama"</b>.
-                            </div>
 
-                            <div style="background:#EFF6FF; border:1px solid #BFDBFE; padding:12px; border-radius:8px; color:#1E40AF;">
-                                <strong style="display:flex; align-items:center; gap:5px; margin-bottom:4px; font-size:0.9rem;">
                                     🍎 Pengguna iPhone / iPad (Safari):
-                                </strong>
-                                1. Ketuk ikon <b>Bagikan (Share / Kotak Panah Atas)</b> di bilah bawah Safari.<br>
-                                2. Gulir ke bawah dan pilih <b>"Add to Home Screen"</b> (Tambah ke Layar Utama).
-                            </div>
-                        </div>
                     `,
                     icon: 'info',
                     confirmButtonColor: 'var(--primary)',
@@ -1141,11 +951,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Default Shortcuts when input is empty (pre-cached HTML)
     const defaultShortcutsHtml = `
-        <div class="spotlight-group-title">⚡ Pintasan Cepat</div>
-        <a href="pesanan.php" class="spotlight-item" data-type="menu"><div class="spotlight-item-left"><div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div><div class="spotlight-item-info"><div class="spotlight-item-title">Input Pesanan Baru</div><div class="spotlight-item-subtitle">Tambah pesanan topi mutz baru per anggota SKPD</div></div></div><span class="spotlight-item-badge" style="background:#EEF2FF; color:#2563EB;">Buka</span></a>
-        <a href="rekap.php" class="spotlight-item" data-type="menu"><div class="spotlight-item-left"><div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></div><div class="spotlight-item-info"><div class="spotlight-item-title">Rekapitulasi Matriks Ukuran</div><div class="spotlight-item-subtitle">Tabel rekapitulasi ukuran 55-60 L/P dan cetak invoice</div></div></div><span class="spotlight-item-badge" style="background:#EEF2FF; color:#2563EB;">Buka</span></a>
-        <a href="stok.php" class="spotlight-item" data-type="menu"><div class="spotlight-item-left"><div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg></div><div class="spotlight-item-info"><div class="spotlight-item-title">Manajemen Stok Topi</div><div class="spotlight-item-subtitle">Kelola stok fisik per ukuran dan peringatan minimum</div></div></div><span class="spotlight-item-badge" style="background:#EEF2FF; color:#2563EB;">Buka</span></a>
-        <a href="skpd.php" class="spotlight-item" data-type="menu"><div class="spotlight-item-left"><div class="spotlight-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div><div class="spotlight-item-info"><div class="spotlight-item-title">Daftar Instansi SKPD & Kontak WA</div><div class="spotlight-item-subtitle">Kelola kontak WhatsApp narahubung dinas</div></div></div><span class="spotlight-item-badge" style="background:#EEF2FF; color:#2563EB;">Buka</span></a>
     `;
 
     function renderDefaultShortcuts() {
@@ -1155,7 +960,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Pre-build loading skeleton template once
-    const loadingSkeletonTpl = '<div class="search-skeleton"><div class="search-skeleton-row"><div class="search-skeleton-avatar"></div><div class="search-skeleton-lines"><div class="search-skeleton-line w-75"></div><div class="search-skeleton-line w-50"></div></div><div class="search-skeleton-badge"></div></div><div class="search-skeleton-row"><div class="search-skeleton-avatar"></div><div class="search-skeleton-lines"><div class="search-skeleton-line w-60"></div><div class="search-skeleton-line w-40"></div></div><div class="search-skeleton-badge"></div></div><div class="search-skeleton-row"><div class="search-skeleton-avatar"></div><div class="search-skeleton-lines"><div class="search-skeleton-line w-75"></div><div class="search-skeleton-line w-50"></div></div><div class="search-skeleton-badge"></div></div></div>';
 
     // Perform Live Search (INP-optimized: all DOM writes deferred via scheduler)
     if (spotlightInput) {
@@ -1182,16 +986,10 @@ document.addEventListener('DOMContentLoaded', function() {
             pendingRAF = requestAnimationFrame(() => {
                 pendingRAF = null;
                 spotlightResults.innerHTML =
-                    '<div class="search-loading-wrapper">' +
-                        '<div class="brutal-loader"></div>' +
-                        '<div class="search-loading-text">Mencari data instan...</div>' +
-                        '<div class="search-loading-sub">Mencocokkan "<b>' + query + '</b>" ke seluruh database</div>' +
-                    '</div>' + loadingSkeletonTpl;
             });
 
             searchDebounceTimer = setTimeout(async () => {
                 try {
-                    const res = await fetch(`api_search.php?q=${encodeURIComponent(query)}`, {
                         credentials: 'same-origin',
                         headers: { 'Accept': 'application/json' }
                     });
@@ -1201,11 +999,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Defer result rendering to next frame
                         requestAnimationFrame(() => renderSearchResults(data));
                     } else {
-                        spotlightResults.innerHTML = '<div class="spotlight-empty"><div style="color:var(--danger);font-weight:600;">Gagal memuat data</div><div style="font-size:0.8rem;color:var(--gray);">Status: ' + res.status + '</div></div>';
                     }
                 } catch (e) {
                     console.error('Search error:', e);
-                    spotlightResults.innerHTML = '<div class="spotlight-empty"><div style="color:var(--danger);font-weight:600;">Kesalahan koneksi</div><div style="font-size:0.8rem;color:var(--gray);">Periksa jaringan Anda.</div></div>';
                 }
             }, 150);
         });
@@ -1261,7 +1057,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 1. Pesanan Items
         if (showPesanan) {
-            html += `<div class="spotlight-group-title">👤 Hasil Pemesan (${data.pesanan.length})</div>`;
             data.pesanan.forEach(item => {
                 totalMatches++;
                 const bayarBg = item.status_bayar === 'Lunas' ? '#DCFCE7' : '#FEE2E2';
@@ -1270,80 +1065,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 const ambilColor = item.status_pengambilan === 'Sudah Diambil' ? '#166534' : '#92400E';
 
                 html += `
-                    <a href="pesanan.php?filter_skpd=${item.skpd_id}" class="spotlight-item" data-type="pesanan" onclick="document.getElementById('spotlightModal').classList.remove('active');">
-                        <div class="spotlight-item-left">
-                            <div class="spotlight-item-icon" style="background:#EEF2FF; color:#2563EB;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            </div>
-                            <div class="spotlight-item-info">
-                                <div class="spotlight-item-title">${escapeHtml(item.nama_pemesan)} <span style="font-weight:400; color:var(--gray); font-size:0.8rem;">(${escapeHtml(item.nama_skpd)})</span></div>
-                                <div class="spotlight-item-subtitle">${item.jenis_kelamin} Uk. <b>${item.ukuran}</b> (${item.jumlah} pcs) &bull; ${item.subtotal_formatted}</div>
-                            </div>
-                        </div>
-                        <div style="display:flex; gap:6px; align-items:center;">
-                            <span class="spotlight-item-badge" style="background:${bayarBg}; color:${bayarColor};">${item.status_bayar}</span>
-                            <span class="spotlight-item-badge" style="background:${ambilBg}; color:${ambilColor};">${item.status_pengambilan}</span>
-                        </div>
-                    </a>
                 `;
             });
         }
 
         // 2. SKPD Items
         if (showSkpd) {
-            html += `<div class="spotlight-group-title">🏛️ Hasil Instansi SKPD (${data.skpd.length})</div>`;
             data.skpd.forEach(skpd => {
                 totalMatches++;
                 const statusBadge = skpd.total_belum_lunas === 0 ? 
-                    '<span class="spotlight-item-badge" style="background:#DCFCE7; color:#166534;">Semua Lunas</span>' : 
-                    `<span class="spotlight-item-badge" style="background:#FEE2E2; color:#991B1B;">${skpd.total_belum_lunas} Belum Lunas</span>`;
 
                 html += `
-                    <a href="pesanan.php?filter_skpd=${skpd.id}" class="spotlight-item" data-type="skpd" onclick="document.getElementById('spotlightModal').classList.remove('active');">
-                        <div class="spotlight-item-left">
-                            <div class="spotlight-item-icon" style="background:#F0FDF4; color:#10B981;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                            </div>
-                            <div class="spotlight-item-info">
-                                <div class="spotlight-item-title">${escapeHtml(skpd.nama_skpd)}</div>
-                                <div class="spotlight-item-subtitle">Total: <b>${skpd.total_qty} pcs</b> (${skpd.total_rp_formatted}) ${skpd.no_wa ? ' &bull; WA: ' + escapeHtml(skpd.no_wa) : ''}</div>
-                            </div>
-                        </div>
                         ${statusBadge}
-                    </a>
                 `;
             });
         }
 
         // 3. Navigation Menus
         if (showMenus) {
-            html += `<div class="spotlight-group-title">⚡ Navigasi Menu</div>`;
             data.menus.forEach(menu => {
                 totalMatches++;
                 html += `
-                    <a href="${menu.url}" class="spotlight-item" data-type="menu" onclick="document.getElementById('spotlightModal').classList.remove('active');">
-                        <div class="spotlight-item-left">
-                            <div class="spotlight-item-icon" style="background:#EEF2FF; color:#2563EB;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                            </div>
-                            <div class="spotlight-item-info">
-                                <div class="spotlight-item-title">${escapeHtml(menu.title)}</div>
-                                <div class="spotlight-item-subtitle">${escapeHtml(menu.desc)}</div>
-                            </div>
-                        </div>
-                        <span class="spotlight-item-badge" style="background:#F1F5F9; color:#475569;">Buka</span>
-                    </a>
                 `;
             });
         }
 
         if (totalMatches === 0) {
             html = `
-                <div class="spotlight-empty">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gray); margin-bottom:10px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    <div style="font-weight:600; color:var(--dark); margin-bottom:4px;">Tidak ada hasil ditemukan</div>
-                    <div style="font-size:0.825rem;">Coba cari dengan kata kunci lain seperti nama SKPD, nama anggota, nomor WA, atau ukuran.</div>
-                </div>
             `;
         }
 
@@ -1357,4 +1105,3 @@ document.addEventListener('DOMContentLoaded', function() {
         return div.innerHTML;
     }
 });
-</script>
