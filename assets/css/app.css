@@ -1305,7 +1305,7 @@ tr:hover {
 }
 
 .skpd-card-title {
-    color: var(--primary);
+    color: var(--dark);
     margin: 0;
     font-size: 1.05rem;
     font-weight: 800;
