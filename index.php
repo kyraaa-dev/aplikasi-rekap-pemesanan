@@ -142,6 +142,23 @@ $skpd_order_items_by_id = [];
 $skpd_id_map = [];
 $skpd_wa_map = [];
 
+// Data for Marquee Ticker
+$q_tunggakan = $conn->query("
+    SELECT SUM(CASE WHEN jenis_mutz = 'Kepala SKPD' THEN jumlah * 150000 ELSE jumlah * 55000 END) as tunggakan 
+    FROM pesanan 
+    WHERE status_bayar = 'Belum Lunas'
+");
+$tunggakan = 0;
+if ($q_tunggakan && $row = $q_tunggakan->fetch_assoc()) {
+    $tunggakan = (float)$row['tunggakan'];
+}
+
+$q_siap = $conn->query("SELECT SUM(jumlah) as siap FROM pesanan WHERE status_pengambilan = 'Siap Diambil'");
+$total_siap = 0;
+if ($q_siap && $row = $q_siap->fetch_assoc()) {
+    $total_siap = (int)$row['siap'];
+}
+
 // Fetch all SKPD metadata including WA contacts
 $q_skpd_meta = $conn->query("SELECT id, nama_skpd, no_wa FROM skpd");
 if ($q_skpd_meta) {
@@ -192,12 +209,48 @@ if ($q_all_orders) {
         .delay-3 { transition-delay: 0.3s; }
         .delay-4 { transition-delay: 0.4s; }
         .delay-5 { transition-delay: 0.5s; }
+        
+        /* Marquee Styles */
+        .marquee-container {
+            background: var(--primary);
+            border-top: 3px solid var(--dark);
+            border-bottom: 3px solid var(--dark);
+            padding: 8px 0;
+            margin: -2rem -2rem 2rem -2rem; /* Stretch across main content */
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 4px 0px var(--dark);
+            position: relative;
+            z-index: 80;
+        }
+        [data-theme="dark"] .marquee-container {
+            border-color: var(--white);
+            box-shadow: 0 4px 0px var(--white);
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 30s linear infinite;
+            font-weight: 800;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            color: var(--dark);
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100%); }
+        }
     </style>
 </head>
 <body>
     <?php include 'sidebar.php'; ?>
 
     <main class="main-content">
+        <div class="marquee-container">
+            <div class="marquee-content">
+                ⚠️ INFO REKAP: Terdapat <?= $total_siap ?> pesanan Mutz yang SIAP DIAMBIL namun belum diambil. &nbsp;&nbsp; • &nbsp;&nbsp; 💸 TOTAL TUNGGAKAN PEMBAYARAN SAAT INI: Rp <?= number_format($tunggakan, 0, ',', '.') ?>. &nbsp;&nbsp; • &nbsp;&nbsp; 🧢 TOTAL PESANAN KESELURUHAN: <?= number_format((int)$t_all, 0, ',', '.') ?> PCS. &nbsp;&nbsp; • &nbsp;&nbsp; ⚡ E-MUTZ KORPRI DASHBOARD SYSTEM
+            </div>
+        </div>
+
         <div class="header">
             <div>
                 <h1>Dashboard</h1>
