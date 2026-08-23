@@ -244,7 +244,7 @@ if ($q_all_orders) {
 <body>
     <?php include 'sidebar.php'; ?>
 
-    <main class="main-content">
+    <main class="main-content page-transition">
         <div class="marquee-container">
             <div class="marquee-content">
                 ⚠️ INFO REKAP: Terdapat <?= $total_siap ?> pesanan Mutz yang SIAP DIAMBIL namun belum diambil. &nbsp;&nbsp; • &nbsp;&nbsp; 💸 TOTAL TUNGGAKAN PEMBAYARAN SAAT INI: Rp <?= number_format($tunggakan, 0, ',', '.') ?>. &nbsp;&nbsp; • &nbsp;&nbsp; 🧢 TOTAL PESANAN KESELURUHAN: <?= number_format((int)$t_all, 0, ',', '.') ?> PCS. &nbsp;&nbsp; • &nbsp;&nbsp; ⚡ E-MUTZ KORPRI DASHBOARD SYSTEM

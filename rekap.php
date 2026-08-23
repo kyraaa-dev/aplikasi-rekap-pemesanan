@@ -145,31 +145,107 @@ while ($t = $res_tagihan->fetch_assoc()) {
     <link rel="stylesheet" href="assets/css/app.css?v=<?= time() ?>">
     <link rel="icon" type="image/png" href="assets/images/logo.png">
     <style>
+        /* Neo-Brutalism Table Styles */
+        .table-rekap {
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 3px solid var(--dark);
+            box-shadow: 6px 6px 0px var(--dark);
+            border-radius: 0;
+            overflow: hidden;
+            background: #fff;
+        }
+        [data-theme="dark"] .table-rekap {
+            border-color: var(--white);
+            box-shadow: 6px 6px 0px var(--white);
+            background: var(--brutal-bg);
+        }
+        
         .table-rekap th, .table-rekap td {
             text-align: center;
-            border: 1px solid var(--gray-light);
+            border-right: 2px solid var(--dark);
+            border-bottom: 2px solid var(--dark);
+            padding: 8px 6px;
         }
-        .table-rekap th { background-color: var(--light); }
-        .table-rekap .th-skpd { text-align: left; }
-        .table-rekap .td-skpd { text-align: left; font-weight: 500; }
-        .table-rekap tbody { counter-reset: rowNumber; }
-        .table-rekap tbody tr { counter-increment: rowNumber; }
-        .table-rekap tbody tr td.row-number::before { content: counter(rowNumber); }
-        .bg-blue { background-color: #EFF6FF !important; }
-        .bg-pink { background-color: #FDF2F8 !important; }
-        .total-col { font-weight: bold; background-color: #EFF6FF !important; }
+        [data-theme="dark"] .table-rekap th, [data-theme="dark"] .table-rekap td {
+            border-color: var(--white);
+        }
         
+        /* Remove right/bottom borders on edge cells to avoid double thickness */
+        .table-rekap tr th:last-child, .table-rekap tr td:last-child {
+            border-right: none;
+        }
+        .table-rekap tbody tr:last-child td, .table-rekap tfoot tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table-rekap th { background-color: var(--light); font-weight: 800; text-transform: uppercase; }
+        .table-rekap .th-skpd { text-align: left; }
+        .table-rekap .td-skpd { text-align: left; font-weight: 700; }
+        
+        .table-rekap tbody { counter-reset: rowNumber; }
+        .table-rekap tbody tr { counter-increment: rowNumber; transition: all 0.2s ease; }
+        .table-rekap tbody tr td.row-number::before { content: counter(rowNumber); }
+        
+        /* Brutalist Hover Effect */
+        .table-rekap tbody tr:hover td {
+            background-color: var(--primary);
+            color: var(--dark);
+            cursor: default;
+        }
+        
+        .bg-blue { background-color: #00FFCC !important; color: #000 !important; }
+        .bg-pink { background-color: #FF00FF !important; color: #FFF !important; }
+        [data-theme="dark"] .bg-pink { color: #FFF !important; }
+        
+        .total-col { font-weight: 900; background-color: #FFE600 !important; color: #000 !important; }
+        
+        /* Brutal Filter Box */
+        .brutal-filter-box {
+            display: flex; gap: 10px; align-items: center; flex-wrap: wrap; 
+            background: var(--light); 
+            padding: 12px 18px; 
+            border-radius: 0; 
+            border: 3px solid var(--dark);
+            box-shadow: 4px 4px 0px var(--dark);
+        }
+        [data-theme="dark"] .brutal-filter-box {
+            border-color: var(--white);
+            box-shadow: 4px 4px 0px var(--white);
+            background: var(--primary-hover);
+        }
+        .brutal-input {
+            padding: 0.5rem; 
+            border-radius: 0; 
+            border: 2px solid var(--dark); 
+            outline: none;
+            font-weight: 600;
+        }
+        .brutal-input:focus {
+            background: var(--primary);
+            color: var(--dark);
+        }
+        
+        /* Page Transition Animation */
+        .page-transition {
+            animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
         @media print {
-            body.print-filter-active .row-empty {
-                display: none !important;
-            }
+            body.print-filter-active .row-empty { display: none !important; }
+            .table-rekap { border: 1px solid #000 !important; box-shadow: none !important; }
+            .table-rekap th, .table-rekap td { border: 1px solid #000 !important; }
+            .bg-blue, .bg-pink, .total-col { background-color: transparent !important; color: #000 !important; }
         }
     </style>
-    <link rel="icon" type="image/png" href="assets/images/logo.png">
 </head>
 <body>
     <?php include 'sidebar.php'; ?>
-    <main class="main-content">
+    <main class="main-content page-transition">
         <div class="header">
             <div>
                 <h1>Rekapitulasi Pesanan Mutz ASN per SKPD</h1>
@@ -181,22 +257,22 @@ while ($t = $res_tagihan->fetch_assoc()) {
             <div class="flex justify-between items-center hide-on-print" style="flex-wrap: wrap; gap: 15px;">
                 <h2 style="margin: 0;">Tabel Rekapitulasi</h2>
                 
-                <form method="GET" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; background: var(--light); padding: 10px 15px; border-radius: 6px; border: 1px solid var(--gray-light);">
-                    <div style="font-size: 0.9rem; font-weight: 500;">Filter Waktu:</div>
-                    <input type="date" name="start_date" value="<?= htmlspecialchars($start_date) ?>" style="padding: 0.4rem; border-radius: 6px; border: 1px solid #d1d5db; outline: none;">
-                    <span>-</span>
-                    <input type="date" name="end_date" value="<?= htmlspecialchars($end_date) ?>" style="padding: 0.4rem; border-radius: 6px; border: 1px solid #d1d5db; outline: none;">
+                <form method="GET" class="brutal-filter-box">
+                    <div style="font-size: 0.9rem; font-weight: 800;">Filter Waktu:</div>
+                    <input type="date" name="start_date" value="<?= htmlspecialchars($start_date) ?>" class="brutal-input">
+                    <span style="font-weight: 800;">-</span>
+                    <input type="date" name="end_date" value="<?= htmlspecialchars($end_date) ?>" class="brutal-input">
                     
-                    <div style="font-size: 0.9rem; font-weight: 500; margin-left: 10px;">Status:</div>
-                    <select name="status_filter" style="padding: 0.4rem; border-radius: 6px; border: 1px solid #d1d5db; outline: none;">
+                    <div style="font-size: 0.9rem; font-weight: 800; margin-left: 10px;">Status:</div>
+                    <select name="status_filter" class="brutal-input">
                         <option value="">Semua Status</option>
                         <option value="sudah" <?= $status_filter == 'sudah' ? 'selected' : '' ?>>Sudah Diambil</option>
                         <option value="belum" <?= $status_filter == 'belum' ? 'selected' : '' ?>>Belum Diambil</option>
                     </select>
 
-                    <button type="submit" class="btn btn-primary" style="padding: 0.4rem 1rem;">Cari</button>
+                    <button type="submit" class="btn" style="background: var(--dark); color: var(--primary); border: 2px solid var(--dark); font-weight: 800; border-radius: 0; padding: 0.4rem 1rem; box-shadow: 2px 2px 0px var(--white);">Cari</button>
                     <?php if(!empty($start_date) || !empty($end_date) || !empty($status_filter)): ?>
-                        <a href="rekap.php" class="btn btn-secondary" style="padding: 0.4rem 1rem; text-decoration: none;">Reset</a>
+                        <a href="rekap.php" class="btn btn-secondary" style="border: 2px solid var(--dark); font-weight: 800; border-radius: 0; padding: 0.4rem 1rem; text-decoration: none; box-shadow: 2px 2px 0px var(--dark);">Reset</a>
                     <?php endif; ?>
                 </form>
 
