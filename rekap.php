@@ -252,6 +252,7 @@ while ($t = $res_tagihan->fetch_assoc()) {
                             <th rowspan="2" class="total-col" style="background: rgba(245, 158, 11, 0.15); color: #D97706;">Tagihan (Rp)</th>
                             <th rowspan="2" class="total-col" style="background: var(--light);">Status Bayar</th>
                             <th rowspan="2" class="total-col" style="background: rgba(59, 130, 246, 0.1); color: var(--primary);">Status Ambil</th>
+                            <th rowspan="2" class="total-col hide-on-print" style="background: var(--dark); color: var(--primary);">Aksi</th>
                         </tr>
                         <tr>
                             <!-- Laki-laki -->
@@ -388,6 +389,20 @@ while ($t = $res_tagihan->fetch_assoc()) {
                                     </a>
                                 <?php endif; ?>
                             </td>
+                            </td>
+                            <td class="total-col hide-on-print" rowspan="<?= $rowspan ?>" style="text-align: center; vertical-align: middle;">
+                                <?php if ($skpd_total > 0): ?>
+                                    <a href="cetak_invoice_skpd.php?skpd_id=<?= $id ?>" 
+                                       target="_blank"
+                                       class="btn" 
+                                       style="background: var(--primary); color: var(--dark); border: 2px solid var(--dark); border-radius: 0; padding: 4px 10px; font-size: 0.75rem; font-weight: 800; text-decoration: none; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; box-shadow: 2px 2px 0px var(--dark); transition: transform 0.1s, box-shadow 0.1s;"
+                                       onmouseover="this.style.transform='translate(-2px,-2px)'; this.style.boxShadow='4px 4px 0px var(--dark)';"
+                                       onmouseout="this.style.transform='none'; this.style.boxShadow='2px 2px 0px var(--dark)';">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                                        INVOICE
+                                    </a>
+                                <?php endif; ?>
+                            </td>
                             <?php endif; ?>
                         </tr>
                         <?php 
@@ -414,7 +429,7 @@ while ($t = $res_tagihan->fetch_assoc()) {
                             <td style="text-align: right; padding-right: 1rem; color: #FCD34D;">
                                 <?= $grand_total_Tagihan > 0 ? 'Rp ' . number_format($grand_total_Tagihan, 0, ',', '.') : '-' ?>
                             </td>
-                            <td></td>
+                            <td colspan="3" class="hide-on-print"></td>
                         </tr>
                     </tfoot>
                 </table>
