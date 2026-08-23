@@ -117,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         html, body {
@@ -131,36 +131,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             display: flex;
             align-items: center;
             justify-content: center;
+            /* Background comes from app.css */
         }
 
         /* Top Bar Actions (Theme Switcher) */
         .login-topbar {
             position: absolute;
-            top: 1.25rem;
+            top: 1.5rem;
             right: 1.5rem;
             z-index: 50;
         }
         .btn-theme-login {
-            background: var(--white);
-            border: 1px solid var(--gray-light);
+            background: var(--primary);
+            border: var(--brutal-border);
             color: var(--dark);
-            width: 42px;
-            height: 42px;
-            border-radius: 6px;
+            width: 46px;
+            height: 46px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: background-color 0.15s ease;
+            transition: all 0.2s;
             box-shadow: var(--shadow);
         }
         .btn-theme-login:hover {
-            background: var(--light);
+            transform: translate(-4px, -4px);
+            box-shadow: 8px 8px 0px #000000;
         }
+        [data-theme="dark"] .btn-theme-login:hover {
+            box-shadow: 8px 8px 0px #FFFFFF;
+        }
+
         /* Login Container & Card */
         .login-wrapper {
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             padding: 16px;
             position: relative;
             z-index: 10;
@@ -168,84 +173,85 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         .login-card {
             background: var(--white);
-            padding: 2.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-lg);
+            padding: 3rem 2.5rem;
             border: var(--brutal-border);
+            box-shadow: 12px 12px 0px #000000;
             position: relative;
-            overflow: hidden;
-            animation: cardAppear 0.3s ease-out forwards;
+            animation: cardAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        [data-theme="dark"] .login-card {
+            background: var(--brutal-bg);
+            box-shadow: 12px 12px 0px #FFFFFF;
         }
 
         @keyframes cardAppear {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(40px) rotate(-2deg); }
+            to { opacity: 1; transform: translateY(0) rotate(0); }
         }
 
         /* Header / Logo */
         .login-header {
             text-align: center;
-            margin-bottom: 1.75rem;
+            margin-bottom: 2rem;
         }
 
         .logo-wrap {
-            width: 76px;
-            height: 76px;
-            margin: 0 auto 0.85rem;
-            background: #ffffff;
-            border-radius: 18px;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.25rem;
+            background: var(--primary);
+            border: var(--brutal-border);
+            box-shadow: var(--shadow);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 10px;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
+            transition: all 0.2s;
         }
         .logo-wrap:hover {
-            transform: scale(1.05) rotate(-3deg);
+            transform: translate(-4px, -4px) rotate(-5deg);
+            box-shadow: 8px 8px 0px #000000;
         }
+        [data-theme="dark"] .logo-wrap:hover {
+            box-shadow: 8px 8px 0px #FFFFFF;
+        }
+        
         .logo-wrap img {
             width: 100%;
             height: 100%;
             object-fit: contain;
         }
+        [data-theme="dark"] .logo-wrap img {
+            filter: drop-shadow(0 0 0 transparent);
+        }
 
         .login-title {
-            font-size: 1.45rem;
-            font-weight: 700;
-            color: #1e293b;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--dark);
+            text-transform: uppercase;
             letter-spacing: -0.02em;
             margin-bottom: 0.25rem;
         }
-        [data-theme="dark"] .login-title {
-            color: #f8fafc;
-        }
-
         .login-subtitle {
-            font-size: 0.85rem;
-            color: #64748b;
-            font-weight: 400;
-        }
-        [data-theme="dark"] .login-subtitle {
-            color: #94a3b8;
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-weight: 600;
         }
 
         /* Form Controls */
         .form-group {
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
             text-align: left;
         }
 
         .form-label {
             display: block;
-            font-size: 0.825rem;
-            font-weight: 600;
-            color: #334155;
-            margin-bottom: 0.4rem;
-            letter-spacing: 0.01em;
-        }
-        [data-theme="dark"] .form-label {
-            color: #cbd5e1;
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
         }
 
         .input-group {
@@ -258,26 +264,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .input-icon-left {
             position: absolute;
             left: 14px;
-            color: #94a3b8;
+            color: var(--dark);
             pointer-events: none;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 5;
-            transition: color 0.2s ease;
+            transition: transform 0.2s;
         }
 
         .input-group input[type="text"],
         .input-group input[type="password"],
         .form-input {
             width: 100% !important;
-            height: 46px !important;
+            height: 50px !important;
             padding: 0 42px 0 44px !important;
-            font-size: 0.95rem !important;
-            color: #1e293b !important;
-            background: #f8fafc !important;
-            border: 1.5px solid #e2e8f0 !important;
-            border-radius: 6px !important;
+            font-size: 1rem !important;
+            font-weight: 600 !important;
+            color: var(--dark) !important;
+            background: var(--white) !important;
+            border: 2px solid var(--dark) !important;
+            box-shadow: 4px 4px 0px var(--dark) !important;
             transition: all 0.2s ease !important;
             outline: none !important;
             box-sizing: border-box !important;
@@ -287,91 +294,111 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         [data-theme="dark"] .input-group input[type="text"],
         [data-theme="dark"] .input-group input[type="password"],
         [data-theme="dark"] .form-input {
-            background: #1e293b !important;
-            border-color: #334155 !important;
-            color: #f8fafc !important;
+            background: var(--brutal-bg) !important;
+            border-color: var(--white) !important;
+            color: var(--white) !important;
+            box-shadow: 4px 4px 0px var(--white) !important;
         }
 
         .input-group input[type="text"]:focus,
         .input-group input[type="password"]:focus,
         .form-input:focus {
-            background: var(--white) !important;
-            border-color: var(--dark) !important;
+            transform: translate(-2px, -2px) !important;
+            box-shadow: 6px 6px 0px var(--dark) !important;
+            background: var(--primary) !important;
+            color: var(--dark) !important;
         }
         [data-theme="dark"] .input-group input[type="text"]:focus,
         [data-theme="dark"] .input-group input[type="password"]:focus,
         [data-theme="dark"] .form-input:focus {
-            background: #09090B !important;
-            border-color: #E4E4E7 !important;
+            box-shadow: 6px 6px 0px var(--white) !important;
+            background: var(--primary) !important;
+            color: var(--dark) !important;
         }
+
         .input-group:focus-within .input-icon-left {
-            color: #2563EB !important;
-        }
-        [data-theme="dark"] .input-group:focus-within .input-icon-left {
-            color: #818cf8 !important;
+            transform: scale(1.1);
         }
 
         .toggle-password {
             position: absolute;
-            right: 10px;
+            right: 14px;
             background: transparent;
             border: none;
-            color: #94a3b8;
+            color: var(--dark);
             cursor: pointer;
-            padding: 6px;
-            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 5;
-            transition: color 0.2s, transform 0.2s;
+            transition: transform 0.2s;
+        }
+        [data-theme="dark"] .toggle-password {
+            color: var(--white);
         }
         .toggle-password:hover {
-            color: #2563EB;
-        }
-        [data-theme="dark"] .toggle-password:hover {
-            color: #818cf8;
+            transform: scale(1.1);
         }
 
         /* Submit Button */
         .btn-submit {
             width: 100%;
-            height: 44px;
-            margin-top: 0.75rem;
+            height: 52px;
+            margin-top: 1rem;
             background: var(--primary);
-            color: var(--white);
-            border: none;
-            border-radius: 6px;
-            font-size: 0.95rem;
-            font-weight: 600;
+            color: var(--dark);
+            border: 2px solid var(--dark);
+            box-shadow: 6px 6px 0px var(--dark);
+            font-size: 1.05rem;
+            font-weight: 800;
+            text-transform: uppercase;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
             cursor: pointer;
-            transition: background-color 0.15s ease, opacity 0.15s ease;
+            transition: all 0.2s ease;
         }
+        [data-theme="dark"] .btn-submit {
+            border-color: var(--white);
+            box-shadow: 6px 6px 0px var(--white);
+        }
+        
         .btn-submit:hover {
-            opacity: 0.9;
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0px var(--dark);
+            background: #FFE600; /* Force cyber yellow */
         }
+        [data-theme="dark"] .btn-submit:hover {
+            box-shadow: 10px 10px 0px var(--white);
+            background: #00FFCC; /* Force cyber cyan */
+        }
+        
         .btn-submit:active {
-            opacity: 0.8;
+            transform: translate(0px, 0px);
+            box-shadow: 2px 2px 0px var(--dark);
         }
+        [data-theme="dark"] .btn-submit:active {
+            box-shadow: 2px 2px 0px var(--white);
+        }
+        
         .btn-submit.loading {
             pointer-events: none;
-            opacity: 0.85;
+            opacity: 0.9;
         }
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         .footer-note {
-            margin-top: 1.25rem;
-            font-size: 0.75rem;
-            color: #94a3b8;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--gray);
             text-align: center;
+            text-transform: uppercase;
         }
 
-        /* Responsiveness for very small screens */
+        /* Responsiveness */
         @media (max-height: 600px) {
             html, body {
                 height: auto;
@@ -381,13 +408,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             body {
                 padding: 1.5rem 0;
             }
-            .logo-wrap {
-                width: 60px;
-                height: 60px;
-                margin-bottom: 0.5rem;
-            }
             .login-card {
-                padding: 1.5rem;
+                padding: 2rem 1.5rem;
             }
         }
     </style>
