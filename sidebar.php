@@ -2,10 +2,7 @@
 <style>
 /* Menu Hover */
 .nav-links a {
-    transition: all 0.15s ease !important;
-}
-.nav-links a:hover {
-    background-color: var(--light) !important;
+    transition: all 0.15s ease;
 }
 
 /* SweetAlert2 Layer Guarantee */
@@ -568,17 +565,50 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
             Pengaturan</a>
         </li>
-        <li id="pwaInstallItem" style="margin-top: 0.75rem;">
-            <a href="#" id="btnPwaInstall" style="background: var(--light); color: var(--dark); font-weight: 600; border-radius: 6px; border: 1px dashed var(--gray);">
+        <li id="pwaInstallItem" style="margin-top: 1.5rem; border-top: 2px dashed var(--dark); padding-top: 1rem;">
+            <a href="#" id="btnPwaInstall" class="btn-sidebar-special">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line><polyline points="9 9 12 12 15 9"></polyline><line x1="12" y1="6" x2="12" y2="12"></line></svg>
-                📲 Pasang Aplikasi</a>
+                📲 Pasang Aplikasi
+            </a>
         </li>
-        <li style="margin-top: 1.5rem;"><a href="logout.php" id="btnLogout" style="color: var(--danger);">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-            Keluar (Logout)</a>
+        <li style="margin-top: 0.5rem;">
+            <a href="logout.php" id="btnLogout" class="btn-sidebar-logout">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                Keluar (Logout)
+            </a>
         </li>
     </ul>
 </aside>
+<style>
+    [data-theme="dark"] #pwaInstallItem { border-top-color: var(--white) !important; }
+    
+    .nav-links a.btn-sidebar-special {
+        background: #00FFCC; /* Cyan default */
+        color: #000000;
+        border: 2px solid #000000;
+        box-shadow: 4px 4px 0px #000000;
+        transform: translate(-4px, -4px);
+    }
+    .nav-links a.btn-sidebar-special:hover {
+        background: #FFE600;
+        transform: translate(-6px, -6px);
+        box-shadow: 6px 6px 0px #000000;
+    }
+    
+    .nav-links a.btn-sidebar-logout {
+        color: #DC2626; /* Red text normally */
+    }
+    .nav-links a.btn-sidebar-logout:hover {
+        background: #FF007F; /* Brutal pink/red on hover */
+        color: #FFFFFF;
+        border-color: #000000;
+        box-shadow: 4px 4px 0px #000000;
+    }
+    [data-theme="dark"] .nav-links a.btn-sidebar-logout:hover {
+        border-color: #FFFFFF;
+        box-shadow: 4px 4px 0px #FFFFFF;
+    }
+</style>
 
 <!-- Mobile Top Navbar (Fixed/Sticky on mobile) -->
 <header class="mobile-topbar hide-on-print">
