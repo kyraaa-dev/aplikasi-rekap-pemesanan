@@ -418,7 +418,7 @@ $pesanans = $conn->query("
                                             $bg = 'rgba(16, 185, 129, 0.1)'; $color = '#10B981'; $border = 'rgba(16, 185, 129, 0.3)';
                                         }
                                     ?>
-                                    <select name="status" onchange="updateStatus(<?= $row['id'] ?>, this)" style="width: 100%; padding: 0.35rem 0.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border-radius: 6px; border: 1px solid <?= $border ?>; background-color: <?= $bg ?>; color: <?= $color ?>; cursor: pointer; outline: none; letter-spacing: 0.2px;">
+                                    <select name="status" data-prev="<?= $st ?>" onchange="updateStatus(<?= $row['id'] ?>, this)" style="width: 100%; padding: 0.35rem 0.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border-radius: 6px; border: 1px solid <?= $border ?>; background-color: <?= $bg ?>; color: <?= $color ?>; cursor: pointer; outline: none; letter-spacing: 0.2px;">
                                         <option value="Menunggu Diproses" <?= $st == 'Menunggu Diproses' ? 'selected' : '' ?>>⏳ Menunggu Diproses</option>
                                         <option value="Sedang Dibuat" <?= $st == 'Sedang Dibuat' ? 'selected' : '' ?>>✂️ Sedang Dibuat</option>
                                         <option value="Siap Diambil" <?= $st == 'Siap Diambil' ? 'selected' : '' ?>>📦 Siap Diambil</option>
@@ -482,6 +482,13 @@ $pesanans = $conn->query("
     <script>
     function updateStatus(id, selectElement) {
         const newStatus = selectElement.value;
+        const previousStatus = selectElement.getAttribute('data-prev');
+        
+        if (!confirm('Apakah Anda yakin ingin mengubah status menjadi "' + newStatus + '"?')) {
+            selectElement.value = previousStatus;
+            return;
+        }
+
         const originalBg = selectElement.style.backgroundColor;
         
         selectElement.disabled = true;
@@ -491,6 +498,7 @@ $pesanans = $conn->query("
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
+                    selectElement.setAttribute('data-prev', newStatus);
                     let bg, color, border;
                     if (newStatus === 'Menunggu Diproses') {
                         bg = 'rgba(75, 85, 99, 0.1)'; color = 'var(--gray)'; border = 'var(--gray-light)';
@@ -506,11 +514,13 @@ $pesanans = $conn->query("
                     selectElement.style.border = `1px solid ${border}`;
                 } else {
                     alert('Gagal mengupdate status');
+                    selectElement.value = previousStatus;
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
                 alert('Terjadi kesalahan koneksi');
+                selectElement.value = previousStatus;
             })
             .finally(() => {
                 selectElement.disabled = false;
