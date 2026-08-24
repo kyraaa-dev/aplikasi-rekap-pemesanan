@@ -426,14 +426,14 @@ if ($q_all_orders) {
                                 
                                 <div class="skpd-actions-grid">
                                     <button type="button" 
-                                            class="btn-wa btn-wa-notify" 
+                                            class="btn-wa" 
                                             data-skpd="<?= htmlspecialchars($nama, ENT_QUOTES) ?>" 
                                             data-wa="<?= htmlspecialchars($skpd_wa_map[$nama] ?? '', ENT_QUOTES) ?>" 
                                             data-total-qty="<?= $total_item ?>" 
                                             data-total-rp="Rp <?= number_format($total_rupiah, 0, ',', '.') ?>" 
                                             data-status-bayar="<?= $status ?>" 
                                             data-status-ambil="<?= $status_ambil ?>" 
-                                            onclick="window.openWhatsAppSender && window.openWhatsAppSender({ skpdName: this.getAttribute('data-skpd'), targetWa: this.getAttribute('data-wa'), totalQty: this.getAttribute('data-total-qty'), totalRp: this.getAttribute('data-total-rp'), statusBayar: this.getAttribute('data-status-bayar'), statusAmbil: this.getAttribute('data-status-ambil') }); event.preventDefault();"
+                                            onclick="window.openWhatsAppSender && window.openWhatsAppSender({ skpdName: this.getAttribute('data-skpd'), targetWa: this.getAttribute('data-wa'), totalQty: this.getAttribute('data-total-qty'), totalRp: this.getAttribute('data-total-rp'), statusBayar: this.getAttribute('data-status-bayar'), statusAmbil: this.getAttribute('data-status-ambil') }); event.stopPropagation(); event.preventDefault();"
                                             title="Kirim Notifikasi WhatsApp"
                                             style="padding: 7px 8px; font-size: 0.8rem; border: 2px solid #000; box-shadow: 2px 2px 0px #000; border-radius: 4px; font-weight: 800;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg>
@@ -464,7 +464,7 @@ if ($q_all_orders) {
                                             Set Diambil
                                         </a>
                                     <?php else: ?>
-                                        <div style="background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; border-radius: 6px; font-size: 0.78rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 4px; padding: 6px 8px;">
+                                        <div style="background: #6EE7B7; color: #000; border: 2px solid #000; box-shadow: 2px 2px 0px #000; border-radius: 4px; font-size: 0.8rem; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 4px; padding: 7px 8px;">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                             Selesai
                                         </div>
@@ -486,7 +486,7 @@ if ($q_all_orders) {
                 <div style="padding: 1.25rem 1.5rem; border-bottom: 4px solid #000; display: flex; justify-content: space-between; align-items: flex-start; background: #FEF08A;">
                     <div>
                         <h3 id="modalSkpdName" style="margin: 0; color: #000; font-size: 1.4rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">-</h3>
-                        <div style="display: flex; gap: 8px; margin-top: 8px; font-size: 0.825rem; flex-wrap: wrap;" id="modalSkpdBadges">
+                        <div style="display: flex; gap: 8px; margin-top: 8px; font-size: 0.825rem; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px;" id="modalSkpdBadges">
                             <!-- Badges -->
                         </div>
                     </div>
