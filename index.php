@@ -524,7 +524,7 @@ if ($q_all_orders) {
                         <!-- Summary info -->
                     </div>
                     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                        <button id="btnModalWa" type="button" class="btn-wa btn-wa-notify" style="padding: 7px 14px; font-size: 0.825rem; border: 2px solid #000; box-shadow: 2px 2px 0px #000; font-weight: 800; border-radius: 4px; background: #FFF;">
+                        <button id="btnModalWa" type="button" class="btn-wa" style="padding: 7px 14px; font-size: 0.825rem; border: 2px solid #000; box-shadow: 2px 2px 0px #000; font-weight: 800; border-radius: 4px; background: #FFF;" onclick="window.openWhatsAppSender && window.openWhatsAppSender({ skpdName: this.getAttribute('data-skpd'), targetWa: this.getAttribute('data-wa'), totalQty: this.getAttribute('data-total-qty'), totalRp: this.getAttribute('data-total-rp'), statusBayar: this.getAttribute('data-status-bayar'), statusAmbil: this.getAttribute('data-status-ambil') }); event.stopPropagation(); event.preventDefault();">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg>
                             Kirim WA
                         </button>
