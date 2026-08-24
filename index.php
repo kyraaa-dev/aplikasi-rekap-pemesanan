@@ -571,6 +571,18 @@ if ($q_all_orders) {
 
             window.openSkpdModal = function(skpdName, skpdId, status, statusColor, statusBg, statusAmbil, statusAmbilColor, statusAmbilBg, totalQty, totalRp) {
                 const modalDetailSkpd = document.getElementById('modalDetailSkpd');
+                
+                if (!modalDetailSkpd) return;
+
+                // Mencegah isu CSS 'transform' containing block dengan memindahkannya ke body
+                if (modalDetailSkpd.parentNode !== document.body) {
+                    // Hapus modal lama jika ada (dari navigasi SPA sebelumnya)
+                    document.body.querySelectorAll('#modalDetailSkpd').forEach(m => {
+                        if (m !== modalDetailSkpd) m.remove();
+                    });
+                    document.body.appendChild(modalDetailSkpd);
+                }
+
                 const modalSkpdName = document.getElementById('modalSkpdName');
                 const modalSkpdBadges = document.getElementById('modalSkpdBadges');
                 const modalSkpdTableBody = document.getElementById('modalSkpdTableBody');
@@ -579,8 +591,6 @@ if ($q_all_orders) {
                 const btnModalAmbilSemua = document.getElementById('btnModalAmbilSemua');
                 const btnModalLunasSemua = document.getElementById('btnModalLunasSemua');
                 const btnModalWa = document.getElementById('btnModalWa');
-
-                if (!modalDetailSkpd) return;
 
                 const cleanName = (skpdName || '').trim();
                 const cleanId = String(skpdId || '');
@@ -703,7 +713,11 @@ if ($q_all_orders) {
                 
                 modalDetailSkpd.classList.add('active');
                 modalDetailSkpd.style.display = 'flex';
+                
+                // Mencegah scrolling pada main container
                 document.body.style.overflow = 'hidden';
+                const mainContent = document.querySelector('.main-content');
+                if (mainContent) mainContent.style.overflow = 'hidden';
             };
 
             window.closeSkpdModal = function() {
@@ -712,7 +726,11 @@ if ($q_all_orders) {
                     modal.classList.remove('active');
                     modal.style.display = 'none';
                 }
+                
+                // Kembalikan scrolling
                 document.body.style.overflow = '';
+                const mainContent = document.querySelector('.main-content');
+                if (mainContent) mainContent.style.overflow = '';
             };
 
             // Global Keydown Escape Handler
