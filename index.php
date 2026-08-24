@@ -433,6 +433,7 @@ if ($q_all_orders) {
                                             data-total-rp="Rp <?= number_format($total_rupiah, 0, ',', '.') ?>" 
                                             data-status-bayar="<?= $status ?>" 
                                             data-status-ambil="<?= $status_ambil ?>" 
+                                            onclick="window.openWhatsAppSender && window.openWhatsAppSender({ skpdName: this.getAttribute('data-skpd'), targetWa: this.getAttribute('data-wa'), totalQty: this.getAttribute('data-total-qty'), totalRp: this.getAttribute('data-total-rp'), statusBayar: this.getAttribute('data-status-bayar'), statusAmbil: this.getAttribute('data-status-ambil') }); event.preventDefault();"
                                             title="Kirim Notifikasi WhatsApp"
                                             style="padding: 7px 8px; font-size: 0.8rem; border: 2px solid #000; box-shadow: 2px 2px 0px #000; border-radius: 4px; font-weight: 800;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg>
@@ -603,10 +604,10 @@ if ($q_all_orders) {
                 // Set Badges
                 if (modalSkpdBadges) {
                     modalSkpdBadges.innerHTML = `
-                        <span style="background: #E5E7EB; color: #000; border: 2px solid #000; box-shadow: 2px 2px 0px #000; padding: 4px 8px; border-radius: 0; font-weight: 800; font-family: monospace;">Total: ${totalQty || 0} buah</span>
-                        <span style="background: #FEF08A; color: #000; border: 2px solid #000; box-shadow: 2px 2px 0px #000; padding: 4px 8px; border-radius: 0; font-weight: 800; font-family: monospace;">${totalRp || 'Rp 0'}</span>
-                        <span style="background: ${statusBg || '#E5E7EB'}; color: #000; border: 2px solid #000; box-shadow: 2px 2px 0px #000; padding: 4px 8px; border-radius: 0; font-weight: 800; font-family: monospace;">Bayar: ${status || '-'}</span>
-                        <span style="background: ${statusAmbilBg || '#E5E7EB'}; color: #000; border: 2px solid #000; box-shadow: 2px 2px 0px #000; padding: 4px 8px; border-radius: 0; font-weight: 800; font-family: monospace;">Ambil: ${statusAmbil || '-'}</span>
+                        <span style="background: #E5E7EB; color: #000; border: 2px solid #000; box-shadow: 2px 2px 0px #000; padding: 4px 8px; border-radius: 0; font-weight: 800; font-family: monospace; white-space: nowrap;">Total: ${totalQty || 0} buah</span>
+                        <span style="background: #FEF08A; color: #000; border: 2px solid #000; box-shadow: 2px 2px 0px #000; padding: 4px 8px; border-radius: 0; font-weight: 800; font-family: monospace; white-space: nowrap;">${totalRp || 'Rp 0'}</span>
+                        <span style="background: ${statusBg || '#E5E7EB'}; color: #000; border: 2px solid #000; box-shadow: 2px 2px 0px #000; padding: 4px 8px; border-radius: 0; font-weight: 800; font-family: monospace; white-space: nowrap;">Bayar: ${status || '-'}</span>
+                        <span style="background: ${statusAmbilBg || '#E5E7EB'}; color: #000; border: 2px solid #000; box-shadow: 2px 2px 0px #000; padding: 4px 8px; border-radius: 0; font-weight: 800; font-family: monospace; white-space: nowrap; flex-grow: 1; text-align: center;">Ambil: ${statusAmbil || '-'}</span>
                     `;
                 }
                 
