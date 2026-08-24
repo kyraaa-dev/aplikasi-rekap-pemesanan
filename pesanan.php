@@ -309,7 +309,7 @@ $pesanans = $conn->query("
             <div class="flex justify-between items-center mb-4" style="flex-wrap: wrap; gap: 10px;">
                 <h2>Daftar Pesanan Mutz</h2>
                 <form method="GET" action="pesanan.php" id="filterForm" style="display: flex; gap: 10px; align-items: center; background: transparent; padding: 10px 15px; border-radius: 12px; border: var(--brutal-border);">
-                    <select name="filter_skpd" onchange="document.getElementById('filterForm').submit()" style="padding: 0.4rem; border-radius: 0px; border: var(--brutal-border); outline: none; background: var(--white); color: var(--dark); box-shadow: 2px 2px 0px #000;">
+                    <select name="filter_skpd" onchange="document.getElementById('filterBtn').click()" style="padding: 0.4rem; border-radius: 0px; border: var(--brutal-border); outline: none; background: var(--white); color: var(--dark); box-shadow: 2px 2px 0px #000;">
                         <option value="0">- Semua SKPD -</option>
                         <?php 
                         // Reset pointer SKPD for filter dropdown
@@ -319,19 +319,19 @@ $pesanans = $conn->query("
                             <option value="<?= $s['id'] ?>" <?= $filter_skpd == $s['id'] ? 'selected' : '' ?>><?= htmlspecialchars($s['nama_skpd']) ?></option>
                         <?php endwhile; ?>
                     </select>
-                    <select name="filter_status" onchange="document.getElementById('filterForm').submit()" style="padding: 0.4rem; border-radius: 0px; border: var(--brutal-border); outline: none; background: var(--white); color: var(--dark); box-shadow: 2px 2px 0px #000;">
+                    <select name="filter_status" onchange="document.getElementById('filterBtn').click()" style="padding: 0.4rem; border-radius: 0px; border: var(--brutal-border); outline: none; background: var(--white); color: var(--dark); box-shadow: 2px 2px 0px #000;">
                         <option value="">- Semua Pembayaran -</option>
                         <option value="Lunas" <?= $filter_status == 'Lunas' ? 'selected' : '' ?>>Lunas</option>
                         <option value="Belum Lunas" <?= $filter_status == 'Belum Lunas' ? 'selected' : '' ?>>Belum Lunas</option>
                     </select>
-                    <select name="filter_ambil" onchange="document.getElementById('filterForm').submit()" style="padding: 0.4rem; border-radius: 0px; border: var(--brutal-border); outline: none; background: var(--white); color: var(--dark); box-shadow: 2px 2px 0px #000;">
+                    <select name="filter_ambil" onchange="document.getElementById('filterBtn').click()" style="padding: 0.4rem; border-radius: 0px; border: var(--brutal-border); outline: none; background: var(--white); color: var(--dark); box-shadow: 2px 2px 0px #000;">
                         <option value="">- Semua Pengambilan -</option>
                         <option value="Menunggu Diproses" <?= $filter_ambil == 'Menunggu Diproses' ? 'selected' : '' ?>>Menunggu Diproses</option>
                         <option value="Sedang Dibuat" <?= $filter_ambil == 'Sedang Dibuat' ? 'selected' : '' ?>>Sedang Dibuat</option>
                         <option value="Siap Diambil" <?= $filter_ambil == 'Siap Diambil' ? 'selected' : '' ?>>Siap Diambil</option>
                         <option value="Sudah Diambil" <?= $filter_ambil == 'Sudah Diambil' ? 'selected' : '' ?>>Sudah Diambil</option>
                     </select>
-                    <!-- <button type="submit" class="btn btn-primary" style="padding: 0.4rem 1rem;">Filter</button> -->
+                    <button type="submit" id="filterBtn" class="btn btn-primary" style="display: none;">Filter</button>
                     <?php if($filter_skpd > 0 || $filter_status != '' || $filter_ambil != ''): ?>
                         <a href="pesanan.php" class="btn btn-secondary" style="padding: 0.4rem 1rem; text-decoration: none;">Reset</a>
                     <?php endif; ?>
@@ -484,13 +484,33 @@ $pesanans = $conn->query("
         const newStatus = selectElement.value;
         const previousStatus = selectElement.getAttribute('data-prev');
         
-        if (!confirm('Apakah Anda yakin ingin mengubah status menjadi "' + newStatus + '"?')) {
-            selectElement.value = previousStatus;
-            return;
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Apakah Anda yakin ingin mengubah status menjadi "' + newStatus + '"?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#2563EB',
+                cancelButtonColor: '#EF4444',
+                confirmButtonText: 'Ya, Ubah',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    processUpdateStatus(id, selectElement, newStatus, previousStatus);
+                } else {
+                    selectElement.value = previousStatus;
+                }
+            });
+        } else {
+            if (!confirm('Apakah Anda yakin ingin mengubah status menjadi "' + newStatus + '"?')) {
+                selectElement.value = previousStatus;
+                return;
+            }
+            processUpdateStatus(id, selectElement, newStatus, previousStatus);
         }
+    }
 
-        const originalBg = selectElement.style.backgroundColor;
-        
+    function processUpdateStatus(id, selectElement, newStatus, previousStatus) {
         selectElement.disabled = true;
         selectElement.style.opacity = '0.7';
 
@@ -512,14 +532,32 @@ $pesanans = $conn->query("
                     selectElement.style.backgroundColor = bg;
                     selectElement.style.color = color;
                     selectElement.style.border = `1px solid ${border}`;
+                    
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: 'Status pesanan berhasil diperbarui',
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                    }
                 } else {
-                    alert('Gagal mengupdate status');
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire('Gagal', 'Gagal mengupdate status', 'error');
+                    } else {
+                        alert('Gagal mengupdate status');
+                    }
                     selectElement.value = previousStatus;
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Terjadi kesalahan koneksi');
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire('Error', 'Terjadi kesalahan koneksi', 'error');
+                } else {
+                    alert('Terjadi kesalahan koneksi');
+                }
                 selectElement.value = previousStatus;
             })
             .finally(() => {
