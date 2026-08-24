@@ -477,8 +477,6 @@ $pesanans = $conn->query("
                 </table>
             </div>
         </div>
-    </main>
-    <script src="assets/js/script.js?v=<?= time() ?>"></script>
     <script>
     function updateStatus(id, selectElement) {
         const newStatus = selectElement.value;
@@ -567,5 +565,7 @@ $pesanans = $conn->query("
             });
     }
     </script>
+    </main>
+    <script src="assets/js/script.js?v=<?= time() ?>"></script>
 </body>
 </html>
