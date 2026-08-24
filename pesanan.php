@@ -512,6 +512,10 @@ $pesanans = $conn->query("
         selectElement.disabled = true;
         selectElement.style.opacity = '0.7';
 
+        if (typeof window.startBrutalLoader === 'function') {
+            window.startBrutalLoader();
+        }
+
         fetch(`pesanan.php?update_status=${id}&status=${encodeURIComponent(newStatus)}&ajax=1`)
             .then(response => response.json())
             .then(data => {
@@ -532,6 +536,10 @@ $pesanans = $conn->query("
                     selectElement.style.border = '2px solid #000';
                     selectElement.style.boxShadow = '2px 2px 0px #000';
                     
+                    if (typeof window.endBrutalLoader === 'function') {
+                        window.endBrutalLoader();
+                    }
+
                     if (typeof Swal !== 'undefined') {
                         Swal.fire({
                             icon: 'success',
@@ -542,6 +550,9 @@ $pesanans = $conn->query("
                         });
                     }
                 } else {
+                    if (typeof window.endBrutalLoader === 'function') {
+                        window.endBrutalLoader();
+                    }
                     if (typeof Swal !== 'undefined') {
                         Swal.fire('Gagal', 'Gagal mengupdate status', 'error');
                     } else {
@@ -552,6 +563,9 @@ $pesanans = $conn->query("
             })
             .catch(error => {
                 console.error('Error:', error);
+                if (typeof window.endBrutalLoader === 'function') {
+                    window.endBrutalLoader();
+                }
                 if (typeof Swal !== 'undefined') {
                     Swal.fire('Error', 'Terjadi kesalahan koneksi', 'error');
                 } else {
@@ -562,6 +576,9 @@ $pesanans = $conn->query("
             .finally(() => {
                 selectElement.disabled = false;
                 selectElement.style.opacity = '1';
+                if (typeof window.endBrutalLoader === 'function') {
+                    window.endBrutalLoader();
+                }
             });
     }
     </script>

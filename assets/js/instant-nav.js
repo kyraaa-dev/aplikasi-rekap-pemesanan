@@ -6,38 +6,48 @@
     const pageCache = new Map();
     let currentPath = window.location.pathname;
 
-    // Progress Bar Element
-    let progressBar = null;
-    function createProgressBar() {
-        if (!progressBar) {
-            progressBar = document.createElement('div');
-            progressBar.id = 'nprogress-bar';
-            progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:#2563EB;z-index:9999999;transition:width 0.2s ease, opacity 0.2s ease;width:0%;opacity:0;pointer-events:none;';
-            document.body.appendChild(progressBar);
+    // Brutalism Loading Screen
+    let brutalLoader = null;
+    function createBrutalLoader() {
+        if (!brutalLoader) {
+            brutalLoader = document.createElement('div');
+            brutalLoader.id = 'brutal-loader';
+            brutalLoader.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:#FDE047;z-index:9999999;transition:opacity 0.2s ease, visibility 0.2s ease;opacity:0;visibility:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;pointer-events:none;';
+            
+            brutalLoader.innerHTML = `
+                <div style="background:#fff;border:4px solid #000;box-shadow:8px 8px 0px #000;padding:20px 40px;font-size:2rem;font-weight:900;color:#000;text-transform:uppercase;letter-spacing:2px;animation:brutalPulse 0.4s infinite alternate;">
+                    MEMUAT...
+                </div>
+                <style>
+                    @keyframes brutalPulse {
+                        0% { transform: scale(1) translate(0, 0); box-shadow: 8px 8px 0px #000; }
+                        100% { transform: scale(1.05) translate(-4px, -4px); box-shadow: 12px 12px 0px #000; }
+                    }
+                </style>
+            `;
+            document.body.appendChild(brutalLoader);
         }
     }
 
     function startProgress() {
-        createProgressBar();
-        progressBar.style.opacity = '1';
-        progressBar.style.width = '35%';
-        setTimeout(() => {
-            if (progressBar && progressBar.style.opacity === '1') {
-                progressBar.style.width = '75%';
-            }
-        }, 80);
+        createBrutalLoader();
+        brutalLoader.style.opacity = '1';
+        brutalLoader.style.visibility = 'visible';
     }
 
     function endProgress() {
-        if (!progressBar) return;
-        progressBar.style.width = '100%';
+        if (!brutalLoader) return;
         setTimeout(() => {
-            progressBar.style.opacity = '0';
+            brutalLoader.style.opacity = '0';
             setTimeout(() => {
-                progressBar.style.width = '0%';
+                brutalLoader.style.visibility = 'hidden';
             }, 200);
-        }, 150);
+        }, 300); // Give it a slight delay so the brutalist animation is seen
     }
+
+    // Expose to global window so other scripts (like AJAX forms) can use it
+    window.startBrutalLoader = startProgress;
+    window.endBrutalLoader = endProgress;
 
     // Prefetch a URL into memory cache
     async function prefetchUrl(url) {
