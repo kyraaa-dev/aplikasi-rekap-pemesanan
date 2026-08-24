@@ -258,26 +258,26 @@ if ($q_all_orders) {
             </div>
         </div>
 
-        <div class="dashboard-stats" style="margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-            <div class="card fade-up delay-1" style="background-color: #00E5FF; border: 3px solid #000; box-shadow: 6px 6px 0px #000; color: #000;">
-                <h3 style="font-weight: 800; font-size: 1.1rem;">Mutz Laki-laki</h3>
-                <div class="value count-up" data-target="<?= (int)$t_l ?>" style="font-weight: 900;"><?= number_format((int)$t_l, 0, ',', '.') ?></div>
+        <div class="dashboard-stats" style="margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
+            <div class="card fade-up delay-1" style="background-color: #00E5FF; border: 3px solid #000; box-shadow: 4px 4px 0px #000; color: #000; padding: 1rem;">
+                <h3 style="font-weight: 800; font-size: 0.95rem; margin-bottom: 0.25rem;">Mutz Laki-laki</h3>
+                <div class="value count-up" data-target="<?= (int)$t_l ?>" style="font-weight: 900; font-size: 1.8rem;"><?= number_format((int)$t_l, 0, ',', '.') ?></div>
             </div>
-            <div class="card fade-up delay-2" style="background-color: #4ADE80; border: 3px solid #000; box-shadow: 6px 6px 0px #000; color: #000;">
-                <h3 style="font-weight: 800; font-size: 1.1rem;">Kepala SKPD</h3>
-                <div class="value count-up" data-target="<?= (int)$t_k ?>" style="font-weight: 900;"><?= number_format((int)$t_k, 0, ',', '.') ?></div>
+            <div class="card fade-up delay-2" style="background-color: #4ADE80; border: 3px solid #000; box-shadow: 4px 4px 0px #000; color: #000; padding: 1rem;">
+                <h3 style="font-weight: 800; font-size: 0.95rem; margin-bottom: 0.25rem;">Kepala SKPD</h3>
+                <div class="value count-up" data-target="<?= (int)$t_k ?>" style="font-weight: 900; font-size: 1.8rem;"><?= number_format((int)$t_k, 0, ',', '.') ?></div>
             </div>
-            <div class="card fade-up delay-3" style="background-color: #FF007F; border: 3px solid #000; box-shadow: 6px 6px 0px #000; color: #FFF;">
-                <h3 style="font-weight: 800; font-size: 1.1rem; color: #FFF;">Mutz Perempuan</h3>
-                <div class="value count-up" data-target="<?= (int)$t_p ?>" style="font-weight: 900;"><?= number_format((int)$t_p, 0, ',', '.') ?></div>
+            <div class="card fade-up delay-3" style="background-color: #FF007F; border: 3px solid #000; box-shadow: 4px 4px 0px #000; color: #FFF; padding: 1rem;">
+                <h3 style="font-weight: 800; font-size: 0.95rem; color: #FFF; margin-bottom: 0.25rem;">Mutz Perempuan</h3>
+                <div class="value count-up" data-target="<?= (int)$t_p ?>" style="font-weight: 900; font-size: 1.8rem;"><?= number_format((int)$t_p, 0, ',', '.') ?></div>
             </div>
-            <div class="card fade-up delay-4" style="background-color: #FFE600; border: 3px solid #000; box-shadow: 6px 6px 0px #000; color: #000;">
-                <h3 style="font-weight: 800; font-size: 1.1rem;">Total (Pcs)</h3>
-                <div class="value count-up" data-target="<?= (int)$t_all ?>" style="font-weight: 900;"><?= number_format((int)$t_all, 0, ',', '.') ?></div>
+            <div class="card fade-up delay-4" style="background-color: #FFE600; border: 3px solid #000; box-shadow: 4px 4px 0px #000; color: #000; padding: 1rem;">
+                <h3 style="font-weight: 800; font-size: 0.95rem; margin-bottom: 0.25rem;">Total (Pcs)</h3>
+                <div class="value count-up" data-target="<?= (int)$t_all ?>" style="font-weight: 900; font-size: 1.8rem;"><?= number_format((int)$t_all, 0, ',', '.') ?></div>
             </div>
-            <div class="card fade-up delay-5" style="background-color: #B4A0FF; border: 3px solid #000; box-shadow: 6px 6px 0px #000; color: #000;">
-                <h3 style="font-weight: 800; font-size: 1.1rem;">Tagihan (Rp)</h3>
-                <div class="value" style="font-weight: 900;">Rp <span class="count-up-money" data-target="<?= (float)$t_tagihan ?>"><?= number_format((float)$t_tagihan, 0, ',', '.') ?></span></div>
+            <div class="card fade-up delay-5" style="background-color: #B4A0FF; border: 3px solid #000; box-shadow: 4px 4px 0px #000; color: #000; padding: 1rem;">
+                <h3 style="font-weight: 800; font-size: 0.95rem; margin-bottom: 0.25rem;">Tagihan (Rp)</h3>
+                <div class="value" style="font-weight: 900; font-size: 1.5rem; white-space: nowrap;">Rp <span class="count-up-money" data-target="<?= (float)$t_tagihan ?>"><?= number_format((float)$t_tagihan, 0, ',', '.') ?></span></div>
             </div>
         </div>
         
@@ -476,8 +476,8 @@ if ($q_all_orders) {
         </div>
 
         <!-- Modal Detail Rincian Pesanan per SKPD -->
-        <div id="modalDetailSkpd" class="modal-skpd-overlay" style="display: none;" onclick="if(event.target===this) window.closeSkpdModal();">
-            <div class="modal-skpd-content" style="border: 4px solid #000; box-shadow: 8px 8px 0px #000; border-radius: 0; background: #fff;">
+        <div id="modalDetailSkpd" class="modal-skpd-overlay" style="display: none; position: fixed; inset: 0; z-index: 100000; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 20px;" onclick="if(event.target===this) window.closeSkpdModal();">
+            <div class="modal-skpd-content" style="border: 4px solid #000; box-shadow: 8px 8px 0px #000; border-radius: 0; background: #fff; width: 100%; max-width: 1000px; max-height: 90vh; display: flex; flex-direction: column; margin: auto;">
                 <!-- Modal Header -->
                 <div style="padding: 1.25rem 1.5rem; border-bottom: 4px solid #000; display: flex; justify-content: space-between; align-items: flex-start; background: #FEF08A;">
                     <div>
@@ -549,6 +549,9 @@ if ($q_all_orders) {
 
             window.openSkpdFromButton = function(btn) {
                 if (!btn) return;
+                
+                if (window.startBrutalLoader) window.startBrutalLoader();
+
                 const skpdName = btn.getAttribute('data-skpd') || '';
                 const skpdId = btn.getAttribute('data-skpd-id') || '0';
                 const status = btn.getAttribute('data-status') || '-';
@@ -560,7 +563,10 @@ if ($q_all_orders) {
                 const totalQty = btn.getAttribute('data-total-qty') || '0';
                 const totalRp = btn.getAttribute('data-total-rp') || 'Rp 0';
                 
-                window.openSkpdModal(skpdName, skpdId, status, statusColor, statusBg, statusAmbil, statusAmbilColor, statusAmbilBg, totalQty, totalRp);
+                setTimeout(() => {
+                    window.openSkpdModal(skpdName, skpdId, status, statusColor, statusBg, statusAmbil, statusAmbilColor, statusAmbilBg, totalQty, totalRp);
+                    if (window.endBrutalLoader) window.endBrutalLoader();
+                }, 400); // Simulate network latency for brutal loader effect
             };
 
             window.openSkpdModal = function(skpdName, skpdId, status, statusColor, statusBg, statusAmbil, statusAmbilColor, statusAmbilBg, totalQty, totalRp) {
