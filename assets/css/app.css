@@ -238,7 +238,7 @@ h1 {
     padding: 2rem;
     border-radius: var(--border-radius);
     border: var(--brutal-border);
-    box-shadow: var(--shadow);
+    box-shadow: 4px 4px 0px #000;
     margin-bottom: 2rem;
 }
 
@@ -414,7 +414,7 @@ button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.sp
 /* SKPD Card Modern Layout */
 .skpd-card {
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    border: 1px solid var(--gray-light);
+    border: 2px solid #000;
     display: flex;
     flex-direction: column;
 }
@@ -561,7 +561,7 @@ tr:hover {
 
 .alert {
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: 4px;
     margin-bottom: 1.5rem;
     font-weight: 500;
 }
@@ -615,7 +615,7 @@ tr:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
+    border-radius: 4px;
     transition: background-color 0.2s;
 }
 
@@ -750,8 +750,8 @@ tr:hover {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         margin-top: 0.5rem;
-        border-radius: 8px;
-        border: 1px solid var(--gray-light);
+        border-radius: 4px;
+        border: 2px solid #000;
     }
 
     table {
@@ -981,7 +981,7 @@ tr:hover {
 }
 
 [data-theme="dark"] .swal2-popup {
-    border: 1px solid var(--gray-light);
+    border: 2px solid #000;
     box-shadow: 0 15px 35px rgba(0,0,0,0.4);
 }
 
@@ -1016,8 +1016,8 @@ tr:hover {
     align-items: center;
     gap: 10px;
     background: var(--white);
-    border: 1px solid var(--gray-light);
-    border-radius: 8px;
+    border: 2px solid #000;
+    border-radius: 4px;
     padding: 9px 16px;
     cursor: pointer;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
@@ -1044,7 +1044,7 @@ tr:hover {
 .header-search-bar kbd {
     background: var(--light);
     color: var(--gray);
-    border: 1px solid var(--gray-light);
+    border: 2px solid #000;
     border-radius: 6px;
     padding: 2px 6px;
     font-size: 0.725rem;
@@ -1095,7 +1095,7 @@ tr:hover {
     max-height: 80vh;
     transform: scale(0.97) translateY(-8px);
     transition: transform 0.15s ease;
-    border: 1px solid var(--gray-light);
+    border: 2px solid #000;
 }
 .spotlight-overlay.active .spotlight-dialog {
     transform: scale(1) translateY(0);
@@ -1213,7 +1213,7 @@ tr:hover {
 .spotlight-item-icon {
     width: 34px;
     height: 34px;
-    border-radius: 8px;
+    border-radius: 4px;
     background: var(--light);
     display: flex;
     align-items: center;
@@ -1279,7 +1279,7 @@ tr:hover {
 }
 .spotlight-shortcuts kbd {
     background: var(--white);
-    border: 1px solid var(--gray-light);
+    border: 2px solid #000;
     border-radius: 4px;
     padding: 1px 5px;
     font-size: 0.7rem;
@@ -1303,10 +1303,10 @@ tr:hover {
    ========================================================= */
 .skpd-card {
     padding: 1.25rem;
-    border-radius: 8px;
+    border-radius: 4px;
     background: var(--white);
-    border: 1px solid var(--gray-light);
-    box-shadow: var(--shadow);
+    border: 2px solid #000;
+    box-shadow: 4px 4px 0px #000;
     transition: box-shadow 0.15s ease, border-color 0.15s ease;
     display: flex;
     flex-direction: column;
@@ -1421,7 +1421,7 @@ tr:hover {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    border: 1px solid var(--gray-light);
+    border: 2px solid #000;
     margin: auto !important;
     animation: modalPopCenter 0.18s ease forwards;
     position: relative;
@@ -1529,7 +1529,7 @@ textarea:focus-visible {
     background: var(--white);
     border-radius: var(--border-radius);
     padding: 1.5rem;
-    box-shadow: var(--shadow);
+    box-shadow: 4px 4px 0px #000;
     border: var(--brutal-border);
     display: flex;
     flex-direction: column;

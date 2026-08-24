@@ -258,38 +258,38 @@ if ($q_all_orders) {
             </div>
         </div>
 
-        <div class="card-grid">
-            <div class="card fade-up delay-1" style="background-color: #00E5FF;">
-                <h3>Total SKPD</h3>
-                <div class="value count-up" data-target="<?= (int)$t_skpd ?>"><?= number_format((int)$t_skpd, 0, ',', '.') ?></div>
+        <div class="dashboard-stats" style="margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+            <div class="card fade-up delay-1" style="background-color: #00E5FF; border: 3px solid #000; box-shadow: 6px 6px 0px #000; color: #000;">
+                <h3 style="font-weight: 800; font-size: 1.1rem;">Mutz Laki-laki</h3>
+                <div class="value count-up" data-target="<?= (int)$t_l ?>" style="font-weight: 900;"><?= number_format((int)$t_l, 0, ',', '.') ?></div>
             </div>
-            <div class="card fade-up delay-2" style="background-color: #39FF14;">
-                <h3>Mutz Laki-laki</h3>
-                <div class="value count-up" data-target="<?= (int)$t_l ?>"><?= number_format((int)$t_l, 0, ',', '.') ?></div>
+            <div class="card fade-up delay-2" style="background-color: #4ADE80; border: 3px solid #000; box-shadow: 6px 6px 0px #000; color: #000;">
+                <h3 style="font-weight: 800; font-size: 1.1rem;">Kepala SKPD</h3>
+                <div class="value count-up" data-target="<?= (int)$t_k ?>" style="font-weight: 900;"><?= number_format((int)$t_k, 0, ',', '.') ?></div>
             </div>
-            <div class="card fade-up delay-3" style="background-color: #FF007F;">
-                <h3>Mutz Perempuan</h3>
-                <div class="value count-up" data-target="<?= (int)$t_p ?>"><?= number_format((int)$t_p, 0, ',', '.') ?></div>
+            <div class="card fade-up delay-3" style="background-color: #FF007F; border: 3px solid #000; box-shadow: 6px 6px 0px #000; color: #FFF;">
+                <h3 style="font-weight: 800; font-size: 1.1rem; color: #FFF;">Mutz Perempuan</h3>
+                <div class="value count-up" data-target="<?= (int)$t_p ?>" style="font-weight: 900;"><?= number_format((int)$t_p, 0, ',', '.') ?></div>
             </div>
-            <div class="card fade-up delay-4" style="background-color: #FFE600;">
-                <h3>Total (Pcs)</h3>
-                <div class="value count-up" data-target="<?= (int)$t_all ?>"><?= number_format((int)$t_all, 0, ',', '.') ?></div>
+            <div class="card fade-up delay-4" style="background-color: #FFE600; border: 3px solid #000; box-shadow: 6px 6px 0px #000; color: #000;">
+                <h3 style="font-weight: 800; font-size: 1.1rem;">Total (Pcs)</h3>
+                <div class="value count-up" data-target="<?= (int)$t_all ?>" style="font-weight: 900;"><?= number_format((int)$t_all, 0, ',', '.') ?></div>
             </div>
-            <div class="card fade-up delay-5" style="background-color: #B4A0FF;">
-                <h3>Tagihan (Rp)</h3>
-                <div class="value">Rp <span class="count-up-money" data-target="<?= (float)$t_tagihan ?>"><?= number_format((float)$t_tagihan, 0, ',', '.') ?></span></div>
+            <div class="card fade-up delay-5" style="background-color: #B4A0FF; border: 3px solid #000; box-shadow: 6px 6px 0px #000; color: #000;">
+                <h3 style="font-weight: 800; font-size: 1.1rem;">Tagihan (Rp)</h3>
+                <div class="value" style="font-weight: 900;">Rp <span class="count-up-money" data-target="<?= (float)$t_tagihan ?>"><?= number_format((float)$t_tagihan, 0, ',', '.') ?></span></div>
             </div>
         </div>
         
-        <div class="panel fade-up">
-            <h2>Selamat Datang di E-MutZ KORPRI</h2>
-            <p>Gunakan menu di samping untuk mengelola Data SKPD, Menginput Pesanan, dan Melihat Rekapitulasi.</p>
+        <div class="panel fade-up" style="border: 3px solid #000; box-shadow: 6px 6px 0px #000; border-radius: 8px; margin-top: 1.5rem;">
+            <h2 style="font-weight: 900; text-transform: uppercase;">Selamat Datang di E-MutZ KORPRI</h2>
+            <p style="font-weight: 600; font-size: 1.05rem;">Gunakan menu di samping untuk mengelola Data SKPD, Menginput Pesanan, dan Melihat Rekapitulasi.</p>
         </div>
 
-        <div class="panel fade-up delay-1">
+        <div class="panel fade-up delay-1" style="border: 3px solid #000; box-shadow: 6px 6px 0px #000; border-radius: 8px; margin-top: 1.5rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                <h2 style="margin-bottom: 0;">Statistik Pemesanan Mutz</h2>
-                <button id="toggleChartBtn" onclick="toggleCharts()" class="btn btn-secondary" style="display: flex; align-items: center; gap: 6px; padding: 0.35rem 0.8rem; font-size: 0.8rem; border-radius: 6px; font-weight: 600;">
+                <h2 style="margin-bottom: 0; font-weight: 900; text-transform: uppercase;">Statistik Pemesanan Mutz</h2>
+                <button id="toggleChartBtn" onclick="toggleCharts()" class="btn btn-secondary" style="display: flex; align-items: center; gap: 6px; padding: 0.35rem 0.8rem; font-size: 0.8rem; border-radius: 4px; font-weight: 800; border: 2px solid #000; box-shadow: 2px 2px 0px #000; background: #FFF; color: #000;">
                     <svg id="chartIconOff" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
                     <svg id="chartIconOn" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     <span id="chartBtnText">Sembunyikan Grafik</span>
@@ -308,32 +308,32 @@ if ($q_all_orders) {
             </div>
         </div>
 
-        <div class="panel fade-up delay-2">
-            <h2>Rincian Pesanan per SKPD</h2>
+        <div class="panel fade-up delay-2" style="border: 3px solid #000; box-shadow: 6px 6px 0px #000; border-radius: 8px; margin-top: 1.5rem; background: #FFF;">
+            <h2 style="font-weight: 900; text-transform: uppercase; border-bottom: 4px solid #000; padding-bottom: 0.5rem;">Rincian Pesanan per SKPD</h2>
             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; margin-top: 1.5rem;">
                 <?php if(!empty($rincian_skpd)): ?>
                     <?php foreach($rincian_skpd as $nama => $details): ?>
                         <?php 
                             $status = isset($status_skpd[$nama]) ? $status_skpd[$nama] : '-';
-                            $status_bg = 'rgba(107, 114, 128, 0.1)';
-                            $status_color = 'var(--gray)';
+                            $status_bg = '#E5E7EB';
+                            $status_color = '#000';
                             if ($status == 'Lunas') {
-                                $status_bg = 'rgba(21, 128, 61, 0.1)'; $status_color = '#15803D';
+                                $status_bg = '#4ADE80';
                             } elseif ($status == 'Sebagian Lunas') {
-                                $status_bg = 'rgba(217, 119, 6, 0.1)'; $status_color = '#D97706';
-                            } elseif ($status == 'Belum Lunas') {
-                                $status_bg = 'rgba(220, 38, 38, 0.1)'; $status_color = '#DC2626';
+                                $status_bg = '#FDE047';
+                            } else {
+                                $status_bg = '#F87171';
                             }
 
-                            $status_ambil = isset($status_ambil_skpd[$nama]) ? $status_ambil_skpd[$nama] : 'Belum Diambil';
-                            $ambil_bg = 'rgba(107, 114, 128, 0.1)';
-                            $ambil_color = 'var(--gray)';
+                            $status_ambil = isset($status_ambil_skpd[$nama]) ? $status_ambil_skpd[$nama] : '-';
+                            $ambil_bg = '#E5E7EB';
+                            $ambil_color = '#000';
                             if ($status_ambil == 'Sudah Diambil') {
-                                $ambil_bg = 'rgba(21, 128, 61, 0.1)'; $ambil_color = '#15803D';
+                                $ambil_bg = '#6EE7B7';
                             } elseif ($status_ambil == 'Sebagian Diambil') {
-                                $ambil_bg = 'rgba(37, 99, 235, 0.1)'; $ambil_color = '#2563EB';
+                                $ambil_bg = '#93C5FD';
                             } else {
-                                $ambil_bg = 'rgba(107, 114, 128, 0.1)'; $ambil_color = 'var(--gray)';
+                                $ambil_bg = '#E5E7EB';
                             }
                             $current_skpd_id = $skpd_id_map[$nama] ?? 0;
 
@@ -380,15 +380,15 @@ if ($q_all_orders) {
                                     <span>Total Pesanan:</span>
                                     <span style="color: var(--primary);"><?= $total_item ?> buah</span>
                                 </li>
-                                <li style="display: flex; justify-content: space-between; margin-top: 6px; font-weight: 800; color: #B45309; background: rgba(245, 158, 11, 0.12); padding: 6px 10px; border-radius: 6px; font-size: 0.95rem;">
+                                <li style="display: flex; justify-content: space-between; margin-top: 6px; font-weight: 800; color: #000; background: #FEF08A; padding: 6px 10px; border-radius: 4px; border: 2px solid #000; box-shadow: 2px 2px 0px #000; font-size: 0.95rem;">
                                     <span>Total Tagihan:</span>
                                     <span>Rp <?= number_format($total_rupiah, 0, ',', '.') ?></span>
                                 </li>
-                                <li style="display: flex; justify-content: space-between; margin-top: 6px; font-weight: 700; color: <?= $status_color ?>; background: <?= $status_bg ?>; padding: 6px 10px; border-radius: 6px; font-size: 0.85rem;">
+                                <li style="display: flex; justify-content: space-between; margin-top: 6px; font-weight: 800; color: #000; background: <?= $status_bg ?>; padding: 6px 10px; border-radius: 4px; border: 2px solid #000; box-shadow: 2px 2px 0px #000; font-size: 0.85rem;">
                                     <span>Status Bayar:</span>
                                     <span><?= $status ?></span>
                                 </li>
-                                <li style="display: flex; justify-content: space-between; margin-top: 6px; font-weight: 700; color: <?= $ambil_color ?>; background: <?= $ambil_bg ?>; padding: 6px 10px; border-radius: 6px; font-size: 0.85rem;">
+                                <li style="display: flex; justify-content: space-between; margin-top: 6px; font-weight: 800; color: #000; background: <?= $ambil_bg ?>; padding: 6px 10px; border-radius: 4px; border: 2px solid #000; box-shadow: 2px 2px 0px #000; font-size: 0.85rem;">
                                     <span>Status Pengambilan:</span>
                                     <span><?= $status_ambil ?></span>
                                 </li>
@@ -409,13 +409,14 @@ if ($q_all_orders) {
                                         data-skpd="<?= htmlspecialchars($nama, ENT_QUOTES, 'UTF-8') ?>" 
                                         data-skpd-id="<?= (int)$current_skpd_id ?>"
                                         data-status="<?= htmlspecialchars($status, ENT_QUOTES, 'UTF-8') ?>"
-                                        data-status-color="<?= $status_color ?>"
+                                        data-status-color="#000"
                                         data-status-bg="<?= $status_bg ?>"
                                         data-status-ambil="<?= htmlspecialchars($status_ambil, ENT_QUOTES, 'UTF-8') ?>"
-                                        data-status-ambil-color="<?= $ambil_color ?>"
+                                        data-status-ambil-color="#000"
                                         data-status-ambil-bg="<?= $ambil_bg ?>"
                                         data-total-qty="<?= (int)$total_item ?>"
-                                        data-total-rp="Rp <?= number_format($total_rupiah, 0, ',', '.') ?>">
+                                        data-total-rp="Rp <?= number_format($total_rupiah, 0, ',', '.') ?>"
+                                        style="border: 2px solid #000; box-shadow: 2px 2px 0px #000; border-radius: 4px; font-weight: 800;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                     Lihat Detail Pesanan
                                 </button>
@@ -430,7 +431,7 @@ if ($q_all_orders) {
                                             data-status-bayar="<?= $status ?>" 
                                             data-status-ambil="<?= $status_ambil ?>" 
                                             title="Kirim Notifikasi WhatsApp"
-                                            style="padding: 7px 8px; font-size: 0.8rem;">
+                                            style="padding: 7px 8px; font-size: 0.8rem; border: 2px solid #000; box-shadow: 2px 2px 0px #000; border-radius: 4px; font-weight: 800;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg>
                                         Notif WA
                                     </button>
@@ -442,7 +443,8 @@ if ($q_all_orders) {
                                            data-confirm-text="Tandai SEMUA pesanan dari '<?= htmlspecialchars($nama, ENT_QUOTES) ?>' sebagai LUNAS?" 
                                            data-confirm-btn="Ya, Lunas" 
                                            data-confirm-color="#D97706" 
-                                           title="Tandai Semua Lunas">
+                                           title="Tandai Semua Lunas"
+                                           style="border: 2px solid #000; box-shadow: 2px 2px 0px #000; border-radius: 4px; font-weight: 800; text-align: center; justify-content: center; background: #FDE047; color: #000;">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                                             Set Lunas
                                         </a>
@@ -475,24 +477,24 @@ if ($q_all_orders) {
 
         <!-- Modal Detail Rincian Pesanan per SKPD -->
         <div id="modalDetailSkpd" class="modal-skpd-overlay" style="display: none;" onclick="if(event.target===this) window.closeSkpdModal();">
-            <div class="modal-skpd-content">
+            <div class="modal-skpd-content" style="border: 4px solid #000; box-shadow: 8px 8px 0px #000; border-radius: 0; background: #fff;">
                 <!-- Modal Header -->
-                <div style="padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--gray-light); display: flex; justify-content: space-between; align-items: flex-start; background: var(--light);">
+                <div style="padding: 1.25rem 1.5rem; border-bottom: 4px solid #000; display: flex; justify-content: space-between; align-items: flex-start; background: #FEF08A;">
                     <div>
-                        <h3 id="modalSkpdName" style="margin: 0; color: var(--dark); font-size: 1.2rem; font-weight: 700;">-</h3>
+                        <h3 id="modalSkpdName" style="margin: 0; color: #000; font-size: 1.4rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">-</h3>
                         <div style="display: flex; gap: 8px; margin-top: 8px; font-size: 0.825rem; flex-wrap: wrap;" id="modalSkpdBadges">
                             <!-- Badges -->
                         </div>
                     </div>
-                    <button id="closeModalSkpd" type="button" onclick="window.closeSkpdModal()" title="Tutup" style="background: transparent; border: none; font-size: 1.6rem; line-height: 1; color: var(--gray); cursor: pointer; padding: 4px 8px; border-radius: 6px; transition: color 0.2s;">&times;</button>
+                    <button id="closeModalSkpd" type="button" onclick="window.closeSkpdModal()" title="Tutup" style="background: #F87171; border: 2px solid #000; font-size: 1.4rem; line-height: 1; color: #000; font-weight: 900; cursor: pointer; padding: 4px 12px; border-radius: 0; box-shadow: 2px 2px 0px #000; transition: transform 0.1s;">&times;</button>
                 </div>
 
                 <!-- Modal Body Table -->
-                <div style="padding: 1.25rem 1.5rem; overflow-y: auto; flex: 1;">
-                    <div class="table-responsive" style="margin-top: 0; border: 1px solid var(--gray-light); border-radius: 6px;">
+                <div style="padding: 1.25rem 1.5rem; overflow-y: auto; flex: 1; background: #fff;">
+                    <div class="table-responsive" style="margin-top: 0; border: 2px solid #000; border-radius: 0;">
                         <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem; margin-top: 0;">
                             <thead>
-                                <tr style="background: var(--light);">
+                                <tr style="background: #E5E7EB; border-bottom: 2px solid #000;">
                                     <th style="padding: 10px 12px; width: 40px; text-align: center;">No</th>
                                     <th style="padding: 10px 12px;">Nama Pemesan</th>
                                     <th style="padding: 10px 12px; text-align: center;">Gender</th>
@@ -518,19 +520,19 @@ if ($q_all_orders) {
                         <!-- Summary info -->
                     </div>
                     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                        <button id="btnModalWa" type="button" class="btn-wa btn-wa-notify" style="padding: 7px 14px; font-size: 0.825rem;">
+                        <button id="btnModalWa" type="button" class="btn-wa btn-wa-notify" style="padding: 7px 14px; font-size: 0.825rem; border: 2px solid #000; box-shadow: 2px 2px 0px #000; font-weight: 800; border-radius: 4px; background: #FFF;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg>
                             Kirim WA
                         </button>
-                        <a id="btnModalLunasSemua" href="#" onclick="window.closeSkpdModal && window.closeSkpdModal()" class="btn-card-amber btn-confirm" data-confirm-title="Konfirmasi Pembayaran Lunas" data-confirm-text="Tandai SEMUA pesanan SKPD ini sebagai LUNAS?" data-confirm-btn="Ya, Sudah Lunas" data-confirm-color="#D97706" style="width: auto; padding: 7px 14px;">
+                        <a id="btnModalLunasSemua" href="#" onclick="window.closeSkpdModal && window.closeSkpdModal()" class="btn-card-amber btn-confirm" data-confirm-title="Konfirmasi Pembayaran Lunas" data-confirm-text="Tandai SEMUA pesanan SKPD ini sebagai LUNAS?" data-confirm-btn="Ya, Sudah Lunas" data-confirm-color="#D97706" style="width: auto; padding: 7px 14px; border: 2px solid #000; box-shadow: 2px 2px 0px #000; font-weight: 800; border-radius: 4px; background: #FDE047; color: #000;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                             Tandai Semua Lunas
                         </a>
-                        <a id="btnModalAmbilSemua" href="#" onclick="window.closeSkpdModal && window.closeSkpdModal()" class="btn-card-emerald btn-confirm" data-confirm-title="Konfirmasi Pengambilan Barang" data-confirm-text="Tandai SEMUA pesanan SKPD ini sebagai SUDAH DIAMBIL?" data-confirm-btn="Ya, Sudah Diambil" data-confirm-color="#10B981" style="width: auto; padding: 7px 14px;">
+                        <a id="btnModalAmbilSemua" href="#" onclick="window.closeSkpdModal && window.closeSkpdModal()" class="btn-card-emerald btn-confirm" data-confirm-title="Konfirmasi Pengambilan Barang" data-confirm-text="Tandai SEMUA pesanan SKPD ini sebagai SUDAH DIAMBIL?" data-confirm-btn="Ya, Sudah Diambil" data-confirm-color="#10B981" style="width: auto; padding: 7px 14px; border: 2px solid #000; box-shadow: 2px 2px 0px #000; font-weight: 800; border-radius: 4px; background: #6EE7B7; color: #000;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             Tandai Semua Sudah Diambil
                         </a>
-                        <a id="btnFilterKePesanan" href="#" onclick="window.closeSkpdModal && window.closeSkpdModal()" class="btn-card-primary" style="width: auto; padding: 7px 14px; text-decoration: none;">
+                        <a id="btnFilterKePesanan" href="#" onclick="window.closeSkpdModal && window.closeSkpdModal()" class="btn-card-primary" style="width: auto; padding: 7px 14px; text-decoration: none; border: 2px solid #000; box-shadow: 2px 2px 0px #000; font-weight: 800; border-radius: 4px; background: #FFF; color: #000;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                             Kelola di Halaman Pesanan
                         </a>
@@ -582,10 +584,10 @@ if ($q_all_orders) {
                 // Set Badges
                 if (modalSkpdBadges) {
                     modalSkpdBadges.innerHTML = `
-                        <span style="background: rgba(67, 56, 202, 0.1); color: var(--primary); padding: 4px 8px; border-radius: 4px; font-weight: 600;">Total: ${totalQty || 0} buah</span>
-                        <span style="background: rgba(180, 83, 9, 0.1); color: #B45309; padding: 4px 8px; border-radius: 4px; font-weight: 600;">${totalRp || 'Rp 0'}</span>
-                        <span style="background: ${statusBg || 'rgba(107, 114, 128, 0.1)'}; color: ${statusColor || 'var(--gray)'}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Bayar: ${status || '-'}</span>
-                        <span style="background: ${statusAmbilBg || 'rgba(107, 114, 128, 0.1)'}; color: ${statusAmbilColor || 'var(--gray)'}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Ambil: ${statusAmbil || '-'}</span>
+                        <span style="background: #E5E7EB; color: #000; border: 2px solid #000; box-shadow: 2px 2px 0px #000; padding: 4px 8px; border-radius: 0; font-weight: 800; font-family: monospace;">Total: ${totalQty || 0} buah</span>
+                        <span style="background: #FEF08A; color: #000; border: 2px solid #000; box-shadow: 2px 2px 0px #000; padding: 4px 8px; border-radius: 0; font-weight: 800; font-family: monospace;">${totalRp || 'Rp 0'}</span>
+                        <span style="background: ${statusBg || '#E5E7EB'}; color: #000; border: 2px solid #000; box-shadow: 2px 2px 0px #000; padding: 4px 8px; border-radius: 0; font-weight: 800; font-family: monospace;">Bayar: ${status || '-'}</span>
+                        <span style="background: ${statusAmbilBg || '#E5E7EB'}; color: #000; border: 2px solid #000; box-shadow: 2px 2px 0px #000; padding: 4px 8px; border-radius: 0; font-weight: 800; font-family: monospace;">Ambil: ${statusAmbil || '-'}</span>
                     `;
                 }
                 
@@ -652,13 +654,12 @@ if ($q_all_orders) {
                         let html = '';
                         items.forEach((item, index) => {
                             const genderColor = item.jenis_kelamin === 'Laki-laki' ? 'var(--primary)' : '#EC4899';
-                            const bayarBg = item.status_bayar === 'Lunas' ? 'rgba(21, 128, 61, 0.1)' : 'rgba(220, 38, 38, 0.1)';
-                            const bayarColor = item.status_bayar === 'Lunas' ? '#15803D' : '#DC2626';
+                            const bayarBg = item.status_bayar === 'Lunas' ? '#4ADE80' : '#F87171';
                             
-                            let ambilBg = 'rgba(107, 114, 128, 0.1)', ambilColor = 'var(--gray)';
-                            if (item.status_pengambilan === 'Sudah Diambil') { ambilBg = 'rgba(21, 128, 61, 0.1)'; ambilColor = '#15803D'; }
-                            else if (item.status_pengambilan === 'Siap Diambil') { ambilBg = 'rgba(67, 56, 202, 0.1)'; ambilColor = 'var(--primary)'; }
-                            else if (item.status_pengambilan === 'Sedang Dibuat') { ambilBg = 'rgba(217, 119, 6, 0.1)'; ambilColor = '#D97706'; }
+                            let ambilBg = '#E5E7EB';
+                            if (item.status_pengambilan === 'Sudah Diambil') { ambilBg = '#6EE7B7'; }
+                            else if (item.status_pengambilan === 'Siap Diambil') { ambilBg = '#FDE047'; }
+                            else if (item.status_pengambilan === 'Sedang Dibuat') { ambilBg = '#93C5FD'; }
 
                             const subtotalFormatted = 'Rp ' + parseInt(item.subtotal || 0).toLocaleString('id-ID');
                             const pemesan = item.nama_pemesan && item.nama_pemesan.trim() !== '' ? item.nama_pemesan : '-';
@@ -666,24 +667,23 @@ if ($q_all_orders) {
                             const mutzLabel = item.jenis_mutz || 'Biasa';
 
                             html += `
-                                <tr style="border-bottom: 1px solid var(--gray-light);">
-                                    <td style="padding: 10px 12px; text-align: center; color: var(--gray);">${index + 1}</td>
-                                    <td style="padding: 10px 12px; font-weight: 600; color: var(--dark);">${pemesan}</td>
-                                    <td style="padding: 10px 12px; text-align: center;">
-                                        <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background-color:${genderColor}; margin-right:4px;"></span>
+                                <tr style="border-bottom: 2px solid #000;">
+                                    <td style="padding: 10px 12px; text-align: center; color: #000; font-weight: 800;">${index + 1}</td>
+                                    <td style="padding: 10px 12px; font-weight: 900; color: #000;">${pemesan}</td>
+                                    <td style="padding: 10px 12px; text-align: center; font-weight: 800; color: #000;">
                                         ${item.jenis_kelamin}
                                     </td>
-                                    <td style="padding: 10px 12px; text-align: center;"><span style="font-size:0.8rem; background:var(--light); padding:2px 6px; border-radius:4px;">${mutzLabel}</span></td>
-                                    <td style="padding: 10px 12px; text-align: center; font-weight: 600;">${item.ukuran}</td>
-                                    <td style="padding: 10px 12px; text-align: center; font-weight: 600;">${item.jumlah}</td>
-                                    <td style="padding: 10px 12px; text-align: right; font-weight: 600; color:#B45309;">${subtotalFormatted}</td>
+                                    <td style="padding: 10px 12px; text-align: center;"><span style="font-size:0.8rem; background:#E5E7EB; border: 2px solid #000; padding:2px 6px; font-weight: 800; box-shadow: 2px 2px 0px #000;">${mutzLabel}</span></td>
+                                    <td style="padding: 10px 12px; text-align: center; font-weight: 900; font-size: 1.1rem; color: #000;">${item.ukuran}</td>
+                                    <td style="padding: 10px 12px; text-align: center; font-weight: 900; font-size: 1.1rem; color: #000;">${item.jumlah}</td>
+                                    <td style="padding: 10px 12px; text-align: right; font-weight: 900; font-family: monospace; font-size: 0.95rem; color:#000;">${subtotalFormatted}</td>
                                     <td style="padding: 10px 12px; text-align: center;">
-                                        <span style="background:${bayarBg}; color:${bayarColor}; padding:3px 8px; border-radius:12px; font-size:0.75rem; font-weight:700;">${item.status_bayar}</span>
+                                        <span style="background:${bayarBg}; color:#000; padding:3px 8px; border:2px solid #000; box-shadow:2px 2px 0px #000; font-size:0.75rem; font-weight:900;">${item.status_bayar}</span>
                                     </td>
                                     <td style="padding: 10px 12px; text-align: center;">
-                                        <span style="background:${ambilBg}; color:${ambilColor}; padding:3px 8px; border-radius:12px; font-size:0.75rem; font-weight:600;">${item.status_pengambilan}</span>
+                                        <span style="background:${ambilBg}; color:#000; padding:3px 8px; border:2px solid #000; box-shadow:2px 2px 0px #000; font-size:0.75rem; font-weight:900;">${item.status_pengambilan}</span>
                                     </td>
-                                    <td style="padding: 10px 12px; font-size:0.8rem; color:var(--gray);">${catatan}</td>
+                                    <td style="padding: 10px 12px; font-size:0.8rem; color:#000; font-weight: 600;">${catatan}</td>
                                 </tr>
                             `;
                         });
