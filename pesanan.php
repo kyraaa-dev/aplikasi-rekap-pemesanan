@@ -389,7 +389,9 @@ $pesanans = $conn->query("
                                     $harga = $row['jenis_mutz'] == 'Kepala SKPD' ? HARGA_KEPALA : HARGA_BIASA;
                                     $total = $harga * $row['jumlah'];
                                 ?>
-                                <div style="font-weight: bold; color: var(--dark);">Rp <?= number_format($total, 0, ',', '.') ?></div>
+                                <div style="display: inline-block; background: #FFF; padding: 4px 8px; border: 2px solid #000; border-radius: 4px; font-weight: 800; font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; color: #000; box-shadow: 2px 2px 0px #000; white-space: nowrap;">
+                                    Rp <?= number_format($total, 0, ',', '.') ?>
+                                </div>
                             </td>
                             <td>
                                 <?php if($row['status_bayar'] == 'Lunas'): ?>
