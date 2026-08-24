@@ -152,6 +152,9 @@ $pesanans = $conn->query("
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Input Pesanan Mutz - E-MutZ KORPRI</title>
@@ -162,7 +165,7 @@ $pesanans = $conn->query("
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="E-MutZ KORPRI">
     <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
-    <link rel="stylesheet" href="assets/css/app.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="assets/css/app.css?v=<?= filemtime("assets/css/app.css") ?>">
     <link rel="icon" type="image/png" href="assets/images/logo.png">
 </head>
 <body>
@@ -585,6 +588,6 @@ $pesanans = $conn->query("
     }
     </script>
     </main>
-    <script src="assets/js/script.js?v=<?= time() ?>"></script>
+    <script src="assets/js/script.js?v=<?= filemtime("assets/css/app.css") ?>"></script>
 </body>
 </html>

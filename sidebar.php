@@ -1,4 +1,4 @@
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 <style>
 /* Menu Hover */
 .nav-links a {
@@ -681,8 +681,8 @@
 </div>
 
 <!-- SweetAlert2 & Instant Navigation Engine -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="assets/js/instant-nav.js?v=<?= time() ?>"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+<script src="assets/js/instant-nav.js?v=<?= filemtime("assets/js/instant-nav.js") ?>"></script>
 <script>
 // Global Toast Configuration for Premium UI
 window.Toast = Swal.mixin({
