@@ -96,6 +96,8 @@ if (isset($_GET['lunas'])) {
 if (isset($_GET['update_status'])) {
     $id = (int)$_GET['update_status'];
     $status = $_GET['status'] ?? '';
+    $is_ajax = isset($_GET['ajax']) ? true : false;
+    
     $valid_statuses = ['Menunggu Diproses', 'Sedang Dibuat', 'Siap Diambil', 'Sudah Diambil'];
     if (in_array($status, $valid_statuses)) {
         $stmt_status = $conn->prepare("UPDATE pesanan SET status_pengambilan = ? WHERE id = ?");
@@ -104,7 +106,17 @@ if (isset($_GET['update_status'])) {
             $stmt_status->execute();
             $stmt_status->close();
         }
+        if ($is_ajax) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => true]);
+            exit;
+        }
         header("Location: pesanan.php?notif=status_sukses");
+        exit;
+    }
+    if ($is_ajax) {
+        header('Content-Type: application/json');
+        echo json_encode(['success' => false]);
         exit;
     }
 }
@@ -296,8 +308,8 @@ $pesanans = $conn->query("
         <div class="panel">
             <div class="flex justify-between items-center mb-4" style="flex-wrap: wrap; gap: 10px;">
                 <h2>Daftar Pesanan Mutz</h2>
-                <form method="GET" action="pesanan.php" style="display: flex; gap: 10px; align-items: center; background: transparent; padding: 10px 15px; border-radius: 12px; border: var(--brutal-border);">
-                    <select name="filter_skpd" style="padding: 0.4rem; border-radius: 0px; border: var(--brutal-border); outline: none; background: var(--white); color: var(--dark); box-shadow: 2px 2px 0px #000;">
+                <form method="GET" action="pesanan.php" id="filterForm" style="display: flex; gap: 10px; align-items: center; background: transparent; padding: 10px 15px; border-radius: 12px; border: var(--brutal-border);">
+                    <select name="filter_skpd" onchange="document.getElementById('filterForm').submit()" style="padding: 0.4rem; border-radius: 0px; border: var(--brutal-border); outline: none; background: var(--white); color: var(--dark); box-shadow: 2px 2px 0px #000;">
                         <option value="0">- Semua SKPD -</option>
                         <?php 
                         // Reset pointer SKPD for filter dropdown
@@ -307,19 +319,19 @@ $pesanans = $conn->query("
                             <option value="<?= $s['id'] ?>" <?= $filter_skpd == $s['id'] ? 'selected' : '' ?>><?= htmlspecialchars($s['nama_skpd']) ?></option>
                         <?php endwhile; ?>
                     </select>
-                    <select name="filter_status" style="padding: 0.4rem; border-radius: 0px; border: var(--brutal-border); outline: none; background: var(--white); color: var(--dark); box-shadow: 2px 2px 0px #000;">
+                    <select name="filter_status" onchange="document.getElementById('filterForm').submit()" style="padding: 0.4rem; border-radius: 0px; border: var(--brutal-border); outline: none; background: var(--white); color: var(--dark); box-shadow: 2px 2px 0px #000;">
                         <option value="">- Semua Pembayaran -</option>
                         <option value="Lunas" <?= $filter_status == 'Lunas' ? 'selected' : '' ?>>Lunas</option>
                         <option value="Belum Lunas" <?= $filter_status == 'Belum Lunas' ? 'selected' : '' ?>>Belum Lunas</option>
                     </select>
-                    <select name="filter_ambil" style="padding: 0.4rem; border-radius: 0px; border: var(--brutal-border); outline: none; background: var(--white); color: var(--dark); box-shadow: 2px 2px 0px #000;">
+                    <select name="filter_ambil" onchange="document.getElementById('filterForm').submit()" style="padding: 0.4rem; border-radius: 0px; border: var(--brutal-border); outline: none; background: var(--white); color: var(--dark); box-shadow: 2px 2px 0px #000;">
                         <option value="">- Semua Pengambilan -</option>
                         <option value="Menunggu Diproses" <?= $filter_ambil == 'Menunggu Diproses' ? 'selected' : '' ?>>Menunggu Diproses</option>
                         <option value="Sedang Dibuat" <?= $filter_ambil == 'Sedang Dibuat' ? 'selected' : '' ?>>Sedang Dibuat</option>
                         <option value="Siap Diambil" <?= $filter_ambil == 'Siap Diambil' ? 'selected' : '' ?>>Siap Diambil</option>
                         <option value="Sudah Diambil" <?= $filter_ambil == 'Sudah Diambil' ? 'selected' : '' ?>>Sudah Diambil</option>
                     </select>
-                    <button type="submit" class="btn btn-primary" style="padding: 0.4rem 1rem;">Filter</button>
+                    <!-- <button type="submit" class="btn btn-primary" style="padding: 0.4rem 1rem;">Filter</button> -->
                     <?php if($filter_skpd > 0 || $filter_status != '' || $filter_ambil != ''): ?>
                         <a href="pesanan.php" class="btn btn-secondary" style="padding: 0.4rem 1rem; text-decoration: none;">Reset</a>
                     <?php endif; ?>
@@ -393,8 +405,7 @@ $pesanans = $conn->query("
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <form action="pesanan.php" method="GET" style="margin: 0; display: inline-block;">
-                                    <input type="hidden" name="update_status" value="<?= $row['id'] ?>">
+                                <div style="margin: 0; display: inline-block; width: 100%;">
                                     <?php 
                                         $st = $row['status_pengambilan'];
                                         if($st == 'Menunggu Diproses') {
@@ -407,13 +418,13 @@ $pesanans = $conn->query("
                                             $bg = 'rgba(16, 185, 129, 0.1)'; $color = '#10B981'; $border = 'rgba(16, 185, 129, 0.3)';
                                         }
                                     ?>
-                                    <select name="status" onchange="this.form.submit()" style="width: 100%; padding: 0.35rem 0.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border-radius: 6px; border: 1px solid <?= $border ?>; background-color: <?= $bg ?>; color: <?= $color ?>; cursor: pointer; outline: none; letter-spacing: 0.2px;">
+                                    <select name="status" onchange="updateStatus(<?= $row['id'] ?>, this)" style="width: 100%; padding: 0.35rem 0.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border-radius: 6px; border: 1px solid <?= $border ?>; background-color: <?= $bg ?>; color: <?= $color ?>; cursor: pointer; outline: none; letter-spacing: 0.2px;">
                                         <option value="Menunggu Diproses" <?= $st == 'Menunggu Diproses' ? 'selected' : '' ?>>⏳ Menunggu Diproses</option>
                                         <option value="Sedang Dibuat" <?= $st == 'Sedang Dibuat' ? 'selected' : '' ?>>✂️ Sedang Dibuat</option>
                                         <option value="Siap Diambil" <?= $st == 'Siap Diambil' ? 'selected' : '' ?>>📦 Siap Diambil</option>
                                         <option value="Sudah Diambil" <?= $st == 'Sudah Diambil' ? 'selected' : '' ?>>✅ Sudah Diambil</option>
                                     </select>
-                                </form>
+                                </div>
                             </td>
                             <td><?= htmlspecialchars($row['catatan'] ?? '') ?: '-' ?></td>
                             <td style="font-size: 0.8rem; color: var(--gray); white-space: nowrap;">
@@ -468,5 +479,44 @@ $pesanans = $conn->query("
         </div>
     </main>
     <script src="assets/js/script.js?v=<?= time() ?>"></script>
+    <script>
+    function updateStatus(id, selectElement) {
+        const newStatus = selectElement.value;
+        const originalBg = selectElement.style.backgroundColor;
+        
+        selectElement.disabled = true;
+        selectElement.style.opacity = '0.7';
+
+        fetch(`pesanan.php?update_status=${id}&status=${encodeURIComponent(newStatus)}&ajax=1`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    let bg, color, border;
+                    if (newStatus === 'Menunggu Diproses') {
+                        bg = 'rgba(75, 85, 99, 0.1)'; color = 'var(--gray)'; border = 'var(--gray-light)';
+                    } else if (newStatus === 'Sedang Dibuat') {
+                        bg = 'rgba(59, 130, 246, 0.1)'; color = 'var(--primary)'; border = 'rgba(59, 130, 246, 0.3)';
+                    } else if (newStatus === 'Siap Diambil') {
+                        bg = 'rgba(245, 158, 11, 0.1)'; color = '#F59E0B'; border = 'rgba(245, 158, 11, 0.3)';
+                    } else {
+                        bg = 'rgba(16, 185, 129, 0.1)'; color = '#10B981'; border = 'rgba(16, 185, 129, 0.3)';
+                    }
+                    selectElement.style.backgroundColor = bg;
+                    selectElement.style.color = color;
+                    selectElement.style.border = `1px solid ${border}`;
+                } else {
+                    alert('Gagal mengupdate status');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan koneksi');
+            })
+            .finally(() => {
+                selectElement.disabled = false;
+                selectElement.style.opacity = '1';
+            });
+    }
+    </script>
 </body>
 </html>
