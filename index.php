@@ -32,7 +32,11 @@ $t_l = $q_l->fetch_assoc()['total'] ?? 0;
 $q_p = $conn->query("SELECT SUM(jumlah) as total FROM pesanan WHERE jenis_kelamin = 'Perempuan'");
 $t_p = $q_p->fetch_assoc()['total'] ?? 0;
 
-$t_all = $t_l + $t_p;
+$q_k = $conn->query("SELECT SUM(jumlah) as total FROM pesanan WHERE jenis_mutz = 'Kepala SKPD'");
+$t_k = $q_k->fetch_assoc()['total'] ?? 0;
+
+$q_all = $conn->query("SELECT SUM(jumlah) as total FROM pesanan");
+$t_all = $q_all->fetch_assoc()['total'] ?? 0;
 
 // Get total overall tagihan
 $q_tagihan = $conn->query("SELECT SUM(CASE WHEN jenis_mutz = 'Kepala SKPD' THEN jumlah * " . HARGA_KEPALA . " ELSE jumlah * " . HARGA_BIASA . " END) as total FROM pesanan");
@@ -698,10 +702,10 @@ if ($q_all_orders) {
                                     <td style="padding: 10px 12px; text-align: center; font-weight: 900; font-size: 1.1rem; color: #000;">${item.jumlah}</td>
                                     <td style="padding: 10px 12px; text-align: right; font-weight: 900; font-family: monospace; font-size: 0.95rem; color:#000;">${subtotalFormatted}</td>
                                     <td style="padding: 10px 12px; text-align: center;">
-                                        <span style="background:${bayarBg}; color:#000; padding:3px 8px; border:2px solid #000; box-shadow:2px 2px 0px #000; font-size:0.75rem; font-weight:900;">${item.status_bayar}</span>
+                                        <span style="background:${bayarBg}; color:#000; padding:3px 8px; border:2px solid #000; box-shadow:2px 2px 0px #000; font-size:0.75rem; font-weight:900; white-space: nowrap;">${item.status_bayar}</span>
                                     </td>
                                     <td style="padding: 10px 12px; text-align: center;">
-                                        <span style="background:${ambilBg}; color:#000; padding:3px 8px; border:2px solid #000; box-shadow:2px 2px 0px #000; font-size:0.75rem; font-weight:900;">${item.status_pengambilan}</span>
+                                        <span style="background:${ambilBg}; color:#000; padding:3px 8px; border:2px solid #000; box-shadow:2px 2px 0px #000; font-size:0.75rem; font-weight:900; white-space: nowrap;">${item.status_pengambilan}</span>
                                     </td>
                                     <td style="padding: 10px 12px; font-size:0.8rem; color:#000; font-weight: 600;">${catatan}</td>
                                 </tr>

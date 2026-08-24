@@ -119,7 +119,7 @@ body {
     transition: all 0.2s ease;
 }
 [data-theme="dark"] .nav-links a {
-    color: var(--white);
+    color: #FFF;
 }
 
 .nav-links a:hover {
@@ -1578,7 +1578,7 @@ textarea:focus-visible {
     margin-left: 10px;
 }
 [data-theme="dark"] .tc-total {
-    border-color: var(--white);
+    border-color: #FFF;
 }
 
 .progress-container {
@@ -1591,7 +1591,7 @@ textarea:focus-visible {
 }
 [data-theme="dark"] .progress-container {
     background: var(--brutal-bg);
-    border-color: var(--white);
+    border-color: #FFF;
 }
 
 .progress-bar {
@@ -1608,7 +1608,7 @@ textarea:focus-visible {
     border-right: 2px solid var(--dark);
 }
 [data-theme="dark"] .progress-bar:not(:last-child) {
-    border-right: 2px solid var(--white);
+    border-right: 2px solid #FFF;
 }
 
 .stats-grid {
@@ -1631,7 +1631,7 @@ textarea:focus-visible {
     border: 2px solid var(--dark);
 }
 [data-theme="dark"] .stat-dot {
-    border-color: var(--white);
+    border-color: #FFF;
 }
 
 .tc-footer {
@@ -1665,9 +1665,9 @@ textarea:focus-visible {
 }
 [data-theme="dark"] .btn-detail {
     background: var(--brutal-bg);
-    color: var(--white);
-    border-color: var(--white);
-    box-shadow: 2px 2px 0px var(--white);
+    color: #FFF;
+    border-color: #FFF;
+    box-shadow: 2px 2px 0px #FFF;
 }
 .btn-detail:hover {
     background: var(--primary);
