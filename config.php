@@ -12,6 +12,25 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Fitur Keamanan: Auto-Logout karena tidak aktif (Session Timeout)
+$session_timeout_seconds = 900; // 15 menit
+
+if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true) {
+    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $session_timeout_seconds) {
+        // Sesi kedaluwarsa
+        session_unset();
+        session_destroy();
+        // Redirect ke halaman login jika bukan sedang di login.php
+        if (basename($_SERVER['PHP_SELF']) !== 'login.php') {
+            header("Location: login.php?msg=" . urlencode("Sesi Anda telah habis karena tidak ada aktivitas (15 Menit). Silakan login kembali."));
+            exit;
+        }
+    }
+    // Perbarui waktu aktivitas terakhir
+    $_SESSION['last_activity'] = time();
+}
+
+
 // Global Security Response Headers
 if (!headers_sent()) {
     header("X-Frame-Options: SAMEORIGIN");
