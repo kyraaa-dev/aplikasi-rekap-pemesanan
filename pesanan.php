@@ -393,14 +393,14 @@ $pesanans = $conn->query("
                             </td>
                             <td>
                                 <?php if($row['status_bayar'] == 'Lunas'): ?>
-                                    <span style="display: inline-flex; align-items: center; gap: 4px; background-color: rgba(16, 185, 129, 0.1); color: #10B981; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: 1px solid rgba(16, 185, 129, 0.3); letter-spacing: 0.5px;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        Lunas
+                                    <span style="display: inline-flex; align-items: center; gap: 4px; background-color: #4ADE80; color: #000; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; border: 2px solid #000; letter-spacing: 0.5px; box-shadow: 2px 2px 0px #000;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        LUNAS
                                     </span>
                                 <?php else: ?>
-                                    <span style="display: inline-flex; align-items: center; gap: 4px; background-color: rgba(239, 68, 68, 0.1); color: #EF4444; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: 1px solid rgba(239, 68, 68, 0.3); letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(239, 68, 68, 0.1);">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                        Belum Lunas
+                                    <span style="display: inline-flex; align-items: center; gap: 4px; background-color: #F87171; color: #000; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; border: 2px solid #000; letter-spacing: 0.5px; box-shadow: 2px 2px 0px #000;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                        BELUM LUNAS
                                     </span>
                                 <?php endif; ?>
                             </td>
@@ -409,16 +409,16 @@ $pesanans = $conn->query("
                                     <?php 
                                         $st = $row['status_pengambilan'];
                                         if($st == 'Menunggu Diproses') {
-                                            $bg = 'rgba(75, 85, 99, 0.1)'; $color = 'var(--gray)'; $border = 'var(--gray-light)';
+                                            $bg = '#E5E7EB'; $color = '#000';
                                         } elseif($st == 'Sedang Dibuat') {
-                                            $bg = 'rgba(59, 130, 246, 0.1)'; $color = 'var(--primary)'; $border = 'rgba(59, 130, 246, 0.3)';
+                                            $bg = '#93C5FD'; $color = '#000';
                                         } elseif($st == 'Siap Diambil') {
-                                            $bg = 'rgba(245, 158, 11, 0.1)'; $color = '#F59E0B'; $border = 'rgba(245, 158, 11, 0.3)';
+                                            $bg = '#FDE047'; $color = '#000';
                                         } else { // Sudah Diambil
-                                            $bg = 'rgba(16, 185, 129, 0.1)'; $color = '#10B981'; $border = 'rgba(16, 185, 129, 0.3)';
+                                            $bg = '#6EE7B7'; $color = '#000';
                                         }
                                     ?>
-                                    <select name="status" data-prev="<?= $st ?>" onchange="updateStatus(<?= $row['id'] ?>, this)" style="width: 100%; padding: 0.35rem 0.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border-radius: 6px; border: 1px solid <?= $border ?>; background-color: <?= $bg ?>; color: <?= $color ?>; cursor: pointer; outline: none; letter-spacing: 0.2px;">
+                                    <select name="status" data-prev="<?= $st ?>" onchange="updateStatus(<?= $row['id'] ?>, this)" style="width: 100%; padding: 0.35rem 0.5rem; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; border-radius: 4px; border: 2px solid #000; background-color: <?= $bg ?>; color: <?= $color ?>; cursor: pointer; outline: none; letter-spacing: 0.2px; box-shadow: 2px 2px 0px #000; transition: transform 0.1s, box-shadow 0.1s;">
                                         <option value="Menunggu Diproses" <?= $st == 'Menunggu Diproses' ? 'selected' : '' ?>>⏳ Menunggu Diproses</option>
                                         <option value="Sedang Dibuat" <?= $st == 'Sedang Dibuat' ? 'selected' : '' ?>>✂️ Sedang Dibuat</option>
                                         <option value="Siap Diambil" <?= $st == 'Siap Diambil' ? 'selected' : '' ?>>📦 Siap Diambil</option>
@@ -519,19 +519,20 @@ $pesanans = $conn->query("
             .then(data => {
                 if (data.success) {
                     selectElement.setAttribute('data-prev', newStatus);
-                    let bg, color, border;
+                    let bg;
                     if (newStatus === 'Menunggu Diproses') {
-                        bg = 'rgba(75, 85, 99, 0.1)'; color = 'var(--gray)'; border = 'var(--gray-light)';
+                        bg = '#E5E7EB';
                     } else if (newStatus === 'Sedang Dibuat') {
-                        bg = 'rgba(59, 130, 246, 0.1)'; color = 'var(--primary)'; border = 'rgba(59, 130, 246, 0.3)';
+                        bg = '#93C5FD';
                     } else if (newStatus === 'Siap Diambil') {
-                        bg = 'rgba(245, 158, 11, 0.1)'; color = '#F59E0B'; border = 'rgba(245, 158, 11, 0.3)';
+                        bg = '#FDE047';
                     } else {
-                        bg = 'rgba(16, 185, 129, 0.1)'; color = '#10B981'; border = 'rgba(16, 185, 129, 0.3)';
+                        bg = '#6EE7B7';
                     }
                     selectElement.style.backgroundColor = bg;
-                    selectElement.style.color = color;
-                    selectElement.style.border = `1px solid ${border}`;
+                    selectElement.style.color = '#000';
+                    selectElement.style.border = '2px solid #000';
+                    selectElement.style.boxShadow = '2px 2px 0px #000';
                     
                     if (typeof Swal !== 'undefined') {
                         Swal.fire({
