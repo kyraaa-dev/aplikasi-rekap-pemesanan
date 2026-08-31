@@ -97,18 +97,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             .settings-grid { grid-template-columns: 1fr; }
         }
         .form-section {
-            background: #FFF;
+            background: var(--brutal-bg);
             padding: 1.5rem;
             border-radius: 8px;
-            box-shadow: 6px 6px 0px #000;
-            border: 3px solid #000;
+            box-shadow: var(--shadow-lg);
+            border: var(--brutal-border);
         }
         .form-section h3 {
             margin-top: 0;
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
-            border-bottom: 4px solid #000;
-            color: #000;
+            border-bottom: var(--brutal-border);
+            color: var(--dark);
             font-weight: 900;
             display: flex;
             align-items: center;
@@ -117,18 +117,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         input[type="password"] {
             width: 100%;
             padding: 0.75rem 1rem;
-            border: 3px solid #000;
+            border: var(--brutal-border);
             border-radius: 6px;
             font-size: 0.95rem;
-            background-color: #FFF;
-            color: #000;
-            box-shadow: 2px 2px 0px #000000;
+            background-color: var(--white);
+            color: var(--dark);
+            box-shadow: var(--shadow);
             box-sizing: border-box;
             transition: transform 0.1s, box-shadow 0.1s;
         }
         input[type="password"]:focus {
             outline: none;
-            box-shadow: 4px 4px 0px #000000;
+            box-shadow: var(--shadow-lg);
             transform: translate(-2px, -2px);
         }
     </style>
@@ -204,11 +204,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         Unduh salinan lengkap seluruh data sistem (Data SKPD, Semua Pesanan, Stok Gudang, Log Retur, dan Pengaturan) ke komputer Anda secara berkala sebagai arsip yang aman.
                     </p>
                     <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                        <a href="backup.php?format=sql" class="btn" style="background: #4ADE80; color: #000; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 6px; font-weight: 800; border: 3px solid #000; box-shadow: 4px 4px 0px #000;">
+                        <a href="backup.php?format=sql" class="btn" style="background: #4ADE80; color: #000; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 6px; font-weight: 800; border: var(--brutal-border); box-shadow: var(--shadow);">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
                             Unduh Cadangan SQL (.sql)
                         </a>
-                        <a href="backup.php?format=json" class="btn" style="background: #00E5FF; color: #000; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 6px; font-weight: 800; border: 3px solid #000; box-shadow: 4px 4px 0px #000;">
+                        <a href="backup.php?format=json" class="btn" style="background: #00E5FF; color: #000; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 6px; font-weight: 800; border: var(--brutal-border); box-shadow: var(--shadow);">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
                             Unduh Cadangan JSON (.json)
                         </a>
