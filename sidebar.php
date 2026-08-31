@@ -733,7 +733,14 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderDefaultShortcuts() {
         if (!spotlightResults) return;
         cachedData = null;
-        spotlightResults.innerHTML = defaultShortcutsHtml;
+        
+        if (currentFilter === 'pesanan') {
+            spotlightResults.innerHTML = '<div class="spotlight-empty"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:12px; color:var(--gray-light);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg><div style="font-weight:600; color:var(--dark); margin-bottom:4px;">Filter: Pemesan</div><div style="font-size:0.825rem; color:var(--gray);">Ketik nama pemesan, catatan, atau ukuran untuk mencari.</div></div>';
+        } else if (currentFilter === 'skpd') {
+            spotlightResults.innerHTML = '<div class="spotlight-empty"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:12px; color:var(--gray-light);"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg><div style="font-weight:600; color:var(--dark); margin-bottom:4px;">Filter: SKPD</div><div style="font-size:0.825rem; color:var(--gray);">Ketik nama instansi SKPD atau nomor WhatsApp.</div></div>';
+        } else {
+            spotlightResults.innerHTML = defaultShortcutsHtml;
+        }
     }
 
     // Pre-build loading skeleton template once
