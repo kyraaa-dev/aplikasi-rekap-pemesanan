@@ -228,16 +228,20 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 <script src="assets/js/instant-nav.js?v=<?= filemtime("assets/js/instant-nav.js") ?>" defer></script>
 <script>
-// Global Toast Configuration for Premium UI
-window.Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
+document.addEventListener('DOMContentLoaded', function() {
+    // Global Toast Configuration for Premium UI
+    if (typeof Swal !== 'undefined') {
+        window.Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
     }
 });
 
