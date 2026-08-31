@@ -81,40 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
     <link rel="stylesheet" href="assets/css/app.css?v=<?= filemtime("assets/css/app.css") ?>">
     <link rel="icon" type="image/png" href="assets/images/logo.png">
-    <style>
-        .settings-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-        @media (max-width: 768px) {
-            .settings-grid {
-                grid-template-columns: 1fr;
-                gap: 1.25rem;
-            }
-        }
-        @media (max-width: 768px) {
-            .settings-grid { grid-template-columns: 1fr; }
-        }
-        .form-section {
-            background: var(--brutal-bg);
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: var(--shadow-lg);
-            border: var(--brutal-border);
-        }
-        .form-section h3 {
-            margin-top: 0;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: var(--brutal-border);
-            color: var(--dark);
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-    </style>
+
 </head>
 <body>
     <?php include 'sidebar.php'; ?>
