@@ -1,4 +1,5 @@
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="preload" href="assets/css/app.css?v=<?= filemtime("assets/css/app.css") ?>" as="style">
+<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 <style>
 /* Menu Hover */
 .nav-links a {
@@ -525,7 +526,7 @@
 <aside class="sidebar">
     <div class="brand">
         <div style="display: flex; align-items: center; gap: 10px;">
-            <img src="assets/images/logo.png?v=2" alt="Logo E-MutZ" style="width: 48px; height: 48px; object-fit: contain; border-radius: 6px;">
+            <img src="assets/images/logo.png?v=2" alt="Logo E-MutZ" width="48" height="48" style="width: 48px; height: 48px; object-fit: contain; border-radius: 6px;">
             <span>E-MutZ KORPRI</span>
         </div>
         <button class="sidebar-close-btn" id="sidebarCloseBtn" title="Tutup Menu">
@@ -616,7 +617,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
     </button>
     <a href="index.php" class="mobile-topbar-brand">
-        <img src="assets/images/logo.png?v=2" alt="Logo" style="width: 32px; height: 32px; object-fit: contain;">
+        <img src="assets/images/logo.png?v=2" alt="Logo" width="32" height="32" style="width: 32px; height: 32px; object-fit: contain;">
         <span>E-MutZ KORPRI</span>
     </a>
     <div class="mobile-topbar-actions" style="display: flex; align-items: center; gap: 6px;">
@@ -681,7 +682,7 @@
 </div>
 
 <!-- SweetAlert2 & Instant Navigation Engine -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 <script src="assets/js/instant-nav.js?v=<?= filemtime("assets/js/instant-nav.js") ?>"></script>
 <script>
 // Global Toast Configuration for Premium UI
@@ -723,7 +724,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const errorMsg = urlParams.get('error_msg');
     if (errorMsg) {
-        Swal.fire({ title: 'Gagal', text: decodeURIComponent(errorMsg), icon: 'error', confirmButtonColor: '#EF4444' });
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({ title: 'Gagal', text: decodeURIComponent(errorMsg), icon: 'error', confirmButtonColor: '#EF4444' });
+        } else {
+            alert('Gagal: ' + decodeURIComponent(errorMsg));
+        }
         window.history.replaceState(null, null, window.location.pathname);
     }
 

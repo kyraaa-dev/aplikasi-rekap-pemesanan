@@ -751,7 +751,7 @@ if ($q_all_orders) {
 
         <!-- 2. SCRIPT CHART.JS & STATISTIK ANIMASI -->
         <script>
-            (function() {
+            function renderChartsWhenReady() {
                 try {
                     // Data from PHP
                     const t_l = <?= (int)$t_l ?>;
@@ -843,11 +843,14 @@ if ($q_all_orders) {
                                 }
                             });
                         }
+                    } else {
+                        setTimeout(renderChartsWhenReady, 50);
                     }
                 } catch (err) {
                     console.warn('Chart rendering caught error:', err);
                 }
-            })();
+            }
+            renderChartsWhenReady();
 
             // Chart Toggle Logic (Global for inline onclick)
             window.setChartVisibility = function(show) {
