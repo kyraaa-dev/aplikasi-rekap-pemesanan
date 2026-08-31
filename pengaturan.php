@@ -114,23 +114,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             align-items: center;
             gap: 10px;
         }
-        input[type="password"] {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: var(--brutal-border);
-            border-radius: 6px;
-            font-size: 0.95rem;
-            background-color: var(--white);
-            color: var(--dark);
-            box-shadow: var(--shadow);
-            box-sizing: border-box;
-            transition: transform 0.1s, box-shadow 0.1s;
-        }
-        input[type="password"]:focus {
-            outline: none;
-            box-shadow: var(--shadow-lg);
-            transform: translate(-2px, -2px);
-        }
     </style>
 </head>
 <body>

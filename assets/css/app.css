@@ -290,7 +290,7 @@ label {
     height: 16px;
 }
 
-input[type="text"], input[type="number"], select, textarea {
+input[type="text"], input[type="password"], input[type="number"], select, textarea {
     width: 100%;
     padding: 0.75rem 1rem;
     border: var(--brutal-border);
@@ -298,7 +298,7 @@ input[type="text"], input[type="number"], select, textarea {
     font-size: 0.95rem;
     background-color: var(--white);
     color: var(--dark);
-    box-shadow: 2px 2px 0px #000000;
+    box-shadow: 2px 2px 0px var(--dark);
     transition: transform 0.1s, box-shadow 0.1s;
 }
 
@@ -306,7 +306,7 @@ input:focus, select:focus, textarea:focus {
     outline: none;
     background-color: var(--white);
     transform: translate(2px, 2px);
-    box-shadow: 0px 0px 0px #000000;
+    box-shadow: 0px 0px 0px var(--dark);
 }
 
 button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.spotlight-close-btn):not(.sidebar-close-btn):not(.spotlight-filter-btn),
