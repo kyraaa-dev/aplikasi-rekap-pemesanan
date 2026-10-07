@@ -217,7 +217,7 @@ if ((!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) &&
 }
 
 $current_page = basename($_SERVER['PHP_SELF'] ?? '');
-$allowed_pages = ['login.php', 'setup.php'];
+$allowed_pages = ['login.php', 'setup.php', 'api_files.php', 'proses_upload.php'];
 
 if (php_sapi_name() !== 'cli' && !in_array($current_page, $allowed_pages)) {
     if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {

@@ -2168,3 +2168,922 @@ textarea:focus-visible {
         display: none !important;
     }
 }
+
+/* =========================================================
+   Basketball Hoop File Upload Animation (Revamped & Premium)
+   ========================================================= */
+
+/* Upload Zone Container & Court Floor */
+.basketball-upload-zone {
+    position: relative;
+    min-height: 380px;
+    border: 4px solid var(--dark);
+    border-radius: 20px;
+    background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 35%, #FFCC80 100%);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 6px 6px 0px var(--dark);
+}
+
+[data-theme="dark"] .basketball-upload-zone {
+    background: linear-gradient(135deg, #0d131f 0%, #151f32 40%, #1a2744 100%);
+    border-color: #00FFCC;
+    box-shadow: 6px 6px 0px #00FFCC;
+}
+
+.basketball-upload-zone:hover {
+    transform: translateY(-2px);
+    box-shadow: 8px 8px 0px var(--dark);
+    border-color: #FF6B00;
+}
+
+[data-theme="dark"] .basketball-upload-zone:hover {
+    border-color: #00FFCC;
+    box-shadow: 8px 8px 0px #00FFCC, 0 0 25px rgba(0, 255, 204, 0.2);
+}
+
+.basketball-upload-zone.drag-over {
+    border-color: #FF6B00;
+    background: linear-gradient(135deg, #FFE8D6 0%, #FFD6A5 40%, #FFBE76 100%);
+    box-shadow: 8px 8px 0px #FF6B00, 0 0 35px rgba(255, 107, 0, 0.3);
+    transform: scale(1.01);
+}
+
+[data-theme="dark"] .basketball-upload-zone.drag-over {
+    background: linear-gradient(135deg, #0c1a2e 0%, #102a45 40%, #163b60 100%);
+    border-color: #00FFCC;
+    box-shadow: 8px 8px 0px #00FFCC, 0 0 40px rgba(0, 255, 204, 0.35);
+}
+
+/* Basketball Court Floor Markings */
+.court-flooring {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.court-paint-key {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 240px;
+    height: 190px;
+    border: 3px solid rgba(139, 69, 19, 0.25);
+    border-top: none;
+    background: rgba(255, 152, 0, 0.08);
+    border-radius: 0 0 8px 8px;
+}
+
+[data-theme="dark"] .court-paint-key {
+    border-color: rgba(0, 255, 204, 0.25);
+    background: rgba(0, 255, 204, 0.04);
+}
+
+.court-free-throw-circle {
+    position: absolute;
+    top: 130px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 140px;
+    border: 3px solid rgba(139, 69, 19, 0.25);
+    border-radius: 50%;
+}
+
+[data-theme="dark"] .court-free-throw-circle {
+    border-color: rgba(0, 255, 204, 0.25);
+}
+
+.court-three-pt-arc {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 480px;
+    height: 300px;
+    border: 3px dashed rgba(139, 69, 19, 0.2);
+    border-top: none;
+    border-radius: 0 0 240px 240px;
+}
+
+[data-theme="dark"] .court-three-pt-arc {
+    border-color: rgba(0, 255, 204, 0.18);
+}
+
+/* Basketball Stage (Backboard, Rim & Net) */
+.bb-stage {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 5;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Backboard */
+.bb-backboard {
+    position: relative;
+    width: 160px;
+    height: 105px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 4px solid var(--dark);
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15), 4px 4px 0px var(--dark);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 8px;
+    transition: transform 0.3s ease;
+}
+
+[data-theme="dark"] .bb-backboard {
+    background: rgba(18, 26, 43, 0.92);
+    border-color: #FFFFFF;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4), 4px 4px 0px #00FFCC;
+}
+
+.bb-target-box {
+    width: 64px;
+    height: 48px;
+    border: 3.5px solid #E53935;
+    border-radius: 3px;
+    background: rgba(229, 57, 53, 0.05);
+    box-shadow: inset 0 0 8px rgba(229, 57, 53, 0.15);
+    margin-bottom: 2px;
+}
+
+[data-theme="dark"] .bb-target-box {
+    border-color: #FF5252;
+    background: rgba(255, 82, 82, 0.08);
+}
+
+/* Backboard Mount Bracket */
+.bb-mount {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 12px;
+    background: #333;
+    border-radius: 4px 4px 0 0;
+    border: 2px solid var(--dark);
+}
+
+/* Hoop Wrap Assembly (Contains layers for authentic depth) */
+.bb-hoop-wrap {
+    position: relative;
+    width: 120px;
+    height: 95px;
+    margin-top: -16px;
+    display: flex;
+    justify-content: center;
+    transform-origin: top center;
+}
+
+/* Hoop Spring Animation upon Dunk */
+.bb-hoop-wrap.hoop-dunk-hit {
+    animation: rimDunkSpring 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.3) forwards;
+}
+
+@keyframes rimDunkSpring {
+    0% { transform: translateY(0) rotateX(0deg); }
+    22% { transform: translateY(18px) rotateX(24deg); }
+    45% { transform: translateY(-6px) rotateX(-10deg); }
+    65% { transform: translateY(4px) rotateX(5deg); }
+    82% { transform: translateY(-2px) rotateX(-2deg); }
+    100% { transform: translateY(0) rotateX(0deg); }
+}
+
+/* Layer 1: Back SVG (Back Rim arc + Back Net) */
+.hoop-svg-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 120px;
+    height: 95px;
+    z-index: 2;
+    overflow: visible;
+}
+
+/* Layer 2: The 3D Basketball (Animated) */
+.file-basketball {
+    position: absolute;
+    top: -90px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #FF9800 0%, #F57C00 50%, #D84315 100%);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.35), inset -3px -3px 8px rgba(0,0,0,0.3), inset 2px 2px 6px rgba(255,255,255,0.4);
+    border: 2px solid #BF360C;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Basketball Rib Lines */
+.ball-rib-h {
+    position: absolute;
+    width: 100%;
+    height: 2.5px;
+    background: #2E1600;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.ball-rib-v {
+    position: absolute;
+    width: 2.5px;
+    height: 100%;
+    background: #2E1600;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.ball-rib-c1 {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border: 2px solid #2E1600;
+    border-radius: 50%;
+    left: -20px;
+    top: 4px;
+}
+
+.ball-rib-c2 {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border: 2px solid #2E1600;
+    border-radius: 50%;
+    right: -20px;
+    top: 4px;
+}
+
+.ball-doc-badge {
+    position: absolute;
+    z-index: 6;
+    background: var(--dark);
+    color: #FFF;
+    border-radius: 6px;
+    padding: 2px 5px;
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    border: 1.5px solid #FFF;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+/* Slam Dunk Trajectory Animation */
+.file-basketball.animating-dunk {
+    animation: slamDunkFullFlight 1.25s cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes slamDunkFullFlight {
+    0% {
+        top: 180px;
+        transform: translateX(-50%) rotate(0deg) scale(0.6);
+        opacity: 0;
+    }
+    15% {
+        top: 60px;
+        transform: translateX(-50%) rotate(60deg) scale(1.15);
+        opacity: 1;
+    }
+    30% {
+        top: -45px;
+        transform: translateX(-50%) rotate(140deg) scale(1.1);
+        opacity: 1;
+    }
+    45% {
+        /* Dunk into hoop center */
+        top: 2px;
+        transform: translateX(-50%) rotate(220deg) scale(0.98);
+        opacity: 1;
+    }
+    60% {
+        /* Inside the net */
+        top: 38px;
+        transform: translateX(-50%) rotate(300deg) scale(0.85);
+        opacity: 1;
+    }
+    75% {
+        /* Exit bottom of net */
+        top: 80px;
+        transform: translateX(-50%) rotate(360deg) scale(0.78);
+        opacity: 1;
+    }
+    88% {
+        /* Bounce on court */
+        top: 155px;
+        transform: translateX(-50%) rotate(400deg) scale(0.9, 0.65);
+        opacity: 0.9;
+    }
+    94% {
+        /* Rebound up slightly */
+        top: 135px;
+        transform: translateX(-50%) rotate(420deg) scale(0.75, 0.85);
+        opacity: 0.6;
+    }
+    100% {
+        top: 150px;
+        transform: translateX(-50%) rotate(440deg) scale(0.6);
+        opacity: 0;
+    }
+}
+
+/* Layer 3: Front SVG (Front Woven Net + Solid Front Rim) */
+.hoop-svg-front {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 120px;
+    height: 95px;
+    z-index: 7;
+    overflow: visible;
+}
+
+/* Net Swish Reaction Wave */
+.net-woven-front {
+    transform-origin: top center;
+    transition: transform 0.2s ease;
+}
+
+.hoop-svg-front.net-swish-active .net-woven-front {
+    animation: netSwishExpand 0.75s cubic-bezier(0.2, 0.9, 0.3, 1.2) forwards;
+}
+
+@keyframes netSwishExpand {
+    0% { transform: scale(1, 1); }
+    25% { transform: scale(1.35, 0.85) skewX(4deg); }
+    50% { transform: scale(0.85, 1.22) skewX(-3deg); }
+    70% { transform: scale(1.12, 0.95) skewX(2deg); }
+    88% { transform: scale(0.96, 1.05); }
+    100% { transform: scale(1, 1); }
+}
+
+/* Celebration Comic FX & Particles */
+.dunk-fx-layer {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 12;
+    pointer-events: none;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dunk-fx-layer.show-celebration {
+    display: flex;
+}
+
+.dunk-badge-popup {
+    background: #FFE600;
+    color: #000;
+    font-size: 1.15rem;
+    font-weight: 900;
+    padding: 6px 18px;
+    border: 3.5px solid var(--dark);
+    border-radius: 50px;
+    box-shadow: 4px 4px 0px var(--dark);
+    letter-spacing: 0.03em;
+    animation: dunkBadgePop 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.35) forwards;
+    white-space: nowrap;
+}
+
+@keyframes dunkBadgePop {
+    0% {
+        transform: scale(0) translateY(10px) rotate(-8deg);
+        opacity: 0;
+    }
+    40% {
+        transform: scale(1.25) translateY(-10px) rotate(4deg);
+        opacity: 1;
+    }
+    70% {
+        transform: scale(1) translateY(-16px) rotate(-2deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.95) translateY(-26px) rotate(0deg);
+        opacity: 0;
+    }
+}
+
+.dunk-sparks {
+    position: absolute;
+    width: 140px;
+    height: 100px;
+    top: 30px;
+    pointer-events: none;
+}
+
+.spark-particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #FF5722;
+    border: 1.5px solid #000;
+}
+
+/* Center Drop Zone Content */
+.drop-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    padding: 1rem 1.5rem 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    max-width: 520px;
+}
+
+.drop-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 14px;
+    background: var(--dark);
+    color: #FFF;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+}
+
+[data-theme="dark"] .drop-status-pill {
+    background: #00FFCC;
+    color: #000;
+}
+
+.drop-title {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--dark);
+    margin: 4px 0;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+}
+
+[data-theme="dark"] .drop-title {
+    color: #FFF;
+}
+
+.drop-subtitle {
+    font-size: 0.85rem;
+    color: var(--gray);
+    margin-bottom: 12px;
+}
+
+.browse-btn-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.browse-action-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 10px 24px !important;
+    background: #FF6B00 !important;
+    color: #FFF !important;
+    border: 3px solid var(--dark) !important;
+    border-radius: 50px !important;
+    font-size: 0.9rem !important;
+    font-weight: 800 !important;
+    cursor: pointer !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 3px 3px 0px var(--dark) !important;
+}
+
+.browse-action-btn:hover {
+    transform: translate(-2px, -2px) !important;
+    box-shadow: 5px 5px 0px var(--dark) !important;
+    background: #FF8533 !important;
+}
+
+.browse-action-btn:active {
+    transform: translate(1px, 1px) !important;
+    box-shadow: 1px 1px 0px var(--dark) !important;
+}
+
+[data-theme="dark"] .browse-action-btn {
+    background: #00FFCC !important;
+    color: #000 !important;
+    border-color: #FFF !important;
+    box-shadow: 3px 3px 0px #FFF !important;
+}
+
+[data-theme="dark"] .browse-action-btn:hover {
+    background: #33FFD6 !important;
+    box-shadow: 5px 5px 0px #FFF !important;
+}
+
+/* File Type Badges */
+.file-format-pills {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.pill-format {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    border: 2px solid var(--dark);
+    background: #FFF;
+    color: var(--dark);
+    box-shadow: 2px 2px 0px var(--dark);
+}
+
+[data-theme="dark"] .pill-format {
+    border-color: #FFF;
+    background: #1a2234;
+    color: #FFF;
+    box-shadow: 2px 2px 0px #FFF;
+}
+
+.pill-word { color: #1E40AF; border-color: #1E40AF; }
+.pill-excel { color: #15803D; border-color: #15803D; }
+.pill-pdf { color: #DC2626; border-color: #DC2626; }
+
+/* Drag Target Aiming Guide (Appears when dragging over) */
+.drag-aim-guide {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.basketball-upload-zone.drag-over .drag-aim-guide {
+    display: flex;
+}
+
+.aim-crosshair {
+    position: absolute;
+    top: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+    border: 3px dashed #FF6B00;
+    border-radius: 50%;
+    animation: aimSpinPulse 2s linear infinite;
+}
+
+[data-theme="dark"] .aim-crosshair {
+    border-color: #00FFCC;
+}
+
+@keyframes aimSpinPulse {
+    0% { transform: translateX(-50%) rotate(0deg) scale(0.95); opacity: 0.7; }
+    50% { transform: translateX(-50%) rotate(180deg) scale(1.08); opacity: 1; }
+    100% { transform: translateX(-50%) rotate(360deg) scale(0.95); opacity: 0.7; }
+}
+
+.aim-callout-text {
+    position: absolute;
+    bottom: 24px;
+    background: var(--dark);
+    color: #FFF;
+    padding: 8px 22px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    border: 2px solid #FF6B00;
+    box-shadow: 4px 4px 0px #FF6B00;
+    animation: aimTextBounce 0.8s ease-in-out infinite alternate;
+}
+
+[data-theme="dark"] .aim-callout-text {
+    background: #00FFCC;
+    color: #000;
+    border-color: #FFF;
+    box-shadow: 4px 4px 0px #FFF;
+}
+
+@keyframes aimTextBounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-8px); }
+}
+
+/* Upload Progress Container */
+.upload-progress-container {
+    margin-bottom: 1.5rem;
+    padding: 1.25rem;
+    background: var(--white);
+    border: var(--brutal-border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    animation: slideUpFade 0.3s ease forwards;
+}
+
+.upload-progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 0.875rem;
+}
+
+.upload-progress-bar {
+    width: 100%;
+    height: 14px;
+    background: var(--gray-light);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 2.5px solid var(--dark);
+    position: relative;
+}
+
+.upload-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #FF6B00 0%, #FF9800 60%, #FFC107 100%);
+    border-radius: 12px;
+    transition: width 0.25s ease;
+    position: relative;
+}
+
+.upload-progress-fill::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.45) 50%,
+        transparent 100%
+    );
+    animation: progressShimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes progressShimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Uploaded Files Section & Cards */
+.uploaded-files-section {
+    margin-top: 1rem;
+}
+
+.uploaded-files-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.uploaded-files-count {
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--dark);
+    color: #FFF;
+}
+
+[data-theme="dark"] .uploaded-files-count {
+    background: #00FFCC;
+    color: #000;
+}
+
+.uploaded-files-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.uploaded-file-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 18px;
+    background: var(--white);
+    border: var(--brutal-border);
+    border-radius: 10px;
+    box-shadow: 3px 3px 0px var(--dark);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.uploaded-file-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px var(--dark);
+}
+
+/* Smooth Deletion Animation */
+.uploaded-file-card.card-deleting {
+    transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transform: translateX(40px) scale(0.92) !important;
+    opacity: 0 !important;
+    background: #FEE2E2 !important;
+    border-color: #EF4444 !important;
+}
+
+.file-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 2px solid rgba(0,0,0,0.15);
+    color: #FFF;
+}
+
+.file-card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.file-card-name {
+    font-weight: 800;
+    font-size: 0.92rem;
+    color: var(--dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 4px;
+}
+
+.file-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    color: var(--gray);
+    flex-wrap: wrap;
+}
+
+.file-ext-badge {
+    padding: 1px 7px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 900;
+    color: #FFF;
+    letter-spacing: 0.05em;
+}
+
+.file-card-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.file-action-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--dark);
+    cursor: pointer;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--white);
+    color: var(--dark);
+    padding: 0;
+    text-decoration: none;
+    box-shadow: 2px 2px 0px var(--dark);
+}
+
+.file-action-btn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0px var(--dark);
+}
+
+.file-action-download:hover {
+    background: #22C55E;
+    color: #FFF;
+}
+
+.file-action-download:hover svg {
+    stroke: #FFF;
+}
+
+/* Delete Button Styling & States */
+.file-action-delete {
+    background: #FFF;
+    color: #EF4444;
+}
+
+.file-action-delete:hover {
+    background: #FF0055;
+    color: #FFF;
+}
+
+.file-action-delete:hover svg {
+    stroke: #FFF;
+}
+
+.file-action-delete:disabled,
+.file-action-delete.is-loading {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.no-files-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 2.5rem 1rem;
+    color: var(--gray);
+    font-size: 0.9rem;
+    text-align: center;
+    border: 2px dashed var(--gray-light);
+    border-radius: 12px;
+}
+
+/* Responsive Styles */
+@media (max-width: 640px) {
+    .basketball-upload-zone {
+        min-height: 340px;
+        padding-bottom: 1.5rem;
+    }
+    
+    .bb-backboard {
+        width: 130px;
+        height: 85px;
+    }
+    
+    .bb-target-box {
+        width: 50px;
+        height: 36px;
+    }
+    
+    .bb-hoop-wrap {
+        width: 100px;
+        height: 80px;
+    }
+    
+    .hoop-svg-back,
+    .hoop-svg-front {
+        width: 100px;
+        height: 80px;
+    }
+
+    .drop-title {
+        font-size: 1.1rem;
+    }
+
+    .uploaded-file-card {
+        flex-wrap: wrap;
+        padding: 10px 14px;
+    }
+
+    .file-card-info {
+        min-width: calc(100% - 60px);
+    }
+
+    .file-card-actions {
+        width: 100%;
+        justify-content: flex-end;
+        padding-top: 8px;
+        border-top: 1px solid var(--gray-light);
+    }
+}
+

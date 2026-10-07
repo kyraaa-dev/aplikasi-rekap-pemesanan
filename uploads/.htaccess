@@ -1,0 +1,13 @@
+# Deny access to execute scripts in uploads directory
+<FilesMatch "\.(php|phtml|php3|php4|php5|php7|phps|cgi|pl|asp|aspx|shtml|shtm|htaccess|htpasswd|ini|log|sh|bak|config|sql)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Disable directory browsing
+Options -Indexes
+
+# Force download for uploaded files
+<FilesMatch "\.(doc|docx|xls|xlsx|pdf)$">
+    Header set Content-Disposition attachment
+</FilesMatch>
