@@ -370,114 +370,120 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         let dragCounter = 0;
         let isAnimating = false;
 
-        // Globally prevent default drag behaviors across the window so browser NEVER opens dropped files in a new tab/preview
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            window.addEventListener(eventName, function(e) {
+        // Helper to extract dropped files from DataTransfer
+        function extractDroppedFiles(e) {
+            const dt = e.dataTransfer;
+            if (!dt) return null;
+            if (dt.files && dt.files.length > 0) {
+                return dt.files;
+            }
+            if (dt.items && dt.items.length > 0) {
+                const arr = [];
+                for (let i = 0; i < dt.items.length; i++) {
+                    if (dt.items[i].kind === 'file') {
+                        const f = dt.items[i].getAsFile();
+                        if (f) arr.push(f);
+                    }
+                }
+                if (arr.length > 0) return arr;
+            }
+            return null;
+        }
+
+        // 1. Universal dragover & dragenter with capture phase - signals to browser that ANY drop is accepted
+        ['dragenter', 'dragover'].forEach(evtName => {
+            window.addEventListener(evtName, function(e) {
                 e.preventDefault();
-            }, false);
-            document.addEventListener(eventName, function(e) {
+                if (e.dataTransfer) {
+                    try { e.dataTransfer.dropEffect = 'copy'; } catch(err) {}
+                }
+                if (zone && !zone.classList.contains('drag-over')) {
+                    zone.classList.add('drag-over');
+                }
+            }, true);
+
+            document.addEventListener(evtName, function(e) {
                 e.preventDefault();
-            }, false);
-        });
+                if (e.dataTransfer) {
+                    try { e.dataTransfer.dropEffect = 'copy'; } catch(err) {}
+                }
+            }, true);
 
-        // Drag enter on basketball zone
-        zone.addEventListener('dragenter', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            dragCounter++;
-            zone.classList.add('drag-over');
-            if (e.dataTransfer) {
-                e.dataTransfer.dropEffect = 'copy';
+            if (zone) {
+                zone.addEventListener(evtName, function(e) {
+                    e.preventDefault();
+                    if (e.dataTransfer) {
+                        try { e.dataTransfer.dropEffect = 'copy'; } catch(err) {}
+                    }
+                    zone.classList.add('drag-over');
+                }, true);
             }
         });
 
-        // Drag over on basketball zone - MUST call preventDefault and set dropEffect = 'copy' on every tick
-        zone.addEventListener('dragover', function(e) {
+        // 2. Drag leave - cleanly clear visual styling when mouse leaves window
+        window.addEventListener('dragleave', function(e) {
             e.preventDefault();
-            e.stopPropagation();
-            if (e.dataTransfer) {
-                e.dataTransfer.dropEffect = 'copy';
-            }
-            if (!zone.classList.contains('drag-over')) {
-                zone.classList.add('drag-over');
-            }
-        });
-
-        // Drag leave on basketball zone
-        zone.addEventListener('dragleave', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            dragCounter--;
-            if (dragCounter <= 0) {
+            if (e.clientX <= 0 || e.clientY <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
                 dragCounter = 0;
-                zone.classList.remove('drag-over');
+                if (zone) zone.classList.remove('drag-over');
             }
-        });
+        }, true);
 
-        // Drop handler on basketball zone
-        zone.addEventListener('drop', function(e) {
+        if (zone) {
+            zone.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                const rect = zone.getBoundingClientRect();
+                if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
+                    zone.classList.remove('drag-over');
+                }
+            }, false);
+        }
+
+        // 3. UNIVERSAL DROP HANDLER on Window (Capture Phase) - Absolutely prevents new tab preview and processes file
+        window.addEventListener('drop', function(e) {
             e.preventDefault();
             e.stopPropagation();
             dragCounter = 0;
-            zone.classList.remove('drag-over');
+            if (zone) zone.classList.remove('drag-over');
 
-            const dt = e.dataTransfer;
-            let files = null;
-            if (dt) {
-                if (dt.files && dt.files.length > 0) {
-                    files = dt.files;
-                } else if (dt.items && dt.items.length > 0) {
-                    const itemFiles = [];
-                    for (let i = 0; i < dt.items.length; i++) {
-                        if (dt.items[i].kind === 'file') {
-                            const f = dt.items[i].getAsFile();
-                            if (f) itemFiles.push(f);
-                        }
-                    }
-                    if (itemFiles.length > 0) files = itemFiles;
-                }
-            }
-
+            const files = extractDroppedFiles(e);
             if (files && files.length > 0) {
                 handleFileSelection(files[0]);
             }
-        });
+        }, true);
 
-        // Also accept drops anywhere on the parent form-section as friendly fallback
-        const uploadSection = zone.closest('.form-section');
-        if (uploadSection) {
-            uploadSection.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                if (e.dataTransfer) {
-                    e.dataTransfer.dropEffect = 'copy';
-                }
-            });
-            uploadSection.addEventListener('drop', function(e) {
+        // Also direct drop on zone
+        if (zone) {
+            zone.addEventListener('drop', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 dragCounter = 0;
                 zone.classList.remove('drag-over');
 
-                const dt = e.dataTransfer;
-                if (dt && dt.files && dt.files.length > 0) {
-                    handleFileSelection(dt.files[0]);
+                const files = extractDroppedFiles(e);
+                if (files && files.length > 0) {
+                    handleFileSelection(files[0]);
                 }
-            });
+            }, true);
         }
 
         // Click zone to browse (ignores click on browse label/buttons)
-        zone.addEventListener('click', function(e) {
-            if (e.target.closest('#browseBtn') || e.target.closest('button') || e.target.closest('a') || isAnimating) return;
-            fileInput.click();
-        });
+        if (zone) {
+            zone.addEventListener('click', function(e) {
+                if (e.target.closest('#browseBtn') || e.target.closest('button') || e.target.closest('a') || isAnimating) return;
+                if (fileInput) fileInput.click();
+            });
+        }
 
         // Browse File Input
-        fileInput.addEventListener('change', function() {
-            if (fileInput.files && fileInput.files.length > 0) {
-                const selected = fileInput.files[0];
-                handleFileSelection(selected);
-            }
-        });
+        if (fileInput) {
+            fileInput.addEventListener('change', function() {
+                if (fileInput.files && fileInput.files.length > 0) {
+                    const selected = fileInput.files[0];
+                    handleFileSelection(selected);
+                }
+            });
+        }
 
         function handleFileSelection(file) {
             if (!file) return;
@@ -524,50 +530,62 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             dropContent.style.transform = 'scale(0.96)';
 
             // Clean previous animation state
-            if (fileBasketball) fileBasketball.classList.remove('animating-dunk');
-            bbBackboard.classList.remove('board-shaking');
-            hoopWrap.classList.remove('hoop-dunk-hit');
-            hoopFrontSvg.classList.remove('net-swish-active');
-            dunkFxLayer.classList.remove('show-celebration');
-            dunkSparks.innerHTML = '';
-
-            // CRITICAL: Force Browser Layout Reflow so keyframe animations restart every time
-            if (fileBasketball) void fileBasketball.offsetWidth;
-            void bbBackboard.offsetWidth;
-            void hoopWrap.offsetWidth;
-            void hoopFrontSvg.offsetWidth;
-            void dunkFxLayer.offsetWidth;
+            if (fileBasketball) {
+                fileBasketball.classList.remove('animating-dunk');
+                void fileBasketball.offsetWidth;
+            }
+            if (bbBackboard) {
+                bbBackboard.classList.remove('board-shaking');
+                void bbBackboard.offsetWidth;
+            }
+            if (hoopWrap) {
+                hoopWrap.classList.remove('hoop-dunk-hit');
+                void hoopWrap.offsetWidth;
+            }
+            if (hoopFrontSvg) {
+                hoopFrontSvg.classList.remove('net-swish-active');
+                void hoopFrontSvg.offsetWidth;
+            }
+            if (dunkFxLayer) {
+                dunkFxLayer.classList.remove('show-celebration');
+                void dunkFxLayer.offsetWidth;
+            }
+            if (dunkSparks) dunkSparks.innerHTML = '';
 
             // Generate celebration shoutout
-            const celebrations = [
-                '✨ DOKUMEN MASUK! 🎯', 
-                '⚡ BERKAS TERSIMPAN! 📄', 
-                '🎯 SUKSES MASUK! ⚡',
-                '🏆 DOKUMEN TERUNGGAH! 📁'
-            ];
-            dunkBadgeText.textContent = celebrations[Math.floor(Math.random() * celebrations.length)];
+            if (dunkBadgeText) {
+                const celebrations = [
+                    '✨ DOKUMEN MASUK! 🎯', 
+                    '⚡ BERKAS TERSIMPAN! 📄', 
+                    '🎯 SUKSES MASUK! ⚡',
+                    '🏆 DOKUMEN TERUNGGAH! 📁'
+                ];
+                dunkBadgeText.textContent = celebrations[Math.floor(Math.random() * celebrations.length)];
+            }
 
             // Spawn 14 spark & star particles around the rim
-            const colors = ['#FF5722', '#FFC107', '#FF9800', '#FFFFFF', '#00FFCC'];
-            for (let i = 0; i < 14; i++) {
-                const spark = document.createElement('div');
-                spark.className = 'spark-particle';
-                const angle = (i / 14) * Math.PI * 2;
-                const distance = 42 + Math.random() * 38;
-                const tx = Math.cos(angle) * distance;
-                const ty = Math.sin(angle) * distance - 8;
-                spark.style.left = '65px';
-                spark.style.top = '35px';
-                spark.style.background = colors[i % colors.length];
-                spark.style.transition = 'all 0.65s cubic-bezier(0.2, 0.8, 0.2, 1)';
-                spark.style.transform = 'translate(0, 0) scale(1)';
-                spark.style.opacity = '1';
-                dunkSparks.appendChild(spark);
+            if (dunkSparks) {
+                const colors = ['#FF5722', '#FFC107', '#FF9800', '#FFFFFF', '#00FFCC'];
+                for (let i = 0; i < 14; i++) {
+                    const spark = document.createElement('div');
+                    spark.className = 'spark-particle';
+                    const angle = (i / 14) * Math.PI * 2;
+                    const distance = 42 + Math.random() * 38;
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance - 8;
+                    spark.style.left = '65px';
+                    spark.style.top = '35px';
+                    spark.style.background = colors[i % colors.length];
+                    spark.style.transition = 'all 0.65s cubic-bezier(0.2, 0.8, 0.2, 1)';
+                    spark.style.transform = 'translate(0, 0) scale(1)';
+                    spark.style.opacity = '1';
+                    dunkSparks.appendChild(spark);
 
-                setTimeout(() => {
-                    spark.style.transform = `translate(${tx}px, ${ty}px) scale(0)`;
-                    spark.style.opacity = '0';
-                }, 480);
+                    setTimeout(() => {
+                        spark.style.transform = `translate(${tx}px, ${ty}px) scale(0)`;
+                        spark.style.opacity = '0';
+                    }, 480);
+                }
             }
 
             // Start Basketball Flight into Ring
@@ -596,23 +614,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Impact Moment @ 480ms: Backboard rattle + Rim flex + Net swish + Comic popup!
             setTimeout(() => {
-                bbBackboard.classList.add('board-shaking');
-                hoopWrap.classList.add('hoop-dunk-hit');
-                hoopFrontSvg.classList.add('net-swish-active');
-                dunkFxLayer.classList.add('show-celebration');
+                if (bbBackboard) bbBackboard.classList.add('board-shaking');
+                if (hoopWrap) hoopWrap.classList.add('hoop-dunk-hit');
+                if (hoopFrontSvg) hoopFrontSvg.classList.add('net-swish-active');
+                if (dunkFxLayer) dunkFxLayer.classList.add('show-celebration');
             }, 480);
 
             // Cleanup & callback to upload
             setTimeout(() => {
                 clearTimeout(safetyTimer);
                 if (fileBasketball) fileBasketball.classList.remove('animating-dunk');
-                bbBackboard.classList.remove('board-shaking');
-                hoopWrap.classList.remove('hoop-dunk-hit');
-                hoopFrontSvg.classList.remove('net-swish-active');
-                dunkFxLayer.classList.remove('show-celebration');
+                if (bbBackboard) bbBackboard.classList.remove('board-shaking');
+                if (hoopWrap) hoopWrap.classList.remove('hoop-dunk-hit');
+                if (hoopFrontSvg) hoopFrontSvg.classList.remove('net-swish-active');
+                if (dunkFxLayer) dunkFxLayer.classList.remove('show-celebration');
                 
-                dropContent.style.opacity = '1';
-                dropContent.style.transform = 'scale(1)';
+                if (dropContent) {
+                    dropContent.style.opacity = '1';
+                    dropContent.style.transform = 'scale(1)';
+                }
                 isAnimating = false;
 
                 if (typeof onComplete === 'function') {

@@ -2215,10 +2215,6 @@ textarea:focus-visible {
     box-shadow: 8px 8px 0px #FF5722, 0 0 45px rgba(255, 87, 34, 0.45) !important;
 }
 
-.basketball-upload-zone.drag-over * {
-    pointer-events: none !important;
-}
-
 [data-theme="dark"] .basketball-upload-zone.drag-over {
     background: radial-gradient(circle at 50% 25%, #162a45 0%, #0e1e33 55%, #08111d 100%) !important;
     border-color: #00FFCC !important;
