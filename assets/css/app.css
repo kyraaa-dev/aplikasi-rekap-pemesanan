@@ -2215,6 +2215,10 @@ textarea:focus-visible {
     box-shadow: 8px 8px 0px #FF5722, 0 0 45px rgba(255, 87, 34, 0.45) !important;
 }
 
+.basketball-upload-zone.drag-over * {
+    pointer-events: none !important;
+}
+
 [data-theme="dark"] .basketball-upload-zone.drag-over {
     background: radial-gradient(circle at 50% 25%, #162a45 0%, #0e1e33 55%, #08111d 100%) !important;
     border-color: #00FFCC !important;
@@ -2565,9 +2569,10 @@ textarea:focus-visible {
 
 @keyframes docSlamDunkFlight {
     0% {
-        top: 180px;
-        transform: translateX(-50%) rotate(-12deg) scale(0.65);
-        opacity: 0;
+        top: 160px;
+        transform: translateX(-50%) rotate(-12deg) scale(0.85);
+        opacity: 0.95;
+        filter: drop-shadow(0 10px 20px rgba(255, 107, 0, 0.6));
     }
     15% {
         top: 55px;

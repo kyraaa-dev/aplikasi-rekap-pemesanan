@@ -369,21 +369,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const noFilesMessage = document.getElementById('noFilesMessage');
         const csrfToken = '<?= generate_csrf_token() ?>';
 
-        let dragCounter = 0;
         let isAnimating = false;
+        let windowDragCounter = 0;
 
         // Helper to extract dropped files from DataTransfer
         function extractDroppedFiles(e) {
+            if (!e || !e.dataTransfer) return null;
             const dt = e.dataTransfer;
-            if (!dt) return null;
             if (dt.files && dt.files.length > 0) {
                 return dt.files;
             }
             if (dt.items && dt.items.length > 0) {
                 const arr = [];
                 for (let i = 0; i < dt.items.length; i++) {
-                    if (dt.items[i].kind === 'file') {
-                        const f = dt.items[i].getAsFile();
+                    const item = dt.items[i];
+                    if (item.kind === 'file') {
+                        const f = item.getAsFile();
                         if (f) arr.push(f);
                     }
                 }
@@ -392,82 +393,85 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             return null;
         }
 
-        // 1. Universal dragover & dragenter with capture phase - signals to browser that ANY drop is accepted
-        ['dragenter', 'dragover'].forEach(evtName => {
+        // 1. Prevent default behavior on Window & Document so files are never opened in new tabs
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(evtName => {
             window.addEventListener(evtName, function(e) {
                 e.preventDefault();
-                if (e.dataTransfer) {
-                    try { e.dataTransfer.dropEffect = 'copy'; } catch(err) {}
-                }
-                if (zone && !zone.classList.contains('drag-over')) {
-                    zone.classList.add('drag-over');
-                }
-            }, true);
-
+            }, false);
             document.addEventListener(evtName, function(e) {
                 e.preventDefault();
+            }, false);
+        });
+
+        // Track drag enter/leave on Window to illuminate upload zone
+        window.addEventListener('dragenter', function(e) {
+            e.preventDefault();
+            windowDragCounter++;
+            if (zone) zone.classList.add('drag-over');
+        }, false);
+
+        window.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            if (e.dataTransfer) {
+                try { e.dataTransfer.dropEffect = 'copy'; } catch(err) {}
+            }
+            if (zone && !zone.classList.contains('drag-over')) {
+                zone.classList.add('drag-over');
+            }
+        }, false);
+
+        window.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            windowDragCounter--;
+            if (windowDragCounter <= 0 || e.clientX <= 0 || e.clientY <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
+                windowDragCounter = 0;
+                if (zone) zone.classList.remove('drag-over');
+            }
+        }, false);
+
+        // 2. Direct Drag & Drop on Basketball Upload Zone
+        if (zone) {
+            zone.addEventListener('dragenter', function(e) {
+                e.preventDefault();
+                zone.classList.add('drag-over');
+            }, false);
+
+            zone.addEventListener('dragover', function(e) {
+                e.preventDefault();
                 if (e.dataTransfer) {
                     try { e.dataTransfer.dropEffect = 'copy'; } catch(err) {}
                 }
-            }, true);
+                zone.classList.add('drag-over');
+            }, false);
 
-            if (zone) {
-                zone.addEventListener(evtName, function(e) {
-                    e.preventDefault();
-                    if (e.dataTransfer) {
-                        try { e.dataTransfer.dropEffect = 'copy'; } catch(err) {}
-                    }
-                    zone.classList.add('drag-over');
-                }, true);
-            }
-        });
-
-        // 2. Drag leave - cleanly clear visual styling when mouse leaves window
-        window.addEventListener('dragleave', function(e) {
-            e.preventDefault();
-            if (e.clientX <= 0 || e.clientY <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
-                dragCounter = 0;
-                if (zone) zone.classList.remove('drag-over');
-            }
-        }, true);
-
-        if (zone) {
             zone.addEventListener('dragleave', function(e) {
                 e.preventDefault();
-                const rect = zone.getBoundingClientRect();
-                if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
-                    zone.classList.remove('drag-over');
-                }
             }, false);
-        }
 
-        // 3. UNIVERSAL DROP HANDLER on Window (Capture Phase) - Absolutely prevents new tab preview and processes file
-        window.addEventListener('drop', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            dragCounter = 0;
-            if (zone) zone.classList.remove('drag-over');
-
-            const files = extractDroppedFiles(e);
-            if (files && files.length > 0) {
-                handleFileSelection(files[0]);
-            }
-        }, true);
-
-        // Also direct drop on zone
-        if (zone) {
             zone.addEventListener('drop', function(e) {
                 e.preventDefault();
-                e.stopPropagation();
-                dragCounter = 0;
+                e.stopPropagation(); // Handled directly on target zone
+                windowDragCounter = 0;
                 zone.classList.remove('drag-over');
 
                 const files = extractDroppedFiles(e);
                 if (files && files.length > 0) {
                     handleFileSelection(files[0]);
                 }
-            }, true);
+            }, false);
         }
+
+        // 3. Fallback Drop Handler on Window (Catches files dropped anywhere on the page)
+        window.addEventListener('drop', function(e) {
+            e.preventDefault();
+            windowDragCounter = 0;
+            if (zone) zone.classList.remove('drag-over');
+
+            const files = extractDroppedFiles(e);
+            if (files && files.length > 0) {
+                handleFileSelection(files[0]);
+            }
+        }, false);
 
         // Click zone to browse (ignores click on browse label/buttons)
         if (zone) {
