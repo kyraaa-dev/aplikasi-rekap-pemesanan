@@ -2448,142 +2448,172 @@ textarea:focus-visible {
 }
 
 /* =========================================================
-   Layer 2: 3D Basketball with Document Badge Actor (The Dunker)
+   Layer 2: 3D Flying Document File Actor (The Dunker)
    ========================================================= */
-.file-basketball {
+.flying-document-file {
     position: absolute;
     top: -120px;
     left: 50%;
     transform: translateX(-50%) scale(0);
-    width: 58px;
-    height: 58px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #FF9800 0%, #F57C00 50%, #D84315 100%);
-    box-shadow: 0 10px 24px rgba(0,0,0,0.4), inset -3px -3px 8px rgba(0,0,0,0.35), inset 2px 2px 6px rgba(255,255,255,0.4);
-    border: 2.5px solid #2E1600;
+    width: 52px;
+    height: 66px;
+    background: #FFFFFF;
+    border-radius: 6px;
+    border: 1.5px solid rgba(255, 255, 255, 0.95);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.42), 0 3px 8px rgba(0, 0, 0, 0.25);
     z-index: 5;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
     opacity: 0;
     pointer-events: none;
     overflow: hidden;
+    transform-origin: center center;
 }
 
-/* Basketball Seam Rib Lines */
-.ball-rib-h {
+/* Dog-ear folded corner at top-right */
+.doc-file-fold {
     position: absolute;
+    top: 0;
+    right: 0;
+    width: 13px;
+    height: 13px;
+    background: linear-gradient(135deg, rgba(0,0,0,0.18) 48%, #CBD5E1 50%);
+    border-bottom-left-radius: 4px;
+    box-shadow: -1.5px 1.5px 3px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+/* File format header ribbon (WORD, EXCEL, PDF) */
+.doc-file-header {
     width: 100%;
-    height: 2.5px;
-    background: #2E1600;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.ball-rib-v {
-    position: absolute;
-    width: 2.5px;
-    height: 100%;
-    background: #2E1600;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.ball-rib-c1 {
-    position: absolute;
-    width: 48px;
-    height: 48px;
-    border: 2px solid #2E1600;
-    border-radius: 50%;
-    left: -22px;
-    top: 4px;
-}
-
-.ball-rib-c2 {
-    position: absolute;
-    width: 48px;
-    height: 48px;
-    border: 2px solid #2E1600;
-    border-radius: 50%;
-    right: -22px;
-    top: 4px;
-}
-
-/* Document Badge in the Center of Basketball */
-.ball-doc-badge {
-    position: absolute;
-    z-index: 6;
-    background: var(--dark);
-    color: #FFF;
-    border-radius: 6px;
-    padding: 2px 6px;
-    font-size: 0.72rem;
+    height: 18px;
+    background: linear-gradient(135deg, #2B579A 0%, #1E3E6F 100%);
+    color: #FFFFFF;
+    font-size: 0.6rem;
     font-weight: 900;
-    letter-spacing: -0.01em;
-    border: 1.5px solid #FFF;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.45);
+    letter-spacing: 0.05em;
     display: flex;
     align-items: center;
-    gap: 3px;
-    white-space: nowrap;
-    transition: background-color 0.2s ease;
+    padding-left: 6px;
+    padding-right: 14px;
+    text-transform: uppercase;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: background 0.2s ease;
 }
 
-/* Slam Dunk Trajectory Animation */
-.file-basketball.animating-dunk {
-    animation: slamDunkFullFlight 1.25s cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
+/* File body containing emblem & skeleton text lines */
+.doc-file-body {
+    flex: 1;
+    background: #F8FAFC;
+    padding: 3px 6px 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-@keyframes slamDunkFullFlight {
+.doc-file-emblem {
+    font-size: 1.22rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px 0 3px;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+}
+
+.doc-file-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5px;
+}
+
+.doc-file-line {
+    display: block;
+    height: 2.5px;
+    background: #CBD5E1;
+    border-radius: 2px;
+}
+
+.doc-file-line.full {
+    width: 100%;
+}
+
+.doc-file-line.short {
+    width: 62%;
+}
+
+/* Motion aura glow during flight */
+.doc-motion-aura {
+    position: absolute;
+    inset: -8px;
+    border-radius: 12px;
+    background: radial-gradient(circle, rgba(255, 120, 0, 0.45) 0%, rgba(255, 193, 7, 0.2) 50%, transparent 70%);
+    z-index: -1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+/* Document Slam Dunk Trajectory Animation */
+.flying-document-file.animating-dunk {
+    animation: docSlamDunkFlight 1.25s cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
+}
+
+.flying-document-file.animating-dunk .doc-motion-aura {
+    opacity: 1;
+}
+
+@keyframes docSlamDunkFlight {
     0% {
         top: 180px;
-        transform: translateX(-50%) rotate(0deg) scale(0.65);
+        transform: translateX(-50%) rotate(-12deg) scale(0.65);
         opacity: 0;
     }
     15% {
-        top: 60px;
-        transform: translateX(-50%) rotate(70deg) scale(1.15);
+        top: 55px;
+        transform: translateX(-50%) rotate(15deg) scale(1.12);
         opacity: 1;
-        filter: drop-shadow(0 12px 22px rgba(255, 107, 0, 0.65));
+        filter: drop-shadow(0 14px 24px rgba(255, 107, 0, 0.55));
     }
     30% {
+        /* Peak height above the hoop */
         top: -45px;
-        transform: translateX(-50%) rotate(150deg) scale(1.12);
+        transform: translateX(-50%) rotate(-8deg) scale(1.15);
         opacity: 1;
     }
     45% {
-        /* Dunk into hoop center */
+        /* Diving directly into the center of the rim aperture */
         top: 2px;
-        transform: translateX(-50%) rotate(220deg) scale(0.98);
+        transform: translateX(-50%) rotate(4deg) scale(0.98);
         opacity: 1;
     }
     60% {
-        /* Inside the net */
+        /* Gliding through inside of woven net */
         top: 38px;
-        transform: translateX(-50%) rotate(300deg) scale(0.85);
+        transform: translateX(-50%) rotate(-5deg) scale(0.86);
         opacity: 1;
     }
     75% {
-        /* Exit bottom of net */
-        top: 82px;
-        transform: translateX(-50%) rotate(360deg) scale(0.78);
+        /* Exiting the bottom fringe of the net */
+        top: 80px;
+        transform: translateX(-50%) rotate(5deg) scale(0.8);
         opacity: 1;
     }
     88% {
-        /* Bounce on court */
-        top: 150px;
-        transform: translateX(-50%) rotate(400deg) scale(0.92, 0.65);
+        /* Landing impact on court */
+        top: 148px;
+        transform: translateX(-50%) rotate(0deg) scale(0.92, 0.68);
         opacity: 0.95;
     }
     94% {
-        /* Rebound up slightly */
+        /* Gentle rebound */
         top: 132px;
-        transform: translateX(-50%) rotate(420deg) scale(0.75, 0.85);
+        transform: translateX(-50%) rotate(0deg) scale(0.78, 0.88);
         opacity: 0.6;
     }
     100% {
         top: 140px;
-        transform: translateX(-50%) rotate(430deg) scale(0.5);
+        transform: translateX(-50%) rotate(0deg) scale(0.5);
         opacity: 0;
     }
 }
@@ -3166,9 +3196,9 @@ textarea:focus-visible {
         height: 90px;
     }
 
-    .file-basketball {
-        width: 48px;
-        height: 48px;
+    .flying-document-file {
+        width: 44px;
+        height: 56px;
     }
 
     .drop-title {

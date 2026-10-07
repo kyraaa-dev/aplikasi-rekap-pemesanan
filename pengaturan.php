@@ -208,16 +208,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </g>
                                 </svg>
 
-                                <!-- Layer 2: 3D Basketball with seam lines & doc badge (The Dunker) -->
-                                <div class="file-basketball" id="fileBasketball">
-                                    <div class="ball-rib-h"></div>
-                                    <div class="ball-rib-v"></div>
-                                    <div class="ball-rib-c1"></div>
-                                    <div class="ball-rib-c2"></div>
-                                    <div class="ball-doc-badge" id="ballDocBadge">
-                                        <span id="ballBadgeIcon">📄</span>
-                                        <span id="ballBadgeText">DOC</span>
+                                <!-- Layer 2: 3D Flying Document File (The Dunker) -->
+                                <div class="flying-document-file" id="flyingDocFile">
+                                    <div class="doc-file-fold"></div>
+                                    <div class="doc-file-header" id="docFileHeader">DOC</div>
+                                    <div class="doc-file-body">
+                                        <div class="doc-file-emblem" id="docFileEmblem">📄</div>
+                                        <div class="doc-file-lines">
+                                            <span class="doc-file-line full"></span>
+                                            <span class="doc-file-line full"></span>
+                                            <span class="doc-file-line short"></span>
+                                        </div>
                                     </div>
+                                    <div class="doc-motion-aura"></div>
                                 </div>
 
                                 <!-- Layer 3: Front Woven Diamond Net & Solid Front Regulation Rim -->
@@ -350,10 +353,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const bbBackboard = document.getElementById('bbBackboard');
         const hoopWrap = document.getElementById('hoopWrap');
         const hoopFrontSvg = document.getElementById('hoopFrontSvg');
-        const fileBasketball = document.getElementById('fileBasketball');
-        const ballBadgeIcon = document.getElementById('ballBadgeIcon');
-        const ballBadgeText = document.getElementById('ballBadgeText');
-        const ballDocBadge = document.getElementById('ballDocBadge');
+        const flyingDocFile = document.getElementById('flyingDocFile');
+        const docFileHeader = document.getElementById('docFileHeader');
+        const docFileEmblem = document.getElementById('docFileEmblem');
         const dunkFxLayer = document.getElementById('dunkFxLayer');
         const dunkBadgeText = document.getElementById('dunkBadgeText');
         const dunkSparks = document.getElementById('dunkSparks');
@@ -505,34 +507,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             const ext = (file && file.name ? file.name.split('.').pop() : '').toLowerCase();
             let label = 'DOC';
             let icon = '📄';
-            let badgeBg = '#2B579A';
+            let headerGradient = 'linear-gradient(135deg, #185ABD 0%, #103F91 100%)';
 
             if (['xls', 'xlsx'].includes(ext)) {
                 label = 'EXCEL';
                 icon = '📊';
-                badgeBg = '#217346';
+                headerGradient = 'linear-gradient(135deg, #107C41 0%, #0A532B 100%)';
             } else if (ext === 'pdf') {
                 label = 'PDF';
                 icon = '📕';
-                badgeBg = '#D32F2F';
-            } else {
+                headerGradient = 'linear-gradient(135deg, #E81123 0%, #A80000 100%)';
+            } else if (['doc', 'docx'].includes(ext)) {
                 label = 'WORD';
                 icon = '📄';
-                badgeBg = '#2B579A';
+                headerGradient = 'linear-gradient(135deg, #185ABD 0%, #103F91 100%)';
+            } else {
+                label = ext.toUpperCase().slice(0, 5) || 'FILE';
+                icon = '📁';
+                headerGradient = 'linear-gradient(135deg, #6C5CE7 0%, #4834D4 100%)';
             }
 
-            if (ballBadgeText) ballBadgeText.textContent = label;
-            if (ballBadgeIcon) ballBadgeIcon.textContent = icon;
-            if (ballDocBadge) ballDocBadge.style.backgroundColor = badgeBg;
+            if (docFileHeader) {
+                docFileHeader.textContent = label;
+                docFileHeader.style.background = headerGradient;
+            }
+            if (docFileEmblem) {
+                docFileEmblem.textContent = icon;
+            }
 
-            // Fade center content slightly so focus is on basketball slam dunk
+            // Fade center content slightly so focus is on document slam dunk
             dropContent.style.opacity = '0.12';
             dropContent.style.transform = 'scale(0.96)';
 
             // Clean previous animation state
-            if (fileBasketball) {
-                fileBasketball.classList.remove('animating-dunk');
-                void fileBasketball.offsetWidth;
+            if (flyingDocFile) {
+                flyingDocFile.classList.remove('animating-dunk');
+                void flyingDocFile.offsetWidth;
             }
             if (bbBackboard) {
                 bbBackboard.classList.remove('board-shaking');
@@ -588,8 +598,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             }
 
-            // Start Basketball Flight into Ring
-            if (fileBasketball) fileBasketball.classList.add('animating-dunk');
+            // Start Document Flight into Ring
+            if (flyingDocFile) flyingDocFile.classList.add('animating-dunk');
 
             // Subtle Web Audio sound synthesis for whoosh & dunk impact
             try {
@@ -623,7 +633,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Cleanup & callback to upload
             setTimeout(() => {
                 clearTimeout(safetyTimer);
-                if (fileBasketball) fileBasketball.classList.remove('animating-dunk');
+                if (flyingDocFile) flyingDocFile.classList.remove('animating-dunk');
                 if (bbBackboard) bbBackboard.classList.remove('board-shaking');
                 if (hoopWrap) hoopWrap.classList.remove('hoop-dunk-hit');
                 if (hoopFrontSvg) hoopFrontSvg.classList.remove('net-swish-active');
