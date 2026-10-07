@@ -729,8 +729,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <a href="${escapeHtml(f.url)}" download class="file-action-btn file-action-download" title="Unduh File">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                                 </a>
-                                <button type="button" class="file-action-btn file-action-delete" title="Hapus File" data-filename="${escapeHtml(f.name)}" data-display-name="${escapeHtml(displayName)}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                <button type="button" class="file-action-btn file-action-delete" title="Hapus Dokumen" aria-label="Hapus Dokumen" data-filename="${escapeHtml(f.name)}" data-display-name="${escapeHtml(displayName)}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                                    </svg>
                                 </button>
                             </div>
                         </div>`;
@@ -760,12 +765,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         function confirmDeleteFile(filename, displayName, card, deleteBtn) {
             Swal.fire({
                 title: 'Hapus Dokumen?',
-                html: `Apakah Anda yakin ingin menghapus <strong>${escapeHtml(displayName)}</strong>?<br><span style="font-size:0.85rem; color:#888;">File akan dihapus permanen dari server.</span>`,
-                icon: 'warning',
+                html: `<div style="margin:10px 0 16px;"><div style="width:54px; height:54px; margin:0 auto; background:#FEE2E2; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid #EF4444;"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></div></div>Apakah Anda yakin ingin menghapus <strong>${escapeHtml(displayName)}</strong>?<br><span style="font-size:0.85rem; color:#888;">File akan dihapus permanen dari server.</span>`,
                 showCancelButton: true,
-                confirmButtonColor: '#FF0055',
+                confirmButtonColor: '#DC2626',
                 cancelButtonColor: '#000',
-                confirmButtonText: 'Ya, Hapus!',
+                confirmButtonText: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg> Ya, Hapus!',
                 cancelButtonText: 'Batal',
                 focusCancel: true
             }).then((result) => {

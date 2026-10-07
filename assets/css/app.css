@@ -3115,15 +3115,42 @@ textarea:focus-visible {
 /* Delete Button Styling & States */
 .file-action-delete {
     background: #FFF;
-    color: #EF4444;
+    color: #DC2626;
+    border-color: var(--dark);
+}
+
+.file-action-delete svg {
+    stroke: #DC2626;
+    transition: stroke 0.15s ease, transform 0.15s ease;
 }
 
 .file-action-delete:hover {
-    background: #FF0055;
+    background: #DC2626;
     color: #FFF;
+    border-color: var(--dark);
 }
 
 .file-action-delete:hover svg {
+    stroke: #FFF;
+    transform: scale(1.12);
+}
+
+[data-theme="dark"] .file-action-delete {
+    background: #1E293B;
+    color: #F87171;
+    border-color: #475569;
+}
+
+[data-theme="dark"] .file-action-delete svg {
+    stroke: #F87171;
+}
+
+[data-theme="dark"] .file-action-delete:hover {
+    background: #DC2626;
+    border-color: #DC2626;
+}
+
+[data-theme="dark"] .file-action-delete:hover svg {
     stroke: #FFF;
 }
 
