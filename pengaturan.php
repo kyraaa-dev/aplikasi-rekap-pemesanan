@@ -274,10 +274,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <h4 class="drop-title">Seret & Masukkan Dokumen ke Ring Basket!</h4>
                             <p class="drop-subtitle">Tarik berkas Word, Excel, atau PDF ke ring basket untuk mengunggah</p>
                             <div class="browse-btn-wrap">
-                                <button type="button" class="browse-action-btn" id="browseBtn" onclick="document.getElementById('fileInput').click()">
+                                <label for="fileInput" class="browse-action-btn" id="browseBtn" role="button" tabindex="0">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                                     Pilih Berkas Dokumen
-                                </button>
+                                </label>
                             </div>
                             <div class="file-format-pills">
                                 <span class="pill-format pill-word">
@@ -295,7 +295,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                         </div>
 
-                        <input type="file" id="fileInput" accept=".doc,.docx,.xls,.xlsx,.pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/pdf" style="display: none;">
+                        <input type="file" id="fileInput" accept=".doc,.docx,.xls,.xlsx,.pdf,.DOC,.DOCX,.XLS,.XLSX,.PDF,application/pdf" style="display: none;">
                     </div>
 
                     <!-- Upload Progress Bar -->
@@ -368,10 +368,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         let dragCounter = 0;
         let isAnimating = false;
 
-        // Prevent default drag behaviors
+        // Prevent default drag behaviors across the entire window
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            window.addEventListener(eventName, preventDefaults, false);
+            document.addEventListener(eventName, preventDefaults, false);
             zone.addEventListener(eventName, preventDefaults, false);
-            document.body.addEventListener(eventName, preventDefaults, false);
         });
 
         function preventDefaults(e) {
@@ -405,21 +406,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         });
 
-        // Click zone to browse
+        // Click zone to browse (ignores click on browse label/buttons)
         zone.addEventListener('click', function(e) {
-            if (e.target.closest('button') || e.target.closest('a') || isAnimating) return;
+            if (e.target.closest('#browseBtn') || e.target.closest('button') || e.target.closest('a') || isAnimating) return;
             fileInput.click();
         });
 
         // Browse File Input
         fileInput.addEventListener('change', function() {
             if (fileInput.files && fileInput.files.length > 0) {
-                handleFileSelection(fileInput.files[0]);
-                fileInput.value = ''; // Reset input agar bisa pilih file yang sama
+                const selected = fileInput.files[0];
+                handleFileSelection(selected);
             }
         });
 
         function handleFileSelection(file) {
+            if (!file) return;
             if (isAnimating) return;
             playBasketballAnimation(file, () => {
                 uploadFile(file);
@@ -430,7 +432,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         function playBasketballAnimation(file, onComplete) {
             isAnimating = true;
 
-            const ext = (file.name.split('.').pop() || '').toLowerCase();
+            // Safety timeout to prevent locking
+            const safetyTimer = setTimeout(() => {
+                isAnimating = false;
+            }, 3000);
+
+            const ext = (file && file.name ? file.name.split('.').pop() : '').toLowerCase();
             let label = 'DOC';
             let icon = '📄';
             let headerClass = 'header-word';
@@ -454,8 +461,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             docActorEmblem.textContent = icon;
 
             // Fade center content slightly so focus is on document dunk
-            dropContent.style.opacity = '0.15';
-            dropContent.style.transform = 'scale(0.95)';
+            dropContent.style.opacity = '0.12';
+            dropContent.style.transform = 'scale(0.96)';
 
             // Clean previous animation state
             flyingDocActor.classList.remove('animating-dunk');
@@ -464,6 +471,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             hoopFrontSvg.classList.remove('net-swish-active');
             dunkFxLayer.classList.remove('show-celebration');
             dunkSparks.innerHTML = '';
+
+            // CRITICAL: Force Browser Layout Reflow so keyframe animations restart every time
+            void flyingDocActor.offsetWidth;
+            void bbBackboard.offsetWidth;
+            void hoopWrap.offsetWidth;
+            void hoopFrontSvg.offsetWidth;
+            void dunkFxLayer.offsetWidth;
 
             // Generate celebration shoutout
             const celebrations = [
@@ -475,13 +489,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ];
             dunkBadgeText.textContent = celebrations[Math.floor(Math.random() * celebrations.length)];
 
-            // Spawn 12 spark & star particles around the rim
+            // Spawn 14 spark & star particles around the rim
             const colors = ['#FF5722', '#FFC107', '#FF9800', '#FFFFFF', '#00FFCC'];
-            for (let i = 0; i < 12; i++) {
+            for (let i = 0; i < 14; i++) {
                 const spark = document.createElement('div');
                 spark.className = 'spark-particle';
-                const angle = (i / 12) * Math.PI * 2;
-                const distance = 40 + Math.random() * 35;
+                const angle = (i / 14) * Math.PI * 2;
+                const distance = 42 + Math.random() * 38;
                 const tx = Math.cos(angle) * distance;
                 const ty = Math.sin(angle) * distance - 8;
                 spark.style.left = '65px';
@@ -495,24 +509,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 setTimeout(() => {
                     spark.style.transform = `translate(${tx}px, ${ty}px) scale(0)`;
                     spark.style.opacity = '0';
-                }, 520);
+                }, 480);
             }
 
             // Start Document Flight into Ring
-            requestAnimationFrame(() => {
-                flyingDocActor.classList.add('animating-dunk');
-            });
+            flyingDocActor.classList.add('animating-dunk');
 
-            // Impact Moment @ 520ms: Backboard rattle + Rim flex + Net swish + Comic popup!
+            // Subtle Web Audio sound synthesis for whoosh & dunk impact
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (AudioCtx) {
+                    const ctx = new AudioCtx();
+                    setTimeout(() => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(400, ctx.currentTime);
+                        osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.22);
+                        gain.gain.setValueAtTime(0.18, ctx.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.22);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start();
+                        osc.stop(ctx.currentTime + 0.22);
+                    }, 480);
+                }
+            } catch (e) {}
+
+            // Impact Moment @ 480ms: Backboard rattle + Rim flex + Net swish + Comic popup!
             setTimeout(() => {
                 bbBackboard.classList.add('board-shaking');
                 hoopWrap.classList.add('hoop-dunk-hit');
                 hoopFrontSvg.classList.add('net-swish-active');
                 dunkFxLayer.classList.add('show-celebration');
-            }, 520);
+            }, 480);
 
             // Cleanup & callback to upload
             setTimeout(() => {
+                clearTimeout(safetyTimer);
                 flyingDocActor.classList.remove('animating-dunk');
                 bbBackboard.classList.remove('board-shaking');
                 hoopWrap.classList.remove('hoop-dunk-hit');
@@ -526,15 +560,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if (typeof onComplete === 'function') {
                     onComplete();
                 }
-            }, 1350);
+            }, 1250);
         }
 
         // Upload File Function
         function uploadFile(file) {
             const allowedExts = ['doc', 'docx', 'xls', 'xlsx', 'pdf'];
-            const ext = (file.name.split('.').pop() || '').toLowerCase();
+            const ext = (file && file.name ? file.name.split('.').pop() : '').toLowerCase();
             
             if (!allowedExts.includes(ext)) {
+                fileInput.value = '';
                 Swal.fire({
                     icon: 'error',
                     title: 'Format Tidak Didukung!',
@@ -546,6 +581,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Batas 10MB
             if (file.size > 10 * 1024 * 1024) {
+                fileInput.value = '';
                 Swal.fire({
                     icon: 'error',
                     title: 'Ukuran Terlalu Besar!',
@@ -558,6 +594,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             const formData = new FormData();
             formData.append('upload_file', file);
             formData.append('csrf_token', csrfToken);
+            fileInput.value = ''; // Safely reset here after file is captured into FormData
 
             uploadFileName.textContent = file.name;
             uploadPercent.textContent = '0%';

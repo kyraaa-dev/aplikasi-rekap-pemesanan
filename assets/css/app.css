@@ -2456,12 +2456,13 @@ textarea:focus-visible {
     top: -120px;
     left: 50%;
     transform: translateX(-50%) scale(0);
-    width: 62px;
-    height: 80px;
+    width: 68px;
+    height: 86px;
+    box-sizing: border-box;
     border-radius: 8px;
     background: #FFFFFF;
     border: 3px solid var(--dark);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.35), 3px 3px 0px var(--dark);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.35), 3px 3px 0px var(--dark);
     z-index: 5;
     display: flex;
     flex-direction: column;
@@ -2479,7 +2480,7 @@ textarea:focus-visible {
     width: 0;
     height: 0;
     border-style: solid;
-    border-width: 0 14px 14px 0;
+    border-width: 0 15px 15px 0;
     border-color: transparent var(--dark) transparent transparent;
 }
 
@@ -2487,11 +2488,11 @@ textarea:focus-visible {
     content: '';
     position: absolute;
     top: 0;
-    right: -14px;
+    right: -15px;
     width: 0;
     height: 0;
     border-style: solid;
-    border-width: 14px 14px 0 0;
+    border-width: 15px 15px 0 0;
     border-color: #E2E8F0 transparent transparent transparent;
 }
 
@@ -2500,17 +2501,17 @@ textarea:focus-visible {
     width: 100%;
     padding: 3px 0;
     text-align: center;
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     font-weight: 900;
     color: #FFF;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
     background: #2B579A;
     border-bottom: 2px solid var(--dark);
 }
 
 .doc-actor-header.header-word { background: #2B579A; }
-.doc-actor-header.header-excel { background: #217346; }
-.doc-actor-header.header-pdf { background: #D32F2F; }
+.doc-actor-header.header-excel { background: #15803D; }
+.doc-actor-header.header-pdf { background: #DC2626; }
 
 /* Large Document Format Emblem */
 .doc-actor-body {
@@ -2524,35 +2525,35 @@ textarea:focus-visible {
 }
 
 .doc-actor-emblem {
-    font-size: 1.45rem;
+    font-size: 1.55rem;
     line-height: 1;
-    margin-bottom: 4px;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+    margin: 2px 0 3px 0;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.18));
 }
 
 .doc-actor-lines {
-    width: 75%;
+    width: 78%;
     display: flex;
     flex-direction: column;
     gap: 3px;
-    margin-top: 2px;
+    margin-top: 1px;
 }
 
 .doc-actor-line {
     height: 3px;
-    background: #CBD5E1;
+    background: #94A3B8;
     border-radius: 2px;
 }
 
 .doc-actor-line:nth-child(1) { width: 100%; }
-.doc-actor-line:nth-child(2) { width: 70%; }
+.doc-actor-line:nth-child(2) { width: 68%; }
 
 /* Dynamic Fiery Motion Comet Trail */
 .doc-comet-trail {
     position: absolute;
-    inset: -6px;
-    border-radius: 12px;
-    background: radial-gradient(circle, rgba(255, 107, 0, 0.45) 0%, transparent 70%);
+    inset: -8px;
+    border-radius: 14px;
+    background: radial-gradient(circle, rgba(255, 107, 0, 0.5) 0%, transparent 70%);
     z-index: -1;
     opacity: 0;
     transition: opacity 0.2s ease;
@@ -2560,7 +2561,7 @@ textarea:focus-visible {
 
 /* The Grand 3D Document Slam Dunk Trajectory */
 .flying-doc-actor.animating-dunk {
-    animation: epicDocDunkFlight 1.3s cubic-bezier(0.2, 0.85, 0.25, 1) forwards;
+    animation: epicDocDunkFlight 1.25s cubic-bezier(0.2, 0.85, 0.25, 1) forwards;
 }
 
 .flying-doc-actor.animating-dunk .doc-comet-trail {
@@ -2569,60 +2570,60 @@ textarea:focus-visible {
 
 @keyframes epicDocDunkFlight {
     0% {
-        top: 230px;
+        top: 240px;
         transform: translateX(-50%) rotate(-12deg) scale(0.65);
         opacity: 0;
     }
-    12% {
-        top: 120px;
-        transform: translateX(-35%) rotate(-25deg) scale(1.18);
+    10% {
+        top: 130px;
+        transform: translateX(-40%) rotate(-25deg) scale(1.15);
         opacity: 1;
-        filter: drop-shadow(0 15px 25px rgba(255, 107, 0, 0.6));
+        filter: drop-shadow(0 15px 25px rgba(255, 107, 0, 0.65));
     }
-    28% {
+    26% {
         /* High Apex Arc above Backboard */
-        top: -55px;
-        transform: translateX(-50%) rotate(38deg) scale(1.22);
+        top: -65px;
+        transform: translateX(-50%) rotate(35deg) scale(1.25);
         opacity: 1;
     }
     42% {
         /* Sharp Downward Spike toward Rim */
-        top: -8px;
-        transform: translateX(-50%) rotate(90deg) scale(1.05);
+        top: -10px;
+        transform: translateX(-50%) rotate(90deg) scale(1.08);
         opacity: 1;
     }
     54% {
         /* Enters directly INSIDE the Rim & Net */
         top: 22px;
-        transform: translateX(-50%) rotate(180deg) scale(0.88);
+        transform: translateX(-50%) rotate(180deg) scale(0.9);
         opacity: 1;
     }
     68% {
         /* Gliding down through the net mesh */
-        top: 62px;
-        transform: translateX(-50%) rotate(270deg) scale(0.78);
+        top: 65px;
+        transform: translateX(-50%) rotate(270deg) scale(0.8);
         opacity: 1;
     }
     80% {
         /* Exits bottom opening of net */
-        top: 105px;
-        transform: translateX(-50%) rotate(360deg) scale(0.72);
+        top: 108px;
+        transform: translateX(-50%) rotate(360deg) scale(0.74);
         opacity: 1;
     }
     89% {
         /* Bounce & Squash on hardwood floor */
-        top: 175px;
-        transform: translateX(-50%) rotate(380deg) scale(0.92, 0.6);
-        opacity: 0.9;
+        top: 180px;
+        transform: translateX(-50%) rotate(380deg) scale(0.95, 0.58);
+        opacity: 0.95;
     }
     95% {
         /* Rebound stretch bounce */
-        top: 155px;
-        transform: translateX(-50%) rotate(390deg) scale(0.72, 0.85);
-        opacity: 0.6;
+        top: 160px;
+        transform: translateX(-50%) rotate(390deg) scale(0.75, 0.88);
+        opacity: 0.7;
     }
     100% {
-        top: 170px;
+        top: 175px;
         transform: translateX(-50%) rotate(400deg) scale(0.5);
         opacity: 0;
     }
