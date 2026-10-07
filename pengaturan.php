@@ -366,26 +366,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         let dragCounter = 0;
         let isAnimating = false;
 
-        // Prevent default drag behaviors across the entire window
+        // Globally prevent default drag behaviors across the window so browser NEVER opens dropped files in a new tab/preview
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            window.addEventListener(eventName, preventDefaults, false);
-            document.addEventListener(eventName, preventDefaults, false);
-            zone.addEventListener(eventName, preventDefaults, false);
+            window.addEventListener(eventName, function(e) {
+                e.preventDefault();
+            }, false);
+            document.addEventListener(eventName, function(e) {
+                e.preventDefault();
+            }, false);
         });
 
-        function preventDefaults(e) {
+        // Drag enter on basketball zone
+        zone.addEventListener('dragenter', function(e) {
             e.preventDefault();
             e.stopPropagation();
-        }
-
-        // Drag enter
-        zone.addEventListener('dragenter', function(e) {
             dragCounter++;
             zone.classList.add('drag-over');
+            if (e.dataTransfer) {
+                e.dataTransfer.dropEffect = 'copy';
+            }
         });
 
-        // Drag leave
+        // Drag over on basketball zone - MUST call preventDefault and set dropEffect = 'copy' on every tick
+        zone.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (e.dataTransfer) {
+                e.dataTransfer.dropEffect = 'copy';
+            }
+            if (!zone.classList.contains('drag-over')) {
+                zone.classList.add('drag-over');
+            }
+        });
+
+        // Drag leave on basketball zone
         zone.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
             dragCounter--;
             if (dragCounter <= 0) {
                 dragCounter = 0;
@@ -393,16 +410,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         });
 
-        // Drop handler
+        // Drop handler on basketball zone
         zone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
             dragCounter = 0;
             zone.classList.remove('drag-over');
 
-            const files = e.dataTransfer.files;
+            const dt = e.dataTransfer;
+            let files = null;
+            if (dt) {
+                if (dt.files && dt.files.length > 0) {
+                    files = dt.files;
+                } else if (dt.items && dt.items.length > 0) {
+                    const itemFiles = [];
+                    for (let i = 0; i < dt.items.length; i++) {
+                        if (dt.items[i].kind === 'file') {
+                            const f = dt.items[i].getAsFile();
+                            if (f) itemFiles.push(f);
+                        }
+                    }
+                    if (itemFiles.length > 0) files = itemFiles;
+                }
+            }
+
             if (files && files.length > 0) {
                 handleFileSelection(files[0]);
             }
         });
+
+        // Also accept drops anywhere on the parent form-section as friendly fallback
+        const uploadSection = zone.closest('.form-section');
+        if (uploadSection) {
+            uploadSection.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                if (e.dataTransfer) {
+                    e.dataTransfer.dropEffect = 'copy';
+                }
+            });
+            uploadSection.addEventListener('drop', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dragCounter = 0;
+                zone.classList.remove('drag-over');
+
+                const dt = e.dataTransfer;
+                if (dt && dt.files && dt.files.length > 0) {
+                    handleFileSelection(dt.files[0]);
+                }
+            });
+        }
 
         // Click zone to browse (ignores click on browse label/buttons)
         zone.addEventListener('click', function(e) {
@@ -420,7 +477,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         function handleFileSelection(file) {
             if (!file) return;
-            if (isAnimating) return;
+            isAnimating = false; // Reset lock to guarantee animation runs
             playBasketballAnimation(file, () => {
                 uploadFile(file);
             });
