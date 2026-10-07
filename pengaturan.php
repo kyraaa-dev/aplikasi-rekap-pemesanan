@@ -187,71 +187,75 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <!-- Backboard, Rim & Net System -->
                         <div class="bb-stage">
                             <div class="bb-mount"></div>
-                            <div class="bb-backboard">
+                            <div class="bb-backboard" id="bbBackboard">
                                 <div class="bb-target-box"></div>
+                                <div class="bb-pad"></div>
                             </div>
                             <div class="bb-hoop-wrap" id="hoopWrap">
                                 <!-- Layer 1: Back Rim & Back Net Mesh -->
-                                <svg class="hoop-svg-back" viewBox="0 0 120 95">
+                                <svg class="hoop-svg-back" viewBox="0 0 130 105">
                                     <!-- Back rim arc -->
-                                    <ellipse cx="60" cy="14" rx="46" ry="11" fill="none" stroke="#B73200" stroke-width="6" stroke-dasharray="144" stroke-dashoffset="72" />
+                                    <ellipse cx="65" cy="16" rx="52" ry="12" fill="none" stroke="#B73200" stroke-width="7" stroke-dasharray="164" stroke-dashoffset="82" />
                                     <!-- Back net strands -->
-                                    <g stroke="rgba(255, 255, 255, 0.45)" stroke-width="1.8" fill="none" stroke-linecap="round">
-                                        <path d="M22,18 L34,36 L48,54 L52,70 L48,84" />
-                                        <path d="M36,18 L48,36 L58,54 L60,70 L58,84" />
-                                        <path d="M50,18 L58,36 L66,54 L68,70 L66,84" />
-                                        <path d="M70,18 L68,36 L66,54 L64,70 L64,84" />
-                                        <path d="M84,18 L76,36 L68,54 L66,70 L68,84" />
-                                        <path d="M98,18 L86,36 L74,54 L70,70 L72,84" />
+                                    <g stroke="rgba(255, 255, 255, 0.45)" stroke-width="2" fill="none" stroke-linecap="round">
+                                        <path d="M22,20 L35,42 L52,62 L56,80 L52,94" />
+                                        <path d="M38,20 L52,42 L62,62 L64,80 L62,94" />
+                                        <path d="M54,20 L64,42 L72,62 L74,80 L72,94" />
+                                        <path d="M76,20 L74,42 L72,62 L70,80 L70,94" />
+                                        <path d="M92,20 L82,42 L74,62 L72,80 L74,94" />
+                                        <path d="M108,20 L95,42 L82,62 L78,80 L80,94" />
                                     </g>
                                 </svg>
 
-                                <!-- Layer 2: 3D Basketball with seam lines & doc icon -->
-                                <div class="file-basketball" id="fileBasketball">
-                                    <div class="ball-rib-h"></div>
-                                    <div class="ball-rib-v"></div>
-                                    <div class="ball-rib-c1"></div>
-                                    <div class="ball-rib-c2"></div>
-                                    <div class="ball-doc-badge" id="ballDocBadge">
-                                        <span id="ballBadgeIcon">📄</span>
-                                        <span id="ballBadgeText">DOC</span>
+                                <!-- Layer 2: 3D Flying Document Card Actor (The Dunker) -->
+                                <div class="flying-doc-actor" id="flyingDocActor">
+                                    <div class="doc-corner-fold"></div>
+                                    <div class="doc-actor-header" id="docActorHeader">DOC</div>
+                                    <div class="doc-actor-body">
+                                        <div class="doc-actor-emblem" id="docActorEmblem">📄</div>
+                                        <div class="doc-actor-lines">
+                                            <div class="doc-actor-line"></div>
+                                            <div class="doc-actor-line"></div>
+                                        </div>
                                     </div>
+                                    <div class="doc-comet-trail"></div>
                                 </div>
 
-                                <!-- Layer 3: Front Woven Diamond Net & Solid Front Rim -->
-                                <svg class="hoop-svg-front" id="hoopFrontSvg" viewBox="0 0 120 95">
+                                <!-- Layer 3: Front Woven Diamond Net & Solid Front Regulation Rim -->
+                                <svg class="hoop-svg-front" id="hoopFrontSvg" viewBox="0 0 130 105">
                                     <!-- Front woven diamond lattice net -->
-                                    <g class="net-woven-front" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round">
+                                    <g class="net-woven-front" stroke="#FFFFFF" stroke-width="2.2" fill="none" stroke-linecap="round">
                                         <!-- Top loop attachments to rim -->
-                                        <path d="M16,14 Q22,21 28,14 Q34,21 40,14 Q46,21 52,14 Q58,21 64,14 Q70,21 76,14 Q82,21 88,14 Q94,21 100,14 Q104,18 106,14" stroke="rgba(255,255,255,0.95)" stroke-width="2.5" />
+                                        <path d="M16,16 Q23,24 30,16 Q37,24 44,16 Q51,24 58,16 Q65,24 72,16 Q79,24 86,16 Q93,24 100,16 Q107,24 114,16" stroke="rgba(255,255,255,0.95)" stroke-width="2.8" />
                                         <!-- Diagonal cords left-to-right -->
-                                        <path d="M18,17 L32,32 L46,47 L53,63 L51,80" />
-                                        <path d="M28,17 L42,32 L56,47 L61,63 L59,80" />
-                                        <path d="M40,17 L54,32 L64,47 L67,63 L65,80" />
-                                        <path d="M54,17 L64,32 L72,47 L72,63 L70,80" />
-                                        <path d="M70,17 L76,32 L78,47 L76,63 L74,80" />
+                                        <path d="M18,19 L34,36 L50,53 L58,70 L56,90" />
+                                        <path d="M30,19 L46,36 L62,53 L68,70 L66,90" />
+                                        <path d="M44,19 L60,36 L72,53 L75,70 L73,90" />
+                                        <path d="M60,19 L72,36 L81,53 L81,70 L79,90" />
+                                        <path d="M78,19 L85,36 L88,53 L86,70 L84,90" />
                                         <!-- Diagonal cords right-to-left -->
-                                        <path d="M102,17 L88,32 L74,47 L67,63 L69,80" />
-                                        <path d="M92,17 L78,32 L64,47 L59,63 L61,80" />
-                                        <path d="M80,17 L66,32 L56,47 L53,63 L55,80" />
-                                        <path d="M66,17 L56,32 L48,47 L48,63 L50,80" />
-                                        <path d="M50,17 L44,32 L42,47 L44,63 L46,80" />
+                                        <path d="M112,19 L96,36 L80,53 L72,70 L74,90" />
+                                        <path d="M100,19 L84,36 L68,53 L62,70 L64,90" />
+                                        <path d="M86,19 L70,36 L58,53 L55,70 L57,90" />
+                                        <path d="M70,19 L58,36 L49,53 L49,70 L51,90" />
+                                        <path d="M52,19 L45,36 L42,53 L44,70 L46,90" />
                                         <!-- Knotted horizontal rings -->
-                                        <ellipse cx="60" cy="32" rx="36" ry="6" stroke="rgba(255,255,255,0.7)" stroke-width="1.6" stroke-dasharray="4,4" />
-                                        <ellipse cx="60" cy="47" rx="26" ry="5" stroke="rgba(255,255,255,0.7)" stroke-width="1.6" stroke-dasharray="4,4" />
-                                        <ellipse cx="60" cy="63" rx="18" ry="4" stroke="rgba(255,255,255,0.7)" stroke-width="1.6" stroke-dasharray="3,3" />
-                                        <!-- Bottom rim frills -->
-                                        <ellipse cx="60" cy="80" rx="14" ry="3.5" stroke="#FFFFFF" stroke-width="2" />
+                                        <ellipse cx="65" cy="36" rx="40" ry="7" stroke="rgba(255,255,255,0.7)" stroke-width="1.8" stroke-dasharray="4,4" />
+                                        <ellipse cx="65" cy="53" rx="29" ry="5.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.8" stroke-dasharray="4,4" />
+                                        <ellipse cx="65" cy="70" rx="20" ry="4.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.8" stroke-dasharray="3,3" />
+                                        <!-- Bottom rim fringe -->
+                                        <ellipse cx="65" cy="90" rx="16" ry="4" stroke="#FFFFFF" stroke-width="2.4" />
                                     </g>
-                                    <!-- Solid Front Rim (Orange regulation ring with highlight) -->
-                                    <ellipse cx="60" cy="14" rx="46" ry="11" fill="none" stroke="#FF5722" stroke-width="6.5" stroke-dasharray="144" stroke-dashoffset="0" />
-                                    <ellipse cx="60" cy="13" rx="44" ry="9.5" fill="none" stroke="#FFA726" stroke-width="2" stroke-dasharray="144" stroke-dashoffset="0" />
+                                    <!-- Solid Front Regulation Rim (Orange with highlight) -->
+                                    <ellipse cx="65" cy="16" rx="52" ry="12" fill="none" stroke="#FF5722" stroke-width="7" stroke-dasharray="164" stroke-dashoffset="0" />
+                                    <ellipse cx="65" cy="15" rx="50" ry="10.5" fill="none" stroke="#FFA726" stroke-width="2.2" stroke-dasharray="164" stroke-dashoffset="0" />
                                     <!-- Rim mounting bracket joint -->
-                                    <rect x="52" y="3" width="16" height="11" rx="2" fill="#D84315" stroke="#222" stroke-width="1.5" />
+                                    <rect x="56" y="4" width="18" height="12" rx="2" fill="#D84315" stroke="#222" stroke-width="1.8" />
                                 </svg>
 
-                                <!-- Slam Dunk Celebration Comic Popup -->
+                                <!-- Slam Dunk Celebration Comic Popup & Shockwave -->
                                 <div class="dunk-fx-layer" id="dunkFxLayer">
+                                    <div class="dunk-shockwave" id="dunkShockwave"></div>
                                     <div class="dunk-badge-popup" id="dunkBadgeText">🔥 SLAM DUNK! 🎯</div>
                                     <div class="dunk-sparks" id="dunkSparks"></div>
                                 </div>
@@ -261,14 +265,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <!-- Drag Target Aiming Guide (Visible during dragover) -->
                         <div class="drag-aim-guide" id="dragAimGuide">
                             <div class="aim-crosshair"></div>
-                            <div class="aim-callout-text">🎯 LEPASKAN UNTUK SLAM DUNK!</div>
+                            <div class="aim-callout-text">🎯 LEPASKAN UNTUK SLAM DUNK DOKUMEN!</div>
                         </div>
 
                         <!-- Drop Zone Center Content -->
                         <div class="drop-content" id="dropContent">
                             <div class="drop-status-pill">🏀 AREA SLAM DUNK DOKUMEN</div>
-                            <h4 class="drop-title">Seret & Masukkan File ke Ring Basket!</h4>
-                            <p class="drop-subtitle">Tarik berkas Anda ke atas ring atau pilih file dari komputer</p>
+                            <h4 class="drop-title">Seret & Masukkan Dokumen ke Ring Basket!</h4>
+                            <p class="drop-subtitle">Tarik berkas Word, Excel, atau PDF ke ring basket untuk mengunggah</p>
                             <div class="browse-btn-wrap">
                                 <button type="button" class="browse-action-btn" id="browseBtn" onclick="document.getElementById('fileInput').click()">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
@@ -291,7 +295,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                         </div>
 
-                        <input type="file" id="fileInput" accept=".doc,.docx,.xls,.xlsx,.pdf" style="display: none;">
+                        <input type="file" id="fileInput" accept=".doc,.docx,.xls,.xlsx,.pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/pdf" style="display: none;">
                     </div>
 
                     <!-- Upload Progress Bar -->
@@ -342,11 +346,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     (function() {
         const zone = document.getElementById('basketballUploadZone');
         const fileInput = document.getElementById('fileInput');
+        const bbBackboard = document.getElementById('bbBackboard');
         const hoopWrap = document.getElementById('hoopWrap');
         const hoopFrontSvg = document.getElementById('hoopFrontSvg');
-        const fileBasketball = document.getElementById('fileBasketball');
-        const ballBadgeIcon = document.getElementById('ballBadgeIcon');
-        const ballBadgeText = document.getElementById('ballBadgeText');
+        const flyingDocActor = document.getElementById('flyingDocActor');
+        const docActorHeader = document.getElementById('docActorHeader');
+        const docActorEmblem = document.getElementById('docActorEmblem');
         const dunkFxLayer = document.getElementById('dunkFxLayer');
         const dunkBadgeText = document.getElementById('dunkBadgeText');
         const dunkSparks = document.getElementById('dunkSparks');
@@ -400,6 +405,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         });
 
+        // Click zone to browse
+        zone.addEventListener('click', function(e) {
+            if (e.target.closest('button') || e.target.closest('a') || isAnimating) return;
+            fileInput.click();
+        });
+
         // Browse File Input
         fileInput.addEventListener('change', function() {
             if (fileInput.files && fileInput.files.length > 0) {
@@ -415,46 +426,69 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             });
         }
 
-        // Basketball Slam Dunk Animation
+        // Basketball & 3D Document Slam Dunk Animation
         function playBasketballAnimation(file, onComplete) {
             isAnimating = true;
 
             const ext = (file.name.split('.').pop() || '').toLowerCase();
-            let icon = '📄';
             let label = 'DOC';
-            if (['xls', 'xlsx'].includes(ext)) { icon = '📊'; label = 'XLS'; }
-            if (ext === 'pdf') { icon = '📕'; label = 'PDF'; }
+            let icon = '📄';
+            let headerClass = 'header-word';
 
-            ballBadgeIcon.textContent = icon;
-            ballBadgeText.textContent = label;
+            if (['xls', 'xlsx'].includes(ext)) {
+                label = 'EXCEL';
+                icon = '📊';
+                headerClass = 'header-excel';
+            } else if (ext === 'pdf') {
+                label = 'PDF';
+                icon = '📕';
+                headerClass = 'header-pdf';
+            } else {
+                label = 'WORD';
+                icon = '📄';
+                headerClass = 'header-word';
+            }
 
-            // Fade center content slightly so court focus is on dunk
-            dropContent.style.opacity = '0.2';
-            dropContent.style.transform = 'scale(0.96)';
+            docActorHeader.textContent = label;
+            docActorHeader.className = `doc-actor-header ${headerClass}`;
+            docActorEmblem.textContent = icon;
+
+            // Fade center content slightly so focus is on document dunk
+            dropContent.style.opacity = '0.15';
+            dropContent.style.transform = 'scale(0.95)';
 
             // Clean previous animation state
-            fileBasketball.classList.remove('animating-dunk');
+            flyingDocActor.classList.remove('animating-dunk');
+            bbBackboard.classList.remove('board-shaking');
             hoopWrap.classList.remove('hoop-dunk-hit');
             hoopFrontSvg.classList.remove('net-swish-active');
             dunkFxLayer.classList.remove('show-celebration');
             dunkSparks.innerHTML = '';
 
-            // Generate particles
-            const celebrations = ['🔥 SLAM DUNK! 🎯', '⚡ SWISH! +3 PTS', '🏀 RIM ROCKER! 🔥', '💥 KABOOM! 🎯'];
+            // Generate celebration shoutout
+            const celebrations = [
+                '🔥 SLAM DUNK! 🎯', 
+                '⚡ SWISH! +3 PTS 🏀', 
+                '💥 BOOMSHAKALAKA! 🔥', 
+                '🎯 PERFECT SHOT! ⚡',
+                '🏆 DOKUMEN MASUK! 🏀'
+            ];
             dunkBadgeText.textContent = celebrations[Math.floor(Math.random() * celebrations.length)];
 
-            // Spawn spark dots around the hoop
-            for (let i = 0; i < 8; i++) {
+            // Spawn 12 spark & star particles around the rim
+            const colors = ['#FF5722', '#FFC107', '#FF9800', '#FFFFFF', '#00FFCC'];
+            for (let i = 0; i < 12; i++) {
                 const spark = document.createElement('div');
                 spark.className = 'spark-particle';
-                const angle = (i / 8) * Math.PI * 2;
-                const distance = 35 + Math.random() * 30;
+                const angle = (i / 12) * Math.PI * 2;
+                const distance = 40 + Math.random() * 35;
                 const tx = Math.cos(angle) * distance;
-                const ty = Math.sin(angle) * distance - 10;
-                spark.style.left = '60px';
-                spark.style.top = '30px';
-                spark.style.transition = 'all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
-                spark.style.transform = `translate(0, 0) scale(1)`;
+                const ty = Math.sin(angle) * distance - 8;
+                spark.style.left = '65px';
+                spark.style.top = '35px';
+                spark.style.background = colors[i % colors.length];
+                spark.style.transition = 'all 0.65s cubic-bezier(0.2, 0.8, 0.2, 1)';
+                spark.style.transform = 'translate(0, 0) scale(1)';
                 spark.style.opacity = '1';
                 dunkSparks.appendChild(spark);
 
@@ -464,21 +498,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }, 520);
             }
 
-            // Start Ball Flight
+            // Start Document Flight into Ring
             requestAnimationFrame(() => {
-                fileBasketball.classList.add('animating-dunk');
+                flyingDocActor.classList.add('animating-dunk');
             });
 
-            // Impact Moment: Rim flex + Net swish + Comic popup
+            // Impact Moment @ 520ms: Backboard rattle + Rim flex + Net swish + Comic popup!
             setTimeout(() => {
+                bbBackboard.classList.add('board-shaking');
                 hoopWrap.classList.add('hoop-dunk-hit');
                 hoopFrontSvg.classList.add('net-swish-active');
                 dunkFxLayer.classList.add('show-celebration');
-            }, 500);
+            }, 520);
 
             // Cleanup & callback to upload
             setTimeout(() => {
-                fileBasketball.classList.remove('animating-dunk');
+                flyingDocActor.classList.remove('animating-dunk');
+                bbBackboard.classList.remove('board-shaking');
                 hoopWrap.classList.remove('hoop-dunk-hit');
                 hoopFrontSvg.classList.remove('net-swish-active');
                 dunkFxLayer.classList.remove('show-celebration');
@@ -490,7 +526,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if (typeof onComplete === 'function') {
                     onComplete();
                 }
-            }, 1250);
+            }, 1350);
         }
 
         // Upload File Function

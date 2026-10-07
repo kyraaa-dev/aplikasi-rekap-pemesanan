@@ -2170,16 +2170,16 @@ textarea:focus-visible {
 }
 
 /* =========================================================
-   Basketball Hoop File Upload Animation (Revamped & Premium)
+   Basketball Hoop & 3D Document Dunk Animation (Pro Arena Edition)
    ========================================================= */
 
-/* Upload Zone Container & Court Floor */
+/* Upload Zone Container & Pro Court Floor */
 .basketball-upload-zone {
     position: relative;
-    min-height: 380px;
+    min-height: 430px;
     border: 4px solid var(--dark);
-    border-radius: 20px;
-    background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 35%, #FFCC80 100%);
+    border-radius: 24px;
+    background: radial-gradient(circle at 50% 25%, #FFF9E6 0%, #FEEBC8 45%, #F6AD55 100%);
     overflow: hidden;
     cursor: pointer;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -2187,13 +2187,13 @@ textarea:focus-visible {
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    padding-bottom: 2rem;
+    padding-bottom: 2.25rem;
     margin-bottom: 1.5rem;
     box-shadow: 6px 6px 0px var(--dark);
 }
 
 [data-theme="dark"] .basketball-upload-zone {
-    background: linear-gradient(135deg, #0d131f 0%, #151f32 40%, #1a2744 100%);
+    background: radial-gradient(circle at 50% 25%, #1a2333 0%, #0f172a 55%, #050b14 100%);
     border-color: #00FFCC;
     box-shadow: 6px 6px 0px #00FFCC;
 }
@@ -2206,23 +2206,23 @@ textarea:focus-visible {
 
 [data-theme="dark"] .basketball-upload-zone:hover {
     border-color: #00FFCC;
-    box-shadow: 8px 8px 0px #00FFCC, 0 0 25px rgba(0, 255, 204, 0.2);
+    box-shadow: 8px 8px 0px #00FFCC, 0 0 30px rgba(0, 255, 204, 0.25);
 }
 
 .basketball-upload-zone.drag-over {
-    border-color: #FF6B00;
-    background: linear-gradient(135deg, #FFE8D6 0%, #FFD6A5 40%, #FFBE76 100%);
-    box-shadow: 8px 8px 0px #FF6B00, 0 0 35px rgba(255, 107, 0, 0.3);
+    border-color: #FF5722;
+    background: radial-gradient(circle at 50% 25%, #FFF0D4 0%, #FED7AA 45%, #FB923C 100%);
+    box-shadow: 8px 8px 0px #FF5722, 0 0 45px rgba(255, 87, 34, 0.35);
     transform: scale(1.01);
 }
 
 [data-theme="dark"] .basketball-upload-zone.drag-over {
-    background: linear-gradient(135deg, #0c1a2e 0%, #102a45 40%, #163b60 100%);
+    background: radial-gradient(circle at 50% 25%, #162a45 0%, #0e1e33 55%, #08111d 100%);
     border-color: #00FFCC;
-    box-shadow: 8px 8px 0px #00FFCC, 0 0 40px rgba(0, 255, 204, 0.35);
+    box-shadow: 8px 8px 0px #00FFCC, 0 0 45px rgba(0, 255, 204, 0.4);
 }
 
-/* Basketball Court Floor Markings */
+/* Court Floor Lines */
 .court-flooring {
     position: absolute;
     inset: 0;
@@ -2235,54 +2235,56 @@ textarea:focus-visible {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 240px;
-    height: 190px;
-    border: 3px solid rgba(139, 69, 19, 0.25);
+    width: 260px;
+    height: 210px;
+    border: 3.5px solid rgba(139, 69, 19, 0.3);
     border-top: none;
     background: rgba(255, 152, 0, 0.08);
-    border-radius: 0 0 8px 8px;
+    border-radius: 0 0 10px 10px;
 }
 
 [data-theme="dark"] .court-paint-key {
-    border-color: rgba(0, 255, 204, 0.25);
-    background: rgba(0, 255, 204, 0.04);
+    border-color: rgba(0, 255, 204, 0.3);
+    background: rgba(0, 255, 204, 0.05);
 }
 
 .court-free-throw-circle {
     position: absolute;
-    top: 130px;
+    top: 145px;
     left: 50%;
     transform: translateX(-50%);
-    width: 140px;
-    height: 140px;
-    border: 3px solid rgba(139, 69, 19, 0.25);
+    width: 150px;
+    height: 150px;
+    border: 3.5px solid rgba(139, 69, 19, 0.3);
     border-radius: 50%;
 }
 
 [data-theme="dark"] .court-free-throw-circle {
-    border-color: rgba(0, 255, 204, 0.25);
+    border-color: rgba(0, 255, 204, 0.3);
 }
 
 .court-three-pt-arc {
     position: absolute;
-    top: -20px;
+    top: -30px;
     left: 50%;
     transform: translateX(-50%);
-    width: 480px;
-    height: 300px;
-    border: 3px dashed rgba(139, 69, 19, 0.2);
+    width: 520px;
+    height: 330px;
+    border: 3.5px dashed rgba(139, 69, 19, 0.22);
     border-top: none;
-    border-radius: 0 0 240px 240px;
+    border-radius: 0 0 260px 260px;
 }
 
 [data-theme="dark"] .court-three-pt-arc {
-    border-color: rgba(0, 255, 204, 0.18);
+    border-color: rgba(0, 255, 204, 0.2);
 }
 
-/* Basketball Stage (Backboard, Rim & Net) */
+/* =========================================================
+   Pro Basketball Backboard & Hoop System
+   ========================================================= */
 .bb-stage {
     position: absolute;
-    top: 16px;
+    top: 18px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -2293,36 +2295,68 @@ textarea:focus-visible {
     user-select: none;
 }
 
-/* Backboard */
+/* Wall Mount Beam */
+.bb-mount {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 14px;
+    background: #2D3748;
+    border-radius: 4px 4px 0 0;
+    border: 2.5px solid var(--dark);
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.2);
+}
+
+/* Tempered Glass Backboard */
 .bb-backboard {
     position: relative;
-    width: 160px;
-    height: 105px;
-    background: rgba(255, 255, 255, 0.92);
-    border: 4px solid var(--dark);
-    border-radius: 8px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15), 4px 4px 0px var(--dark);
-    backdrop-filter: blur(4px);
+    width: 190px;
+    height: 125px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 4.5px solid var(--dark);
+    border-radius: 10px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.18), 5px 5px 0px var(--dark);
+    backdrop-filter: blur(8px);
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    padding-bottom: 8px;
-    transition: transform 0.3s ease;
+    padding-bottom: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 [data-theme="dark"] .bb-backboard {
-    background: rgba(18, 26, 43, 0.92);
+    background: rgba(15, 23, 42, 0.9);
     border-color: #FFFFFF;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4), 4px 4px 0px #00FFCC;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.45), 5px 5px 0px #00FFCC;
 }
 
+/* Backboard LED Border Glow during dunk */
+.bb-backboard.board-shaking {
+    animation: backboardTremor 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+    border-color: #FF5722 !important;
+    box-shadow: 0 0 35px rgba(255, 87, 34, 0.7), 5px 5px 0px #FF5722 !important;
+}
+
+@keyframes backboardTremor {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    15% { transform: translate(-3px, 4px) rotate(-1.5deg); }
+    30% { transform: translate(4px, -3px) rotate(1.2deg); }
+    45% { transform: translate(-3px, 3px) rotate(-0.8deg); }
+    60% { transform: translate(2px, -2px) rotate(0.5deg); }
+    75% { transform: translate(-1px, 1px); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+/* Inner Regulation Target Square */
 .bb-target-box {
-    width: 64px;
-    height: 48px;
-    border: 3.5px solid #E53935;
-    border-radius: 3px;
-    background: rgba(229, 57, 53, 0.05);
-    box-shadow: inset 0 0 8px rgba(229, 57, 53, 0.15);
+    width: 76px;
+    height: 56px;
+    border: 4px solid #E53935;
+    border-radius: 4px;
+    background: rgba(229, 57, 53, 0.06);
+    box-shadow: inset 0 0 10px rgba(229, 57, 53, 0.18);
     margin-bottom: 2px;
 }
 
@@ -2331,197 +2365,66 @@ textarea:focus-visible {
     background: rgba(255, 82, 82, 0.08);
 }
 
-/* Backboard Mount Bracket */
-.bb-mount {
+/* Lower Crash Padding Bar */
+.bb-pad {
     position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 24px;
-    height: 12px;
-    background: #333;
-    border-radius: 4px 4px 0 0;
-    border: 2px solid var(--dark);
+    bottom: -5px;
+    left: -4.5px;
+    right: -4.5px;
+    height: 10px;
+    background: #E53935;
+    border: 3px solid var(--dark);
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* Hoop Wrap Assembly (Contains layers for authentic depth) */
+[data-theme="dark"] .bb-pad {
+    background: #00FFCC;
+}
+
+/* Hoop Wrap Assembly (Contains Dual Spring Box & Layers) */
 .bb-hoop-wrap {
     position: relative;
-    width: 120px;
-    height: 95px;
+    width: 130px;
+    height: 105px;
     margin-top: -16px;
     display: flex;
     justify-content: center;
     transform-origin: top center;
 }
 
-/* Hoop Spring Animation upon Dunk */
+/* Dual Spring Breakaway Dunk Flex */
 .bb-hoop-wrap.hoop-dunk-hit {
-    animation: rimDunkSpring 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.3) forwards;
+    animation: rimFlexSnap 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.35) forwards;
 }
 
-@keyframes rimDunkSpring {
+@keyframes rimFlexSnap {
     0% { transform: translateY(0) rotateX(0deg); }
-    22% { transform: translateY(18px) rotateX(24deg); }
-    45% { transform: translateY(-6px) rotateX(-10deg); }
-    65% { transform: translateY(4px) rotateX(5deg); }
-    82% { transform: translateY(-2px) rotateX(-2deg); }
+    22% { transform: translateY(22px) rotateX(28deg); }
+    45% { transform: translateY(-8px) rotateX(-12deg); }
+    65% { transform: translateY(5px) rotateX(6deg); }
+    82% { transform: translateY(-2px) rotateX(-3deg); }
     100% { transform: translateY(0) rotateX(0deg); }
 }
 
-/* Layer 1: Back SVG (Back Rim arc + Back Net) */
+/* Layer 1: Back SVG (Back Rim Arc + Back Net Strands) */
 .hoop-svg-back {
     position: absolute;
     top: 0;
     left: 0;
-    width: 120px;
-    height: 95px;
+    width: 130px;
+    height: 105px;
     z-index: 2;
     overflow: visible;
 }
 
-/* Layer 2: The 3D Basketball (Animated) */
-.file-basketball {
-    position: absolute;
-    top: -90px;
-    left: 50%;
-    transform: translateX(-50%) scale(0);
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #FF9800 0%, #F57C00 50%, #D84315 100%);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.35), inset -3px -3px 8px rgba(0,0,0,0.3), inset 2px 2px 6px rgba(255,255,255,0.4);
-    border: 2px solid #BF360C;
-    z-index: 5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-/* Basketball Rib Lines */
-.ball-rib-h {
-    position: absolute;
-    width: 100%;
-    height: 2.5px;
-    background: #2E1600;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.ball-rib-v {
-    position: absolute;
-    width: 2.5px;
-    height: 100%;
-    background: #2E1600;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.ball-rib-c1 {
-    position: absolute;
-    width: 44px;
-    height: 44px;
-    border: 2px solid #2E1600;
-    border-radius: 50%;
-    left: -20px;
-    top: 4px;
-}
-
-.ball-rib-c2 {
-    position: absolute;
-    width: 44px;
-    height: 44px;
-    border: 2px solid #2E1600;
-    border-radius: 50%;
-    right: -20px;
-    top: 4px;
-}
-
-.ball-doc-badge {
-    position: absolute;
-    z-index: 6;
-    background: var(--dark);
-    color: #FFF;
-    border-radius: 6px;
-    padding: 2px 5px;
-    font-size: 0.7rem;
-    font-weight: 900;
-    letter-spacing: -0.02em;
-    border: 1.5px solid #FFF;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-    display: flex;
-    align-items: center;
-    gap: 2px;
-}
-
-/* Slam Dunk Trajectory Animation */
-.file-basketball.animating-dunk {
-    animation: slamDunkFullFlight 1.25s cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
-}
-
-@keyframes slamDunkFullFlight {
-    0% {
-        top: 180px;
-        transform: translateX(-50%) rotate(0deg) scale(0.6);
-        opacity: 0;
-    }
-    15% {
-        top: 60px;
-        transform: translateX(-50%) rotate(60deg) scale(1.15);
-        opacity: 1;
-    }
-    30% {
-        top: -45px;
-        transform: translateX(-50%) rotate(140deg) scale(1.1);
-        opacity: 1;
-    }
-    45% {
-        /* Dunk into hoop center */
-        top: 2px;
-        transform: translateX(-50%) rotate(220deg) scale(0.98);
-        opacity: 1;
-    }
-    60% {
-        /* Inside the net */
-        top: 38px;
-        transform: translateX(-50%) rotate(300deg) scale(0.85);
-        opacity: 1;
-    }
-    75% {
-        /* Exit bottom of net */
-        top: 80px;
-        transform: translateX(-50%) rotate(360deg) scale(0.78);
-        opacity: 1;
-    }
-    88% {
-        /* Bounce on court */
-        top: 155px;
-        transform: translateX(-50%) rotate(400deg) scale(0.9, 0.65);
-        opacity: 0.9;
-    }
-    94% {
-        /* Rebound up slightly */
-        top: 135px;
-        transform: translateX(-50%) rotate(420deg) scale(0.75, 0.85);
-        opacity: 0.6;
-    }
-    100% {
-        top: 150px;
-        transform: translateX(-50%) rotate(440deg) scale(0.6);
-        opacity: 0;
-    }
-}
-
-/* Layer 3: Front SVG (Front Woven Net + Solid Front Rim) */
+/* Layer 3: Front SVG (Front Woven Diamond Net + Solid Front Regulation Rim) */
 .hoop-svg-front {
     position: absolute;
     top: 0;
     left: 0;
-    width: 120px;
-    height: 95px;
+    width: 130px;
+    height: 105px;
     z-index: 7;
     overflow: visible;
 }
@@ -2533,22 +2436,204 @@ textarea:focus-visible {
 }
 
 .hoop-svg-front.net-swish-active .net-woven-front {
-    animation: netSwishExpand 0.75s cubic-bezier(0.2, 0.9, 0.3, 1.2) forwards;
+    animation: netSwishExplosion 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.25) forwards;
 }
 
-@keyframes netSwishExpand {
+@keyframes netSwishExplosion {
     0% { transform: scale(1, 1); }
-    25% { transform: scale(1.35, 0.85) skewX(4deg); }
-    50% { transform: scale(0.85, 1.22) skewX(-3deg); }
-    70% { transform: scale(1.12, 0.95) skewX(2deg); }
-    88% { transform: scale(0.96, 1.05); }
+    22% { transform: scale(1.45, 0.8) skewX(6deg); }
+    45% { transform: scale(0.8, 1.3) skewX(-5deg); }
+    68% { transform: scale(1.15, 0.92) skewX(3deg); }
+    85% { transform: scale(0.95, 1.05); }
     100% { transform: scale(1, 1); }
 }
 
-/* Celebration Comic FX & Particles */
+/* =========================================================
+   Layer 2: 3D Flying Document Card Actor (The Dunker)
+   ========================================================= */
+.flying-doc-actor {
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    width: 62px;
+    height: 80px;
+    border-radius: 8px;
+    background: #FFFFFF;
+    border: 3px solid var(--dark);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.35), 3px 3px 0px var(--dark);
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Folded Dog-Ear Corner at Top Right */
+.doc-corner-fold {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 14px 14px 0;
+    border-color: transparent var(--dark) transparent transparent;
+}
+
+.doc-corner-fold::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -14px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 14px 14px 0 0;
+    border-color: #E2E8F0 transparent transparent transparent;
+}
+
+/* Header Ribbon Bar */
+.doc-actor-header {
+    width: 100%;
+    padding: 3px 0;
+    text-align: center;
+    font-size: 0.65rem;
+    font-weight: 900;
+    color: #FFF;
+    letter-spacing: 0.04em;
+    background: #2B579A;
+    border-bottom: 2px solid var(--dark);
+}
+
+.doc-actor-header.header-word { background: #2B579A; }
+.doc-actor-header.header-excel { background: #217346; }
+.doc-actor-header.header-pdf { background: #D32F2F; }
+
+/* Large Document Format Emblem */
+.doc-actor-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 4px;
+    width: 100%;
+}
+
+.doc-actor-emblem {
+    font-size: 1.45rem;
+    line-height: 1;
+    margin-bottom: 4px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+
+.doc-actor-lines {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 2px;
+}
+
+.doc-actor-line {
+    height: 3px;
+    background: #CBD5E1;
+    border-radius: 2px;
+}
+
+.doc-actor-line:nth-child(1) { width: 100%; }
+.doc-actor-line:nth-child(2) { width: 70%; }
+
+/* Dynamic Fiery Motion Comet Trail */
+.doc-comet-trail {
+    position: absolute;
+    inset: -6px;
+    border-radius: 12px;
+    background: radial-gradient(circle, rgba(255, 107, 0, 0.45) 0%, transparent 70%);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+/* The Grand 3D Document Slam Dunk Trajectory */
+.flying-doc-actor.animating-dunk {
+    animation: epicDocDunkFlight 1.3s cubic-bezier(0.2, 0.85, 0.25, 1) forwards;
+}
+
+.flying-doc-actor.animating-dunk .doc-comet-trail {
+    opacity: 1;
+}
+
+@keyframes epicDocDunkFlight {
+    0% {
+        top: 230px;
+        transform: translateX(-50%) rotate(-12deg) scale(0.65);
+        opacity: 0;
+    }
+    12% {
+        top: 120px;
+        transform: translateX(-35%) rotate(-25deg) scale(1.18);
+        opacity: 1;
+        filter: drop-shadow(0 15px 25px rgba(255, 107, 0, 0.6));
+    }
+    28% {
+        /* High Apex Arc above Backboard */
+        top: -55px;
+        transform: translateX(-50%) rotate(38deg) scale(1.22);
+        opacity: 1;
+    }
+    42% {
+        /* Sharp Downward Spike toward Rim */
+        top: -8px;
+        transform: translateX(-50%) rotate(90deg) scale(1.05);
+        opacity: 1;
+    }
+    54% {
+        /* Enters directly INSIDE the Rim & Net */
+        top: 22px;
+        transform: translateX(-50%) rotate(180deg) scale(0.88);
+        opacity: 1;
+    }
+    68% {
+        /* Gliding down through the net mesh */
+        top: 62px;
+        transform: translateX(-50%) rotate(270deg) scale(0.78);
+        opacity: 1;
+    }
+    80% {
+        /* Exits bottom opening of net */
+        top: 105px;
+        transform: translateX(-50%) rotate(360deg) scale(0.72);
+        opacity: 1;
+    }
+    89% {
+        /* Bounce & Squash on hardwood floor */
+        top: 175px;
+        transform: translateX(-50%) rotate(380deg) scale(0.92, 0.6);
+        opacity: 0.9;
+    }
+    95% {
+        /* Rebound stretch bounce */
+        top: 155px;
+        transform: translateX(-50%) rotate(390deg) scale(0.72, 0.85);
+        opacity: 0.6;
+    }
+    100% {
+        top: 170px;
+        transform: translateX(-50%) rotate(400deg) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* =========================================================
+   Celebration Comic FX, Shockwaves & Spark Particles
+   ========================================================= */
 .dunk-fx-layer {
     position: absolute;
-    top: -20px;
+    top: -24px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 12;
@@ -2562,57 +2647,81 @@ textarea:focus-visible {
     display: flex;
 }
 
+/* Concentric Shockwave Ring */
+.dunk-shockwave {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 30px;
+    border: 4px solid #FF9800;
+    border-radius: 50%;
+    opacity: 0;
+    animation: shockwaveExpand 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes shockwaveExpand {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; border-width: 6px; }
+    100% { transform: translate(-50%, -50%) scale(2.8); opacity: 0; border-width: 1px; }
+}
+
+/* Giant Comic Pop-up Badge */
 .dunk-badge-popup {
     background: #FFE600;
     color: #000;
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     font-weight: 900;
-    padding: 6px 18px;
-    border: 3.5px solid var(--dark);
+    padding: 7px 22px;
+    border: 4px solid var(--dark);
     border-radius: 50px;
     box-shadow: 4px 4px 0px var(--dark);
     letter-spacing: 0.03em;
-    animation: dunkBadgePop 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.35) forwards;
+    animation: epicBadgePop 0.95s cubic-bezier(0.175, 0.885, 0.32, 1.4) forwards;
     white-space: nowrap;
+    text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
 }
 
-@keyframes dunkBadgePop {
+@keyframes epicBadgePop {
     0% {
-        transform: scale(0) translateY(10px) rotate(-8deg);
+        transform: scale(0) translateY(15px) rotate(-10deg);
         opacity: 0;
     }
-    40% {
-        transform: scale(1.25) translateY(-10px) rotate(4deg);
+    35% {
+        transform: scale(1.35) translateY(-14px) rotate(5deg);
         opacity: 1;
     }
     70% {
-        transform: scale(1) translateY(-16px) rotate(-2deg);
+        transform: scale(1) translateY(-22px) rotate(-2deg);
         opacity: 1;
     }
     100% {
-        transform: scale(0.95) translateY(-26px) rotate(0deg);
+        transform: scale(0.92) translateY(-32px) rotate(0deg);
         opacity: 0;
     }
 }
 
 .dunk-sparks {
     position: absolute;
-    width: 140px;
-    height: 100px;
+    width: 160px;
+    height: 110px;
     top: 30px;
     pointer-events: none;
 }
 
 .spark-particle {
     position: absolute;
-    width: 8px;
-    height: 8px;
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
     background: #FF5722;
-    border: 1.5px solid #000;
+    border: 2px solid #000;
+    box-shadow: 0 0 8px #FF5722;
 }
 
-/* Center Drop Zone Content */
+/* =========================================================
+   Center Drop Zone Content & Buttons
+   ========================================================= */
 .drop-content {
     position: relative;
     z-index: 3;
@@ -2626,16 +2735,16 @@ textarea:focus-visible {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 4px 14px;
+    padding: 5px 16px;
     background: var(--dark);
     color: #FFF;
     border-radius: 20px;
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     font-weight: 800;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     margin-bottom: 8px;
-    box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.25);
 }
 
 [data-theme="dark"] .drop-status-pill {
@@ -2644,7 +2753,7 @@ textarea:focus-visible {
 }
 
 .drop-title {
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     font-weight: 900;
     color: var(--dark);
     margin: 4px 0;
@@ -2657,54 +2766,54 @@ textarea:focus-visible {
 }
 
 .drop-subtitle {
-    font-size: 0.85rem;
+    font-size: 0.88rem;
     color: var(--gray);
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
 .browse-btn-wrap {
     display: flex;
     justify-content: center;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
 .browse-action-btn {
     display: inline-flex !important;
     align-items: center !important;
     gap: 8px !important;
-    padding: 10px 24px !important;
+    padding: 11px 26px !important;
     background: #FF6B00 !important;
     color: #FFF !important;
-    border: 3px solid var(--dark) !important;
+    border: 3.5px solid var(--dark) !important;
     border-radius: 50px !important;
-    font-size: 0.9rem !important;
+    font-size: 0.95rem !important;
     font-weight: 800 !important;
     cursor: pointer !important;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    box-shadow: 3px 3px 0px var(--dark) !important;
+    box-shadow: 4px 4px 0px var(--dark) !important;
 }
 
 .browse-action-btn:hover {
     transform: translate(-2px, -2px) !important;
-    box-shadow: 5px 5px 0px var(--dark) !important;
+    box-shadow: 6px 6px 0px var(--dark) !important;
     background: #FF8533 !important;
 }
 
 .browse-action-btn:active {
     transform: translate(1px, 1px) !important;
-    box-shadow: 1px 1px 0px var(--dark) !important;
+    box-shadow: 2px 2px 0px var(--dark) !important;
 }
 
 [data-theme="dark"] .browse-action-btn {
     background: #00FFCC !important;
     color: #000 !important;
     border-color: #FFF !important;
-    box-shadow: 3px 3px 0px #FFF !important;
+    box-shadow: 4px 4px 0px #FFF !important;
 }
 
 [data-theme="dark"] .browse-action-btn:hover {
     background: #33FFD6 !important;
-    box-shadow: 5px 5px 0px #FFF !important;
+    box-shadow: 6px 6px 0px #FFF !important;
 }
 
 /* File Type Badges */
@@ -2740,7 +2849,7 @@ textarea:focus-visible {
 .pill-excel { color: #15803D; border-color: #15803D; }
 .pill-pdf { color: #DC2626; border-color: #DC2626; }
 
-/* Drag Target Aiming Guide (Appears when dragging over) */
+/* Drag Target Aiming Guide */
 .drag-aim-guide {
     position: absolute;
     inset: 0;
@@ -2758,12 +2867,12 @@ textarea:focus-visible {
 
 .aim-crosshair {
     position: absolute;
-    top: 45px;
+    top: 50px;
     left: 50%;
     transform: translateX(-50%);
-    width: 100px;
-    height: 100px;
-    border: 3px dashed #FF6B00;
+    width: 110px;
+    height: 110px;
+    border: 3.5px dashed #FF6B00;
     border-radius: 50%;
     animation: aimSpinPulse 2s linear infinite;
 }
@@ -2783,12 +2892,12 @@ textarea:focus-visible {
     bottom: 24px;
     background: var(--dark);
     color: #FFF;
-    padding: 8px 22px;
+    padding: 9px 24px;
     border-radius: 50px;
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: 900;
     letter-spacing: 0.02em;
-    border: 2px solid #FF6B00;
+    border: 3px solid #FF6B00;
     box-shadow: 4px 4px 0px #FF6B00;
     animation: aimTextBounce 0.8s ease-in-out infinite alternate;
 }
@@ -3041,33 +3150,38 @@ textarea:focus-visible {
 /* Responsive Styles */
 @media (max-width: 640px) {
     .basketball-upload-zone {
-        min-height: 340px;
+        min-height: 380px;
         padding-bottom: 1.5rem;
     }
     
     .bb-backboard {
-        width: 130px;
-        height: 85px;
+        width: 150px;
+        height: 100px;
     }
     
     .bb-target-box {
-        width: 50px;
-        height: 36px;
+        width: 58px;
+        height: 42px;
     }
     
     .bb-hoop-wrap {
-        width: 100px;
-        height: 80px;
+        width: 110px;
+        height: 90px;
     }
     
     .hoop-svg-back,
     .hoop-svg-front {
-        width: 100px;
-        height: 80px;
+        width: 110px;
+        height: 90px;
+    }
+
+    .flying-doc-actor {
+        width: 50px;
+        height: 65px;
     }
 
     .drop-title {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
     }
 
     .uploaded-file-card {
@@ -3086,4 +3200,5 @@ textarea:focus-visible {
         border-top: 1px solid var(--gray-light);
     }
 }
+
 
