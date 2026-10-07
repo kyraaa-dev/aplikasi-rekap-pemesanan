@@ -207,18 +207,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </g>
                                 </svg>
 
-                                <!-- Layer 2: 3D Flying Document Card Actor (The Dunker) -->
-                                <div class="flying-doc-actor" id="flyingDocActor">
-                                    <div class="doc-corner-fold"></div>
-                                    <div class="doc-actor-header" id="docActorHeader">DOC</div>
-                                    <div class="doc-actor-body">
-                                        <div class="doc-actor-emblem" id="docActorEmblem">📄</div>
-                                        <div class="doc-actor-lines">
-                                            <div class="doc-actor-line"></div>
-                                            <div class="doc-actor-line"></div>
-                                        </div>
+                                <!-- Layer 2: 3D Basketball with seam lines & doc badge (The Dunker) -->
+                                <div class="file-basketball" id="fileBasketball">
+                                    <div class="ball-rib-h"></div>
+                                    <div class="ball-rib-v"></div>
+                                    <div class="ball-rib-c1"></div>
+                                    <div class="ball-rib-c2"></div>
+                                    <div class="ball-doc-badge" id="ballDocBadge">
+                                        <span id="ballBadgeIcon">📄</span>
+                                        <span id="ballBadgeText">DOC</span>
                                     </div>
-                                    <div class="doc-comet-trail"></div>
                                 </div>
 
                                 <!-- Layer 3: Front Woven Diamond Net & Solid Front Regulation Rim -->
@@ -270,7 +268,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                         <!-- Drop Zone Center Content -->
                         <div class="drop-content" id="dropContent">
-                            <div class="drop-status-pill">📁 AREA UNGGAH DOKUMEN</div>
                             <h4 class="drop-title">Seret & Masukkan Dokumen ke Ring Basket!</h4>
                             <p class="drop-subtitle">Tarik berkas Word, Excel, atau PDF ke ring basket untuk mengunggah</p>
                             <div class="browse-btn-wrap">
@@ -349,9 +346,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const bbBackboard = document.getElementById('bbBackboard');
         const hoopWrap = document.getElementById('hoopWrap');
         const hoopFrontSvg = document.getElementById('hoopFrontSvg');
-        const flyingDocActor = document.getElementById('flyingDocActor');
-        const docActorHeader = document.getElementById('docActorHeader');
-        const docActorEmblem = document.getElementById('docActorEmblem');
+        const fileBasketball = document.getElementById('fileBasketball');
+        const ballBadgeIcon = document.getElementById('ballBadgeIcon');
+        const ballBadgeText = document.getElementById('ballBadgeText');
+        const ballDocBadge = document.getElementById('ballDocBadge');
         const dunkFxLayer = document.getElementById('dunkFxLayer');
         const dunkBadgeText = document.getElementById('dunkBadgeText');
         const dunkSparks = document.getElementById('dunkSparks');
@@ -440,32 +438,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             const ext = (file && file.name ? file.name.split('.').pop() : '').toLowerCase();
             let label = 'DOC';
             let icon = '📄';
-            let headerClass = 'header-word';
+            let badgeBg = '#2B579A';
 
             if (['xls', 'xlsx'].includes(ext)) {
                 label = 'EXCEL';
                 icon = '📊';
-                headerClass = 'header-excel';
+                badgeBg = '#217346';
             } else if (ext === 'pdf') {
                 label = 'PDF';
                 icon = '📕';
-                headerClass = 'header-pdf';
+                badgeBg = '#D32F2F';
             } else {
                 label = 'WORD';
                 icon = '📄';
-                headerClass = 'header-word';
+                badgeBg = '#2B579A';
             }
 
-            docActorHeader.textContent = label;
-            docActorHeader.className = `doc-actor-header ${headerClass}`;
-            docActorEmblem.textContent = icon;
+            if (ballBadgeText) ballBadgeText.textContent = label;
+            if (ballBadgeIcon) ballBadgeIcon.textContent = icon;
+            if (ballDocBadge) ballDocBadge.style.backgroundColor = badgeBg;
 
-            // Fade center content slightly so focus is on document dunk
+            // Fade center content slightly so focus is on basketball slam dunk
             dropContent.style.opacity = '0.12';
             dropContent.style.transform = 'scale(0.96)';
 
             // Clean previous animation state
-            flyingDocActor.classList.remove('animating-dunk');
+            if (fileBasketball) fileBasketball.classList.remove('animating-dunk');
             bbBackboard.classList.remove('board-shaking');
             hoopWrap.classList.remove('hoop-dunk-hit');
             hoopFrontSvg.classList.remove('net-swish-active');
@@ -473,7 +471,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             dunkSparks.innerHTML = '';
 
             // CRITICAL: Force Browser Layout Reflow so keyframe animations restart every time
-            void flyingDocActor.offsetWidth;
+            if (fileBasketball) void fileBasketball.offsetWidth;
             void bbBackboard.offsetWidth;
             void hoopWrap.offsetWidth;
             void hoopFrontSvg.offsetWidth;
@@ -511,8 +509,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }, 480);
             }
 
-            // Start Document Flight into Ring
-            flyingDocActor.classList.add('animating-dunk');
+            // Start Basketball Flight into Ring
+            if (fileBasketball) fileBasketball.classList.add('animating-dunk');
 
             // Subtle Web Audio sound synthesis for whoosh & dunk impact
             try {
@@ -546,7 +544,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Cleanup & callback to upload
             setTimeout(() => {
                 clearTimeout(safetyTimer);
-                flyingDocActor.classList.remove('animating-dunk');
+                if (fileBasketball) fileBasketball.classList.remove('animating-dunk');
                 bbBackboard.classList.remove('board-shaking');
                 hoopWrap.classList.remove('hoop-dunk-hit');
                 hoopFrontSvg.classList.remove('net-swish-active');
@@ -729,9 +727,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                                 </a>
                                 <button type="button" class="file-action-btn file-action-delete" title="Hapus Dokumen" aria-label="Hapus Dokumen" data-filename="${escapeHtml(f.name)}" data-display-name="${escapeHtml(displayName)}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 6h18"></path>
+                                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
                                         <line x1="10" y1="11" x2="10" y2="17"></line>
                                         <line x1="14" y1="11" x2="14" y2="17"></line>
                                     </svg>
@@ -764,11 +763,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         function confirmDeleteFile(filename, displayName, card, deleteBtn) {
             Swal.fire({
                 title: 'Hapus Dokumen?',
-                html: `<div style="margin:10px 0 16px;"><div style="width:54px; height:54px; margin:0 auto; background:#FEE2E2; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid #EF4444;"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></div></div>Apakah Anda yakin ingin menghapus <strong>${escapeHtml(displayName)}</strong>?<br><span style="font-size:0.85rem; color:#888;">File akan dihapus permanen dari server.</span>`,
+                html: `<div style="margin:10px 0 16px;"><div style="width:54px; height:54px; margin:0 auto; background:#FEE2E2; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid #EF4444;"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></div></div>Apakah Anda yakin ingin menghapus <strong>${escapeHtml(displayName)}</strong>?<br><span style="font-size:0.85rem; color:#888;">File akan dihapus permanen dari server.</span>`,
                 showCancelButton: true,
                 confirmButtonColor: '#DC2626',
                 cancelButtonColor: '#000',
-                confirmButtonText: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg> Ya, Hapus!',
+                confirmButtonText: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg> Ya, Hapus!',
                 cancelButtonText: 'Batal',
                 focusCancel: true
             }).then((result) => {

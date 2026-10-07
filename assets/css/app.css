@@ -2449,182 +2449,142 @@ textarea:focus-visible {
 }
 
 /* =========================================================
-   Layer 2: 3D Flying Document Card Actor (The Dunker)
+   Layer 2: 3D Basketball with Document Badge Actor (The Dunker)
    ========================================================= */
-.flying-doc-actor {
+.file-basketball {
     position: absolute;
     top: -120px;
     left: 50%;
     transform: translateX(-50%) scale(0);
-    width: 68px;
-    height: 86px;
-    box-sizing: border-box;
-    border-radius: 8px;
-    background: #FFFFFF;
-    border: 3px solid var(--dark);
-    box-shadow: 0 14px 28px rgba(0,0,0,0.35), 3px 3px 0px var(--dark);
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #FF9800 0%, #F57C00 50%, #D84315 100%);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.4), inset -3px -3px 8px rgba(0,0,0,0.35), inset 2px 2px 6px rgba(255,255,255,0.4);
+    border: 2.5px solid #2E1600;
     z-index: 5;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
     opacity: 0;
     pointer-events: none;
     overflow: hidden;
 }
 
-/* Folded Dog-Ear Corner at Top Right */
-.doc-corner-fold {
+/* Basketball Seam Rib Lines */
+.ball-rib-h {
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 15px 15px 0;
-    border-color: transparent var(--dark) transparent transparent;
-}
-
-.doc-corner-fold::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: -15px;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 15px 15px 0 0;
-    border-color: #E2E8F0 transparent transparent transparent;
-}
-
-/* Header Ribbon Bar */
-.doc-actor-header {
     width: 100%;
-    padding: 3px 0;
-    text-align: center;
-    font-size: 0.7rem;
-    font-weight: 900;
+    height: 2.5px;
+    background: #2E1600;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.ball-rib-v {
+    position: absolute;
+    width: 2.5px;
+    height: 100%;
+    background: #2E1600;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.ball-rib-c1 {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border: 2px solid #2E1600;
+    border-radius: 50%;
+    left: -22px;
+    top: 4px;
+}
+
+.ball-rib-c2 {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border: 2px solid #2E1600;
+    border-radius: 50%;
+    right: -22px;
+    top: 4px;
+}
+
+/* Document Badge in the Center of Basketball */
+.ball-doc-badge {
+    position: absolute;
+    z-index: 6;
+    background: var(--dark);
     color: #FFF;
-    letter-spacing: 0.05em;
-    background: #2B579A;
-    border-bottom: 2px solid var(--dark);
-}
-
-.doc-actor-header.header-word { background: #2B579A; }
-.doc-actor-header.header-excel { background: #15803D; }
-.doc-actor-header.header-pdf { background: #DC2626; }
-
-/* Large Document Format Emblem */
-.doc-actor-body {
-    flex: 1;
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    border: 1.5px solid #FFF;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.45);
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 2px 4px;
-    width: 100%;
-}
-
-.doc-actor-emblem {
-    font-size: 1.55rem;
-    line-height: 1;
-    margin: 2px 0 3px 0;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.18));
-}
-
-.doc-actor-lines {
-    width: 78%;
-    display: flex;
-    flex-direction: column;
     gap: 3px;
-    margin-top: 1px;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
 }
 
-.doc-actor-line {
-    height: 3px;
-    background: #94A3B8;
-    border-radius: 2px;
+/* Slam Dunk Trajectory Animation */
+.file-basketball.animating-dunk {
+    animation: slamDunkFullFlight 1.25s cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
 }
 
-.doc-actor-line:nth-child(1) { width: 100%; }
-.doc-actor-line:nth-child(2) { width: 68%; }
-
-/* Dynamic Fiery Motion Comet Trail */
-.doc-comet-trail {
-    position: absolute;
-    inset: -8px;
-    border-radius: 14px;
-    background: radial-gradient(circle, rgba(255, 107, 0, 0.5) 0%, transparent 70%);
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-/* The Grand 3D Document Slam Dunk Trajectory */
-.flying-doc-actor.animating-dunk {
-    animation: epicDocDunkFlight 1.25s cubic-bezier(0.2, 0.85, 0.25, 1) forwards;
-}
-
-.flying-doc-actor.animating-dunk .doc-comet-trail {
-    opacity: 1;
-}
-
-@keyframes epicDocDunkFlight {
+@keyframes slamDunkFullFlight {
     0% {
-        top: 240px;
-        transform: translateX(-50%) rotate(-12deg) scale(0.65);
+        top: 180px;
+        transform: translateX(-50%) rotate(0deg) scale(0.65);
         opacity: 0;
     }
-    10% {
-        top: 130px;
-        transform: translateX(-40%) rotate(-25deg) scale(1.15);
+    15% {
+        top: 60px;
+        transform: translateX(-50%) rotate(70deg) scale(1.15);
         opacity: 1;
-        filter: drop-shadow(0 15px 25px rgba(255, 107, 0, 0.65));
+        filter: drop-shadow(0 12px 22px rgba(255, 107, 0, 0.65));
     }
-    26% {
-        /* High Apex Arc above Backboard */
-        top: -65px;
-        transform: translateX(-50%) rotate(35deg) scale(1.25);
-        opacity: 1;
-    }
-    42% {
-        /* Sharp Downward Spike toward Rim */
-        top: -10px;
-        transform: translateX(-50%) rotate(90deg) scale(1.08);
+    30% {
+        top: -45px;
+        transform: translateX(-50%) rotate(150deg) scale(1.12);
         opacity: 1;
     }
-    54% {
-        /* Enters directly INSIDE the Rim & Net */
-        top: 22px;
-        transform: translateX(-50%) rotate(180deg) scale(0.9);
+    45% {
+        /* Dunk into hoop center */
+        top: 2px;
+        transform: translateX(-50%) rotate(220deg) scale(0.98);
         opacity: 1;
     }
-    68% {
-        /* Gliding down through the net mesh */
-        top: 65px;
-        transform: translateX(-50%) rotate(270deg) scale(0.8);
+    60% {
+        /* Inside the net */
+        top: 38px;
+        transform: translateX(-50%) rotate(300deg) scale(0.85);
         opacity: 1;
     }
-    80% {
-        /* Exits bottom opening of net */
-        top: 108px;
-        transform: translateX(-50%) rotate(360deg) scale(0.74);
+    75% {
+        /* Exit bottom of net */
+        top: 82px;
+        transform: translateX(-50%) rotate(360deg) scale(0.78);
         opacity: 1;
     }
-    89% {
-        /* Bounce & Squash on hardwood floor */
-        top: 180px;
-        transform: translateX(-50%) rotate(380deg) scale(0.95, 0.58);
+    88% {
+        /* Bounce on court */
+        top: 150px;
+        transform: translateX(-50%) rotate(400deg) scale(0.92, 0.65);
         opacity: 0.95;
     }
-    95% {
-        /* Rebound stretch bounce */
-        top: 160px;
-        transform: translateX(-50%) rotate(390deg) scale(0.75, 0.88);
-        opacity: 0.7;
+    94% {
+        /* Rebound up slightly */
+        top: 132px;
+        transform: translateX(-50%) rotate(420deg) scale(0.75, 0.85);
+        opacity: 0.6;
     }
     100% {
-        top: 175px;
-        transform: translateX(-50%) rotate(400deg) scale(0.5);
+        top: 140px;
+        transform: translateX(-50%) rotate(430deg) scale(0.5);
         opacity: 0;
     }
 }
@@ -3114,44 +3074,46 @@ textarea:focus-visible {
 
 /* Delete Button Styling & States */
 .file-action-delete {
-    background: #FFF;
-    color: #DC2626;
-    border-color: var(--dark);
+    background: #FEE2E2 !important;
+    color: #DC2626 !important;
+    border: 2px solid #DC2626 !important;
 }
 
 .file-action-delete svg {
-    stroke: #DC2626;
-    transition: stroke 0.15s ease, transform 0.15s ease;
+    stroke: #DC2626 !important;
+    transition: all 0.15s ease;
 }
 
 .file-action-delete:hover {
-    background: #DC2626;
-    color: #FFF;
-    border-color: var(--dark);
+    background: #DC2626 !important;
+    color: #FFF !important;
+    border-color: #991B1B !important;
+    box-shadow: 3px 3px 0px var(--dark);
+    transform: translate(-1px, -1px);
 }
 
 .file-action-delete:hover svg {
-    stroke: #FFF;
-    transform: scale(1.12);
+    stroke: #FFF !important;
+    transform: scale(1.15);
 }
 
 [data-theme="dark"] .file-action-delete {
-    background: #1E293B;
-    color: #F87171;
-    border-color: #475569;
+    background: rgba(220, 38, 38, 0.2) !important;
+    color: #F87171 !important;
+    border-color: #EF4444 !important;
 }
 
 [data-theme="dark"] .file-action-delete svg {
-    stroke: #F87171;
+    stroke: #F87171 !important;
 }
 
 [data-theme="dark"] .file-action-delete:hover {
-    background: #DC2626;
-    border-color: #DC2626;
+    background: #DC2626 !important;
+    border-color: #DC2626 !important;
 }
 
 [data-theme="dark"] .file-action-delete:hover svg {
-    stroke: #FFF;
+    stroke: #FFF !important;
 }
 
 .file-action-delete:disabled,
@@ -3203,9 +3165,9 @@ textarea:focus-visible {
         height: 90px;
     }
 
-    .flying-doc-actor {
-        width: 50px;
-        height: 65px;
+    .file-basketball {
+        width: 48px;
+        height: 48px;
     }
 
     .drop-title {
