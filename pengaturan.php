@@ -256,7 +256,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <!-- Slam Dunk Celebration Comic Popup & Shockwave -->
                                 <div class="dunk-fx-layer" id="dunkFxLayer">
                                     <div class="dunk-shockwave" id="dunkShockwave"></div>
-                                    <div class="dunk-badge-popup" id="dunkBadgeText">🔥 SLAM DUNK! 🎯</div>
+                                    <div class="dunk-badge-popup" id="dunkBadgeText">✨ DOKUMEN MASUK! 🎯</div>
                                     <div class="dunk-sparks" id="dunkSparks"></div>
                                 </div>
                             </div>
@@ -265,12 +265,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <!-- Drag Target Aiming Guide (Visible during dragover) -->
                         <div class="drag-aim-guide" id="dragAimGuide">
                             <div class="aim-crosshair"></div>
-                            <div class="aim-callout-text">🎯 LEPASKAN UNTUK SLAM DUNK DOKUMEN!</div>
+                            <div class="aim-callout-text">🎯 LEPASKAN UNTUK MEMASUKKAN DOKUMEN!</div>
                         </div>
 
                         <!-- Drop Zone Center Content -->
                         <div class="drop-content" id="dropContent">
-                            <div class="drop-status-pill">🏀 AREA SLAM DUNK DOKUMEN</div>
+                            <div class="drop-status-pill">📁 AREA UNGGAH DOKUMEN</div>
                             <h4 class="drop-title">Seret & Masukkan Dokumen ke Ring Basket!</h4>
                             <p class="drop-subtitle">Tarik berkas Word, Excel, atau PDF ke ring basket untuk mengunggah</p>
                             <div class="browse-btn-wrap">
@@ -481,11 +481,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Generate celebration shoutout
             const celebrations = [
-                '🔥 SLAM DUNK! 🎯', 
-                '⚡ SWISH! +3 PTS 🏀', 
-                '💥 BOOMSHAKALAKA! 🔥', 
-                '🎯 PERFECT SHOT! ⚡',
-                '🏆 DOKUMEN MASUK! 🏀'
+                '✨ DOKUMEN MASUK! 🎯', 
+                '⚡ BERKAS TERSIMPAN! 📄', 
+                '🎯 SUKSES MASUK! ⚡',
+                '🏆 DOKUMEN TERUNGGAH! 📁'
             ];
             dunkBadgeText.textContent = celebrations[Math.floor(Math.random() * celebrations.length)];
 
@@ -634,7 +633,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if (res.success) {
                         Swal.fire({
                             icon: 'success',
-                            title: '🏀 Slam Dunk Berhasil!',
+                            title: 'Dokumen Berhasil Diunggah',
                             html: `<strong>${escapeHtml(res.file.name)}</strong> telah aman tersimpan.<br><small style="color:#666;">${escapeHtml(res.file.type)} — ${escapeHtml(res.file.size)}</small>`,
                             confirmButtonColor: '#000',
                             timer: 3000,

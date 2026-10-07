@@ -231,7 +231,7 @@ if ($saved) {
 
     echo json_encode([
         'success' => true,
-        'message' => 'Dokumen berhasil diunggah! 🏀 Slam dunk!',
+        'message' => 'Dokumen berhasil diunggah',
         'file' => [
             'name'        => $original_name,
             'saved_as'    => $unique_name,
