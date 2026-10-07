@@ -194,8 +194,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="bb-hoop-wrap" id="hoopWrap">
                                 <!-- Layer 1: Back Rim & Back Net Mesh -->
                                 <svg class="hoop-svg-back" viewBox="0 0 130 105">
-                                    <!-- Back rim arc -->
-                                    <ellipse cx="65" cy="16" rx="52" ry="12" fill="none" stroke="#B73200" stroke-width="7" stroke-dasharray="164" stroke-dashoffset="82" />
+                                    <!-- Back rim arc (Seamless solid arc curving through top y=4) -->
+                                    <path d="M 13,16 A 52,12 0 0,0 117,16" fill="none" stroke="#B73200" stroke-width="7" stroke-linecap="round" />
+                                    <path d="M 13,16 A 52,12 0 0,0 117,16" fill="none" stroke="#D84315" stroke-width="5" stroke-linecap="round" />
                                     <!-- Back net strands -->
                                     <g stroke="rgba(255, 255, 255, 0.45)" stroke-width="2" fill="none" stroke-linecap="round">
                                         <path d="M22,20 L35,42 L52,62 L56,80 L52,94" />
@@ -237,18 +238,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         <path d="M86,19 L70,36 L58,53 L55,70 L57,90" />
                                         <path d="M70,19 L58,36 L49,53 L49,70 L51,90" />
                                         <path d="M52,19 L45,36 L42,53 L44,70 L46,90" />
-                                        <!-- Knotted horizontal rings -->
-                                        <ellipse cx="65" cy="36" rx="40" ry="7" stroke="rgba(255,255,255,0.7)" stroke-width="1.8" stroke-dasharray="4,4" />
-                                        <ellipse cx="65" cy="53" rx="29" ry="5.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.8" stroke-dasharray="4,4" />
-                                        <ellipse cx="65" cy="70" rx="20" ry="4.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.8" stroke-dasharray="3,3" />
+                                        <!-- Solid horizontal woven net rings (No broken dashed cuts) -->
+                                        <ellipse cx="65" cy="36" rx="40" ry="7" stroke="rgba(255,255,255,0.65)" stroke-width="1.8" fill="none" />
+                                        <ellipse cx="65" cy="53" rx="29" ry="5.5" stroke="rgba(255,255,255,0.65)" stroke-width="1.8" fill="none" />
+                                        <ellipse cx="65" cy="70" rx="20" ry="4.5" stroke="rgba(255,255,255,0.65)" stroke-width="1.8" fill="none" />
                                         <!-- Bottom rim fringe -->
-                                        <ellipse cx="65" cy="90" rx="16" ry="4" stroke="#FFFFFF" stroke-width="2.4" />
+                                        <ellipse cx="65" cy="90" rx="16" ry="4" stroke="#FFFFFF" stroke-width="2.4" fill="none" />
                                     </g>
-                                    <!-- Solid Front Regulation Rim (Orange with highlight) -->
-                                    <ellipse cx="65" cy="16" rx="52" ry="12" fill="none" stroke="#FF5722" stroke-width="7" stroke-dasharray="164" stroke-dashoffset="0" />
-                                    <ellipse cx="65" cy="15" rx="50" ry="10.5" fill="none" stroke="#FFA726" stroke-width="2.2" stroke-dasharray="164" stroke-dashoffset="0" />
+                                    <!-- Solid Front Regulation Rim (Seamless solid front arc, vibrant orange, curves through front y=28) -->
+                                    <path d="M 13,16 A 52,12 0 0,1 117,16" fill="none" stroke="#D84315" stroke-width="7" stroke-linecap="round" />
+                                    <path d="M 13,16 A 52,12 0 0,1 117,16" fill="none" stroke="#FF5722" stroke-width="5.5" stroke-linecap="round" />
+                                    <path d="M 16,16.5 A 49,10.5 0 0,1 114,16.5" fill="none" stroke="#FFA726" stroke-width="2" stroke-linecap="round" />
                                     <!-- Rim mounting bracket joint -->
                                     <rect x="56" y="4" width="18" height="12" rx="2" fill="#D84315" stroke="#222" stroke-width="1.8" />
+                                    <circle cx="60.5" cy="10" r="1.5" fill="#222" />
+                                    <circle cx="69.5" cy="10" r="1.5" fill="#222" />
                                 </svg>
 
                                 <!-- Slam Dunk Celebration Comic Popup & Shockwave -->
