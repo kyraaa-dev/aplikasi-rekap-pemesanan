@@ -9,7 +9,7 @@ if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
 
 $format = $_GET['format'] ?? 'sql';
 $timestamp = date('Y-m-d_H-i-s');
-$tables = ['settings', 'skpd', 'stok_mutz', 'pesanan', 'retur_pesanan'];
+$tables = ['settings', 'skpd', 'stok_mutz', 'pesanan', 'retur_pesanan', 'riwayat_stok'];
 
 if ($format === 'json') {
     // Export Data JSON

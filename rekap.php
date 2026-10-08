@@ -279,7 +279,7 @@ while ($t = $res_tagihan->fetch_assoc()) {
                     <?php endif; ?>
                 </form>
 
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2" style="flex-wrap: wrap;">
                     <select id="printFilter" onchange="togglePrintFilter()" style="padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid var(--gray-light); font-size: 0.9rem; background-color: var(--white); color: var(--dark); cursor: pointer;">
                         <option value="active">Cetak SKPD Pemesan Saja</option>
                         <option value="all">Cetak Seluruh SKPD</option>

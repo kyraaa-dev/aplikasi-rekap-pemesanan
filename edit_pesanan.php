@@ -45,24 +45,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['skpd_id'])) {
 
         if ($success) {
             if ($old) {
-                // Kembalikan stok lama
                 $old_jm = $old['jenis_mutz'];
                 $old_jk = $old['jenis_kelamin'];
                 $old_uk = (int)$old['ukuran'];
                 $old_jml = (int)$old['jumlah'];
-                $stmt_rev = $conn->prepare("UPDATE stok_mutz SET jumlah_stok = jumlah_stok + ? WHERE jenis_mutz = ? AND jenis_kelamin = ? AND ukuran = ?");
-                if ($stmt_rev) {
-                    $stmt_rev->bind_param("issi", $old_jml, $old_jm, $old_jk, $old_uk);
-                    $stmt_rev->execute();
-                    $stmt_rev->close();
-                }
                 
-                // Kurangi dengan stok baru
-                $stmt_ded = $conn->prepare("UPDATE stok_mutz SET jumlah_stok = jumlah_stok - ? WHERE jenis_mutz = ? AND jenis_kelamin = ? AND ukuran = ?");
-                if ($stmt_ded) {
-                    $stmt_ded->bind_param("issi", $jumlah, $jenis_mutz, $jenis_kelamin, $ukuran);
-                    $stmt_ded->execute();
-                    $stmt_ded->close();
+                // Cek jika ada perubahan pada stok
+                if ($old_jm != $jenis_mutz || $old_jk != $jenis_kelamin || $old_uk != $ukuran || $old_jml != $jumlah) {
+                    sesuaikan_stok($conn, $old_jm, $old_jk, $old_uk, $old_jml, "Edit Pesanan #$id (Revisi stok lama)", 'Masuk');
+                    sesuaikan_stok($conn, $jenis_mutz, $jenis_kelamin, $ukuran, -$jumlah, "Edit Pesanan #$id (Revisi stok baru)", 'Keluar');
                 }
             }
 
@@ -116,7 +107,7 @@ $skpds = $conn->query("SELECT * FROM skpd ORDER BY nama_skpd ASC");
             </a>
         </div>
 
-        <div class="panel" style="max-width: 820px; margin: 1.5rem 0; padding: 2rem; border-radius: 6px; background: var(--white); box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid var(--gray-light);">
+        <div class="panel responsive-panel" style="max-width: 820px; margin: 1.5rem 0; border-radius: 6px; background: var(--white); box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid var(--gray-light);">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gray-light); padding-bottom: 1.25rem; margin-bottom: 1.5rem;">
                 <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--primary); margin: 0; display: flex; align-items: center; gap: 8px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
@@ -231,7 +222,7 @@ $skpds = $conn->query("SELECT * FROM skpd ORDER BY nama_skpd ASC");
                     <input type="text" name="catatan" value="<?= htmlspecialchars($pesanan['catatan'] ?? '') ?>" placeholder="Contoh: Titip ke bagian admin">
                 </div>
 
-                <div style="display: flex; gap: 12px; justify-content: flex-end; align-items: center; border-top: 1px solid var(--gray-light); padding-top: 1.5rem;">
+                <div class="form-action-footer">
                     <a href="pesanan.php" class="btn btn-secondary" style="padding: 0.7rem 1.5rem; text-decoration: none; border-radius: 6px; font-weight: 600;">
                         Batal
                     </a>

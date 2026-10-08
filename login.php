@@ -124,9 +124,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         html, body {
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
+            min-height: 100vh;
+            min-height: 100dvh;
+            width: 100%;
+            overflow-x: hidden;
             position: relative;
         }
 
@@ -134,6 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 1.5rem 1rem;
             /* Background comes from app.css */
         }
 

@@ -235,4 +235,69 @@ if (!isset($skip_db_select)) {
 }
 define('HARGA_BIASA', isset($app_settings['harga_biasa']) ? (int)$app_settings['harga_biasa'] : 55000);
 define('HARGA_KEPALA', isset($app_settings['harga_kepala']) ? (int)$app_settings['harga_kepala'] : 150000);
+
+/**
+ * Pencatatan Riwayat Mutasi Stok (Kartu Stok)
+ */
+function catat_riwayat_stok($conn, $jenis_mutz, $jenis_kelamin, $ukuran, $tipe_mutasi, $jumlah, $stok_sebelum, $stok_sesudah, $keterangan = '') {
+    $ukuran_int = (int)$ukuran;
+    $jumlah_int = (int)$jumlah;
+    $stok_sebelum_int = (int)$stok_sebelum;
+    $stok_sesudah_int = (int)$stok_sesudah;
+    
+    $stmt = $conn->prepare("INSERT INTO riwayat_stok (jenis_mutz, jenis_kelamin, ukuran, tipe_mutasi, jumlah, stok_sebelum, stok_sesudah, keterangan) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    if ($stmt) {
+        $stmt->bind_param("ssisiiss", $jenis_mutz, $jenis_kelamin, $ukuran_int, $tipe_mutasi, $jumlah_int, $stok_sebelum_int, $stok_sesudah_int, $keterangan);
+        $res = $stmt->execute();
+        $stmt->close();
+        return $res;
+    }
+    return false;
+}
+
+/**
+ * Update Stok Sekaligus Mencatat ke Riwayat Mutasi (Kartu Stok)
+ * $delta: positif (stok bertambah) atau negatif (stok berkurang)
+ */
+function sesuaikan_stok($conn, $jenis_mutz, $jenis_kelamin, $ukuran, $delta, $keterangan = '', $tipe_override = null) {
+    $ukuran_int = (int)$ukuran;
+    $delta_int = (int)$delta;
+    
+    // Ambil stok saat ini
+    $stok_sebelum = 0;
+    $stmt_get = $conn->prepare("SELECT jumlah_stok FROM stok_mutz WHERE jenis_mutz = ? AND jenis_kelamin = ? AND ukuran = ?");
+    if ($stmt_get) {
+        $stmt_get->bind_param("ssi", $jenis_mutz, $jenis_kelamin, $ukuran_int);
+        $stmt_get->execute();
+        $res_get = $stmt_get->get_result();
+        if ($row = $res_get->fetch_assoc()) {
+            $stok_sebelum = (int)$row['jumlah_stok'];
+        }
+        $stmt_get->close();
+    }
+    
+    $stok_sesudah = $stok_sebelum + $delta_int;
+    
+    // Update stok
+    $stmt_up = $conn->prepare("UPDATE stok_mutz SET jumlah_stok = ? WHERE jenis_mutz = ? AND jenis_kelamin = ? AND ukuran = ?");
+    if ($stmt_up) {
+        $stmt_up->bind_param("issi", $stok_sesudah, $jenis_mutz, $jenis_kelamin, $ukuran_int);
+        $stmt_up->execute();
+        $stmt_up->close();
+    }
+    
+    // Tentukan tipe mutasi
+    if ($tipe_override) {
+        $tipe = $tipe_override;
+    } else {
+        $tipe = ($delta_int >= 0) ? 'Masuk' : 'Keluar';
+    }
+    
+    catat_riwayat_stok($conn, $jenis_mutz, $jenis_kelamin, $ukuran_int, $tipe, abs($delta_int), $stok_sebelum, $stok_sesudah, $keterangan);
+    
+    return [
+        'stok_sebelum' => $stok_sebelum,
+        'stok_sesudah' => $stok_sesudah
+    ];
+}
 ?>

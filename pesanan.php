@@ -28,13 +28,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['skpd_id'])) {
         $stmt->close();
 
         if ($success) {
-            // Kurangi stok otomatis via prepared statement
-            $stmt_stok = $conn->prepare("UPDATE stok_mutz SET jumlah_stok = jumlah_stok - ? WHERE jenis_mutz = ? AND jenis_kelamin = ? AND ukuran = ?");
-            if ($stmt_stok) {
-                $stmt_stok->bind_param("issi", $jumlah, $jenis_mutz, $jenis_kelamin, $ukuran);
-                $stmt_stok->execute();
-                $stmt_stok->close();
+            $pesanan_id = $conn->insert_id;
+            // Ambil info SKPD untuk log keterangan kartu stok
+            $nama_skpd_text = '';
+            $q_skpd = $conn->query("SELECT nama_skpd FROM skpd WHERE id = $skpd_id LIMIT 1");
+            if ($q_skpd && $row_skpd = $q_skpd->fetch_assoc()) {
+                $nama_skpd_text = $row_skpd['nama_skpd'];
             }
+            $info_pemesan = !empty($nama_pemesan) ? "$nama_pemesan - $nama_skpd_text" : $nama_skpd_text;
+            $ket_pesanan = "Pesanan #$pesanan_id ($info_pemesan)";
+            sesuaikan_stok($conn, $jenis_mutz, $jenis_kelamin, $ukuran, -$jumlah, $ket_pesanan, 'Keluar');
             
             header("Location: pesanan.php?notif=simpan_sukses");
             exit;
@@ -48,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['skpd_id'])) {
 if (isset($_GET['del'])) {
     $id = (int)$_GET['del'];
     
-    // Kembalikan stok sebelum dihapus
+    // Kembalikan stok sebelum dihapus dan catat mutasi masuk
     $stmt_old = $conn->prepare("SELECT jenis_mutz, jenis_kelamin, ukuran, jumlah FROM pesanan WHERE id = ?");
     if ($stmt_old) {
         $stmt_old->bind_param("i", $id);
@@ -60,12 +63,7 @@ if (isset($_GET['del'])) {
             $old_uk = (int)$old['ukuran'];
             $old_jml = (int)$old['jumlah'];
             
-            $stmt_inc = $conn->prepare("UPDATE stok_mutz SET jumlah_stok = jumlah_stok + ? WHERE jenis_mutz = ? AND jenis_kelamin = ? AND ukuran = ?");
-            if ($stmt_inc) {
-                $stmt_inc->bind_param("issi", $old_jml, $old_jm, $old_jk, $old_uk);
-                $stmt_inc->execute();
-                $stmt_inc->close();
-            }
+            sesuaikan_stok($conn, $old_jm, $old_jk, $old_uk, $old_jml, "Pembatalan / Hapus Pesanan #$id", 'Masuk');
         }
         $stmt_old->close();
     }
@@ -180,9 +178,9 @@ $pesanans = $conn->query("
 
         
         <div class="panel" style="margin: 1.5rem 0; padding: 0; overflow: hidden;">
-            <div style="display: flex; flex-wrap: wrap;">
+            <div class="split-form-panel">
                 <!-- Kiri: Deskripsi & Instruksi -->
-                <div style="flex: 1.5; min-width: 350px; padding: 2.5rem; border-right: var(--brutal-border);">
+                <div class="split-form-side">
                     <div style="display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 6px; background: var(--light); color: var(--primary); margin-bottom: 1.5rem;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                     </div>
@@ -207,7 +205,7 @@ $pesanans = $conn->query("
                 </div>
                 
                 <!-- Kanan: Form Input -->
-                <div style="flex: 2; min-width: 400px; padding: 2.5rem;">
+                <div class="split-form-main">
                     <form method="POST">
                         <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
                         
@@ -297,8 +295,8 @@ $pesanans = $conn->query("
                             <input type="text" name="catatan" placeholder="Contoh: Titip ke bagian admin, minta dikemas terpisah, dsb.">
                         </div>
 
-                        <div style="display: flex; justify-content: flex-end; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--gray-light);">
-                            <button type="submit" class="btn-card-primary" style="padding: 0.85rem 2rem; border-radius: 6px; font-size: 1.05rem; ;">
+                        <div class="form-action-footer">
+                            <button type="submit" class="btn-card-primary" style="padding: 0.85rem 2rem; border-radius: 6px; font-size: 1.05rem;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                                 Simpan Pesanan
                             </button>
@@ -310,8 +308,8 @@ $pesanans = $conn->query("
 
         <div class="panel">
             <div class="flex justify-between items-center mb-4" style="flex-wrap: wrap; gap: 10px;">
-                <h2>Daftar Pesanan Mutz</h2>
-                <form method="GET" action="pesanan.php" id="filterForm" style="display: flex; gap: 10px; align-items: center; background: transparent; padding: 10px 15px; border-radius: 12px; border: var(--brutal-border);">
+                <h2 style="margin: 0;">Daftar Pesanan Mutz</h2>
+                <form method="GET" action="pesanan.php" id="filterForm" class="filter-form" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; background: transparent; padding: 10px 15px; border-radius: 12px; border: var(--brutal-border);">
                     <select name="filter_skpd" onchange="document.getElementById('filterBtn').click()" style="padding: 0.4rem; border-radius: 0px; border: var(--brutal-border); outline: none; background: var(--white); color: var(--dark); box-shadow: 2px 2px 0px #000;">
                         <option value="0">- Semua SKPD -</option>
                         <?php 

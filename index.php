@@ -246,6 +246,16 @@ if ($q_all_orders) {
             0% { transform: translateX(100vw); }
             100% { transform: translateX(-100%); }
         }
+        @media (max-width: 991px) {
+            .marquee-container {
+                margin: -1.25rem -1rem 1.25rem -1rem;
+            }
+        }
+        @media (max-width: 576px) {
+            .marquee-container {
+                margin: -1rem -0.75rem 1rem -0.75rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -265,7 +275,7 @@ if ($q_all_orders) {
             </div>
         </div>
 
-        <div class="dashboard-stats" style="margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
+        <div class="dashboard-stats">
             <div class="card fade-up delay-1" style="background-color: #00E5FF; border: 3px solid #000; box-shadow: 4px 4px 0px #000; color: #000; padding: 1rem;">
                 <h3 style="font-weight: 800; font-size: 0.95rem; margin-bottom: 0.25rem;">Mutz Laki-laki</h3>
                 <div class="value count-up" data-target="<?= (int)$t_l ?>" style="font-weight: 900; font-size: 1.8rem;"><?= number_format((int)$t_l, 0, ',', '.') ?></div>
@@ -298,7 +308,7 @@ if ($q_all_orders) {
                 <h2 style="margin-bottom: 0; font-weight: 900; text-transform: uppercase;">Statistik Pemesanan Mutz</h2>
                 <button id="toggleChartBtn" onclick="toggleCharts()" class="btn btn-secondary" style="display: flex; align-items: center; gap: 6px; padding: 0.35rem 0.8rem; font-size: 0.8rem; border-radius: 4px; font-weight: 800; border: 2px solid #000; box-shadow: 2px 2px 0px #000; background: #FFF; color: #000;">
                     <svg id="chartIconOff" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
-                    <svg id="chartIconOn" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    <svg id="chartIconOn" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     <span id="chartBtnText">Sembunyikan Grafik</span>
                 </button>
             </div>
@@ -306,10 +316,10 @@ if ($q_all_orders) {
                 <div style="flex: 1; min-width: 200px; max-width: 250px; margin: 0 auto;">
                     <canvas id="genderChart"></canvas>
                 </div>
-                <div style="flex: 2; min-width: 300px; max-width: 400px; margin: 0 auto;">
+                <div style="flex: 2; min-width: 280px; max-width: 400px; margin: 0 auto;">
                     <canvas id="topSkpdChart"></canvas>
                 </div>
-                <div style="flex: 2; min-width: 300px; max-width: 400px; margin: 0 auto;">
+                <div style="flex: 2; min-width: 280px; max-width: 400px; margin: 0 auto;">
                     <canvas id="sizeChart"></canvas>
                 </div>
             </div>
@@ -317,7 +327,7 @@ if ($q_all_orders) {
 
         <div class="panel fade-up delay-2" style="border: 3px solid #000; box-shadow: 6px 6px 0px #000; border-radius: 8px; margin-top: 1.5rem; background: #FFF;">
             <h2 style="font-weight: 900; text-transform: uppercase; border-bottom: 4px solid #000; padding-bottom: 0.5rem;">Rincian Pesanan per SKPD</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; margin-top: 1.5rem;">
+            <div class="skpd-dashboard-grid">
                 <?php if(!empty($rincian_skpd)): ?>
                     <?php foreach($rincian_skpd as $nama => $details): ?>
                         <?php 

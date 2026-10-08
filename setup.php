@@ -102,6 +102,27 @@ if ($conn->query($sql_stok) === TRUE) {
     echo "<div style='color: red;'>❌ Error creating table stok_mutz: " . $conn->error . "</div>";
 }
 
+// Create Riwayat Stok table
+$sql_riwayat_stok = "CREATE TABLE IF NOT EXISTS riwayat_stok (
+    id INT(9) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    jenis_mutz ENUM('Biasa', 'Kepala SKPD') NOT NULL,
+    jenis_kelamin ENUM('Laki-laki', 'Perempuan') NOT NULL,
+    ukuran INT(3) NOT NULL,
+    tipe_mutasi ENUM('Masuk', 'Keluar', 'Penyesuaian') NOT NULL,
+    jumlah INT(6) NOT NULL,
+    stok_sebelum INT(6) NOT NULL DEFAULT 0,
+    stok_sesudah INT(6) NOT NULL DEFAULT 0,
+    keterangan VARCHAR(255) NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_waktu (created_at),
+    INDEX idx_barang (jenis_mutz, jenis_kelamin, ukuran)
+)";
+if ($conn->query($sql_riwayat_stok) === TRUE) {
+    echo "<div style='color: green;'>✅ Table 'riwayat_stok' created successfully.</div>";
+} else {
+    echo "<div style='color: red;'>❌ Error creating table riwayat_stok: " . $conn->error . "</div>";
+}
+
 // Create Settings table
 $sql_settings = "CREATE TABLE IF NOT EXISTS settings (
     id INT(1) UNSIGNED AUTO_INCREMENT PRIMARY KEY,

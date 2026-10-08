@@ -53,25 +53,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['alasan'])) {
         $stmt_pesanan->execute();
         $stmt_pesanan->close();
 
-        // Kembalikan stok ukuran lama via prepared statement
+        // Kembalikan stok ukuran lama & kurangi stok ukuran baru (catat kartu stok)
         $jm = $pesanan['jenis_mutz'];
         $jk = $pesanan['jenis_kelamin'];
         $jml = (int)$pesanan['jumlah'];
         
-        $stmt_inc = $conn->prepare("UPDATE stok_mutz SET jumlah_stok = jumlah_stok + ? WHERE jenis_mutz = ? AND jenis_kelamin = ? AND ukuran = ?");
-        if ($stmt_inc) {
-            $stmt_inc->bind_param("issi", $jml, $jm, $jk, $ukuran_lama);
-            $stmt_inc->execute();
-            $stmt_inc->close();
-        }
-        
-        // Kurangi stok ukuran baru via prepared statement
-        $stmt_dec = $conn->prepare("UPDATE stok_mutz SET jumlah_stok = jumlah_stok - ? WHERE jenis_mutz = ? AND jenis_kelamin = ? AND ukuran = ?");
-        if ($stmt_dec) {
-            $stmt_dec->bind_param("issi", $jml, $jm, $jk, $ukuran_baru);
-            $stmt_dec->execute();
-            $stmt_dec->close();
-        }
+        sesuaikan_stok($conn, $jm, $jk, $ukuran_lama, $jml, "Retur Pesanan #$id (Ukuran $ukuran_lama kembali)", 'Masuk');
+        sesuaikan_stok($conn, $jm, $jk, $ukuran_baru, -$jml, "Retur Pesanan #$id (Tukar ke ukuran $ukuran_baru)", 'Keluar');
 
         $conn->commit();
         header("Location: retur.php?notif=retur_sukses");
@@ -124,7 +112,7 @@ if ($pesanan['jenis_kelamin'] == 'Laki-laki') {
             </a>
         </div>
         
-        <div class="panel" style="max-width: 720px; margin: 1.5rem 0; padding: 2rem; border-radius: 6px; background: var(--white); box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid var(--gray-light);">
+        <div class="panel responsive-panel" style="max-width: 720px; margin: 1.5rem 0; border-radius: 6px; background: var(--white); box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid var(--gray-light);">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gray-light); padding-bottom: 1.25rem; margin-bottom: 1.5rem;">
                 <h2 style="font-size: 1.25rem; font-weight: 700; color: #D97706; margin: 0; display: flex; align-items: center; gap: 8px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path><path d="M3 22v-6h6"></path><path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path></svg>
@@ -174,7 +162,7 @@ if ($pesanan['jenis_kelamin'] == 'Laki-laki') {
                     <small style="color: var(--gray); display: block; margin-top: 6px; font-size: 0.8rem;">Jika retur karena cacat (bukan tukar ukuran), biarkan ukuran tetap sama.</small>
                 </div>
                 
-                <div style="display: flex; gap: 12px; justify-content: flex-end; align-items: center; border-top: 1px solid var(--gray-light); padding-top: 1.5rem;">
+                <div class="form-action-footer">
                     <a href="pesanan.php" class="btn btn-secondary" style="padding: 0.7rem 1.5rem; text-decoration: none; border-radius: 6px; font-weight: 600;">
                         Batal
                     </a>

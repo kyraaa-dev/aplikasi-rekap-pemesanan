@@ -263,6 +263,8 @@ document.addEventListener('DOMContentLoaded', function() {
             case 'simpan_sukses': text = 'Data berhasil disimpan!'; break;
             case 'edit_sukses': text = 'Data berhasil diperbarui!'; break;
             case 'pengaturan_sukses': text = 'Pengaturan berhasil disimpan!'; break;
+            case 'restock_sukses': text = 'Stok masuk berhasil ditambahkan ke gudang!'; break;
+            case 'stok_sukses': text = 'Perubahan stok berhasil disimpan!'; break;
         }
         window.Toast.fire({ icon: icon, title: text });
         // Clean URL
