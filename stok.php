@@ -381,12 +381,12 @@ if (!empty($params)) {
 
             <!-- Banner Peringatan Stok Menipis -->
             <?php if (!empty($low_stock_items)): ?>
-            <div class="hide-on-print" style="margin-top: 1.25rem; background: #FEF2F2; border: 2px solid #EF4444; border-radius: 6px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <div style="background: #EF4444; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900;">!</div>
+            <div class="hide-on-print" style="margin-top: 1.25rem; background: #FEF2F2; border: 2px solid #EF4444; border-radius: 6px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; box-shadow: 3px 3px 0 #EF4444;">
+                <div style="display: flex; align-items: center; gap: 12px; flex: 1; min-width: 260px;">
+                    <div style="background: #EF4444; color: #fff; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.15rem; flex-shrink: 0; border: 2px solid #000;">!</div>
                     <div>
-                        <strong style="color: #991B1B; font-size: 0.95rem;">Perhatian: Terdapat <?= count($low_stock_items) ?> ukuran mutz dengan stok menipis (&le; 5 pcs) atau habis!</strong>
-                        <div style="color: #B91C1C; font-size: 0.825rem; margin-top: 2px;">
+                        <strong style="color: #991B1B; font-size: 0.95rem; display: block;">Perhatian: Terdapat <?= count($low_stock_items) ?> ukuran mutz dengan stok menipis (&le; 5 pcs) atau habis!</strong>
+                        <div style="color: #B91C1C; font-size: 0.825rem; margin-top: 3px; line-height: 1.4;">
                             <?php 
                             $low_names = array_map(function($i) {
                                 return $i['jenis_mutz'] . ' ' . ($i['jenis_kelamin'] == 'Laki-laki' ? 'Pria' : 'Wanita') . ' Uk.' . $i['ukuran'] . ' (' . $i['jumlah_stok'] . ' pcs)';
@@ -397,9 +397,16 @@ if (!empty($params)) {
                         </div>
                     </div>
                 </div>
-                <button type="button" onclick="window.filterTableStatus('menipis')" class="btn" style="background: #EF4444; color: #fff; font-weight: 700; padding: 6px 14px; font-size: 0.85rem; border-radius: 4px; border: 1px solid #7F1D1D; cursor: pointer;">
-                    Lihat Ukuran Menipis &darr;
-                </button>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button type="button" onclick="window.filterTableStatus('menipis')" class="btn" style="background: #EF4444; color: #fff; font-weight: 700; padding: 7px 14px; font-size: 0.85rem; border-radius: 4px; border: 2px solid #000; box-shadow: 2px 2px 0 #000; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        Lihat di Tabel &darr;
+                    </button>
+                    <button type="button" onclick="window.openLowStockModal()" class="btn" style="background: #FFF; color: #991B1B; font-weight: 700; padding: 7px 14px; font-size: 0.85rem; border-radius: 4px; border: 2px solid #000; box-shadow: 2px 2px 0 #000; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        Rincian & Restock Cepat
+                    </button>
+                </div>
             </div>
             <?php endif; ?>
         </div>
@@ -435,7 +442,7 @@ if (!empty($params)) {
                         <button type="button" class="filter-pill" onclick="window.filterTableCategory('biasa-pria', this)">Biasa (Pria)</button>
                         <button type="button" class="filter-pill" onclick="window.filterTableCategory('biasa-wanita', this)">Biasa (Wanita)</button>
                         <button type="button" class="filter-pill" onclick="window.filterTableCategory('kepala', this)">Kepala SKPD</button>
-                        <button type="button" class="filter-pill" onclick="window.filterTableCategory('menipis', this)" style="border-color: #DC2626; color: #DC2626;">Stok &le; 5</button>
+                        <button type="button" id="filterPillMenipis" data-category="menipis" class="filter-pill" onclick="window.filterTableCategory('menipis', this)" style="border-color: #DC2626; color: #DC2626;">Stok &le; 5</button>
                     </div>
                 </div>
                 
@@ -756,6 +763,93 @@ if (!empty($params)) {
         </div>
     </div>
 
+    <!-- ============================================== -->
+    <!-- MODAL RINCIAN UKURAN MENIPIS                   -->
+    <!-- ============================================== -->
+    <div id="lowStockModal" class="restock-modal-overlay" onclick="if(event.target===this) window.closeLowStockModal();">
+        <div class="restock-modal-box" style="max-width: 640px;">
+            <!-- Modal Header -->
+            <div style="padding: 1.15rem 1.4rem; border-bottom: 3px solid #000; background: #FEF2F2; display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="background: #EF4444; color: #fff; width: 34px; height: 34px; border-radius: 6px; display: flex; align-items: center; justify-content: center; border: 2px solid #000; font-weight: 900; font-size: 1.1rem;">
+                        !
+                    </div>
+                    <div>
+                        <h3 style="margin: 0; font-size: 1.15rem; font-weight: 800; color: #991B1B;">Rincian Stok Menipis & Habis</h3>
+                        <p style="margin: 2px 0 0 0; font-size: 0.8rem; color: #B91C1C;">Daftar ukuran mutz yang memerlukan pengadaan / restock segera</p>
+                    </div>
+                </div>
+                <button type="button" onclick="window.closeLowStockModal()" style="background: #F87171; border: 2px solid #000; font-size: 1.25rem; font-weight: 900; line-height: 1; padding: 4px 10px; cursor: pointer; border-radius: 4px; box-shadow: 2px 2px 0 #000;">&times;</button>
+            </div>
+
+            <!-- Modal Body Table -->
+            <div style="padding: 1.25rem; max-height: 60vh; overflow-y: auto;">
+                <?php if (!empty($low_stock_items)): ?>
+                <div class="table-responsive" style="border: 2px solid #000; border-radius: 6px; overflow: hidden; margin: 0;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem;">
+                        <thead>
+                            <tr style="background: #F3F4F6; border-bottom: 2px solid #000;">
+                                <th style="padding: 8px 10px; text-align: center; width: 40px;">No</th>
+                                <th style="padding: 8px 10px;">Jenis Mutz</th>
+                                <th style="padding: 8px 10px; text-align: center;">Gender</th>
+                                <th style="padding: 8px 10px; text-align: center; width: 70px;">Ukuran</th>
+                                <th style="padding: 8px 10px; text-align: center; width: 100px;">Sisa Stok</th>
+                                <th style="padding: 8px 10px; text-align: center; width: 110px;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                            $no_ls = 1;
+                            foreach($low_stock_items as $ls):
+                                $val_ls = (int)$ls['jumlah_stok'];
+                                $is_zero = $val_ls <= 0;
+                            ?>
+                            <tr style="border-bottom: 1px solid #E5E7EB; <?= $is_zero ? 'background: #FFF1F2;' : 'background: #FFFBEB;' ?>">
+                                <td style="text-align: center; font-weight: 600; color: var(--gray);"><?= $no_ls++ ?></td>
+                                <td><strong><?= htmlspecialchars($ls['jenis_mutz']) ?></strong></td>
+                                <td style="text-align: center;"><?= $ls['jenis_kelamin'] ?></td>
+                                <td style="text-align: center;">
+                                    <span style="background: #000; color: #fff; padding: 2px 8px; border-radius: 4px; font-weight: 800;">
+                                        <?= $ls['ukuran'] ?>
+                                    </span>
+                                </td>
+                                <td style="text-align: center;">
+                                    <?php if ($is_zero): ?>
+                                        <span style="background: #FEE2E2; color: #991B1B; font-weight: 800; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; border: 1px solid #EF4444;">HABIS (0)</span>
+                                    <?php else: ?>
+                                        <span style="background: #FEF3C7; color: #92400E; font-weight: 800; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; border: 1px solid #F59E0B;"><?= $val_ls ?> Pcs</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td style="text-align: center;">
+                                    <button type="button" 
+                                            onclick="window.closeLowStockModal(); window.quickRestockRow('<?= htmlspecialchars($ls['jenis_mutz']) ?>', '<?= htmlspecialchars($ls['jenis_kelamin']) ?>', <?= $ls['ukuran'] ?>, <?= $ls['jumlah_stok'] ?>)" 
+                                            class="btn" 
+                                            style="background: #10B981; color: #fff; font-size: 0.8rem; font-weight: 700; padding: 4px 10px; border-radius: 4px; border: 1px solid #059669; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+                                        + Restock
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php else: ?>
+                <p style="text-align: center; color: var(--gray); margin: 1rem 0;">Semua stok mutz saat ini dalam kondisi aman (&gt; 5 pcs).</p>
+                <?php endif; ?>
+            </div>
+
+            <!-- Modal Footer -->
+            <div style="padding: 1rem 1.25rem; border-top: 2px solid #E5E7EB; background: #F9FAFB; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                <button type="button" onclick="window.closeLowStockModal(); window.filterTableStatus('menipis');" class="btn" style="background: #EF4444; color: #fff; font-weight: 700; padding: 7px 14px; font-size: 0.85rem; border-radius: 4px; border: 2px solid #000; box-shadow: 2px 2px 0 #000; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                    Lihat di Tabel Bawah &darr;
+                </button>
+                <button type="button" onclick="window.closeLowStockModal()" class="btn btn-secondary" style="border: 2px solid #000; border-radius: 4px; padding: 7px 14px; font-weight: 600; cursor: pointer;">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="assets/js/script.js?v=<?= filemtime("assets/css/app.css") ?>"></script>
     <script>
     // JSON Map Stok Saat Ini
@@ -772,6 +866,17 @@ if (!empty($params)) {
 
     window.closeRestockModal = function() {
         const modal = document.getElementById('restockModal');
+        if (modal) modal.classList.remove('active');
+    };
+
+    // Helper Modal Rincian Stok Menipis
+    window.openLowStockModal = function() {
+        const modal = document.getElementById('lowStockModal');
+        if (modal) modal.classList.add('active');
+    };
+
+    window.closeLowStockModal = function() {
+        const modal = document.getElementById('lowStockModal');
         if (modal) modal.classList.remove('active');
     };
 
@@ -823,7 +928,12 @@ if (!empty($params)) {
     // Filter Kategori di Tab Stok Fisik
     window.filterTableCategory = function(category, btnElement) {
         document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
-        if (btnElement) btnElement.classList.add('active');
+        if (btnElement) {
+            btnElement.classList.add('active');
+        } else if (category === 'menipis') {
+            const pillM = document.getElementById('filterPillMenipis');
+            if (pillM) pillM.classList.add('active');
+        }
 
         const rows = document.querySelectorAll('#stokTableBody tr');
         rows.forEach(row => {
@@ -836,19 +946,62 @@ if (!empty($params)) {
         });
     };
 
+    // Aksi Klik: Lihat Ukuran Menipis (Scroll + Filter + Highlight + Feedback)
     window.filterTableStatus = function(status) {
-        const pills = document.querySelectorAll('.filter-pill');
-        pills.forEach(p => {
-            if (p.textContent.includes('Stok ≤ 5') || p.textContent.includes('menipis')) {
-                window.filterTableCategory('menipis', p);
-            }
+        const tableBody = document.getElementById('stokTableBody');
+        // Jika sedang di tab riwayat atau tabel belum ada di DOM, alihkan ke tab stok
+        if (!tableBody) {
+            window.location.href = 'stok.php?tab=stok&filter=menipis#tabContentStok';
+            return;
+        }
+
+        // 1. Aktifkan pill filter 'menipis'
+        const pillMenipis = document.getElementById('filterPillMenipis') || document.querySelector('.filter-pill[data-category="menipis"]');
+        window.filterTableCategory('menipis', pillMenipis);
+
+        // 2. Smooth scroll langsung ke tabel
+        const targetElement = document.getElementById('tabContentStok') || tableBody;
+        if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // 3. Highlight pulse pada baris yang tampil
+        const visibleRows = document.querySelectorAll('#stokTableBody tr:not([style*="display: none"])');
+        visibleRows.forEach(row => {
+            row.style.transition = 'all 0.3s ease';
+            const origBg = row.style.backgroundColor;
+            row.style.backgroundColor = '#FEE2E2';
+            row.style.boxShadow = 'inset 0 0 0 2px #EF4444';
+            setTimeout(() => {
+                row.style.backgroundColor = origBg || '';
+                row.style.boxShadow = '';
+            }, 1400);
         });
+
+        // 4. Toast pemberitahuan
+        if (window.Toast) {
+            window.Toast.fire({
+                icon: 'warning',
+                title: 'Menampilkan ' + visibleRows.length + ' ukuran mutz yang perlu restok'
+            });
+        }
     };
 
-    // Shortcut ESC untuk tutup modal
+    // Auto filter jika URL memiliki parameter ?filter=menipis
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('filter') === 'menipis') {
+            setTimeout(() => {
+                window.filterTableStatus('menipis');
+            }, 250);
+        }
+    });
+
+    // Shortcut ESC untuk tutup semua modal
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             window.closeRestockModal();
+            window.closeLowStockModal();
         }
     });
     </script>
