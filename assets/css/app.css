@@ -3077,86 +3077,109 @@ textarea:focus-visible {
     flex-shrink: 0;
 }
 
-.file-action-btn {
-    width: 38px;
-    height: 38px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid var(--dark);
-    cursor: pointer;
-    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-    background: var(--white);
-    color: var(--dark);
-    padding: 0;
-    text-decoration: none;
-    box-shadow: 2px 2px 0px var(--dark);
+/* Uploaded File Action Buttons - Identical to Action Menu (.btn-danger / .btn-secondary) */
+.file-action-btn,
+.file-card-actions .btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    padding: 0.35rem 0.75rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    border-radius: 6px !important;
+    border: 2px solid var(--dark) !important;
+    box-shadow: 2px 2px 0px var(--dark) !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    line-height: 1.2 !important;
+    height: auto !important;
+    width: auto !important;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease !important;
 }
 
-.file-action-btn:hover {
-    transform: translate(-1px, -1px);
-    box-shadow: 3px 3px 0px var(--dark);
+.file-card-actions .btn:hover {
+    transform: translate(-1px, -1px) !important;
+    box-shadow: 3px 3px 0px var(--dark) !important;
+}
+
+.file-card-actions .btn:active {
+    transform: translate(1px, 1px) !important;
+    box-shadow: 1px 1px 0px var(--dark) !important;
+}
+
+/* Download Button (Secondary Action) */
+.file-action-download {
+    background-color: var(--white) !important;
+    color: var(--dark) !important;
+}
+
+.file-action-download svg {
+    stroke: currentColor !important;
+    flex-shrink: 0;
 }
 
 .file-action-download:hover {
-    background: #22C55E;
-    color: #FFF;
+    background-color: #00FFCC !important;
+    color: #000000 !important;
 }
 
-.file-action-download:hover svg {
-    stroke: #FFF;
-}
-
-/* Delete Button Styling & States */
+/* Delete Button (Danger Action - Identik dengan tombol Hapus pada pesanan, skpd & retur) */
 .file-action-delete {
-    background: #FEE2E2 !important;
-    color: #DC2626 !important;
-    border: 2px solid #DC2626 !important;
+    background-color: #EF4444 !important;
+    color: #FFFFFF !important;
 }
 
 .file-action-delete svg {
-    stroke: #DC2626 !important;
-    transition: all 0.15s ease;
+    stroke: #FFFFFF !important;
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
 }
 
 .file-action-delete:hover {
-    background: #DC2626 !important;
-    color: #FFF !important;
-    border-color: #991B1B !important;
-    box-shadow: 3px 3px 0px var(--dark);
-    transform: translate(-1px, -1px);
+    background-color: #DC2626 !important;
+    color: #FFFFFF !important;
 }
 
 .file-action-delete:hover svg {
-    stroke: #FFF !important;
-    transform: scale(1.15);
+    stroke: #FFFFFF !important;
+    transform: scale(1.1);
+}
+
+[data-theme="dark"] .file-card-actions .btn {
+    border-color: #FFFFFF !important;
+    box-shadow: 2px 2px 0px #FFFFFF !important;
+}
+
+[data-theme="dark"] .file-card-actions .btn:hover {
+    box-shadow: 3px 3px 0px #FFFFFF !important;
+}
+
+[data-theme="dark"] .file-action-download {
+    background-color: #1a2234 !important;
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .file-action-download:hover {
+    background-color: #00FFCC !important;
+    color: #000000 !important;
+    border-color: #FFFFFF !important;
 }
 
 [data-theme="dark"] .file-action-delete {
-    background: rgba(220, 38, 38, 0.2) !important;
-    color: #F87171 !important;
-    border-color: #EF4444 !important;
-}
-
-[data-theme="dark"] .file-action-delete svg {
-    stroke: #F87171 !important;
+    background-color: #DC2626 !important;
+    color: #FFFFFF !important;
 }
 
 [data-theme="dark"] .file-action-delete:hover {
-    background: #DC2626 !important;
-    border-color: #DC2626 !important;
-}
-
-[data-theme="dark"] .file-action-delete:hover svg {
-    stroke: #FFF !important;
+    background-color: #B91C1C !important;
 }
 
 .file-action-delete:disabled,
 .file-action-delete.is-loading {
-    opacity: 0.5;
-    cursor: not-allowed;
-    pointer-events: none;
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
 }
 
 .no-files-message {
