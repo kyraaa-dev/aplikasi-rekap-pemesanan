@@ -323,6 +323,67 @@ if (!empty($params)) {
                 font-weight: bold !important;
             }
         }
+
+        /* Mobile Overrides */
+        @media (max-width: 991px) {
+            .tab-nav-container {
+                flex-wrap: nowrap !important;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .header-actions-group {
+                flex-direction: column;
+            }
+            .header-actions-group > button {
+                width: 100%;
+                justify-content: center;
+            }
+            .low-stock-banner-inner {
+                flex-direction: column;
+            }
+            .low-stock-banner-actions {
+                width: 100%;
+            }
+            .low-stock-banner-actions .btn {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .restock-modal-overlay {
+                align-items: flex-end !important;
+                padding: 0 !important;
+            }
+            .restock-modal-box {
+                max-width: 100% !important;
+                width: 100% !important;
+                border-radius: 16px 16px 0 0 !important;
+                border-left: none !important;
+                border-right: none !important;
+                border-bottom: none !important;
+                max-height: 90vh;
+                overflow-y: auto;
+                animation: modalSlideUp 0.25s ease forwards !important;
+            }
+            @keyframes modalSlideUp {
+                from { opacity: 0; transform: translateY(30px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .restock-form-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .filter-pills-row {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 4px;
+            }
+            .stok-input {
+                width: 70px !important;
+                font-size: 0.9rem !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -337,7 +398,7 @@ if (!empty($params)) {
                 </h1>
                 <p style="margin: 4px 0 0 0; color: var(--gray); font-size: 0.875rem;">Pantau stok fisik per ukuran topi, mutasi keluar-masuk (kartu stok), dan restock pengadaan</p>
             </div>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <div class="header-actions-group">
                 <button type="button" onclick="window.openRestockModal()" class="btn-card-primary btn-restock-trigger" style="display: inline-flex; align-items: center; gap: 8px; padding: 0.65rem 1.25rem; font-weight: 700; border-radius: 6px; background: #10B981; color: #fff; border: 2px solid #000; box-shadow: 3px 3px 0 #000; cursor: pointer;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                     + Tambah Stok Masuk (Restock)
@@ -381,31 +442,33 @@ if (!empty($params)) {
 
             <!-- Banner Peringatan Stok Menipis -->
             <?php if (!empty($low_stock_items)): ?>
-            <div class="hide-on-print" style="margin-top: 1.25rem; background: #FEF2F2; border: 2px solid #EF4444; border-radius: 6px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; box-shadow: 3px 3px 0 #EF4444;">
-                <div style="display: flex; align-items: center; gap: 12px; flex: 1; min-width: 260px;">
-                    <div style="background: #EF4444; color: #fff; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.15rem; flex-shrink: 0; border: 2px solid #000;">!</div>
-                    <div>
-                        <strong style="color: #991B1B; font-size: 0.95rem; display: block;">Perhatian: Terdapat <?= count($low_stock_items) ?> ukuran mutz dengan stok menipis (&le; 5 pcs) atau habis!</strong>
-                        <div style="color: #B91C1C; font-size: 0.825rem; margin-top: 3px; line-height: 1.4;">
-                            <?php 
-                            $low_names = array_map(function($i) {
-                                return $i['jenis_mutz'] . ' ' . ($i['jenis_kelamin'] == 'Laki-laki' ? 'Pria' : 'Wanita') . ' Uk.' . $i['ukuran'] . ' (' . $i['jumlah_stok'] . ' pcs)';
-                            }, array_slice($low_stock_items, 0, 4));
-                            echo htmlspecialchars(implode(', ', $low_names));
-                            if (count($low_stock_items) > 4) echo ' dan ' . (count($low_stock_items) - 4) . ' lainnya.';
-                            ?>
+            <div class="hide-on-print" style="margin-top: 1.25rem; background: #FEF2F2; border: 2px solid #EF4444; border-radius: 6px; padding: 14px 18px; box-shadow: 3px 3px 0 #EF4444;">
+                <div class="low-stock-banner-inner" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0;">
+                        <div style="background: #EF4444; color: #fff; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.15rem; flex-shrink: 0; border: 2px solid #000;">!</div>
+                        <div style="min-width: 0; flex: 1;">
+                            <strong style="color: #991B1B; font-size: 0.95rem; display: block;">Perhatian: Terdapat <?= count($low_stock_items) ?> ukuran mutz dengan stok menipis (&le; 5 pcs) atau habis!</strong>
+                            <div style="color: #B91C1C; font-size: 0.825rem; margin-top: 3px; line-height: 1.4; word-break: break-word;">
+                                <?php
+                                $low_names = array_map(function($i) {
+                                    return $i['jenis_mutz'] . ' ' . ($i['jenis_kelamin'] == 'Laki-laki' ? 'Pria' : 'Wanita') . ' Uk.' . $i['ukuran'] . ' (' . $i['jumlah_stok'] . ' pcs)';
+                                }, array_slice($low_stock_items, 0, 4));
+                                echo htmlspecialchars(implode(', ', $low_names));
+                                if (count($low_stock_items) > 4) echo ' dan ' . (count($low_stock_items) - 4) . ' lainnya.';
+                                ?>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                    <button type="button" onclick="window.filterTableStatus('menipis')" class="btn" style="background: #EF4444; color: #fff; font-weight: 700; padding: 7px 14px; font-size: 0.85rem; border-radius: 4px; border: 2px solid #000; box-shadow: 2px 2px 0 #000; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                        Lihat di Tabel &darr;
-                    </button>
-                    <button type="button" onclick="window.openLowStockModal()" class="btn" style="background: #FFF; color: #991B1B; font-weight: 700; padding: 7px 14px; font-size: 0.85rem; border-radius: 4px; border: 2px solid #000; box-shadow: 2px 2px 0 #000; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                        Rincian & Restock Cepat
-                    </button>
+                    <div class="low-stock-banner-actions" style="display: flex; gap: 8px; flex-wrap: wrap; flex-shrink: 0; margin-top: 2px;">
+                        <button type="button" onclick="window.filterTableStatus('menipis')" class="btn" style="background: #EF4444; color: #fff; font-weight: 700; padding: 7px 14px; font-size: 0.85rem; border-radius: 4px; border: 2px solid #000; box-shadow: 2px 2px 0 #000; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            Lihat di Tabel &darr;
+                        </button>
+                        <button type="button" onclick="window.openLowStockModal()" class="btn" style="background: #FFF; color: #991B1B; font-weight: 700; padding: 7px 14px; font-size: 0.85rem; border-radius: 4px; border: 2px solid #000; box-shadow: 2px 2px 0 #000; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                            Rincian &amp; Restock Cepat
+                        </button>
+                    </div>
                 </div>
             </div>
             <?php endif; ?>
@@ -437,7 +500,7 @@ if (!empty($params)) {
                         </p>
                     </div>
                     <!-- Filter Pills Cepat -->
-                    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                    <div class="filter-pills-row">
                         <button type="button" class="filter-pill active" onclick="window.filterTableCategory('all', this)">Semua</button>
                         <button type="button" class="filter-pill" onclick="window.filterTableCategory('biasa-pria', this)">Biasa (Pria)</button>
                         <button type="button" class="filter-pill" onclick="window.filterTableCategory('biasa-wanita', this)">Biasa (Wanita)</button>
@@ -556,7 +619,7 @@ if (!empty($params)) {
             <div id="tabContentRiwayat">
                 <!-- Filter Bar Riwayat Mutasi -->
                 <div class="hide-on-print" style="background: #F9FAFB; border: 2px solid #000; border-radius: 6px; padding: 14px 18px; margin-bottom: 1.25rem;">
-                    <form method="GET" style="display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap;">
+                    <form method="GET" class="riwayat-filter-form" style="display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap;">
                         <input type="hidden" name="tab" value="riwayat">
                         
                         <div style="flex: 1; min-width: 140px;">
@@ -709,7 +772,7 @@ if (!empty($params)) {
                 <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
                 <input type="hidden" name="tambah_restock" value="1">
                 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+                <div class="restock-form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
                     <div>
                         <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--dark); margin-bottom: 6px;">Jenis Mutz</label>
                         <select name="jenis_mutz" id="restockJenisMutz" onchange="window.updateRestockOptions()" style="width: 100%; padding: 8px 10px; border: 2px solid #000; border-radius: 4px; font-weight: 600;">
@@ -726,7 +789,7 @@ if (!empty($params)) {
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+                <div class="restock-form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
                     <div>
                         <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--dark); margin-bottom: 6px;">Ukuran Topi</label>
                         <select name="ukuran" id="restockUkuran" onchange="window.updateRestockCurrentStockInfo()" style="width: 100%; padding: 8px 10px; border: 2px solid #000; border-radius: 4px; font-weight: 700;">

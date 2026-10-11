@@ -3446,3 +3446,301 @@ textarea:focus-visible {
 }
 
 
+/* =====================================================
+   COMPREHENSIVE MOBILE IMPROVEMENTS - All Pages
+   ===================================================== */
+
+/* === MOBILE TOPBAR: Stronger border & branding === */
+@media (max-width: 991px) {
+    .mobile-topbar {
+        border-bottom: 3px solid var(--dark);
+        box-shadow: 0 4px 0px var(--dark);
+        padding: 0.6rem 1rem;
+        min-height: 56px;
+        gap: 8px;
+    }
+
+    .mobile-topbar-brand span {
+        font-size: 1rem;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+    }
+
+    /* Main content pushes below topbar */
+    .main-content {
+        padding-top: 1rem;
+    }
+
+    /* === PAGE HEADERS: Stack nicely on mobile === */
+    .page-header-mobile {
+        flex-direction: column;
+        align-items: stretch !important;
+    }
+
+    /* === TAB NAV: Scrollable on mobile === */
+    .tab-nav-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        flex-wrap: nowrap !important;
+        padding-bottom: 0;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        gap: 4px !important;
+    }
+    .tab-nav-container::-webkit-scrollbar {
+        display: none;
+    }
+    .tab-btn {
+        white-space: nowrap;
+        flex-shrink: 0;
+        padding: 8px 14px !important;
+        font-size: 0.85rem !important;
+    }
+
+    /* === FILTER PILLS: Scrollable row === */
+    .filter-pills-row {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 6px;
+        padding-bottom: 4px;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .filter-pills-row::-webkit-scrollbar {
+        display: none;
+    }
+    .filter-pill {
+        white-space: nowrap;
+        flex-shrink: 0;
+        font-size: 0.78rem !important;
+        padding: 5px 10px !important;
+    }
+
+    /* === STOCK SUMMARY CARDS: 2 cols on tablet === */
+    .stock-summary-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+
+    /* === HEADER ACTIONS: Wrap correctly === */
+    .header-actions-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        width: 100%;
+    }
+    .header-actions-group > * {
+        flex: 1 1 auto;
+        min-width: 140px;
+    }
+    .btn-restock-trigger {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    /* === RESTOCK MODAL: Full-screen on mobile === */
+    .restock-modal-overlay {
+        padding: 0 !important;
+        align-items: flex-end !important;
+    }
+    .restock-modal-box {
+        max-width: 100% !important;
+        width: 100% !important;
+        border-radius: 16px 16px 0 0 !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-bottom: none !important;
+        max-height: 92vh;
+        overflow-y: auto;
+    }
+
+    /* === CARD-ROWS: Mobile inline info cards === */
+    .mobile-info-card {
+        background: var(--white);
+        border: var(--brutal-border);
+        border-radius: 8px;
+        padding: 12px 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 3px 3px 0 var(--dark);
+        margin-bottom: 8px;
+    }
+
+    /* === STOK TABLE: Input on mobile === */
+    .stok-input {
+        width: 72px !important;
+        font-size: 0.9rem !important;
+    }
+
+    /* === LOW-STOCK BANNER: Stack on mobile === */
+    .low-stock-banner-inner {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+    .low-stock-banner-actions {
+        width: 100%;
+        flex-direction: column !important;
+    }
+    .low-stock-banner-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    /* === STOCK SUMMARY: Single column on phone === */
+    .stock-summary-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+    }
+
+    /* === HEADER SHRINK === */
+    .main-content .header h1 {
+        font-size: 1.1rem !important;
+    }
+    .main-content .header p {
+        font-size: 0.8rem !important;
+    }
+
+    /* === STOK FILTER PILLS: wrap & compact === */
+    .filter-pill {
+        padding: 4px 8px !important;
+        font-size: 0.75rem !important;
+    }
+
+    /* === RESTOCK MODAL FORM GRID: Stack on phone === */
+    .restock-form-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+
+    /* === LOW-STOCK MODAL TABLE: Compact === */
+    .low-stock-modal-table th,
+    .low-stock-modal-table td {
+        padding: 7px 8px !important;
+        font-size: 0.8rem !important;
+    }
+
+    /* === PESANAN TABLE: Hide less important cols === */
+    .pesanan-col-hide-mobile {
+        display: none !important;
+    }
+
+    /* === REKAP TABLE: Compact === */
+    .rekap-table th, .rekap-table td {
+        font-size: 0.78rem !important;
+        padding: 6px 6px !important;
+    }
+
+    /* === CARD GRID: Single col === */
+    .card-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* === PANEL PADDING === */
+    .panel {
+        padding: 1rem 0.85rem !important;
+    }
+
+    /* === FORM BUTTONS: Full-width on mobile === */
+    .form-save-btn {
+        width: 100% !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+
+    /* === ACTION GROUP IN HEADER === */
+    .header > div:last-child {
+        width: 100%;
+    }
+    .header > div:last-child > button,
+    .header > div:last-child > a {
+        flex: 1 1 auto;
+        justify-content: center;
+        text-align: center;
+        min-width: 120px;
+    }
+
+    /* === RIWAYAT FILTER FORM: Stack === */
+    .riwayat-filter-form {
+        flex-direction: column !important;
+    }
+    .riwayat-filter-form > div {
+        min-width: 100% !important;
+    }
+
+    /* === STOK TAB NAV === */
+    .tab-btn {
+        padding: 7px 10px !important;
+        font-size: 0.8rem !important;
+    }
+    .tab-btn svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+}
+
+/* === TOUCH OPTIMIZATIONS for all interactive elements === */
+@media (hover: none) and (pointer: coarse) {
+    .nav-links a {
+        min-height: 48px;
+    }
+    .btn-hamburger {
+        min-width: 48px;
+        min-height: 48px;
+    }
+    .filter-pill {
+        min-height: 38px;
+        display: inline-flex;
+        align-items: center;
+    }
+    .stok-input {
+        min-height: 42px;
+    }
+    .tab-btn {
+        min-height: 44px;
+    }
+    /* Prevent double-tap zoom on buttons */
+    button, a, input, select {
+        touch-action: manipulation;
+    }
+}
+
+/* === DARK MODE MOBILE ADJUSTMENTS === */
+[data-theme="dark"] .tab-btn {
+    background: #1a1a1a;
+    color: #FAFAFA;
+    border-color: #FFFFFF;
+}
+[data-theme="dark"] .tab-btn.active {
+    background: #000;
+    color: #00FFCC;
+    border-bottom-color: #000;
+}
+[data-theme="dark"] .filter-pill {
+    background: #1a1a1a;
+    color: #FAFAFA;
+    border-color: #FFFFFF;
+}
+[data-theme="dark"] .filter-pill:hover,
+[data-theme="dark"] .filter-pill.active {
+    background: #00FFCC;
+    color: #000;
+    border-color: #FFFFFF;
+}
+[data-theme="dark"] .restock-modal-box {
+    background: #121212 !important;
+    border-color: #FFFFFF !important;
+}
+[data-theme="dark"] .mobile-topbar {
+    border-bottom-color: #FFFFFF;
+    box-shadow: 0 4px 0px #FFFFFF;
+    background-color: #000000;
+}
+[data-theme="dark"] .mobile-topbar-brand span {
+    color: #00FFCC;
+}
+
