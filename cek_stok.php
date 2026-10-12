@@ -173,9 +173,9 @@ $admin_wa_default = '6281258902720';
             bottom: 0;
             width: 100vw;
             height: 100vh;
-            background-image: url('assets/images/bg-bupati-new.jpg');
+            background-image: url('assets/images/bg-korpri-banjar.jpg');
             background-size: cover;
-            background-position: center 20%;
+            background-position: center 25%;
             background-repeat: no-repeat;
             z-index: -3;
             transform: translateZ(0);
@@ -194,12 +194,32 @@ $admin_wa_default = '6281258902720';
             z-index: -2;
             pointer-events: none;
             /* High-performance pure GPU alpha gradient - zero repaint lag during scroll */
-            background: radial-gradient(circle at 50% 12%, rgba(248, 250, 252, 0.82) 0%, rgba(241, 245, 249, 0.95) 100%);
+            background: radial-gradient(circle at 50% 12%, rgba(248, 250, 252, 0.76) 0%, rgba(241, 245, 249, 0.92) 100%);
             transition: background 0.3s ease;
         }
 
         [data-theme="dark"] .public-bg-overlay {
-            background: radial-gradient(circle at 50% 12%, rgba(15, 23, 42, 0.85) 0%, rgba(9, 13, 22, 0.97) 100%);
+            background: radial-gradient(circle at 50% 12%, rgba(15, 23, 42, 0.80) 0%, rgba(9, 13, 22, 0.96) 100%);
+        }
+
+        /* Official KORPRI Seal Watermark (GPU-Accelerated) */
+        .public-bg-watermark {
+            position: fixed;
+            top: 46%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateZ(0);
+            width: min(70vw, 520px);
+            height: min(70vw, 520px);
+            background-image: url('assets/images/korpri-badge.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.04;
+            z-index: -2;
+            pointer-events: none;
+        }
+        [data-theme="dark"] .public-bg-watermark {
+            opacity: 0.055;
         }
 
         /* High-Performance Frosted Glass Surface Utility */
@@ -1288,9 +1308,10 @@ $admin_wa_default = '6281258902720';
         }
 
         /* ==========================================================================
-           MODERN MINIMALIST EXECUTIVE FOOTER
+           MODERN EXECUTIVE KORPRI FOOTER
            ========================================================================== */
         .public-footer {
+            position: relative;
             background: var(--glass-nav);
             border-top: 1px solid var(--glass-border-subtle);
             padding: 2.25rem 1.5rem;
@@ -1298,6 +1319,27 @@ $admin_wa_default = '6281258902720';
             box-sizing: border-box;
             margin-top: 3.5rem;
             color: var(--text-main);
+            overflow: hidden;
+        }
+
+        /* Official KORPRI Royal Gold & Navy Accent Line */
+        .public-footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #1E40AF 0%, #D97706 35%, #F59E0B 50%, #D97706 65%, #2563EB 100%);
+            opacity: 0.95;
+        }
+
+        .footer-desktop-wrap {
+            display: block;
+        }
+
+        .footer-mobile-wrap {
+            display: none;
         }
 
         .footer-inner {
@@ -1317,12 +1359,13 @@ $admin_wa_default = '6281258902720';
         }
 
         .footer-logo-mini {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
             background: #FFFFFF;
-            padding: 2px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            padding: 3px;
+            border: 1.5px solid rgba(217, 119, 6, 0.4);
+            box-shadow: 0 2px 10px rgba(30, 58, 138, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1335,7 +1378,7 @@ $admin_wa_default = '6281258902720';
         }
 
         .footer-brand-title {
-            font-size: 0.95rem;
+            font-size: 0.98rem;
             font-weight: 800;
             color: var(--text-main);
             line-height: 1.2;
@@ -1617,38 +1660,176 @@ $admin_wa_default = '6281258902720';
                 height: 40px;
             }
 
-            /* Minimalist Footer on Mobile */
+            /* Executive KORPRI Mobile Footer Experience */
+            .footer-desktop-wrap {
+                display: none !important;
+            }
+            .footer-mobile-wrap {
+                display: flex !important;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                max-width: 460px;
+                margin: 0 auto;
+                text-align: center;
+                gap: 1.15rem;
+            }
+
             .public-footer {
-                padding: 2rem 1.25rem 6rem 1.25rem;
+                padding: 2.25rem 1.15rem 7rem 1.15rem;
                 margin-top: 2.5rem;
             }
-            .footer-inner {
+
+            .footer-mobile-header {
+                display: flex;
                 flex-direction: column;
                 align-items: center;
-                text-align: center;
-                gap: 1.25rem;
+                gap: 7px;
             }
-            .footer-brand-wrap {
-                flex-direction: column;
-                text-align: center;
-                gap: 8px;
-            }
-            .footer-links-group {
+
+            .footer-mobile-emblem {
+                width: 52px;
+                height: 52px;
+                border-radius: 50%;
+                background: #FFFFFF;
+                padding: 4px;
+                border: 2px solid rgba(217, 119, 6, 0.45);
+                box-shadow: 0 4px 16px rgba(30, 58, 138, 0.15);
+                display: flex;
+                align-items: center;
                 justify-content: center;
-                gap: 6px;
             }
-            .footer-link-pill {
-                font-size: 0.78rem;
-                padding: 6px 14px;
+            .footer-mobile-emblem img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
             }
-            .footer-bottom-bar {
+
+            .footer-mobile-badge {
+                display: inline-block;
+                font-size: 0.68rem;
+                font-weight: 800;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #B45309;
+                background: rgba(245, 158, 11, 0.12);
+                border: 1px solid rgba(217, 119, 6, 0.25);
+                padding: 3px 11px;
+                border-radius: var(--radius-full);
+            }
+            [data-theme="dark"] .footer-mobile-badge {
+                color: #FBBF24;
+                background: rgba(245, 158, 11, 0.18);
+            }
+
+            .footer-mobile-title {
+                font-size: 1.05rem;
+                font-weight: 900;
+                color: var(--text-main);
+                line-height: 1.25;
+                letter-spacing: -0.01em;
+                margin: 0;
+            }
+
+            .footer-mobile-desc {
+                font-size: 0.77rem;
+                color: var(--text-muted);
+                line-height: 1.45;
+                margin: 0;
+                max-width: 320px;
+            }
+
+            /* 3 Touch Cards on Mobile */
+            .footer-mobile-nav-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 7px;
+                width: 100%;
+            }
+
+            .footer-mobile-card {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 10px 14px;
+                background: var(--glass-card);
+                border: 1px solid var(--glass-border);
+                border-radius: 14px;
+                text-decoration: none;
+                transition: var(--transition-smooth);
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+                text-align: left;
+            }
+            .footer-mobile-card:active {
+                transform: scale(0.98);
+                background: rgba(37, 99, 235, 0.06);
+            }
+            .footer-card-icon {
+                font-size: 1.25rem;
+                line-height: 1;
+                flex-shrink: 0;
+                width: 34px;
+                height: 34px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(37, 99, 235, 0.08);
+                border-radius: 10px;
+            }
+            [data-theme="dark"] .footer-card-icon {
+                background: rgba(255, 255, 255, 0.08);
+            }
+            .footer-card-body {
+                flex: 1;
+                min-width: 0;
+            }
+            .footer-card-title {
+                font-size: 0.84rem;
+                font-weight: 700;
+                color: var(--text-main);
+                line-height: 1.2;
+            }
+            .footer-card-sub {
+                font-size: 0.71rem;
+                color: var(--text-muted);
+                margin-top: 1px;
+            }
+            .footer-card-arrow {
+                color: var(--text-subtle);
+                font-size: 0.85rem;
+                font-weight: 700;
+            }
+
+            /* Sekretariat Address Chip */
+            .footer-mobile-sekretariat {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 7px;
+                font-size: 0.73rem;
+                color: var(--text-muted);
+                background: rgba(15, 23, 42, 0.03);
+                border: 1px solid var(--glass-border-subtle);
+                padding: 8px 12px;
+                border-radius: 12px;
+                line-height: 1.4;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            [data-theme="dark"] .footer-mobile-sekretariat {
+                background: rgba(255, 255, 255, 0.04);
+            }
+
+            .footer-mobile-bottom {
+                display: flex;
                 flex-direction: column;
                 align-items: center;
-                text-align: center;
-                gap: 10px;
-                margin-top: 1.25rem;
-                padding-top: 1rem;
-                line-height: 1.5;
+                gap: 8px;
+                width: 100%;
+                padding-top: 0.85rem;
+                border-top: 1px solid var(--glass-border-subtle);
+                font-size: 0.73rem;
+                color: var(--text-subtle);
             }
         }
 
@@ -1673,6 +1854,7 @@ $admin_wa_default = '6281258902720';
 
     <!-- Kantor Bupati / Dewan Pengurus KORPRI Background -->
     <div class="public-bg-fixed" aria-hidden="true"></div>
+    <div class="public-bg-watermark" aria-hidden="true"></div>
     <div class="public-bg-overlay" aria-hidden="true"></div>
 
     <!-- Frosted Top Navbar -->
@@ -1990,33 +2172,92 @@ $admin_wa_default = '6281258902720';
         </a>
     </div>
 
-    <!-- Modern Minimalist Footer -->
+    <!-- Modern Executive KORPRI Footer -->
     <footer class="public-footer">
-        <div class="footer-inner">
-            <div class="footer-brand-wrap">
-                <div class="footer-logo-mini">
-                    <img src="assets/images/logo.png?v=2" alt="Logo KORPRI" width="28" height="28">
+        <!-- Desktop Footer Layout -->
+        <div class="footer-desktop-wrap">
+            <div class="footer-inner">
+                <div class="footer-brand-wrap">
+                    <div class="footer-logo-mini">
+                        <img src="assets/images/korpri-badge.png" alt="Logo KORPRI" width="30" height="30">
+                    </div>
+                    <div>
+                        <div class="footer-brand-title">E-MutZ KORPRI</div>
+                        <div class="footer-brand-sub">Dewan Pengurus KORPRI Kabupaten Banjar</div>
+                    </div>
                 </div>
-                <div>
-                    <div class="footer-brand-title">E-MutZ KORPRI</div>
-                    <div class="footer-brand-sub">Dewan Pengurus KORPRI Kabupaten Banjar</div>
-                </div>
+
+                <nav class="footer-links-group" aria-label="Navigasi Footer">
+                    <a href="#panduan" class="footer-link-pill">Panduan Ukuran</a>
+                    <a href="#spesifikasi" class="footer-link-pill">Spesifikasi Eselon II</a>
+                    <a href="login.php" class="footer-link-pill">Portal Petugas</a>
+                </nav>
             </div>
 
-            <nav class="footer-links-group" aria-label="Navigasi Footer">
-                <a href="#panduan" class="footer-link-pill">Panduan Ukuran</a>
-                <a href="#spesifikasi" class="footer-link-pill">Spesifikasi Eselon II</a>
-                <a href="login.php" class="footer-link-pill">Portal Petugas</a>
-            </nav>
+            <div class="footer-bottom-bar">
+                <div>
+                    &copy; <?= date('Y') ?> Dewan Pengurus KORPRI Kabupaten Banjar. Seluruh Hak Cipta Dilindungi.
+                </div>
+                <div class="footer-status-pill">
+                    <span class="footer-status-dot"></span>
+                    <span>Layanan Resmi Aktif</span>
+                </div>
+            </div>
         </div>
 
-        <div class="footer-bottom-bar">
-            <div>
-                &copy; <?= date('Y') ?> Dewan Pengurus KORPRI Kabupaten Banjar. Seluruh Hak Cipta Dilindungi.
+        <!-- Mobile-Tailored Executive Footer Layout -->
+        <div class="footer-mobile-wrap">
+            <div class="footer-mobile-header">
+                <div class="footer-mobile-emblem">
+                    <img src="assets/images/korpri-badge.png" alt="Lambang KORPRI" width="44" height="44">
+                </div>
+                <span class="footer-mobile-badge">Dewan Pengurus KORPRI</span>
+                <h3 class="footer-mobile-title">Kabupaten Banjar</h3>
+                <p class="footer-mobile-desc">Sistem Informasi Rekapitulasi Pemesanan &amp; Ketersediaan Mutz ASN</p>
             </div>
-            <div class="footer-status-pill">
-                <span class="footer-status-dot"></span>
-                <span>Layanan Resmi Aktif</span>
+
+            <nav class="footer-mobile-nav-grid" aria-label="Navigasi Cepat Mobile">
+                <a href="#panduan" class="footer-mobile-card">
+                    <div class="footer-card-icon">📐</div>
+                    <div class="footer-card-body">
+                        <div class="footer-card-title">Panduan Ukuran</div>
+                        <div class="footer-card-sub">Cek nomor lingkar kepala (cm)</div>
+                    </div>
+                    <div class="footer-card-arrow">&rarr;</div>
+                </a>
+
+                <a href="#spesifikasi" class="footer-mobile-card">
+                    <div class="footer-card-icon">🎖️</div>
+                    <div class="footer-card-body">
+                        <div class="footer-card-title">Spesifikasi Eselon II</div>
+                        <div class="footer-card-sub">Mutz khusus Kepala SKPD / Pejabat</div>
+                    </div>
+                    <div class="footer-card-arrow">&rarr;</div>
+                </a>
+
+                <a href="login.php" class="footer-mobile-card">
+                    <div class="footer-card-icon">🔐</div>
+                    <div class="footer-card-body">
+                        <div class="footer-card-title">Portal Petugas</div>
+                        <div class="footer-card-sub">Login administrator sistem</div>
+                    </div>
+                    <div class="footer-card-arrow">&rarr;</div>
+                </a>
+            </nav>
+
+            <div class="footer-mobile-sekretariat">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span>Sekretariat KORPRI: Kantor Bupati Banjar, Martapura</span>
+            </div>
+
+            <div class="footer-mobile-bottom">
+                <div class="footer-status-pill">
+                    <span class="footer-status-dot"></span>
+                    <span>Layanan Resmi Aktif &amp; Terverifikasi</span>
+                </div>
+                <div>
+                    &copy; <?= date('Y') ?> Dewan Pengurus KORPRI Kabupaten Banjar
+                </div>
             </div>
         </div>
     </footer>
