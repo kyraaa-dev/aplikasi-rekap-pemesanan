@@ -2,27 +2,6 @@
 define('ALLOW_DB_FAIL', true);
 require_once 'config.php';
 
-if (isset($_GET['debug_stok']) && $_GET['debug_stok'] === '1') {
-    header('Content-Type: text/plain');
-    echo "DB active: " . ($conn ? $conn->query("SELECT DATABASE()")->fetch_row()[0] : 'conn is null') . "\n";
-    if ($conn) {
-        $r_cnt = $conn->query("SELECT COUNT(*) as c, SUM(jumlah_stok) as s FROM stok_mutz");
-        if ($r_cnt) {
-            $row_cnt = $r_cnt->fetch_assoc();
-            echo "Row count: " . $row_cnt['c'] . ", Total stok: " . ($row_cnt['s'] ?? 0) . "\n";
-        } else {
-            echo "Error: " . $conn->error . "\n";
-        }
-        $r_sample = $conn->query("SELECT * FROM stok_mutz LIMIT 5");
-        if ($r_sample) {
-            while ($s = $r_sample->fetch_assoc()) {
-                echo json_encode($s) . "\n";
-            }
-        }
-    }
-    exit;
-}
-
 // Fetch current stock from database
 $q_stok = $conn ? $conn->query("
     SELECT jenis_mutz, jenis_kelamin, ukuran, jumlah_stok 
