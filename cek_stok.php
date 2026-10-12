@@ -91,17 +91,17 @@ $admin_wa_default = '6281258902720';
             --danger: #DC2626;
             --danger-light: #FEE2E2;
             
-            /* Glassmorphism Light Tokens */
+            /* Glassmorphism High-Performance Light Tokens */
             --bg-body: #F8FAFC;
             --text-main: #0F172A;
             --text-muted: #64748B;
             --text-subtle: #94A3B8;
             
-            --glass-card: rgba(255, 255, 255, 0.88);
-            --glass-card-hover: rgba(255, 255, 255, 0.96);
-            --glass-nav: rgba(255, 255, 255, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.7);
-            --glass-border-subtle: rgba(226, 232, 240, 0.8);
+            --glass-card: rgba(255, 255, 255, 0.94);
+            --glass-card-hover: #FFFFFF;
+            --glass-nav: rgba(255, 255, 255, 0.92);
+            --glass-border: rgba(255, 255, 255, 0.85);
+            --glass-border-subtle: rgba(226, 232, 240, 0.85);
             
             --shadow-sm: 0 2px 8px -2px rgba(15, 23, 42, 0.05);
             --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
@@ -114,7 +114,7 @@ $admin_wa_default = '6281258902720';
             --radius-xl: 28px;
             --radius-full: 9999px;
             
-            --transition-smooth: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-smooth: all 0.2s ease;
         }
 
         /* Dark Mode Tokens */
@@ -124,9 +124,9 @@ $admin_wa_default = '6281258902720';
             --text-muted: #94A3B8;
             --text-subtle: #64748B;
             
-            --glass-card: rgba(17, 24, 39, 0.85);
-            --glass-card-hover: rgba(24, 32, 47, 0.92);
-            --glass-nav: rgba(15, 23, 42, 0.85);
+            --glass-card: rgba(17, 24, 39, 0.92);
+            --glass-card-hover: rgba(24, 32, 47, 0.96);
+            --glass-nav: rgba(15, 23, 42, 0.92);
             --glass-border: rgba(255, 255, 255, 0.12);
             --glass-border-subtle: rgba(255, 255, 255, 0.08);
             
@@ -136,11 +136,16 @@ $admin_wa_default = '6281258902720';
             --shadow-glow: 0 0 30px -5px rgba(59, 130, 246, 0.35);
         }
 
-        /* Base Resets */
+        /* Base Resets & Ultra-Smooth Scrolling */
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
         }
 
         body.public-catalog-page {
@@ -158,6 +163,7 @@ $admin_wa_default = '6281258902720';
 
         /* ==========================================================================
            KANTOR DEWAN PENGURUS KORPRI / KANTOR BUPATI BANJAR BACKGROUND
+           GPU Hardware Accelerated (Zero Scroll Jitter)
            ========================================================================== */
         .public-bg-fixed {
             position: fixed;
@@ -172,7 +178,8 @@ $admin_wa_default = '6281258902720';
             background-position: center 20%;
             background-repeat: no-repeat;
             z-index: -3;
-            transform: scale(1.02);
+            transform: translateZ(0);
+            will-change: transform;
             pointer-events: none;
         }
 
@@ -186,29 +193,23 @@ $admin_wa_default = '6281258902720';
             height: 100vh;
             z-index: -2;
             pointer-events: none;
-            /* Light mode frosted overlay: clear architectural view with executive frosted tint */
-            background: radial-gradient(circle at 50% 12%, rgba(248, 250, 252, 0.76) 0%, rgba(241, 245, 249, 0.90) 100%);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            /* High-performance pure GPU alpha gradient - zero repaint lag during scroll */
+            background: radial-gradient(circle at 50% 12%, rgba(248, 250, 252, 0.82) 0%, rgba(241, 245, 249, 0.95) 100%);
             transition: background 0.3s ease;
         }
 
         [data-theme="dark"] .public-bg-overlay {
-            /* Dark mode frosted overlay: deep executive midnight glass */
-            background: radial-gradient(circle at 50% 12%, rgba(15, 23, 42, 0.78) 0%, rgba(9, 13, 22, 0.92) 100%);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            background: radial-gradient(circle at 50% 12%, rgba(15, 23, 42, 0.85) 0%, rgba(9, 13, 22, 0.97) 100%);
         }
 
-        /* Glass Surface Utility */
+        /* High-Performance Frosted Glass Surface Utility */
         .glass-panel {
             background: var(--glass-card);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow-md);
             border-radius: var(--radius-lg);
-            transition: var(--transition-smooth);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transform: translateZ(0);
         }
 
         /* ==========================================================================
@@ -221,8 +222,8 @@ $admin_wa_default = '6281258902720';
             width: 100%;
             z-index: 100;
             background: var(--glass-nav);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--glass-border-subtle);
             box-shadow: var(--shadow-sm);
             padding: 0.75rem 1.5rem;
@@ -230,7 +231,8 @@ $admin_wa_default = '6281258902720';
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
-            transition: var(--transition-smooth);
+            transition: transform 0.2s ease;
+            transform: translateZ(0);
         }
 
         .brand-public {
@@ -398,41 +400,29 @@ $admin_wa_default = '6281258902720';
         .institution-ribbon {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
             background: rgba(37, 99, 235, 0.08);
             border: 1px solid rgba(37, 99, 235, 0.2);
-            padding: 6px 16px;
+            padding: 7px 20px;
             border-radius: var(--radius-full);
             margin-bottom: 1.25rem;
-            text-align: left;
+            text-align: center;
             transition: var(--transition-smooth);
         }
         [data-theme="dark"] .institution-ribbon {
             background: rgba(37, 99, 235, 0.15);
             border-color: rgba(59, 130, 246, 0.3);
         }
-        .ribbon-icon {
-            width: 22px;
-            height: 22px;
-            object-fit: contain;
-            flex-shrink: 0;
-        }
         .ribbon-text-main {
-            font-size: 0.82rem;
+            font-size: 0.84rem;
             font-weight: 800;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
             color: var(--primary);
             line-height: 1.2;
         }
         [data-theme="dark"] .ribbon-text-main {
             color: #93C5FD;
-        }
-        .ribbon-text-sub {
-            font-size: 0.72rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            margin-left: 4px;
         }
 
         /* Live Realtime Indicator Pill */
@@ -606,8 +596,6 @@ $admin_wa_default = '6281258902720';
             max-width: 1100px;
             margin: 0 auto;
             background: var(--glass-card);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow-md);
             border-radius: var(--radius-lg);
@@ -734,8 +722,6 @@ $admin_wa_default = '6281258902720';
 
         .gender-pill {
             background: var(--glass-card);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
             color: var(--text-main);
             border: 1px solid var(--glass-border-subtle);
             box-shadow: var(--shadow-sm);
@@ -747,7 +733,7 @@ $admin_wa_default = '6281258902720';
             display: inline-flex;
             align-items: center;
             gap: 9px;
-            transition: var(--transition-smooth);
+            transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
             font-family: var(--font-main);
@@ -812,8 +798,6 @@ $admin_wa_default = '6281258902720';
 
         .size-chip-btn {
             background: var(--glass-card);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
             color: var(--text-main);
             border: 1px solid var(--glass-border-subtle);
             box-shadow: var(--shadow-sm);
@@ -824,7 +808,7 @@ $admin_wa_default = '6281258902720';
             cursor: pointer;
             white-space: nowrap;
             flex-shrink: 0;
-            transition: var(--transition-smooth);
+            transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
             user-select: none;
             display: inline-flex;
             align-items: center;
@@ -855,7 +839,7 @@ $admin_wa_default = '6281258902720';
            ESELON II SPECIAL INFO BANNER
            ========================================================================== */
         .eselon-banner {
-            background: linear-gradient(135deg, rgba(254, 243, 199, 0.9) 0%, rgba(253, 230, 138, 0.75) 100%);
+            background: linear-gradient(135deg, rgba(254, 243, 199, 0.95) 0%, rgba(253, 230, 138, 0.85) 100%);
             border: 1px solid rgba(245, 158, 11, 0.35);
             box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.15);
             border-radius: var(--radius-lg);
@@ -869,7 +853,7 @@ $admin_wa_default = '6281258902720';
             transition: var(--transition-smooth);
         }
         [data-theme="dark"] .eselon-banner {
-            background: linear-gradient(135deg, rgba(45, 33, 10, 0.9) 0%, rgba(61, 43, 0, 0.8) 100%);
+            background: linear-gradient(135deg, rgba(45, 33, 10, 0.95) 0%, rgba(61, 43, 0, 0.85) 100%);
             border-color: rgba(245, 158, 11, 0.4);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
             color: #FEF3C7;
@@ -905,14 +889,12 @@ $admin_wa_default = '6281258902720';
         }
 
         @keyframes cardPopIn {
-            from { opacity: 0; transform: translateY(12px) scale(0.98); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .size-card {
             background: var(--glass-card);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow-md);
             border-radius: var(--radius-lg);
@@ -920,18 +902,20 @@ $admin_wa_default = '6281258902720';
             display: flex;
             flex-direction: column;
             position: relative;
-            transition: var(--transition-smooth);
-            animation: cardPopIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            animation: cardPopIn 0.25s ease-out backwards;
+            contain: content;
         }
         .size-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
-            border-color: rgba(37, 99, 235, 0.3);
+            border-color: rgba(37, 99, 235, 0.35);
         }
         [data-theme="dark"] .size-card:hover {
             border-color: rgba(59, 130, 246, 0.4);
             box-shadow: 0 16px 35px -5px rgba(0, 0, 0, 0.5);
         }
+
 
         .card-header-row {
             display: flex;
@@ -1284,8 +1268,6 @@ $admin_wa_default = '6281258902720';
             height: 44px;
             border-radius: 50%;
             background: var(--glass-card) !important;
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
             color: var(--text-main) !important;
             border: 1px solid var(--glass-border-subtle) !important;
             box-shadow: var(--shadow-md) !important;
@@ -1310,8 +1292,6 @@ $admin_wa_default = '6281258902720';
            ========================================================================== */
         .public-footer {
             background: var(--glass-nav);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border-top: 1px solid var(--glass-border-subtle);
             padding: 3rem 1.5rem;
             text-align: center;
@@ -1591,11 +1571,7 @@ $admin_wa_default = '6281258902720';
             <div class="hero-card-banner glass-panel">
                 <!-- Institution Badge -->
                 <div class="institution-ribbon">
-                    <img src="assets/images/logo.png" alt="Emblem KORPRI" class="ribbon-icon">
-                    <div>
-                        <span class="ribbon-text-main">DEWAN PENGURUS KORPRI KABUPATEN BANJAR</span>
-                        <span class="ribbon-text-sub">&bull; Sekretariat Daerah Martapura</span>
-                    </div>
+                    <span class="ribbon-text-main">DEWAN PENGURUS KORPRI KABUPATEN BANJAR</span>
                 </div>
 
                 <br>
@@ -2199,17 +2175,24 @@ $admin_wa_default = '6281258902720';
             }
         }
 
-        // Back to top scroll listener
+        // Ultra-smooth throttled back-to-top scroll listener (Zero jank)
+        let isScrollTicking = false;
         window.addEventListener('scroll', function() {
-            const btn = document.getElementById('btnScrollTop');
-            if (btn) {
-                if (window.scrollY > 300) {
-                    btn.classList.add('visible');
-                } else {
-                    btn.classList.remove('visible');
-                }
+            if (!isScrollTicking) {
+                window.requestAnimationFrame(function() {
+                    const btn = document.getElementById('btnScrollTop');
+                    if (btn) {
+                        if (window.scrollY > 300) {
+                            btn.classList.add('visible');
+                        } else {
+                            btn.classList.remove('visible');
+                        }
+                    }
+                    isScrollTicking = false;
+                });
+                isScrollTicking = true;
             }
-        });
+        }, { passive: true });
 
         // Initialize on Load
         document.addEventListener('DOMContentLoaded', function() {
