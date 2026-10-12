@@ -765,9 +765,12 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
-            flex-wrap: wrap;
+            gap: 16px;
+            flex-wrap: nowrap;
             box-shadow: var(--shadow-subtle);
+            box-sizing: border-box;
+            max-width: 100%;
+            position: relative;
         }
 
         .gender-segmented-control {
@@ -777,6 +780,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             border-radius: var(--radius-sm);
             padding: 3px;
             gap: 3px;
+            flex-shrink: 0;
+            box-sizing: border-box;
         }
 
         .btn-segment {
@@ -832,7 +837,12 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             overflow-x: auto;
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
-            padding: 2px 0;
+            overscroll-behavior-x: contain;
+            padding: 2px 2px;
+            flex: 1;
+            min-width: 0;
+            max-width: 100%;
+            box-sizing: border-box;
         }
         .size-chips-scroller::-webkit-scrollbar {
             display: none;
@@ -854,6 +864,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             display: inline-flex;
             align-items: center;
             gap: 4px;
+            flex-shrink: 0;
+            box-sizing: border-box;
         }
         .btn-size-chip:hover:not(.active) {
             border-color: #94A3B8;
@@ -868,6 +880,32 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             background: #1D4ED8;
             border-color: #1D4ED8;
             color: #FFFFFF;
+        }
+
+        /* Responsive Filter Toolbar: Clean Stacking on Tablet & Medium Screens */
+        @media (max-width: 1039px) {
+            .gov-filter-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+                padding: 10px 12px;
+            }
+            .gender-segmented-control {
+                width: 100%;
+                display: flex;
+            }
+            .btn-segment {
+                flex: 1;
+                justify-content: center;
+            }
+            .size-chips-scroller {
+                width: 100%;
+                min-width: 0;
+                max-width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 2px;
+            }
         }
 
         /* Eselon II Callout Bar (Clean Governmental Notice) */
@@ -1673,10 +1711,13 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 flex-direction: column;
                 align-items: stretch;
                 gap: 10px;
+                width: 100%;
+                box-sizing: border-box;
             }
             .gender-segmented-control {
                 width: 100%;
                 display: flex;
+                box-sizing: border-box;
             }
             .btn-segment {
                 flex: 1;
@@ -1685,12 +1726,20 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 font-size: 0.8rem;
             }
             .size-chips-scroller {
+                width: 100%;
+                min-width: 0;
+                max-width: 100%;
                 gap: 6px;
-                padding: 2px 0 4px 0;
+                padding: 2px 2px 4px 2px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior-x: contain;
+                box-sizing: border-box;
             }
             .btn-size-chip {
                 padding: 6px 10px;
                 font-size: 0.78rem;
+                flex-shrink: 0;
             }
 
             /* Stock Grid on Mobile: Dynamic, Crisp 2 Columns */
