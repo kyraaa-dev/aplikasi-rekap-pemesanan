@@ -48,7 +48,7 @@ $sizes_pria = [55, 56, 57, 58, 59, 60];
 $sizes_wanita = [58, 59, 60];
 
 // Default admin WhatsApp
-$admin_wa_default = '6281234567890';
+$admin_wa_default = '6281258902720';
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -144,10 +144,25 @@ $admin_wa_default = '6281234567890';
             box-sizing: border-box;
         }
 
-        /* Hero Section */
+        /* Hero Section with High-Contrast Card Banner */
         .hero-section {
-            padding: 2.5rem 0 1.5rem 0;
+            padding: 2rem 0 1.5rem 0;
             text-align: center;
+        }
+
+        .hero-card-banner {
+            background: #FFFFFF;
+            border: 3px solid #000000;
+            box-shadow: 6px 6px 0px #000000;
+            border-radius: 12px;
+            padding: 2.25rem 1.75rem 2rem 1.75rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        [data-theme="dark"] .hero-card-banner {
+            background: #18181B;
+            border-color: #FAFAFA;
+            box-shadow: 6px 6px 0px #FAFAFA;
         }
 
         .live-badge {
@@ -156,8 +171,8 @@ $admin_wa_default = '6281234567890';
             gap: 8px;
             background: #DCFCE7;
             color: #166534;
-            border: 2px solid #000;
-            box-shadow: 2px 2px 0px #000;
+            border: 2px solid #000000;
+            box-shadow: 2px 2px 0px #000000;
             padding: 6px 14px;
             border-radius: 999px;
             font-size: 0.8rem;
@@ -188,26 +203,33 @@ $admin_wa_default = '6281234567890';
         }
 
         .hero-title {
-            font-size: 2.25rem;
+            font-size: 2.3rem;
             font-weight: 900;
             line-height: 1.15;
             letter-spacing: -0.8px;
-            margin: 0 auto 0.75rem auto;
+            margin: 0 auto 0.85rem auto;
             max-width: 850px;
             text-transform: uppercase;
-            color: var(--dark);
+            color: #000000;
+        }
+        [data-theme="dark"] .hero-title {
+            color: #FFFFFF !important;
         }
         @media (max-width: 640px) {
             .hero-title { font-size: 1.65rem; }
+            .hero-card-banner { padding: 1.5rem 1rem; }
         }
 
         .hero-desc {
             font-size: 1.05rem;
-            color: var(--gray);
-            max-width: 680px;
-            margin: 0 auto 1.75rem auto;
-            line-height: 1.5;
-            font-weight: 500;
+            color: #374151;
+            max-width: 720px;
+            margin: 0 auto 0 auto;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+        [data-theme="dark"] .hero-desc {
+            color: #E4E4E7 !important;
         }
 
         /* Stat Banner Highlights */
@@ -776,17 +798,19 @@ $admin_wa_default = '6281234567890';
     <main class="catalog-container">
         <!-- Hero Section -->
         <section class="hero-section">
-            <div class="live-badge">
-                <span class="live-pulse"></span>
-                <span>Update Stok Real-Time dari Gudang KORPRI</span>
-            </div>
+            <div class="hero-card-banner">
+                <div class="live-badge">
+                    <span class="live-pulse"></span>
+                    <span>Update Stok Real-Time dari Gudang KORPRI</span>
+                </div>
 
-            <h2 class="hero-title">
-                Ketersediaan Stok Topi Mutz ASN
-            </h2>
-            <p class="hero-desc">
-                Informasi ukuran yang tersedia untuk <strong>Mutz Standar ASN</strong> dan <strong>Mutz Khusus Kepala SKPD / Pejabat Eselon II</strong>. Cek nomor lingkar kepala Anda sebelum melakukan pemesanan.
-            </p>
+                <h2 class="hero-title">
+                    Ketersediaan Stok Topi Mutz ASN
+                </h2>
+                <p class="hero-desc">
+                    Informasi ukuran yang tersedia untuk <strong>Mutz Standar ASN</strong> dan <strong>Mutz Khusus Kepala SKPD / Pejabat Eselon II</strong>. Cek nomor lingkar kepala Anda sebelum melakukan pemesanan.
+                </p>
+            </div>
 
             <!-- Stat Highlights -->
             <div class="stat-banner-row">
@@ -824,7 +848,7 @@ $admin_wa_default = '6281234567890';
                         <div class="tab-title">
                             <span>🏷️ Mutz Standar ASN</span>
                         </div>
-                        <div class="tab-sub">PNS, PPPK &amp; Pelaksana Teknis</div>
+                        <div class="tab-sub">Diperuntukkan bagi seluruh ASN (PNS &amp; PPPK)</div>
                     </div>
                     <div class="tab-price-tag">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></div>
                 </button>
@@ -942,7 +966,7 @@ $admin_wa_default = '6281234567890';
                         <div style="font-size: 0.8rem; font-weight: 800; color: #059669; text-transform: uppercase;">Standar ASN</div>
                         <h5 style="margin: 4px 0 8px 0; font-size: 1.1rem; font-weight: 900; color: inherit;">Mutz Reguler (Biasa)</h5>
                         <ul style="padding-left: 18px; margin: 0; font-size: 0.875rem; line-height: 1.6; font-weight: 600;">
-                            <li>Diperuntukkan bagi seluruh PNS, PPPK, dan Staf Pelaksana/Fungsional.</li>
+                            <li>Diperuntukkan bagi seluruh ASN (PNS dan PPPK).</li>
                             <li>Bahan drill resmi KORPRI yang nyaman dan adem.</li>
                             <li>List kain standar warna navy/biru KORPRI.</li>
                             <li>Harga resmi: <strong>Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></strong>.</li>
