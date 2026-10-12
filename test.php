@@ -7,14 +7,20 @@ echo "DB Name: " . ($db ?? 'none') . "\n";
 echo "Connected: " . ($connected ? 'YES' : 'NO') . "\n";
 
 if ($conn) {
-    echo "\n--- Tables in DB ---\n";
+    echo "\n--- Databases in Cluster ---\n";
+    $res_db = $conn->query("SHOW DATABASES");
+    if ($res_db) {
+        while ($row = $res_db->fetch_row()) {
+            echo "- " . $row[0] . "\n";
+        }
+    }
+
+    echo "\n--- Tables in current DB ($db) ---\n";
     $res = $conn->query("SHOW TABLES");
     if ($res) {
         while ($row = $res->fetch_row()) {
             echo "- " . $row[0] . "\n";
         }
-    } else {
-        echo "Error SHOW TABLES: " . $conn->error . "\n";
     }
 
     echo "\n--- Check stok_mutz ---\n";
