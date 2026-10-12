@@ -15,10 +15,10 @@ if ($conn) {
         }
     }
 
-    echo "\n--- Tables in current DB ($db) ---\n";
-    $res = $conn->query("SHOW TABLES");
-    if ($res) {
-        while ($row = $res->fetch_row()) {
+    echo "\n--- Tables in test DB ---\n";
+    $res_test = $conn->query("SHOW TABLES FROM test");
+    if ($res_test) {
+        while ($row = $res_test->fetch_row()) {
             echo "- " . $row[0] . "\n";
         }
     }
