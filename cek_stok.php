@@ -330,39 +330,40 @@ $admin_wa_default = '6281258902720';
         }
 
         .tab-btn {
-            background: transparent;
-            border: 2px solid transparent;
+            background: transparent !important;
+            border: 2px solid transparent !important;
             border-radius: 8px;
             padding: 14px 18px;
             cursor: pointer;
             text-align: left;
             transition: all 0.15s ease;
-            display: flex;
+            display: flex !important;
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            color: inherit;
+            color: inherit !important;
+            box-shadow: none !important;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
         .tab-btn:hover {
-            background: rgba(0, 0, 0, 0.04);
+            background: rgba(0, 0, 0, 0.05) !important;
         }
         [data-theme="dark"] .tab-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.08) !important;
         }
 
         .tab-btn.active.tab-biasa {
-            background: #00FFCC;
+            background: #00FFCC !important;
             color: #000000 !important;
-            border-color: #000000;
-            box-shadow: 3px 3px 0px #000000;
+            border: 2px solid #000000 !important;
+            box-shadow: 3px 3px 0px #000000 !important;
         }
         .tab-btn.active.tab-kepala {
-            background: #FBBF24;
+            background: #FBBF24 !important;
             color: #000000 !important;
-            border-color: #000000;
-            box-shadow: 3px 3px 0px #000000;
+            border: 2px solid #000000 !important;
+            box-shadow: 3px 3px 0px #000000 !important;
         }
 
         .tab-title {
@@ -437,16 +438,16 @@ $admin_wa_default = '6281258902720';
             flex-wrap: wrap;
         }
         .gender-pill {
-            background: #FFFFFF;
-            color: #000000;
-            border: 2px solid #000000;
-            box-shadow: 3px 3px 0px #000000;
+            background: #FFFFFF !important;
+            color: #000000 !important;
+            border: 2px solid #000000 !important;
+            box-shadow: 3px 3px 0px #000000 !important;
             padding: 9px 20px;
             border-radius: 6px;
             font-size: 0.95rem;
             font-weight: 800;
             cursor: pointer;
-            display: inline-flex;
+            display: inline-flex !important;
             align-items: center;
             gap: 8px;
             transition: transform 0.1s, box-shadow 0.1s;
@@ -454,10 +455,10 @@ $admin_wa_default = '6281258902720';
             -webkit-tap-highlight-color: transparent;
         }
         [data-theme="dark"] .gender-pill {
-            background: #18181B;
-            color: #FAFAFA;
-            border-color: #FAFAFA;
-            box-shadow: 3px 3px 0px #FAFAFA;
+            background: #18181B !important;
+            color: #FAFAFA !important;
+            border-color: #FAFAFA !important;
+            box-shadow: 3px 3px 0px #FAFAFA !important;
         }
         .gender-pill:hover {
             transform: translate(-1px, -1px);
@@ -482,6 +483,12 @@ $admin_wa_default = '6281258902720';
             font-size: 0.78rem;
             font-weight: 800;
         }
+        [data-theme="dark"] .pill-badge {
+            background: rgba(255,255,255,0.18);
+        }
+        .pill-label-short {
+            display: none;
+        }
 
         /* Interactive Quick Size Chips */
         .quick-size-track {
@@ -499,10 +506,10 @@ $admin_wa_default = '6281258902720';
             display: none;
         }
         .size-chip-btn {
-            background: #FFFFFF;
-            color: #000000;
-            border: 2px solid #000000;
-            box-shadow: 2px 2px 0px #000000;
+            background: #FFFFFF !important;
+            color: #000000 !important;
+            border: 2px solid #000000 !important;
+            box-shadow: 2px 2px 0px #000000 !important;
             border-radius: 999px;
             padding: 6px 14px;
             font-size: 0.82rem;
@@ -512,13 +519,16 @@ $admin_wa_default = '6281258902720';
             flex-shrink: 0;
             transition: all 0.15s ease;
             user-select: none;
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
             -webkit-tap-highlight-color: transparent;
         }
         [data-theme="dark"] .size-chip-btn {
-            background: #18181B;
-            color: #FAFAFA;
-            border-color: #FAFAFA;
-            box-shadow: 2px 2px 0px #FAFAFA;
+            background: #18181B !important;
+            color: #FAFAFA !important;
+            border-color: #FAFAFA !important;
+            box-shadow: 2px 2px 0px #FAFAFA !important;
         }
         .size-chip-btn:hover {
             transform: translate(-1px, -1px);
@@ -526,6 +536,7 @@ $admin_wa_default = '6281258902720';
         .size-chip-btn.active {
             background: #000000 !important;
             color: #FFFFFF !important;
+            border-color: #000000 !important;
             transform: translate(1px, 1px);
             box-shadow: 1px 1px 0px #000000 !important;
         }
@@ -843,9 +854,14 @@ $admin_wa_default = '6281258902720';
             bottom: 24px;
             right: 24px;
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            align-items: flex-end;
             gap: 10px;
             z-index: 95;
+            pointer-events: none;
+        }
+        .floating-actions-wrap > * {
+            pointer-events: auto;
         }
         .floating-wa-btn {
             background: #25D366;
@@ -873,14 +889,14 @@ $admin_wa_default = '6281258902720';
             box-shadow: 2px 2px 0px #000000;
         }
         .btn-scroll-top {
-            display: none;
+            display: none !important;
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: #FFFFFF;
-            color: #000000;
-            border: 2px solid #000000;
-            box-shadow: 3px 3px 0px #000000;
+            background: #FFFFFF !important;
+            color: #000000 !important;
+            border: 2px solid #000000 !important;
+            box-shadow: 3px 3px 0px #000000 !important;
             cursor: pointer;
             align-items: center;
             justify-content: center;
@@ -889,21 +905,21 @@ $admin_wa_default = '6281258902720';
             -webkit-tap-highlight-color: transparent;
         }
         [data-theme="dark"] .btn-scroll-top {
-            background: #18181B;
-            color: #FAFAFA;
-            border-color: #FAFAFA;
-            box-shadow: 3px 3px 0px #FAFAFA;
+            background: #18181B !important;
+            color: #FAFAFA !important;
+            border-color: #FAFAFA !important;
+            box-shadow: 3px 3px 0px #FAFAFA !important;
         }
         .btn-scroll-top.visible {
-            display: inline-flex;
+            display: inline-flex !important;
         }
         .btn-scroll-top:hover {
             transform: translate(-1px, -1px);
-            box-shadow: 4px 4px 0px #000000;
+            box-shadow: 4px 4px 0px #000000 !important;
         }
         .btn-scroll-top:active {
             transform: translate(1px, 1px);
-            box-shadow: 1px 1px 0px #000000;
+            box-shadow: 1px 1px 0px #000000 !important;
         }
 
         /* ==========================================================================
@@ -912,12 +928,12 @@ $admin_wa_default = '6281258902720';
         @media (max-width: 640px) {
             /* Top Navbar */
             .public-navbar {
-                padding: 0.65rem 0.85rem;
+                padding: 0.55rem 0.85rem;
                 gap: 0.5rem;
             }
             .brand-public {
                 gap: 8px;
-                max-width: calc(100% - 150px);
+                min-width: 0;
             }
             .brand-public img {
                 width: 36px;
@@ -927,14 +943,15 @@ $admin_wa_default = '6281258902720';
                 font-size: 0.95rem;
             }
             .brand-text-sub {
-                font-size: 0.62rem;
+                display: none !important;
             }
             .nav-actions {
-                gap: 6px;
+                gap: 5px;
             }
             .nav-actions .btn {
-                padding: 6px 10px !important;
-                font-size: 0.8rem !important;
+                padding: 6px 9px !important;
+                font-size: 0.78rem !important;
+                min-height: 34px !important;
             }
 
             /* Container */
@@ -956,12 +973,12 @@ $admin_wa_default = '6281258902720';
                 box-shadow: 4px 4px 0px #FAFAFA;
             }
             .hero-title {
-                font-size: clamp(1.4rem, 5.5vw, 1.85rem);
+                font-size: clamp(1.35rem, 5.5vw, 1.75rem);
                 margin-bottom: 0.65rem;
                 letter-spacing: -0.5px;
             }
             .hero-desc {
-                font-size: 0.9rem;
+                font-size: 0.88rem;
                 line-height: 1.5;
             }
             .live-badge {
@@ -1007,7 +1024,7 @@ $admin_wa_default = '6281258902720';
 
             /* Sticky Category & Filter Controls on Mobile */
             .category-switcher-wrap {
-                top: 56px;
+                top: 50px;
                 padding: 6px 0 8px 0;
                 margin-left: -0.85rem;
                 margin-right: -0.85rem;
@@ -1032,18 +1049,20 @@ $admin_wa_default = '6281258902720';
                 box-shadow: 4px 4px 0px #FAFAFA;
             }
             .tab-btn {
-                padding: 8px 10px;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 4px;
-                border-radius: 6px;
+                padding: 8px 10px !important;
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 4px !important;
+                border-radius: 6px !important;
+                min-height: 54px !important;
             }
             .tab-title {
                 font-size: 0.82rem;
-                gap: 5px;
+                gap: 4px;
+                line-height: 1.2;
             }
             .tab-sub {
-                display: none;
+                display: none !important;
             }
             .tab-price-tag {
                 font-size: 0.72rem;
@@ -1051,26 +1070,38 @@ $admin_wa_default = '6281258902720';
                 border-radius: 4px;
             }
 
-            /* Segmented Gender Pills */
+            /* Segmented 1-Row Gender Pills */
             .gender-filter-bar {
-                display: flex;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
                 gap: 8px;
                 margin-top: 8px;
                 margin-bottom: 8px;
                 width: 100%;
             }
+            .pill-label-full {
+                display: none !important;
+            }
+            .pill-label-short {
+                display: inline !important;
+            }
             .gender-pill {
-                flex: 1 1 0;
+                width: 100%;
                 justify-content: center;
-                padding: 9px 6px;
-                font-size: 0.85rem;
-                min-height: 42px;
-                box-shadow: 2px 2px 0px #000;
+                padding: 8px 8px !important;
+                font-size: 0.85rem !important;
+                min-height: 42px !important;
+                box-shadow: 2px 2px 0px #000 !important;
                 border-radius: 6px;
                 white-space: nowrap;
+                gap: 6px;
             }
             [data-theme="dark"] .gender-pill {
-                box-shadow: 2px 2px 0px #FAFAFA;
+                box-shadow: 2px 2px 0px #FAFAFA !important;
+            }
+            .gender-pill .pill-badge {
+                font-size: 0.72rem;
+                padding: 2px 5px;
             }
 
             /* Quick Size Chips on Mobile */
@@ -1080,9 +1111,10 @@ $admin_wa_default = '6281258902720';
                 gap: 6px;
             }
             .size-chip-btn {
-                padding: 5px 11px;
-                font-size: 0.78rem;
-                box-shadow: 2px 2px 0px #000;
+                padding: 5px 11px !important;
+                font-size: 0.78rem !important;
+                box-shadow: 2px 2px 0px #000 !important;
+                min-height: 32px !important;
             }
 
             /* Eselon Banner */
@@ -1210,7 +1242,7 @@ $admin_wa_default = '6281258902720';
             .btn-scroll-top {
                 width: 40px;
                 height: 40px;
-                box-shadow: 2.5px 2.5px 0px #000;
+                box-shadow: 2.5px 2.5px 0px #000 !important;
             }
         }
 
@@ -1220,23 +1252,20 @@ $admin_wa_default = '6281258902720';
         }
 
         @media (max-width: 440px) {
-            .brand-text-sub {
-                display: none;
-            }
             .nav-btn-text {
-                display: none;
+                display: none !important;
             }
             .nav-btn-short {
-                display: inline;
+                display: inline !important;
             }
             .floating-wa-text {
-                display: none;
+                display: none !important;
             }
             .floating-wa-btn {
                 padding: 10px 12px;
                 border-radius: 50%;
-                width: 42px;
-                height: 42px;
+                width: 44px;
+                height: 44px;
                 justify-content: center;
             }
         }
@@ -1355,12 +1384,14 @@ $admin_wa_default = '6281258902720';
             <!-- Gender Selector Pills -->
             <div class="gender-filter-bar">
                 <button type="button" class="gender-pill active" id="pillPria" onclick="switchGender('Laki-laki')">
-                    <span>👔 Pria (Laki-laki)</span>
+                    <span class="pill-label-full">👔 Pria (Laki-laki)</span>
+                    <span class="pill-label-short">👔 Pria</span>
                     <span id="badgeCountPria" class="pill-badge">...</span>
                 </button>
 
                 <button type="button" class="gender-pill" id="pillWanita" onclick="switchGender('Perempuan')">
-                    <span>🧕 Wanita (Perempuan)</span>
+                    <span class="pill-label-full">🧕 Wanita (Perempuan)</span>
+                    <span class="pill-label-short">🧕 Wanita</span>
                     <span id="badgeCountWanita" class="pill-badge">...</span>
                 </button>
             </div>
@@ -1695,7 +1726,7 @@ $admin_wa_default = '6281258902720';
             const btnAll = document.createElement('button');
             btnAll.type = 'button';
             btnAll.className = 'size-chip-btn' + (selectedSizeFilter === null ? ' active' : '');
-            btnAll.textContent = '✨ Semua Ukuran (' + allSizes.length + ')';
+            btnAll.textContent = '✨ Semua (' + allSizes.length + ')';
             btnAll.onclick = function() {
                 selectedSizeFilter = null;
                 renderQuickSizeChips();
