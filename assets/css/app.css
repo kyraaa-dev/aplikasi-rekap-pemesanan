@@ -378,7 +378,7 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0px 0px 0px var(--dark);
 }
 
-button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.spotlight-close-btn):not(.sidebar-close-btn):not(.spotlight-filter-btn):not(.tab-btn):not(.gender-pill):not(.size-chip-btn):not(.btn-scroll-top),
+button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.spotlight-close-btn):not(.sidebar-close-btn):not(.spotlight-filter-btn):not(.tab-btn):not(.gender-pill):not(.size-chip-btn):not(.btn-scroll-top):not(.btn-order-wa),
 .btn {
     display: inline-flex;
     align-items: center;
@@ -396,13 +396,13 @@ button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.sp
     transition: transform 0.1s, box-shadow 0.1s;
 }
 
-button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.spotlight-close-btn):not(.sidebar-close-btn):not(.spotlight-filter-btn):not(.tab-btn):not(.gender-pill):not(.size-chip-btn):not(.btn-scroll-top):hover,
+button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.spotlight-close-btn):not(.sidebar-close-btn):not(.spotlight-filter-btn):not(.tab-btn):not(.gender-pill):not(.size-chip-btn):not(.btn-scroll-top):not(.btn-order-wa):hover,
 .btn:hover {
     transform: translate(-2px, -2px);
     box-shadow: 6px 6px 0px #000000;
 }
 
-button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.spotlight-close-btn):not(.sidebar-close-btn):not(.spotlight-filter-btn):not(.tab-btn):not(.gender-pill):not(.size-chip-btn):not(.btn-scroll-top):active,
+button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.spotlight-close-btn):not(.sidebar-close-btn):not(.spotlight-filter-btn):not(.tab-btn):not(.gender-pill):not(.size-chip-btn):not(.btn-scroll-top):not(.btn-order-wa):active,
 .btn:active {
     transform: translate(2px, 2px);
     box-shadow: 2px 2px 0px #000000;
@@ -975,7 +975,7 @@ tr:hover {
         text-align: center !important;
     }
 
-    .btn, button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.spotlight-close-btn):not(.sidebar-close-btn):not(.spotlight-filter-btn):not(.tab-btn):not(.gender-pill):not(.size-chip-btn):not(.btn-scroll-top) {
+    .btn, button:not(.btn-hamburger):not(.spotlight-trigger-btn):not(#themeToggle):not(.spotlight-close-btn):not(.sidebar-close-btn):not(.spotlight-filter-btn):not(.tab-btn):not(.gender-pill):not(.size-chip-btn):not(.btn-scroll-top):not(.btn-order-wa) {
         padding: 0.7rem 1.2rem;
         font-size: 0.95rem;
         min-height: 44px;

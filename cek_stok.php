@@ -376,6 +376,9 @@ $admin_wa_default = '6281258902720';
             margin-bottom: 2px;
             color: inherit;
         }
+        .tab-title-short {
+            display: none;
+        }
         .tab-sub {
             font-size: 0.8rem;
             font-weight: 600;
@@ -397,33 +400,34 @@ $admin_wa_default = '6281258902720';
         .eselon-banner {
             background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
             border: 3px solid #000000;
-            box-shadow: 6px 6px 0px #000000;
+            box-shadow: 5px 5px 0px #000000;
             border-radius: 10px;
-            padding: 22px;
-            margin-bottom: 2rem;
+            padding: 16px 20px;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
             color: #000000;
+            text-align: left;
         }
         [data-theme="dark"] .eselon-banner {
             background: linear-gradient(135deg, #2A1F02 0%, #3D2B00 100%);
             border-color: #F59E0B;
-            box-shadow: 6px 6px 0px #F59E0B;
+            box-shadow: 5px 5px 0px #F59E0B;
             color: #FAFAFA;
         }
         .eselon-badge-icon {
-            width: 60px;
-            height: 60px;
+            width: 48px;
+            height: 48px;
             background: #F59E0B;
             color: #000;
             border: 2px solid #000;
-            box-shadow: 3px 3px 0px #000;
-            border-radius: 12px;
+            box-shadow: 2.5px 2.5px 0px #000;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 1.6rem;
             flex-shrink: 0;
         }
 
@@ -617,6 +621,8 @@ $admin_wa_default = '6281258902720';
             display: inline-flex;
             align-items: center;
             gap: 5px;
+            white-space: nowrap !important;
+            flex-shrink: 0 !important;
         }
         .badge-ready {
             background: #86EFAC;
@@ -704,18 +710,19 @@ $admin_wa_default = '6281258902720';
             box-shadow: 1px 1px 0px #000;
         }
         .btn-order-wa.ready {
-            background: #25D366;
-            color: #000000;
+            background: #25D366 !important;
+            color: #000000 !important;
         }
         .btn-order-wa.preorder {
-            background: #E5E7EB;
-            color: #1F2937;
+            background: #F3F4F6 !important;
+            color: #111827 !important;
+            border-color: #000000 !important;
         }
         [data-theme="dark"] .btn-order-wa.preorder {
-            background: #27272A;
-            color: #FAFAFA;
-            border-color: #FAFAFA;
-            box-shadow: 2px 2px 0px #FAFAFA;
+            background: #27272A !important;
+            color: #FAFAFA !important;
+            border-color: #FAFAFA !important;
+            box-shadow: 2px 2px 0px #FAFAFA !important;
         }
 
         /* Size Guide Section */
@@ -1056,6 +1063,12 @@ $admin_wa_default = '6281258902720';
                 border-radius: 6px !important;
                 min-height: 54px !important;
             }
+            .tab-title-full {
+                display: none !important;
+            }
+            .tab-title-short {
+                display: inline !important;
+            }
             .tab-title {
                 font-size: 0.82rem;
                 gap: 4px;
@@ -1117,12 +1130,30 @@ $admin_wa_default = '6281258902720';
                 min-height: 32px !important;
             }
 
-            /* Eselon Banner */
+            /* Eselon Banner Compact on Mobile */
             .eselon-banner {
-                flex-direction: column;
-                text-align: center;
-                padding: 16px;
-                gap: 12px;
+                flex-direction: row !important;
+                text-align: left !important;
+                padding: 12px 14px !important;
+                gap: 12px !important;
+                margin-bottom: 1.25rem !important;
+                border-radius: 8px !important;
+                box-shadow: 3px 3px 0px #000 !important;
+                align-items: flex-start !important;
+            }
+            .eselon-badge-icon {
+                width: 38px !important;
+                height: 38px !important;
+                font-size: 1.25rem !important;
+                border-radius: 6px !important;
+            }
+            .eselon-banner h3 {
+                font-size: 0.95rem !important;
+                line-height: 1.25 !important;
+            }
+            .eselon-banner p {
+                font-size: 0.78rem !important;
+                line-height: 1.35 !important;
             }
 
             /* Stock Cards */
@@ -1130,6 +1161,13 @@ $admin_wa_default = '6281258902720';
                 grid-template-columns: 1fr;
                 gap: 14px;
                 margin-bottom: 2rem;
+            }
+            .card-header-row {
+                gap: 8px;
+            }
+            .status-badge {
+                padding: 4px 8px !important;
+                font-size: 0.72rem !important;
             }
             .size-card {
                 padding: 16px 14px;
@@ -1343,7 +1381,7 @@ $admin_wa_default = '6281258902720';
                     <div class="stat-banner-icon" style="background: #60A5FA; color: #000;">🏷️</div>
                     <div>
                         <div class="stat-val" style="font-size: 1.5rem; font-weight: 900; line-height: 1.1;">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></div>
-                        <div class="stat-lbl" style="font-size: 0.8rem; font-weight: 700; color: var(--gray);">Harga Mutz Standar ASN</div>
+                        <div class="stat-lbl" style="font-size: 0.8rem; font-weight: 700; color: var(--gray);">Mutz Standar ASN</div>
                     </div>
                 </div>
 
@@ -1351,7 +1389,7 @@ $admin_wa_default = '6281258902720';
                     <div class="stat-banner-icon" style="background: #FBBF24; color: #000;">👑</div>
                     <div>
                         <div class="stat-val" style="font-size: 1.5rem; font-weight: 900; line-height: 1.1;">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></div>
-                        <div class="stat-lbl" style="font-size: 0.8rem; font-weight: 700; color: var(--gray);">Harga Mutz Kepala SKPD (Eselon II)</div>
+                        <div class="stat-lbl" style="font-size: 0.8rem; font-weight: 700; color: var(--gray);">Mutz Kepala SKPD (Eselon II)</div>
                     </div>
                 </div>
             </div>
@@ -1363,7 +1401,8 @@ $admin_wa_default = '6281258902720';
                 <button type="button" class="tab-btn tab-biasa active" id="tabBtnBiasa" onclick="switchCategory('Biasa')">
                     <div>
                         <div class="tab-title">
-                            <span>🏷️ Mutz Standar ASN</span>
+                            <span class="tab-title-full">🏷️ Standar ASN</span>
+                            <span class="tab-title-short">🏷️ Standar ASN</span>
                         </div>
                         <div class="tab-sub">Diperuntukkan bagi seluruh ASN (PNS &amp; PPPK)</div>
                     </div>
@@ -1373,7 +1412,8 @@ $admin_wa_default = '6281258902720';
                 <button type="button" class="tab-btn tab-kepala" id="tabBtnKepala" onclick="switchCategory('Kepala SKPD')">
                     <div>
                         <div class="tab-title">
-                            <span>👑 Kepala SKPD / Eselon II</span>
+                            <span class="tab-title-full">👑 Kepala SKPD (Eselon II)</span>
+                            <span class="tab-title-short">👑 Kepala SKPD</span>
                         </div>
                         <div class="tab-sub">Pejabat Pimpinan Tinggi Pratama</div>
                     </div>
@@ -1405,11 +1445,16 @@ $admin_wa_default = '6281258902720';
         <!-- Eselon II Special Info Banner -->
         <div id="eselonNotice" class="eselon-banner" style="display: none;">
             <div class="eselon-badge-icon">👑</div>
-            <div>
-                <div style="font-size: 0.8rem; font-weight: 900; color: #D97706; text-transform: uppercase; letter-spacing: 0.5px;">Eksklusif Eselon II</div>
-                <h3 style="margin: 3px 0 6px 0; font-size: 1.25rem; font-weight: 900; color: inherit;">Spesifikasi Mutz Kepala Dinas / Badan / Asisten</h3>
-                <p style="margin: 0; font-size: 0.9rem; font-weight: 600; opacity: 0.85; line-height: 1.45;">
-                    Dirancang khusus dengan <strong>bordir list benang emas tebal</strong> sesuai pedoman resmi seragam KORPRI bagi Pejabat Pimpinan Tinggi Pratama (Eselon II). Tersedia untuk ukuran kepala Pria maupun Wanita.
+            <div style="flex: 1; min-width: 0;">
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px;">
+                    <span style="font-size: 0.72rem; font-weight: 800; background: #FEF3C7; color: #B45309; padding: 2px 7px; border-radius: 4px; border: 1px solid #D97706; text-transform: uppercase; letter-spacing: 0.4px;">Eksklusif Eselon II</span>
+                    <span style="font-size: 0.75rem; font-weight: 800; color: #92400E;">Bordir List Benang Emas</span>
+                </div>
+                <h3 style="margin: 0 0 4px 0; font-size: 1.05rem; font-weight: 900; color: inherit; line-height: 1.3;">
+                    Spesifikasi Mutz Kepala Dinas / Badan / Asisten
+                </h3>
+                <p style="margin: 0; font-size: 0.85rem; font-weight: 600; opacity: 0.88; line-height: 1.45;">
+                    Dirancang khusus dengan bordir list benang emas tebal resmi KORPRI bagi Pejabat Pimpinan Tinggi Pratama. Tersedia ukuran Pria &amp; Wanita.
                 </p>
             </div>
         </div>
@@ -1707,8 +1752,8 @@ $admin_wa_default = '6281258902720';
             const wanitaObj = dataCat['Perempuan'] || {};
             for (let sz in wanitaObj) { totalWanita += (wanitaObj[sz] || 0); }
 
-            document.getElementById('badgeCountPria').textContent = totalPria + ' ready';
-            document.getElementById('badgeCountWanita').textContent = totalWanita + ' ready';
+            document.getElementById('badgeCountPria').textContent = totalPria > 0 ? (totalPria + ' ready') : 'Pre-Order';
+            document.getElementById('badgeCountWanita').textContent = totalWanita > 0 ? (totalWanita + ' ready') : 'Pre-Order';
         }
 
         // Render Quick Interactive Size Filter Chips
