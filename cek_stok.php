@@ -801,7 +801,7 @@ $admin_wa_default = '6281258902720';
             <div class="hero-card-banner">
                 <div class="live-badge">
                     <span class="live-pulse"></span>
-                    <span>Update Stok Real-Time dari Gudang KORPRI</span>
+                    <span>Update Stok Real-Time dari Sekretariat KORPRI</span>
                 </div>
 
                 <h2 class="hero-title">
@@ -818,7 +818,7 @@ $admin_wa_default = '6281258902720';
                     <div class="stat-banner-icon" style="background: #00FFCC; color: #000;">📦</div>
                     <div>
                         <div style="font-size: 1.5rem; font-weight: 900; line-height: 1.1;"><?= number_format($total_stok_tersedia, 0, ',', '.') ?> Pcs</div>
-                        <div style="font-size: 0.8rem; font-weight: 700; color: var(--gray);">Total Stok Gudang Ready</div>
+                        <div style="font-size: 0.8rem; font-weight: 700; color: var(--gray);">Total Stok di Sekretariat KORPRI</div>
                     </div>
                 </div>
 
@@ -968,7 +968,7 @@ $admin_wa_default = '6281258902720';
                         <ul style="padding-left: 18px; margin: 0; font-size: 0.875rem; line-height: 1.6; font-weight: 600;">
                             <li>Diperuntukkan bagi seluruh ASN (PNS dan PPPK).</li>
                             <li>Bahan drill resmi KORPRI yang nyaman dan adem.</li>
-                            <li>List kain standar warna navy/biru KORPRI.</li>
+                            <li>List kain standar warna khaki.</li>
                             <li>Harga resmi: <strong>Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></strong>.</li>
                         </ul>
                     </div>
@@ -1238,7 +1238,7 @@ $admin_wa_default = '6281258902720';
 
                     <div class="stock-qty-wrap">
                         <div class="qty-number" style="color: ${qty > 0 ? (qty <= 5 ? '#D97706' : '#059669') : '#DC2626'};">${qty} <span style="font-size: 1.1rem; font-weight: 700;">pcs</span></div>
-                        <div class="qty-label">${statusText} di Gudang</div>
+                        <div class="qty-label">${statusText} di Sekretariat KORPRI</div>
                         <div class="stock-progress-bar">
                             <div class="stock-progress-fill" style="width: ${percent}%; background: ${barColor};"></div>
                         </div>
