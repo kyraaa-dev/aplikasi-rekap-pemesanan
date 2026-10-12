@@ -424,60 +424,89 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
            OFFICIAL HERO & INSTITUTIONAL HEADER
            ========================================================================== */
         .gov-hero {
-            background: var(--gov-surface);
-            border: 1px solid var(--gov-hairline);
+            position: relative;
+            background-color: #0B1E3B;
+            background-image: 
+                linear-gradient(135deg, rgba(7, 21, 43, 0.88) 0%, rgba(11, 30, 59, 0.82) 50%, rgba(15, 41, 77, 0.88) 100%),
+                url('assets/images/batik-korpri.jpg');
+            background-size: cover;
+            background-position: center;
+            border: 1px solid rgba(212, 175, 55, 0.4);
             border-radius: var(--radius-lg);
             padding: 2.25rem 2rem 2rem 2rem;
             margin-bottom: 2rem;
-            box-shadow: var(--shadow-subtle);
-            position: relative;
+            box-shadow: 0 8px 24px -4px rgba(11, 30, 59, 0.16), 0 2px 6px -2px rgba(11, 30, 59, 0.08);
             text-align: center;
+            overflow: hidden;
+            color: #FFFFFF;
+        }
+        [data-theme="dark"] .gov-hero {
+            background-image: 
+                linear-gradient(135deg, rgba(4, 12, 26, 0.92) 0%, rgba(8, 20, 42, 0.86) 50%, rgba(11, 30, 59, 0.92) 100%),
+                url('assets/images/batik-korpri.jpg');
+            border-color: rgba(212, 175, 55, 0.35);
+        }
+
+        /* Subtle gold accent top highlight */
+        .gov-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37, #FBBF24, transparent);
+            border-radius: var(--radius-full);
         }
 
         .gov-authority-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: var(--gov-hairline-subtle);
-            border: 1px solid var(--gov-hairline);
+            background: rgba(11, 30, 59, 0.7);
+            border: 1px solid rgba(212, 175, 55, 0.45);
             padding: 6px 14px;
             border-radius: var(--radius-full);
             font-size: 0.76rem;
             font-weight: 700;
             letter-spacing: 0.05em;
             text-transform: uppercase;
-            color: var(--korpri-navy);
+            color: #FDE68A;
             margin-bottom: 1.25rem;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
         [data-theme="dark"] .gov-authority-badge {
-            background: var(--korpri-blue-subtle);
-            border-color: rgba(59, 130, 246, 0.3);
-            color: #93C5FD;
+            background: rgba(8, 20, 42, 0.8);
+            border-color: rgba(212, 175, 55, 0.4);
+            color: #FDE68A;
         }
 
         .gov-hero-h1 {
             font-size: clamp(1.65rem, 3.2vw, 2.35rem);
             font-weight: 800;
-            color: var(--korpri-navy);
+            color: #FFFFFF;
             line-height: 1.2;
             letter-spacing: -0.025em;
             margin: 0 auto 0.85rem auto;
             max-width: 820px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
         }
         [data-theme="dark"] .gov-hero-h1 {
-            color: #F8FAFC;
+            color: #FFFFFF;
         }
 
         .gov-hero-sub {
             font-size: 0.98rem;
-            color: var(--gov-muted);
+            color: #E2E8F0;
             max-width: 720px;
             margin: 0 auto 1.5rem auto;
             line-height: 1.6;
             font-weight: 500;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
         }
 
-        /* Official Info Strip (Replaces generic SaaS stat cards) */
+        /* Official Info Strip (Integrated with Batik background) */
         .gov-info-strip {
             display: flex;
             align-items: center;
@@ -485,9 +514,9 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             gap: 1.75rem;
             flex-wrap: wrap;
             padding-top: 1.25rem;
-            border-top: 1px solid var(--gov-hairline);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
             font-size: 0.85rem;
-            color: var(--gov-muted);
+            color: #CBD5E1;
         }
 
         .gov-info-item {
@@ -497,11 +526,11 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             font-weight: 600;
         }
         .gov-info-item svg {
-            color: var(--korpri-gold);
+            color: #FBBF24;
             flex-shrink: 0;
         }
         .gov-info-item strong {
-            color: var(--gov-slate);
+            color: #FFFFFF;
         }
 
         /* ==========================================================================
