@@ -48,6 +48,37 @@ if ($q_stok) {
 $sizes_pria = [55, 56, 57, 58, 59, 60];
 $sizes_wanita = [58, 59, 60];
 
+// Fetch list of SKPD from database with fallback list
+$skpd_options = [];
+if ($conn) {
+    $q_skpd = @$conn->query("SELECT nama_skpd FROM skpd ORDER BY nama_skpd ASC");
+    if ($q_skpd) {
+        while ($s = $q_skpd->fetch_assoc()) {
+            if (!empty($s['nama_skpd'])) {
+                $skpd_options[] = $s['nama_skpd'];
+            }
+        }
+    }
+}
+
+// Fallback comprehensive list if DB not connected or empty
+if (empty($skpd_options)) {
+    $skpd_options = [
+        'BAPPEDALITBANG', 'BKPSDM', 'BPBD', 'BPKPAD', 
+        'DINAS KESEHATAN', 'DINAS PENDIDIKAN', 'DINAS PERTANIAN', 'DINSOSP3AKP2B', 
+        'DISBUDPORAPAR', 'DISDUKCAPIL', 'DISHUB', 'DISKOMINFO/DKISP', 
+        'DISNAKERTRANS', 'DISPERSIP', 'DKPP', 'DKUMPP', 
+        'DPKP/DAMKAR', 'DPMD', 'DPMPTSP', 'DPRKPLH', 'DPUPRP', 
+        'INSPEKTORAT', 'KESBANGPOL', 'RS RAZA', 'SATPOLPP', 'SETDA', 'SETWAN',
+        'KEC ALUH -ALUH', 'KEC ARANIO', 'KEC ASTAMBUL', 'KEC BERUNTUNG BARU', 
+        'KEC CINTAPURI DARUSSALAM', 'KEC GAMBUT', 'KEC KARANG INTAN', 'KEC KERTAK HANYAR', 
+        'KEC MARTAPURA', 'KEC MARTAPURA BARAT', 'KEC MARTAPURA TIMUR', 'KEC MATARAMAN', 
+        'KEC PARAMASAN', 'KEC PENGARON', 'KEC SAMBUNG MAKMUR', 'KEC SIMPANG EMPAT', 
+        'KEC SUNGAI PINANG', 'KEC SUNGAI TABUK', 'KEC TATAH MAKMUR', 'KEC TELAGA BAUNTUNG'
+    ];
+    sort($skpd_options);
+}
+
 // Default admin WhatsApp
 $admin_wa_default = '6281258902720';
 
@@ -1411,6 +1442,16 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             border-color: var(--korpri-blue);
             box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
         }
+        select.gov-form-input {
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-right: 36px;
+            appearance: none;
+            -webkit-appearance: none;
+        }
 
         /* Floating Actions Container (No Collision with Cards) */
         .gov-floating-actions {
@@ -2177,7 +2218,16 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
             <div class="gov-form-group">
                 <label class="gov-form-label" for="orderSkpd">Asal Dinas / SKPD (Opsional):</label>
-                <input type="text" id="orderSkpd" class="gov-form-input" placeholder="Contoh: Dinas Pendidikan">
+                <select id="orderSkpd" class="gov-form-input" onchange="toggleManualSkpd(this.value)">
+                    <option value="">-- Pilih Asal Dinas / SKPD --</option>
+                    <?php foreach ($skpd_options as $opt): ?>
+                        <option value="<?= htmlspecialchars($opt, ENT_QUOTES) ?>"><?= htmlspecialchars($opt) ?></option>
+                    <?php endforeach; ?>
+                    <option value="LAINNYA">Lainnya / UPT / Unit Lain (Ketik Manual)...</option>
+                </select>
+                <div id="wrapperSkpdManual" style="display: none; margin-top: 8px;">
+                    <input type="text" id="orderSkpdManual" class="gov-form-input" placeholder="Ketik nama Dinas / UPT / Instansi Anda">
+                </div>
             </div>
 
             <button type="button" onclick="submitWhatsAppOrder()" class="btn-order-action ready-wa" style="padding: 12px; font-size: 0.94rem;">
@@ -2539,9 +2589,27 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             }
         }
 
+        function toggleManualSkpd(val) {
+            const wrap = document.getElementById('wrapperSkpdManual');
+            const input = document.getElementById('orderSkpdManual');
+            if (val === 'LAINNYA') {
+                wrap.style.display = 'block';
+                if (input) input.focus();
+            } else {
+                wrap.style.display = 'none';
+                if (input) input.value = '';
+            }
+        }
+
         function submitWhatsAppOrder() {
             const nama = document.getElementById('orderNama').value.trim();
-            const skpd = document.getElementById('orderSkpd').value.trim();
+            const selSkpd = document.getElementById('orderSkpd').value.trim();
+            let skpd = '';
+            if (selSkpd === 'LAINNYA') {
+                skpd = document.getElementById('orderSkpdManual').value.trim();
+            } else {
+                skpd = selSkpd;
+            }
 
             const isKepala = (selectedOrderData.category === 'Kepala SKPD');
             const catText = isKepala ? 'Mutz Kepala SKPD (Eselon II)' : 'Mutz Standar ASN (Biasa)';
