@@ -162,7 +162,7 @@ $admin_wa_default = '6281258902720';
         }
 
         /* ==========================================================================
-           KANTOR DEWAN PENGURUS KORPRI / KANTOR BUPATI BANJAR BACKGROUND
+           AUTHENTIC EXECUTIVE GOVERNMENT BACKGROUND (Clean, Dignified, No AI-Slop)
            GPU Hardware Accelerated (Zero Scroll Jitter)
            ========================================================================== */
         .public-bg-fixed {
@@ -173,13 +173,27 @@ $admin_wa_default = '6281258902720';
             bottom: 0;
             width: 100vw;
             height: 100vh;
-            background-image: url('assets/images/bg-korpri-banjar.jpg');
+            background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 45%, #E2E8F0 100%);
+            z-index: -4;
+            pointer-events: none;
+        }
+
+        .public-bg-heritage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('assets/images/bg-bupati.jpg');
             background-size: cover;
-            background-position: center 25%;
+            background-position: center 30%;
             background-repeat: no-repeat;
+            opacity: 0.12;
+            filter: grayscale(85%) contrast(110%);
             z-index: -3;
             transform: translateZ(0);
-            will-change: transform;
             pointer-events: none;
         }
 
@@ -193,33 +207,42 @@ $admin_wa_default = '6281258902720';
             height: 100vh;
             z-index: -2;
             pointer-events: none;
-            /* High-performance pure GPU alpha gradient - zero repaint lag during scroll */
-            background: radial-gradient(circle at 50% 12%, rgba(248, 250, 252, 0.76) 0%, rgba(241, 245, 249, 0.92) 100%);
+            /* High-performance pure GPU alpha gradient */
+            background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.08) 0%, transparent 65%),
+                        radial-gradient(circle at 15% 45%, rgba(217, 119, 6, 0.05) 0%, transparent 55%);
             transition: background 0.3s ease;
         }
 
+        [data-theme="dark"] .public-bg-fixed {
+            background: linear-gradient(180deg, #090E17 0%, #0F172A 50%, #060911 100%);
+        }
+        [data-theme="dark"] .public-bg-heritage {
+            opacity: 0.08;
+            filter: grayscale(100%) brightness(75%);
+        }
         [data-theme="dark"] .public-bg-overlay {
-            background: radial-gradient(circle at 50% 12%, rgba(15, 23, 42, 0.80) 0%, rgba(9, 13, 22, 0.96) 100%);
+            background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.12) 0%, transparent 65%),
+                        radial-gradient(circle at 85% 45%, rgba(245, 158, 11, 0.06) 0%, transparent 55%);
         }
 
-        /* Official KORPRI Seal Watermark (GPU-Accelerated) */
+        /* Official Authentic KORPRI Seal Watermark (GPU-Accelerated) */
         .public-bg-watermark {
             position: fixed;
-            top: 46%;
+            top: 48%;
             left: 50%;
             transform: translate(-50%, -50%) translateZ(0);
-            width: min(70vw, 520px);
-            height: min(70vw, 520px);
+            width: min(65vw, 460px);
+            height: min(65vw, 460px);
             background-image: url('assets/images/korpri-badge.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            opacity: 0.04;
+            opacity: 0.035;
             z-index: -2;
             pointer-events: none;
         }
         [data-theme="dark"] .public-bg-watermark {
-            opacity: 0.055;
+            opacity: 0.045;
         }
 
         /* High-Performance Frosted Glass Surface Utility */
@@ -421,6 +444,8 @@ $admin_wa_default = '6281258902720';
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
             background: rgba(37, 99, 235, 0.08);
             border: 1px solid rgba(37, 99, 235, 0.2);
             padding: 7px 20px;
@@ -443,6 +468,15 @@ $admin_wa_default = '6281258902720';
         }
         [data-theme="dark"] .ribbon-text-main {
             color: #93C5FD;
+        }
+        .ribbon-text-sub {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+        }
+        [data-theme="dark"] .ribbon-text-sub {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         /* Live Realtime Indicator Pill */
@@ -558,6 +592,12 @@ $admin_wa_default = '6281258902720';
             flex-shrink: 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             transition: transform 0.25s ease;
+        }
+        .stat-banner-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            flex-shrink: 0;
         }
         .stat-banner-box:hover .stat-banner-icon {
             transform: scale(1.08);
@@ -689,6 +729,15 @@ $admin_wa_default = '6281258902720';
             margin-bottom: 2px;
             color: inherit;
         }
+        .tab-title-full, .tab-title-short {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .tab-icon-svg {
+            flex-shrink: 0;
+            stroke: currentColor;
+        }
         .tab-title-short {
             display: none;
         }
@@ -790,6 +839,15 @@ $admin_wa_default = '6281258902720';
         .gender-pill.active-gold .pill-badge {
             background: rgba(255, 255, 255, 0.25);
             color: #FFFFFF;
+        }
+        .pill-label-full, .pill-label-short {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .pill-icon-svg {
+            flex-shrink: 0;
+            stroke: currentColor;
         }
         .pill-label-short {
             display: none;
@@ -970,6 +1028,16 @@ $admin_wa_default = '6281258902720';
             flex-shrink: 0 !important;
             letter-spacing: 0.01em;
         }
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+        .status-dot.green { background: #10B981; box-shadow: 0 0 6px rgba(16, 185, 129, 0.6); }
+        .status-dot.yellow { background: #F59E0B; box-shadow: 0 0 6px rgba(245, 158, 11, 0.6); }
+        .status-dot.red { background: #EF4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
         .badge-ready {
             background: var(--success-light);
             color: var(--success);
@@ -1419,6 +1487,19 @@ $admin_wa_default = '6281258902720';
             font-weight: 500;
             margin-top: 1px;
         }
+        .footer-address {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+            font-weight: 500;
+        }
+        .footer-address svg {
+            color: var(--korpri-gold);
+            flex-shrink: 0;
+        }
 
         .footer-links-group {
             display: flex;
@@ -1537,14 +1618,16 @@ $admin_wa_default = '6281258902720';
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
             }
             .institution-ribbon {
-                padding: 4px 11px;
+                padding: 5px 12px;
                 margin-bottom: 0.85rem;
+                gap: 5px;
             }
             .ribbon-text-main {
                 font-size: 0.72rem;
             }
             .ribbon-text-sub {
-                display: none;
+                font-size: 0.68rem;
+                display: inline;
             }
             .hero-title {
                 font-size: 1.4rem;
@@ -1574,6 +1657,10 @@ $admin_wa_default = '6281258902720';
                 height: 38px;
                 font-size: 1.15rem;
                 border-radius: 10px;
+            }
+            .stat-banner-icon svg {
+                width: 19px;
+                height: 19px;
             }
             .stat-val {
                 font-size: 1.15rem;
@@ -1606,10 +1693,16 @@ $admin_wa_default = '6281258902720';
                 font-size: 0.84rem;
             }
             .tab-title-full {
-                display: none;
+                display: none !important;
             }
             .tab-title-short {
-                display: inline;
+                display: inline-flex !important;
+                align-items: center;
+                gap: 5px;
+            }
+            .tab-title-short .tab-icon-svg {
+                width: 13px;
+                height: 13px;
             }
             .tab-sub {
                 display: none;
@@ -1632,10 +1725,16 @@ $admin_wa_default = '6281258902720';
                 border-radius: var(--radius-full);
             }
             .pill-label-full {
-                display: none;
+                display: none !important;
             }
             .pill-label-short {
-                display: inline;
+                display: inline-flex !important;
+                align-items: center;
+                gap: 5px;
+            }
+            .pill-label-short .pill-icon-svg {
+                width: 13px;
+                height: 13px;
             }
 
             /* Stock Cards on Mobile - Modern Clean Card */
@@ -1792,6 +1891,25 @@ $admin_wa_default = '6281258902720';
                 max-width: 320px;
             }
 
+            .footer-location-chip {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 0.75rem;
+                font-weight: 700;
+                color: var(--korpri-gold);
+                background: rgba(245, 158, 11, 0.1);
+                border: 1px solid rgba(217, 119, 6, 0.25);
+                padding: 4px 12px;
+                border-radius: var(--radius-full);
+                margin-top: 6px;
+            }
+            [data-theme="dark"] .footer-location-chip {
+                color: #FCD34D;
+                background: rgba(245, 158, 11, 0.18);
+                border-color: rgba(245, 158, 11, 0.35);
+            }
+
             /* 3 Touch Cards on Mobile */
             .footer-mobile-nav-grid {
                 display: grid;
@@ -1907,6 +2025,7 @@ $admin_wa_default = '6281258902720';
 
     <!-- Kantor Bupati / Dewan Pengurus KORPRI Background -->
     <div class="public-bg-fixed" aria-hidden="true"></div>
+    <div class="public-bg-heritage" aria-hidden="true"></div>
     <div class="public-bg-watermark" aria-hidden="true"></div>
     <div class="public-bg-overlay" aria-hidden="true"></div>
 
@@ -1958,6 +2077,7 @@ $admin_wa_default = '6281258902720';
                 <!-- Institution Badge -->
                 <div class="institution-ribbon">
                     <span class="ribbon-text-main">DEWAN PENGURUS KORPRI KABUPATEN BANJAR</span>
+                    <span class="ribbon-text-sub">&bull; Jl. A. Yani No. 2 Martapura</span>
                 </div>
 
                 <br>
@@ -1979,7 +2099,9 @@ $admin_wa_default = '6281258902720';
             <!-- Stat Highlights -->
             <div class="stat-banner-row">
                 <div class="stat-banner-box glass-panel">
-                    <div class="stat-banner-icon emerald">📦</div>
+                    <div class="stat-banner-icon emerald">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    </div>
                     <div>
                         <div class="stat-val"><?= number_format($total_stok_tersedia, 0, ',', '.') ?> Pcs</div>
                         <div class="stat-lbl">Total Stok di Sekretariat KORPRI</div>
@@ -1987,7 +2109,9 @@ $admin_wa_default = '6281258902720';
                 </div>
 
                 <div class="stat-banner-box glass-panel">
-                    <div class="stat-banner-icon blue">🏷️</div>
+                    <div class="stat-banner-icon blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                    </div>
                     <div>
                         <div class="stat-val">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></div>
                         <div class="stat-lbl">Mutz Standar ASN</div>
@@ -1995,7 +2119,9 @@ $admin_wa_default = '6281258902720';
                 </div>
 
                 <div class="stat-banner-box glass-panel">
-                    <div class="stat-banner-icon gold">👑</div>
+                    <div class="stat-banner-icon gold">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                    </div>
                     <div>
                         <div class="stat-val">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></div>
                         <div class="stat-lbl">Mutz Kepala SKPD (Eselon II)</div>
@@ -2010,8 +2136,14 @@ $admin_wa_default = '6281258902720';
                 <button type="button" class="tab-btn tab-biasa active" id="tabBtnBiasa" onclick="switchCategory('Biasa')">
                     <div>
                         <div class="tab-title">
-                            <span class="tab-title-full">🏷️ Standar ASN</span>
-                            <span class="tab-title-short">🏷️ Standar ASN</span>
+                            <span class="tab-title-full">
+                                <svg class="tab-icon-svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                                Standar ASN
+                            </span>
+                            <span class="tab-title-short">
+                                <svg class="tab-icon-svg" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                                Standar ASN
+                            </span>
                         </div>
                         <div class="tab-sub">Diperuntukkan bagi seluruh ASN (PNS &amp; PPPK)</div>
                     </div>
@@ -2021,8 +2153,14 @@ $admin_wa_default = '6281258902720';
                 <button type="button" class="tab-btn tab-kepala" id="tabBtnKepala" onclick="switchCategory('Kepala SKPD')">
                     <div>
                         <div class="tab-title">
-                            <span class="tab-title-full">👑 Kepala SKPD (Eselon II)</span>
-                            <span class="tab-title-short">👑 Kepala SKPD</span>
+                            <span class="tab-title-full">
+                                <svg class="tab-icon-svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                                Kepala SKPD (Eselon II)
+                            </span>
+                            <span class="tab-title-short">
+                                <svg class="tab-icon-svg" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                                Kepala SKPD
+                            </span>
                         </div>
                         <div class="tab-sub">Pejabat Pimpinan Tinggi Pratama</div>
                     </div>
@@ -2033,14 +2171,26 @@ $admin_wa_default = '6281258902720';
             <!-- Gender Selector Pills -->
             <div class="gender-filter-bar">
                 <button type="button" class="gender-pill active" id="pillPria" onclick="switchGender('Laki-laki')">
-                    <span class="pill-label-full">👨 Pria (Laki-laki)</span>
-                    <span class="pill-label-short">👨 Pria</span>
+                    <span class="pill-label-full">
+                        <svg class="pill-icon-svg" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Pria (Laki-laki)
+                    </span>
+                    <span class="pill-label-short">
+                        <svg class="pill-icon-svg" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Pria
+                    </span>
                     <span id="badgeCountPria" class="pill-badge">...</span>
                 </button>
 
                 <button type="button" class="gender-pill" id="pillWanita" onclick="switchGender('Perempuan')">
-                    <span class="pill-label-full">🧕 Wanita (Perempuan)</span>
-                    <span class="pill-label-short">🧕 Wanita</span>
+                    <span class="pill-label-full">
+                        <svg class="pill-icon-svg" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 1 5 5c0 2.22-1.2 4.16-3 5.2V14a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2v-1.8C8.2 11.16 7 9.22 7 7a5 5 0 0 1 5-5z"></path><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg>
+                        Wanita (Perempuan)
+                    </span>
+                    <span class="pill-label-short">
+                        <svg class="pill-icon-svg" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 1 5 5c0 2.22-1.2 4.16-3 5.2V14a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2v-1.8C8.2 11.16 7 9.22 7 7a5 5 0 0 1 5-5z"></path><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg>
+                        Wanita
+                    </span>
                     <span id="badgeCountWanita" class="pill-badge">...</span>
                 </button>
             </div>
@@ -2053,7 +2203,9 @@ $admin_wa_default = '6281258902720';
 
         <!-- Eselon II Special Info Banner -->
         <div id="eselonNotice" class="eselon-banner" style="display: none;">
-            <div class="eselon-badge-icon">👑</div>
+            <div class="eselon-badge-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+            </div>
             <div style="flex: 1; min-width: 0;">
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px;">
                     <span style="font-size: 0.74rem; font-weight: 800; background: rgba(217, 119, 6, 0.15); color: #B45309; padding: 2px 8px; border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: 0.03em;">Eksklusif Eselon II</span>
@@ -2076,8 +2228,9 @@ $admin_wa_default = '6281258902720';
         <!-- Size Guide & How to Measure Section -->
         <section class="guide-box glass-panel" id="panduan">
             <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 1rem;">
-                <h3 style="margin: 0; font-size: 1.3rem; font-weight: 800; color: var(--text-main);">
-                    📏 Panduan Ukuran &amp; Cara Mengukur Lingkar Kepala
+                <h3 style="margin: 0; font-size: 1.3rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4Z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/><path d="m4.5 13.5 2 2"/></svg>
+                    Panduan Ukuran &amp; Cara Mengukur Lingkar Kepala
                 </h3>
                 <span style="font-size: 0.8rem; font-weight: 700; background: var(--warning-light); color: var(--warning); padding: 4px 12px; border-radius: var(--radius-full);">
                     Tips Akurasi
@@ -2126,24 +2279,30 @@ $admin_wa_default = '6281258902720';
 
             <div style="margin-top: 1.5rem; background: rgba(37, 99, 235, 0.08); border: 1px solid rgba(37, 99, 235, 0.2); border-radius: var(--radius-md); padding: 14px 18px; color: var(--primary);">
                 <div style="display: flex; gap: 12px; align-items: flex-start;">
-                    <div style="font-size: 1.35rem; line-height: 1;">💡</div>
-                    <div style="font-size: 0.88rem; line-height: 1.5; font-weight: 600;">
-                        <strong>Catatan untuk ASN Wanita (Berhijab/Sanggul):</strong> Disarankan memilih 1 hingga 2 nomor lebih besar (biasanya No. 58 s/d 60) untuk memberikan ruang hijab agar topi tidak menekan kepala dan tetap nyaman serta tegak rapi saat dikenakan.
+                    <div style="color: var(--primary); flex-shrink: 0; margin-top: 2px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    </div>
+                    <div style="font-size: 0.88rem; line-height: 1.5; font-weight: 600; color: var(--text-main);">
+                        <strong style="color: var(--primary);">Catatan untuk ASN Wanita (Berhijab/Sanggul):</strong> Disarankan memilih 1 hingga 2 nomor lebih besar (biasanya No. 58 s/d 60) untuk memberikan ruang hijab agar topi tidak menekan kepala dan tetap nyaman serta tegak rapi saat dikenakan.
                     </div>
                 </div>
             </div>
 
             <!-- Comparison Table: Biasa dan Kepala SKPD -->
             <div style="margin-top: 2.25rem;" id="spesifikasi">
-                <h4 style="margin: 0 0 10px 0; font-size: 1.15rem; font-weight: 800; color: var(--text-main);">
-                    ⚖️ Perbedaan Mutz Biasa dan Kepala SKPD (Eselon II)
+                <h4 style="margin: 0 0 10px 0; font-size: 1.15rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--korpri-gold);"><circle cx="12" cy="12" r="10"></circle><path d="m16 10-4 4-2-2"></path></svg>
+                    Perbedaan Mutz Biasa dan Kepala SKPD (Eselon II)
                 </h4>
                 
                 <div class="comparison-grid">
                     <div class="comparison-card card-standar">
                         <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px;">
                             <div style="font-size: 0.8rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.03em;">Standar ASN</div>
-                            <span class="badge-include-pin">📌 Include Pin Kab. Banjar</span>
+                            <span class="badge-include-pin">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Include Pin Kab. Banjar
+                            </span>
                         </div>
                         <h5 style="margin: 4px 0 8px 0; font-size: 1.1rem; font-weight: 800; color: var(--text-main);">Mutz Reguler (Biasa)</h5>
                         <ul style="padding-left: 18px; margin: 0; font-size: 0.875rem; line-height: 1.6; font-weight: 500; color: var(--text-muted);">
@@ -2156,7 +2315,10 @@ $admin_wa_default = '6281258902720';
                     <div class="comparison-card card-eselon">
                         <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px;">
                             <div style="font-size: 0.8rem; font-weight: 800; color: var(--korpri-gold); text-transform: uppercase; letter-spacing: 0.03em;">Pejabat Eselon II</div>
-                            <span class="badge-include-pin gold">📌 Include Pin Kab. Banjar</span>
+                            <span class="badge-include-pin gold">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Include Pin Kab. Banjar
+                            </span>
                         </div>
                         <h5 style="margin: 4px 0 8px 0; font-size: 1.1rem; font-weight: 800; color: var(--text-main);">Mutz Kepala SKPD</h5>
                         <ul style="padding-left: 18px; margin: 0; font-size: 0.875rem; line-height: 1.6; font-weight: 500; color: var(--text-muted);">
@@ -2245,6 +2407,10 @@ $admin_wa_default = '6281258902720';
                     <div>
                         <div class="footer-brand-title">E-MutZ KORPRI</div>
                         <div class="footer-brand-sub">Dewan Pengurus KORPRI Kabupaten Banjar</div>
+                        <div class="footer-address">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            <span>Sekretariat: Kantor Bupati Banjar, Jl. A. Yani No. 2 Martapura</span>
+                        </div>
                     </div>
                 </div>
 
@@ -2257,7 +2423,7 @@ $admin_wa_default = '6281258902720';
 
             <div class="footer-bottom-bar">
                 <div>
-                    &copy; <?= date('Y') ?> Dewan Pengurus KORPRI Kabupaten Banjar. Seluruh Hak Cipta Dilindungi.
+                    &copy; <?= date('Y') ?> Dewan Pengurus KORPRI Kabupaten Banjar &bull; Jl. A. Yani No. 2 Martapura. Seluruh Hak Cipta Dilindungi.
                 </div>
                 <div class="footer-status-pill">
                     <span class="footer-status-dot"></span>
@@ -2270,16 +2436,22 @@ $admin_wa_default = '6281258902720';
         <div class="footer-mobile-wrap">
             <div class="footer-mobile-header">
                 <div class="footer-mobile-emblem">
-                    <img src="assets/images/korpri-badge.png" alt="Lambang KORPRI" width="44" height="44">
+                    <img src="assets/images/korpri-badge.png" alt="Lambang KORPRI" width="46" height="46">
                 </div>
                 <span class="footer-mobile-badge">Dewan Pengurus KORPRI</span>
                 <h3 class="footer-mobile-title">Kabupaten Banjar</h3>
-                <p class="footer-mobile-desc">Sistem Informasi Rekapitulasi Pemesanan &amp; Ketersediaan Mutz ASN</p>
+                <p class="footer-mobile-desc">Sistem Rekapitulasi Pemesanan &amp; Ketersediaan Mutz ASN</p>
+                <div class="footer-location-chip">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <span>Jl. A. Yani No. 2 Martapura</span>
+                </div>
             </div>
 
             <nav class="footer-mobile-nav-grid" aria-label="Navigasi Cepat Mobile">
                 <a href="#panduan" class="footer-mobile-card">
-                    <div class="footer-card-icon">📐</div>
+                    <div class="footer-card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4Z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/><path d="m4.5 13.5 2 2"/></svg>
+                    </div>
                     <div class="footer-card-body">
                         <div class="footer-card-title">Panduan Ukuran</div>
                         <div class="footer-card-sub">Cek nomor lingkar kepala (cm)</div>
@@ -2288,7 +2460,9 @@ $admin_wa_default = '6281258902720';
                 </a>
 
                 <a href="#spesifikasi" class="footer-mobile-card">
-                    <div class="footer-card-icon">🎖️</div>
+                    <div class="footer-card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--korpri-gold);"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                    </div>
                     <div class="footer-card-body">
                         <div class="footer-card-title">Spesifikasi Eselon II</div>
                         <div class="footer-card-sub">Mutz khusus Kepala SKPD / Pejabat</div>
@@ -2297,7 +2471,9 @@ $admin_wa_default = '6281258902720';
                 </a>
 
                 <a href="login.php" class="footer-mobile-card">
-                    <div class="footer-card-icon">🔐</div>
+                    <div class="footer-card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    </div>
                     <div class="footer-card-body">
                         <div class="footer-card-title">Portal Petugas</div>
                         <div class="footer-card-sub">Login administrator sistem</div>
@@ -2307,8 +2483,8 @@ $admin_wa_default = '6281258902720';
             </nav>
 
             <div class="footer-mobile-sekretariat">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                <span>Sekretariat KORPRI: Kantor Bupati Banjar, Martapura</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; color: var(--korpri-gold);"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span><strong>Sekretariat:</strong> Kantor Bupati Banjar, Jl. A. Yani No. 2 Martapura</span>
             </div>
 
             <div class="footer-mobile-bottom">
@@ -2317,7 +2493,7 @@ $admin_wa_default = '6281258902720';
                     <span>Layanan Resmi Aktif &amp; Terverifikasi</span>
                 </div>
                 <div>
-                    &copy; <?= date('Y') ?> Dewan Pengurus KORPRI Kabupaten Banjar
+                    &copy; <?= date('Y') ?> KORPRI Kab. Banjar &bull; Martapura
                 </div>
             </div>
         </div>
@@ -2453,7 +2629,7 @@ $admin_wa_default = '6281258902720';
             const btnAll = document.createElement('button');
             btnAll.type = 'button';
             btnAll.className = 'size-chip-btn' + (selectedSizeFilter === null ? ' active' : '');
-            btnAll.textContent = '✨ Semua (' + allSizes.length + ')';
+            btnAll.textContent = 'Semua (' + allSizes.length + ')';
             btnAll.onclick = function() {
                 selectedSizeFilter = null;
                 renderQuickSizeChips();
@@ -2501,7 +2677,7 @@ $admin_wa_default = '6281258902720';
                 let btnHtml = '';
 
                 if (qty > 5) {
-                    statusBadge = '<span class="status-badge badge-ready">🟢 Ready Stock</span>';
+                    statusBadge = '<span class="status-badge badge-ready"><span class="status-dot green"></span> Ready Stock</span>';
                     statusText = 'Tersedia';
                     barColor = 'linear-gradient(90deg, #10B981, #059669)';
                     btnHtml = `
@@ -2511,7 +2687,7 @@ $admin_wa_default = '6281258902720';
                         </button>
                     `;
                 } else if (qty > 0) {
-                    statusBadge = `<span class="status-badge badge-low">🟡 Sisa ${qty} Pcs</span>`;
+                    statusBadge = `<span class="status-badge badge-low"><span class="status-dot yellow"></span> Sisa ${qty} Pcs</span>`;
                     statusText = 'Menipis';
                     barColor = 'linear-gradient(90deg, #F59E0B, #D97706)';
                     btnHtml = `
@@ -2521,7 +2697,7 @@ $admin_wa_default = '6281258902720';
                         </button>
                     `;
                 } else {
-                    statusBadge = '<span class="status-badge badge-empty">🔴 Stok Habis</span>';
+                    statusBadge = '<span class="status-badge badge-empty"><span class="status-dot red"></span> Stok Habis</span>';
                     statusText = 'Habis';
                     barColor = 'linear-gradient(90deg, #EF4444, #DC2626)';
                     btnHtml = `
@@ -2555,7 +2731,7 @@ $admin_wa_default = '6281258902720';
                     </div>
 
                     <div style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted); margin-bottom: 14px; line-height: 1.4;">
-                        ${currentCategory === 'Kepala SKPD' ? '👑 Eselon II (Bordir List Emas)' : '🏷️ Standar Mutz ASN KORPRI'} &bull; ${currentGender}
+                        ${currentCategory === 'Kepala SKPD' ? 'Eselon II (Bordir List Emas)' : 'Standar Mutz ASN KORPRI'} &bull; ${currentGender}
                     </div>
 
                     ${btnHtml}
@@ -2569,16 +2745,16 @@ $admin_wa_default = '6281258902720';
         function openOrderModal(category, gender, size, stock) {
             selectedOrderData = { category, gender, size, stock };
 
-            document.getElementById('modalCat').textContent = category === 'Kepala SKPD' ? '👑 Kepala SKPD / Eselon II' : '🏷️ Mutz Standar ASN (Biasa)';
+            document.getElementById('modalCat').textContent = category === 'Kepala SKPD' ? 'Kepala SKPD / Eselon II' : 'Mutz Standar ASN (Biasa)';
             document.getElementById('modalGender').textContent = gender;
             document.getElementById('modalSize').textContent = 'Nomor ' + size + ' (Lingkar ~' + size + ' cm)';
             
             const statusElem = document.getElementById('modalStockStatus');
             if (stock > 0) {
-                statusElem.textContent = '🟢 Ready (' + stock + ' pcs tersedia)';
+                statusElem.textContent = 'Ready (' + stock + ' pcs tersedia)';
                 statusElem.style.color = '#059669';
             } else {
-                statusElem.textContent = '🔴 Habis (Diteruskan sebagai Pre-Order)';
+                statusElem.textContent = 'Habis (Diteruskan sebagai Pre-Order)';
                 statusElem.style.color = '#DC2626';
             }
 
@@ -2628,7 +2804,7 @@ $admin_wa_default = '6281258902720';
             const url = window.location.href;
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(url).then(() => {
-                    alert('✅ Tautan Katalog Stok berhasil disalin! Anda dapat membagikannya ke WhatsApp.');
+                    alert('Tautan Katalog Stok berhasil disalin! Anda dapat membagikannya ke WhatsApp.');
                 });
             } else {
                 prompt('Salin tautan ini:', url);
