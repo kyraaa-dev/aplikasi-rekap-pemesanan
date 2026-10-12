@@ -1288,17 +1288,134 @@ $admin_wa_default = '6281258902720';
         }
 
         /* ==========================================================================
-           PUBLIC FOOTER
+           MODERN MINIMALIST EXECUTIVE FOOTER
            ========================================================================== */
         .public-footer {
             background: var(--glass-nav);
             border-top: 1px solid var(--glass-border-subtle);
-            padding: 3rem 1.5rem;
-            text-align: center;
+            padding: 2.25rem 1.5rem;
             width: 100%;
             box-sizing: border-box;
-            margin-top: 3rem;
+            margin-top: 3.5rem;
             color: var(--text-main);
+        }
+
+        .footer-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-brand-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-logo-mini {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: #FFFFFF;
+            padding: 2px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .footer-logo-mini img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .footer-brand-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+        .footer-brand-sub {
+            font-size: 0.74rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 1px;
+        }
+
+        .footer-links-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link-pill {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            background: rgba(15, 23, 42, 0.03);
+            border: 1px solid var(--glass-border-subtle);
+            transition: var(--transition-smooth);
+        }
+        .footer-link-pill:hover {
+            color: var(--primary);
+            background: rgba(37, 99, 235, 0.08);
+            border-color: rgba(37, 99, 235, 0.25);
+            transform: translateY(-1px);
+        }
+        [data-theme="dark"] .footer-link-pill {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        [data-theme="dark"] .footer-link-pill:hover {
+            color: #93C5FD;
+            background: rgba(37, 99, 235, 0.15);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .footer-bottom-bar {
+            max-width: 1140px;
+            margin: 1.5rem auto 0 auto;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--glass-border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.76rem;
+            color: var(--text-subtle);
+            font-weight: 500;
+        }
+
+        .footer-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: var(--success);
+            background: var(--success-light);
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+        }
+        [data-theme="dark"] .footer-status-pill {
+            background: rgba(6, 78, 59, 0.5);
+            color: #6EE7B7;
+        }
+        .footer-status-dot {
+            width: 6px;
+            height: 6px;
+            background: #10B981;
+            border-radius: 50%;
         }
 
         /* ==========================================================================
@@ -1499,6 +1616,40 @@ $admin_wa_default = '6281258902720';
                 width: 40px;
                 height: 40px;
             }
+
+            /* Minimalist Footer on Mobile */
+            .public-footer {
+                padding: 2rem 1.25rem 6rem 1.25rem;
+                margin-top: 2.5rem;
+            }
+            .footer-inner {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 1.25rem;
+            }
+            .footer-brand-wrap {
+                flex-direction: column;
+                text-align: center;
+                gap: 8px;
+            }
+            .footer-links-group {
+                justify-content: center;
+                gap: 6px;
+            }
+            .footer-link-pill {
+                font-size: 0.78rem;
+                padding: 6px 14px;
+            }
+            .footer-bottom-bar {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 10px;
+                margin-top: 1.25rem;
+                padding-top: 1rem;
+                line-height: 1.5;
+            }
         }
 
         @media (max-width: 400px) {
@@ -1583,7 +1734,7 @@ $admin_wa_default = '6281258902720';
                 </div>
 
                 <h2 class="hero-title">
-                    Ketersediaan Stok <span class="gradient-text">Topi Mutz ASN</span>
+                    Ketersediaan Stok <span class="gradient-text">Mutz ASN</span>
                 </h2>
                 <p class="hero-desc">
                     Informasi ukuran yang tersedia untuk <strong>Mutz Standar ASN</strong> dan <strong>Mutz Khusus Kepala SKPD / Pejabat Eselon II</strong>. Cek nomor lingkar kepala Anda sebelum melakukan pemesanan.
@@ -1839,26 +1990,33 @@ $admin_wa_default = '6281258902720';
         </a>
     </div>
 
-    <!-- Modern Glass Footer -->
+    <!-- Modern Minimalist Footer -->
     <footer class="public-footer">
-        <div style="max-width: 640px; margin: 0 auto;">
-            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px;">
-                <img src="assets/images/logo.png?v=2" alt="Logo KORPRI" width="40" height="40">
-                <span style="font-weight: 800; font-size: 1.15rem; color: var(--text-main);">E-MutZ KORPRI</span>
+        <div class="footer-inner">
+            <div class="footer-brand-wrap">
+                <div class="footer-logo-mini">
+                    <img src="assets/images/logo.png?v=2" alt="Logo KORPRI" width="28" height="28">
+                </div>
+                <div>
+                    <div class="footer-brand-title">E-MutZ KORPRI</div>
+                    <div class="footer-brand-sub">Dewan Pengurus KORPRI Kabupaten Banjar</div>
+                </div>
             </div>
-            <p style="color: var(--text-muted); font-size: 0.88rem; margin: 6px 0 18px 0; font-weight: 500; line-height: 1.5;">
-                Sistem Informasi Rekapitulasi Pemesanan &amp; Manajemen Stok Mutz ASN<br>
-                <strong>Dewan Pengurus KORPRI Kabupaten Banjar</strong>
-            </p>
-            <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 1.5rem;">
-                <a href="#panduan" style="font-weight: 700; color: var(--primary); text-decoration: none; font-size: 0.85rem;">Panduan Ukuran</a>
-                <span style="color: var(--text-subtle);">&bull;</span>
-                <a href="#spesifikasi" style="font-weight: 700; color: var(--primary); text-decoration: none; font-size: 0.85rem;">Spesifikasi Eselon II</a>
-                <span style="color: var(--text-subtle);">&bull;</span>
-                <a href="login.php" style="font-weight: 700; color: var(--primary); text-decoration: none; font-size: 0.85rem;">Portal Admin</a>
-            </div>
-            <div style="font-size: 0.78rem; color: var(--text-subtle); font-weight: 600;">
+
+            <nav class="footer-links-group" aria-label="Navigasi Footer">
+                <a href="#panduan" class="footer-link-pill">Panduan Ukuran</a>
+                <a href="#spesifikasi" class="footer-link-pill">Spesifikasi Eselon II</a>
+                <a href="login.php" class="footer-link-pill">Portal Petugas</a>
+            </nav>
+        </div>
+
+        <div class="footer-bottom-bar">
+            <div>
                 &copy; <?= date('Y') ?> Dewan Pengurus KORPRI Kabupaten Banjar. Seluruh Hak Cipta Dilindungi.
+            </div>
+            <div class="footer-status-pill">
+                <span class="footer-status-dot"></span>
+                <span>Layanan Resmi Aktif</span>
             </div>
         </div>
     </footer>
