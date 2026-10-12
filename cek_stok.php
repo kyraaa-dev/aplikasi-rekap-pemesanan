@@ -1071,6 +1071,17 @@ $admin_wa_default = '6281258902720';
             border-color: rgba(248, 113, 113, 0.3);
         }
 
+        .badge-preorder-gold {
+            background: rgba(245, 158, 11, 0.12);
+            color: #B45309;
+            border: 1px solid rgba(217, 119, 6, 0.35);
+        }
+        [data-theme="dark"] .badge-preorder-gold {
+            background: rgba(245, 158, 11, 0.2);
+            color: #FCD34D;
+            border-color: rgba(245, 158, 11, 0.4);
+        }
+
         /* Stock Quantity Meter */
         .stock-qty-wrap {
             margin: 12px 0 16px 0;
@@ -1143,6 +1154,15 @@ $admin_wa_default = '6281258902720';
         .btn-order-wa.ready:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+        .btn-order-wa.ready-gold {
+            background: var(--korpri-gold-gradient);
+            color: #FFFFFF;
+            box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35);
+        }
+        .btn-order-wa.ready-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(217, 119, 6, 0.45);
         }
         .btn-order-wa.preorder {
             background: rgba(100, 116, 139, 0.1);
@@ -1812,195 +1832,78 @@ $admin_wa_default = '6281258902720';
                 height: 40px;
             }
 
-            /* Executive KORPRI Mobile Footer Experience */
+            /* Minimalist Executive KORPRI Mobile Footer */
             .footer-desktop-wrap {
                 display: none !important;
             }
             .footer-mobile-wrap {
-                display: flex !important;
-                flex-direction: column;
-                align-items: center;
+                display: block !important;
                 width: 100%;
-                max-width: 460px;
                 margin: 0 auto;
                 text-align: center;
-                gap: 1.15rem;
             }
 
             .public-footer {
-                padding: 2.25rem 1.15rem 7rem 1.15rem;
-                margin-top: 2.5rem;
+                padding: 1.25rem 1rem calc(5.5rem + env(safe-area-inset-bottom, 0px)) 1rem;
+                margin-top: 1.75rem;
             }
 
-            .footer-mobile-header {
+            .footer-mobile-minimal {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 gap: 7px;
+                width: 100%;
             }
 
-            .footer-mobile-emblem {
-                width: 52px;
-                height: 52px;
-                border-radius: 50%;
-                background: #FFFFFF;
-                padding: 4px;
-                border: 2px solid rgba(217, 119, 6, 0.45);
-                box-shadow: 0 4px 16px rgba(30, 58, 138, 0.15);
+            .footer-mobile-mini-brand {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-            }
-            .footer-mobile-emblem img {
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
+                gap: 8px;
             }
 
-            .footer-mobile-badge {
-                display: inline-block;
-                font-size: 0.68rem;
+            .footer-mobile-mini-title {
+                font-size: 0.88rem;
                 font-weight: 800;
-                letter-spacing: 0.08em;
-                text-transform: uppercase;
-                color: #B45309;
-                background: rgba(245, 158, 11, 0.12);
-                border: 1px solid rgba(217, 119, 6, 0.25);
-                padding: 3px 11px;
-                border-radius: var(--radius-full);
-            }
-            [data-theme="dark"] .footer-mobile-badge {
-                color: #FBBF24;
-                background: rgba(245, 158, 11, 0.18);
-            }
-
-            .footer-mobile-title {
-                font-size: 1.05rem;
-                font-weight: 900;
-                color: var(--text-main);
-                line-height: 1.25;
-                letter-spacing: -0.01em;
-                margin: 0;
-            }
-
-            .footer-mobile-desc {
-                font-size: 0.77rem;
-                color: var(--text-muted);
-                line-height: 1.45;
-                margin: 0;
-                max-width: 320px;
-            }
-
-            .footer-location-chip {
-                display: inline-flex;
-                align-items: center;
-                gap: 6px;
-                font-size: 0.75rem;
-                font-weight: 700;
-                color: var(--korpri-gold);
-                background: rgba(245, 158, 11, 0.1);
-                border: 1px solid rgba(217, 119, 6, 0.25);
-                padding: 4px 12px;
-                border-radius: var(--radius-full);
-                margin-top: 6px;
-            }
-            [data-theme="dark"] .footer-location-chip {
-                color: #FCD34D;
-                background: rgba(245, 158, 11, 0.18);
-                border-color: rgba(245, 158, 11, 0.35);
-            }
-
-            /* 3 Touch Cards on Mobile */
-            .footer-mobile-nav-grid {
-                display: grid;
-                grid-template-columns: 1fr;
-                gap: 7px;
-                width: 100%;
-            }
-
-            .footer-mobile-card {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding: 10px 14px;
-                background: var(--glass-card);
-                border: 1px solid var(--glass-border);
-                border-radius: 14px;
-                text-decoration: none;
-                transition: var(--transition-smooth);
-                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-                text-align: left;
-            }
-            .footer-mobile-card:active {
-                transform: scale(0.98);
-                background: rgba(37, 99, 235, 0.06);
-            }
-            .footer-card-icon {
-                font-size: 1.25rem;
-                line-height: 1;
-                flex-shrink: 0;
-                width: 34px;
-                height: 34px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: rgba(37, 99, 235, 0.08);
-                border-radius: 10px;
-            }
-            [data-theme="dark"] .footer-card-icon {
-                background: rgba(255, 255, 255, 0.08);
-            }
-            .footer-card-body {
-                flex: 1;
-                min-width: 0;
-            }
-            .footer-card-title {
-                font-size: 0.84rem;
-                font-weight: 700;
                 color: var(--text-main);
                 line-height: 1.2;
             }
-            .footer-card-sub {
-                font-size: 0.71rem;
-                color: var(--text-muted);
-                margin-top: 1px;
-            }
-            .footer-card-arrow {
-                color: var(--text-subtle);
-                font-size: 0.85rem;
-                font-weight: 700;
-            }
 
-            /* Sekretariat Address Chip */
-            .footer-mobile-sekretariat {
+            .footer-mobile-mini-loc {
                 display: inline-flex;
                 align-items: center;
-                justify-content: center;
-                gap: 7px;
-                font-size: 0.73rem;
-                color: var(--text-muted);
-                background: rgba(15, 23, 42, 0.03);
-                border: 1px solid var(--glass-border-subtle);
-                padding: 8px 12px;
-                border-radius: 12px;
-                line-height: 1.4;
-                width: 100%;
-                box-sizing: border-box;
+                gap: 4px;
+                font-size: 0.74rem;
+                font-weight: 600;
+                color: var(--korpri-gold);
             }
-            [data-theme="dark"] .footer-mobile-sekretariat {
-                background: rgba(255, 255, 255, 0.04);
+            [data-theme="dark"] .footer-mobile-mini-loc {
+                color: #FCD34D;
             }
 
-            .footer-mobile-bottom {
+            .footer-mobile-mini-links {
                 display: flex;
-                flex-direction: column;
                 align-items: center;
+                justify-content: center;
                 gap: 8px;
-                width: 100%;
-                padding-top: 0.85rem;
-                border-top: 1px solid var(--glass-border-subtle);
-                font-size: 0.73rem;
+                font-size: 0.75rem;
+                font-weight: 600;
                 color: var(--text-subtle);
+                margin: 2px 0;
+            }
+            .footer-mobile-mini-links a {
+                color: var(--text-muted);
+                text-decoration: none;
+            }
+            .footer-mobile-mini-links a:hover {
+                color: var(--primary);
+            }
+
+            .footer-mobile-mini-copy {
+                font-size: 0.71rem;
+                color: var(--text-subtle);
+                font-weight: 500;
             }
         }
 
@@ -2077,7 +1980,6 @@ $admin_wa_default = '6281258902720';
                 <!-- Institution Badge -->
                 <div class="institution-ribbon">
                     <span class="ribbon-text-main">DEWAN PENGURUS KORPRI KABUPATEN BANJAR</span>
-                    <span class="ribbon-text-sub">&bull; Jl. A. Yani No. 2 Martapura</span>
                 </div>
 
                 <br>
@@ -2162,7 +2064,7 @@ $admin_wa_default = '6281258902720';
                                 Kepala SKPD
                             </span>
                         </div>
-                        <div class="tab-sub">Pejabat Pimpinan Tinggi Pratama</div>
+                        <div class="tab-sub">Ready &amp; Buka Pre-Order (Eselon II)</div>
                     </div>
                     <div class="tab-price-tag">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></div>
                 </button>
@@ -2208,6 +2110,7 @@ $admin_wa_default = '6281258902720';
             </div>
             <div style="flex: 1; min-width: 0;">
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px;">
+                    <span style="font-size: 0.74rem; font-weight: 800; background: rgba(16, 185, 129, 0.15); color: #047857; padding: 2px 8px; border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: 0.03em;">Ready &amp; Buka Pre-Order</span>
                     <span style="font-size: 0.74rem; font-weight: 800; background: rgba(217, 119, 6, 0.15); color: #B45309; padding: 2px 8px; border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: 0.03em;">Eksklusif Eselon II</span>
                     <span style="font-size: 0.75rem; font-weight: 700; color: #92400E;">Bordir List Benang Emas</span>
                 </div>
@@ -2215,7 +2118,7 @@ $admin_wa_default = '6281258902720';
                     Spesifikasi Mutz Kepala Dinas / Badan / Asisten
                 </h3>
                 <p style="margin: 0; font-size: 0.85rem; font-weight: 500; opacity: 0.9; line-height: 1.45;">
-                    Dirancang khusus dengan bordir list benang emas tebal resmi KORPRI bagi Pejabat Pimpinan Tinggi Pratama. Tersedia ukuran Pria &amp; Wanita.
+                    Dirancang khusus dengan bordir list benang emas tebal resmi KORPRI bagi Pejabat Pimpinan Tinggi Pratama. Melayani pemesanan langsung &amp; Pre-Order resmi seluruh ukuran.
                 </p>
             </div>
         </div>
@@ -2407,10 +2310,6 @@ $admin_wa_default = '6281258902720';
                     <div>
                         <div class="footer-brand-title">E-MutZ KORPRI</div>
                         <div class="footer-brand-sub">Dewan Pengurus KORPRI Kabupaten Banjar</div>
-                        <div class="footer-address">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                            <span>Sekretariat: Kantor Bupati Banjar, Jl. A. Yani No. 2 Martapura</span>
-                        </div>
                     </div>
                 </div>
 
@@ -2423,7 +2322,7 @@ $admin_wa_default = '6281258902720';
 
             <div class="footer-bottom-bar">
                 <div>
-                    &copy; <?= date('Y') ?> Dewan Pengurus KORPRI Kabupaten Banjar &bull; Jl. A. Yani No. 2 Martapura. Seluruh Hak Cipta Dilindungi.
+                    &copy; <?= date('Y') ?> Dewan Pengurus KORPRI Kabupaten Banjar. Seluruh Hak Cipta Dilindungi.
                 </div>
                 <div class="footer-status-pill">
                     <span class="footer-status-dot"></span>
@@ -2432,68 +2331,26 @@ $admin_wa_default = '6281258902720';
             </div>
         </div>
 
-        <!-- Mobile-Tailored Executive Footer Layout -->
+        <!-- Mobile-Tailored Minimalist Footer Layout -->
         <div class="footer-mobile-wrap">
-            <div class="footer-mobile-header">
-                <div class="footer-mobile-emblem">
-                    <img src="assets/images/korpri-badge.png" alt="Lambang KORPRI" width="46" height="46">
+            <div class="footer-mobile-minimal">
+                <div class="footer-mobile-mini-brand">
+                    <img src="assets/images/korpri-badge.png" alt="Logo KORPRI" width="22" height="22">
+                    <span class="footer-mobile-mini-title">Dewan Pengurus KORPRI Kab. Banjar</span>
                 </div>
-                <span class="footer-mobile-badge">Dewan Pengurus KORPRI</span>
-                <h3 class="footer-mobile-title">Kabupaten Banjar</h3>
-                <p class="footer-mobile-desc">Sistem Rekapitulasi Pemesanan &amp; Ketersediaan Mutz ASN</p>
-                <div class="footer-location-chip">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <div class="footer-mobile-mini-loc">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                     <span>Jl. A. Yani No. 2 Martapura</span>
                 </div>
-            </div>
-
-            <nav class="footer-mobile-nav-grid" aria-label="Navigasi Cepat Mobile">
-                <a href="#panduan" class="footer-mobile-card">
-                    <div class="footer-card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4Z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/><path d="m4.5 13.5 2 2"/></svg>
-                    </div>
-                    <div class="footer-card-body">
-                        <div class="footer-card-title">Panduan Ukuran</div>
-                        <div class="footer-card-sub">Cek nomor lingkar kepala (cm)</div>
-                    </div>
-                    <div class="footer-card-arrow">&rarr;</div>
-                </a>
-
-                <a href="#spesifikasi" class="footer-mobile-card">
-                    <div class="footer-card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--korpri-gold);"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-                    </div>
-                    <div class="footer-card-body">
-                        <div class="footer-card-title">Spesifikasi Eselon II</div>
-                        <div class="footer-card-sub">Mutz khusus Kepala SKPD / Pejabat</div>
-                    </div>
-                    <div class="footer-card-arrow">&rarr;</div>
-                </a>
-
-                <a href="login.php" class="footer-mobile-card">
-                    <div class="footer-card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                    </div>
-                    <div class="footer-card-body">
-                        <div class="footer-card-title">Portal Petugas</div>
-                        <div class="footer-card-sub">Login administrator sistem</div>
-                    </div>
-                    <div class="footer-card-arrow">&rarr;</div>
-                </a>
-            </nav>
-
-            <div class="footer-mobile-sekretariat">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; color: var(--korpri-gold);"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                <span><strong>Sekretariat:</strong> Kantor Bupati Banjar, Jl. A. Yani No. 2 Martapura</span>
-            </div>
-
-            <div class="footer-mobile-bottom">
-                <div class="footer-status-pill">
-                    <span class="footer-status-dot"></span>
-                    <span>Layanan Resmi Aktif &amp; Terverifikasi</span>
-                </div>
-                <div>
-                    &copy; <?= date('Y') ?> KORPRI Kab. Banjar &bull; Martapura
+                <nav class="footer-mobile-mini-links" aria-label="Navigasi Footer Mobile">
+                    <a href="#panduan">Panduan Ukuran</a>
+                    <span>&bull;</span>
+                    <a href="#spesifikasi">Spesifikasi Eselon II</a>
+                    <span>&bull;</span>
+                    <a href="login.php">Portal Petugas</a>
+                </nav>
+                <div class="footer-mobile-mini-copy">
+                    &copy; <?= date('Y') ?> KORPRI Kab. Banjar
                 </div>
             </div>
         </div>
@@ -2610,8 +2467,13 @@ $admin_wa_default = '6281258902720';
             const wanitaObj = dataCat['Perempuan'] || {};
             for (let sz in wanitaObj) { totalWanita += (wanitaObj[sz] || 0); }
 
-            document.getElementById('badgeCountPria').textContent = totalPria > 0 ? (totalPria + ' ready') : 'Pre-Order';
-            document.getElementById('badgeCountWanita').textContent = totalWanita > 0 ? (totalWanita + ' ready') : 'Pre-Order';
+            if (currentCategory === 'Kepala SKPD') {
+                document.getElementById('badgeCountPria').textContent = totalPria > 0 ? (totalPria + ' ready') : 'Buka Pre-Order';
+                document.getElementById('badgeCountWanita').textContent = totalWanita > 0 ? (totalWanita + ' ready') : 'Buka Pre-Order';
+            } else {
+                document.getElementById('badgeCountPria').textContent = totalPria > 0 ? (totalPria + ' ready') : 'Pre-Order';
+                document.getElementById('badgeCountWanita').textContent = totalWanita > 0 ? (totalWanita + ' ready') : 'Pre-Order';
+            }
         }
 
         // Render Quick Interactive Size Filter Chips
@@ -2696,6 +2558,17 @@ $admin_wa_default = '6281258902720';
                             Ambil Sisa ${qty} Pcs
                         </button>
                     `;
+                } else if (currentCategory === 'Kepala SKPD') {
+                    // Kepala SKPD: Ready Buka Pre-Order
+                    statusBadge = '<span class="status-badge badge-preorder-gold"><span class="status-dot yellow"></span> Buka Pre-Order</span>';
+                    statusText = 'Ready Pre-Order';
+                    barColor = 'linear-gradient(90deg, #F59E0B, #D97706)';
+                    btnHtml = `
+                        <button type="button" class="btn-order-wa ready-gold" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, 0)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                            Pre-Order Ukuran ${sz} via WA
+                        </button>
+                    `;
                 } else {
                     statusBadge = '<span class="status-badge badge-empty"><span class="status-dot red"></span> Stok Habis</span>';
                     statusText = 'Habis';
@@ -2708,7 +2581,20 @@ $admin_wa_default = '6281258902720';
                     `;
                 }
 
-                const percent = Math.min(100, Math.round((qty / maxStockBaseline) * 100));
+                const isKepalaPreOrder = (currentCategory === 'Kepala SKPD' && qty === 0);
+                const percent = isKepalaPreOrder ? 100 : Math.min(100, Math.round((qty / maxStockBaseline) * 100));
+
+                const qtyNumberHtml = isKepalaPreOrder
+                    ? `<div class="qty-number" style="color: #D97706; font-size: 1.55rem; padding-top: 4px; padding-bottom: 4px;">Ready <span style="font-size: 1rem; font-weight: 700;">Pre-Order</span></div>`
+                    : `<div class="qty-number" style="color: ${qty > 0 ? (qty <= 5 ? '#D97706' : '#059669') : '#DC2626'};">${qty} <span style="font-size: 1.1rem; font-weight: 700;">pcs</span></div>`;
+
+                const qtyLabelText = isKepalaPreOrder
+                    ? 'Buka Pre-Order Resmi di Sekretariat KORPRI'
+                    : `${statusText} di Sekretariat KORPRI`;
+
+                const subtextInfo = (currentCategory === 'Kepala SKPD')
+                    ? `Eselon II (Bordir List Emas) &bull; Ready &amp; Buka Pre-Order &bull; ${currentGender}`
+                    : `Standar Mutz ASN KORPRI &bull; ${currentGender}`;
 
                 const card = document.createElement('div');
                 card.className = 'size-card';
@@ -2723,15 +2609,15 @@ $admin_wa_default = '6281258902720';
                     </div>
 
                     <div class="stock-qty-wrap">
-                        <div class="qty-number" style="color: ${qty > 0 ? (qty <= 5 ? '#D97706' : '#059669') : '#DC2626'};">${qty} <span style="font-size: 1.1rem; font-weight: 700;">pcs</span></div>
-                        <div class="qty-label">${statusText} di Sekretariat KORPRI</div>
+                        ${qtyNumberHtml}
+                        <div class="qty-label">${qtyLabelText}</div>
                         <div class="stock-progress-bar">
                             <div class="stock-progress-fill" style="width: ${percent}%; background: ${barColor};"></div>
                         </div>
                     </div>
 
                     <div style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted); margin-bottom: 14px; line-height: 1.4;">
-                        ${currentCategory === 'Kepala SKPD' ? 'Eselon II (Bordir List Emas)' : 'Standar Mutz ASN KORPRI'} &bull; ${currentGender}
+                        ${subtextInfo}
                     </div>
 
                     ${btnHtml}
@@ -2753,6 +2639,9 @@ $admin_wa_default = '6281258902720';
             if (stock > 0) {
                 statusElem.textContent = 'Ready (' + stock + ' pcs tersedia)';
                 statusElem.style.color = '#059669';
+            } else if (category === 'Kepala SKPD') {
+                statusElem.textContent = 'Ready Buka Pre-Order (Siap Dipesan via WA)';
+                statusElem.style.color = '#D97706';
             } else {
                 statusElem.textContent = 'Habis (Diteruskan sebagai Pre-Order)';
                 statusElem.style.color = '#DC2626';
@@ -2774,7 +2663,9 @@ $admin_wa_default = '6281258902720';
             const skpd = document.getElementById('orderSkpd').value.trim();
 
             const catText = selectedOrderData.category === 'Kepala SKPD' ? 'Mutz Kepala SKPD (Eselon II)' : 'Mutz Standar ASN (Biasa)';
-            const statusPesanan = selectedOrderData.stock > 0 ? 'Pemesanan Ready Stock' : 'Permintaan Pre-Order (Stok Habis)';
+            const statusPesanan = (selectedOrderData.category === 'Kepala SKPD' && selectedOrderData.stock === 0)
+                ? 'Pre-Order Resmi Mutz Kepala SKPD'
+                : (selectedOrderData.stock > 0 ? 'Pemesanan Ready Stock' : 'Permintaan Pre-Order (Stok Habis)');
 
             let msg = `Halo Admin E-MutZ KORPRI,\n\n`;
             msg += `Saya ingin melakukan *${statusPesanan}* dengan rincian berikut:\n`;
