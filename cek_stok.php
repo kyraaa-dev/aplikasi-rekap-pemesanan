@@ -511,7 +511,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 1.75rem;
+            gap: 1.25rem;
             flex-wrap: wrap;
             padding-top: 1.25rem;
             border-top: 1px solid rgba(255, 255, 255, 0.15);
@@ -519,18 +519,84 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             color: #CBD5E1;
         }
 
-        .gov-info-item {
+        .gov-info-location {
             display: inline-flex;
             align-items: center;
-            gap: 7px;
-            font-weight: 600;
+            gap: 10px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 9999px;
+            padding: 6px 16px;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
-        .gov-info-item svg {
+        .loc-pin-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: #FBBF24;
             flex-shrink: 0;
         }
-        .gov-info-item strong {
+        .loc-text-block {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+        }
+        .loc-instansi {
             color: #FFFFFF;
+        }
+        .loc-divider {
+            color: #FBBF24;
+            opacity: 0.7;
+            font-size: 0.75rem;
+        }
+        .loc-alamat {
+            color: #FEF08A;
+            font-weight: 600;
+        }
+
+        .gov-info-meta-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .gov-meta-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(15, 23, 42, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 9999px;
+            padding: 5px 12px;
+            font-size: 0.8rem;
+            color: #E2E8F0;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        .gov-meta-chip strong {
+            color: #FFFFFF;
+        }
+        .gov-meta-chip svg {
+            color: #FBBF24;
+            flex-shrink: 0;
+        }
+        .meta-pulse-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22C55E;
+            box-shadow: 0 0 6px #22C55E;
+            display: inline-block;
+            flex-shrink: 0;
         }
 
         /* ==========================================================================
@@ -857,6 +923,26 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             .gov-stock-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+        }
+
+        .gov-stock-grid > .stock-item-card:only-child {
+            grid-column: 1 / -1;
+            max-width: 360px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .pill-text-short,
+        .btn-text-short,
+        .pin-text-short,
+        .chip-text-short {
+            display: none;
+        }
+        .pill-text-full,
+        .btn-text-full,
+        .pin-text-full,
+        .chip-text-full {
+            display: inline;
         }
 
         .stock-item-card {
@@ -1508,10 +1594,60 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 margin-bottom: 1rem;
             }
             .gov-info-strip {
-                gap: 0.85rem;
-                font-size: 0.78rem;
+                gap: 0.75rem;
+                padding-top: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+            .gov-info-location {
+                width: 100%;
+                max-width: 380px;
+                border-radius: 12px;
+                padding: 8px 12px;
+                gap: 10px;
+                text-align: left;
+                align-items: center;
+                justify-content: flex-start;
+                box-sizing: border-box;
+            }
+            .loc-pin-icon {
+                width: 28px;
+                height: 28px;
+            }
+            .loc-text-block {
+                display: flex;
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 1px;
+                flex: 1;
+                min-width: 0;
+            }
+            .loc-divider {
+                display: none;
+            }
+            .loc-instansi {
+                font-size: 0.82rem;
+                font-weight: 800;
+                color: #FFFFFF;
+                line-height: 1.25;
+            }
+            .loc-alamat {
+                font-size: 0.74rem;
+                font-weight: 600;
+                color: #FDE68A;
+                line-height: 1.25;
+            }
+            .gov-info-meta-row {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+            .gov-meta-chip {
+                padding: 4px 10px;
+                font-size: 0.72rem;
             }
 
             /* Product Selector on Mobile */
@@ -1536,6 +1672,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 margin-bottom: 1.25rem;
                 flex-direction: column;
                 align-items: stretch;
+                gap: 10px;
             }
             .gender-segmented-control {
                 width: 100%;
@@ -1547,18 +1684,90 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 padding: 8px 10px;
                 font-size: 0.8rem;
             }
+            .size-chips-scroller {
+                gap: 6px;
+                padding: 2px 0 4px 0;
+            }
+            .btn-size-chip {
+                padding: 6px 10px;
+                font-size: 0.78rem;
+            }
 
-            /* Stock Grid on Mobile */
+            /* Stock Grid on Mobile: Dynamic, Crisp 2 Columns */
             .gov-stock-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-                margin-bottom: 2.5rem;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+                margin-bottom: 2rem;
             }
             .stock-item-card {
-                padding: 16px;
+                padding: 12px 10px;
+                border-radius: var(--radius-sm);
+            }
+            .stock-card-head {
+                margin-bottom: 6px;
+                align-items: flex-start;
+                gap: 4px;
             }
             .size-num-title {
-                font-size: 1.6rem;
+                font-size: 1.26rem;
+                line-height: 1;
+            }
+            .size-circumference {
+                font-size: 0.68rem;
+                margin-top: 2px;
+            }
+            .status-pill {
+                padding: 2px 6px;
+                font-size: 0.68rem;
+                gap: 4px;
+                flex-shrink: 0;
+            }
+            .status-dot-sm {
+                width: 5px;
+                height: 5px;
+            }
+            .stock-card-body {
+                padding: 8px 8px;
+                margin-bottom: 10px;
+                border-radius: 4px;
+            }
+            .body-row {
+                font-size: 0.73rem;
+                margin-bottom: 2px;
+            }
+            .body-row-cat {
+                display: none; /* redundant in 2-column mobile cards */
+            }
+            .body-value {
+                font-size: 0.76rem;
+            }
+            .body-include-pin {
+                font-size: 0.68rem;
+            }
+            .btn-order-action {
+                padding: 7px 6px;
+                font-size: 0.76rem;
+                gap: 4px;
+                border-radius: 6px;
+            }
+            .btn-order-action svg {
+                width: 14px;
+                height: 14px;
+                flex-shrink: 0;
+            }
+
+            /* Toggle Text Full / Short on Mobile */
+            .pill-text-full,
+            .btn-text-full,
+            .pin-text-full,
+            .chip-text-full {
+                display: none !important;
+            }
+            .pill-text-short,
+            .btn-text-short,
+            .pin-text-short,
+            .chip-text-short {
+                display: inline !important;
             }
 
             /* Size Guide & Spec on Mobile */
@@ -1680,17 +1889,26 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             </p>
 
             <div class="gov-info-strip">
-                <div class="gov-info-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                    <span><strong>Sekretariat KORPRI Kabupaten Banjar Jl. A.Yani Nomor 2 Martapura</strong></span>
+                <div class="gov-info-location">
+                    <div class="loc-pin-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </div>
+                    <div class="loc-text-block">
+                        <span class="loc-instansi">Sekretariat KORPRI Kabupaten Banjar</span>
+                        <span class="loc-divider">•</span>
+                        <span class="loc-alamat">Jl. A. Yani Nomor 2 Martapura</span>
+                    </div>
                 </div>
-                <div class="gov-info-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                    <span>Status: <strong>Update Real-Time</strong></span>
-                </div>
-                <div class="gov-info-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-                    <span>Total Fisik Tersedia: <strong><?= number_format($total_stok_tersedia, 0, ',', '.') ?> Pcs</strong></span>
+
+                <div class="gov-info-meta-row">
+                    <div class="gov-meta-chip">
+                        <span class="meta-pulse-dot"></span>
+                        <span>Status: <strong>Update Real-Time</strong></span>
+                    </div>
+                    <div class="gov-meta-chip">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                        <span>Total Stok: <strong><?= number_format($total_stok_tersedia, 0, ',', '.') ?> Pcs</strong></span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1933,10 +2151,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             <div class="footer-identity">
                 <img src="assets/images/korpri-badge.png" alt="Logo KORPRI" class="footer-seal" width="32" height="32">
                 <div>
-                    <div class="footer-name">Dewan Pengurus KORPRI Kabupaten Banjar</div>
+                    <div class="footer-name">Sekretariat KORPRI Kabupaten Banjar</div>
                     <div class="footer-address-txt">
                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                        <span>Jl. A. Yani No. 2 Martapura</span>
+                        <span>Jl. A. Yani Nomor 2 Martapura</span>
                     </div>
                 </div>
             </div>
@@ -1951,7 +2169,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         </div>
 
         <div class="footer-copyright-bar">
-            <div>&copy; <?= date('Y') ?> Dewan Pengurus KORPRI Kabupaten Banjar. Seluruh Hak Cipta Dilindungi.</div>
+            <div>&copy; <?= date('Y') ?> Sekretariat KORPRI Kabupaten Banjar. Seluruh Hak Cipta Dilindungi.</div>
             <div style="display: flex; align-items: center; gap: 6px;">
                 <span style="width: 7px; height: 7px; border-radius: 50%; background: #16A34A; display: inline-block;"></span>
                 <span>Layanan Publik Resmi Aktif</span>
@@ -2082,7 +2300,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             const btnAll = document.createElement('button');
             btnAll.type = 'button';
             btnAll.className = 'btn-size-chip' + (selectedSizeFilter === null ? ' active' : '');
-            btnAll.textContent = 'Semua Ukuran (' + allSizes.length + ')';
+            btnAll.innerHTML = '<span class="chip-text-full">Semua Ukuran (' + allSizes.length + ')</span><span class="chip-text-short">Semua (' + allSizes.length + ')</span>';
             btnAll.onclick = function() {
                 selectedSizeFilter = null;
                 renderSizeChips();
@@ -2139,53 +2357,65 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     // Eselon II selalu Ready Stock
                     statusPillHtml = `
                         <span class="status-pill pill-avail-ready">
-                            <span class="status-dot-sm"></span> Ready Stock
+                            <span class="status-dot-sm"></span>
+                            <span class="pill-text-full">Ready Stock</span>
+                            <span class="pill-text-short">Ready</span>
                         </span>
                     `;
                     stockText = 'Ready Stock di Sekretariat';
                     btnActionHtml = `
                         <button type="button" class="btn-order-action ready-wa" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, ${qty > 0 ? qty : 1})">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                            <span>Pesan Ukuran ${sz} via WA</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                            <span class="btn-text-full">Pesan Ukuran ${sz} via WA</span>
+                            <span class="btn-text-short">Pesan WA</span>
                         </button>
                     `;
                 } else if (qty > 5) {
                     statusPillHtml = `
                         <span class="status-pill pill-avail-ready">
-                            <span class="status-dot-sm"></span> Tersedia (${qty} pcs)
+                            <span class="status-dot-sm"></span>
+                            <span class="pill-text-full">Tersedia (${qty} pcs)</span>
+                            <span class="pill-text-short">${qty} pcs</span>
                         </span>
                     `;
                     stockText = `Tersedia ${qty} pcs`;
                     btnActionHtml = `
                         <button type="button" class="btn-order-action ready-wa" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, ${qty})">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                            <span>Pesan Ukuran ${sz} via WA</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                            <span class="btn-text-full">Pesan Ukuran ${sz} via WA</span>
+                            <span class="btn-text-short">Pesan WA</span>
                         </button>
                     `;
                 } else if (qty > 0) {
                     statusPillHtml = `
                         <span class="status-pill pill-avail-low">
-                            <span class="status-dot-sm"></span> Sisa ${qty} pcs
+                            <span class="status-dot-sm"></span>
+                            <span class="pill-text-full">Sisa ${qty} pcs</span>
+                            <span class="pill-text-short">${qty} pcs</span>
                         </span>
                     `;
                     stockText = `Tersisa ${qty} pcs`;
                     btnActionHtml = `
                         <button type="button" class="btn-order-action ready-wa" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, ${qty})">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                            <span>Ambil Sisa ${qty} pcs via WA</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                            <span class="btn-text-full">Ambil Sisa ${qty} pcs via WA</span>
+                            <span class="btn-text-short">Pesan WA</span>
                         </button>
                     `;
                 } else {
                     statusPillHtml = `
                         <span class="status-pill pill-avail-empty">
-                            <span class="status-dot-sm"></span> Habis (Pre-Order)
+                            <span class="status-dot-sm"></span>
+                            <span class="pill-text-full">Habis (Pre-Order)</span>
+                            <span class="pill-text-short">Pre-Order</span>
                         </span>
                     `;
                     stockText = 'Stok Fisik Habis';
                     btnActionHtml = `
                         <button type="button" class="btn-order-action preorder-wa" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, 0)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
-                            <span>Pre-Order Ukuran ${sz} via WA</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                            <span class="btn-text-full">Pre-Order Ukuran ${sz} via WA</span>
+                            <span class="btn-text-short">Pre-Order WA</span>
                         </button>
                     `;
                 }
@@ -2196,15 +2426,15 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     <div class="stock-card-head">
                         <div class="size-display-wrap">
                             <div class="size-num-title">No. ${sz}</div>
-                            <div class="size-circumference">Lingkar Kepala ~${sz} cm</div>
+                            <div class="size-circumference">Lingkar ~${sz} cm</div>
                         </div>
                         ${statusPillHtml}
                     </div>
 
                     <div class="stock-card-body">
-                        <div class="body-row">
+                        <div class="body-row body-row-cat">
                             <span class="body-label">Kategori</span>
-                            <span class="body-value">${isKepala ? 'Kepala SKPD (Eselon II)' : 'Standar ASN'}</span>
+                            <span class="body-value">${isKepala ? 'Kepala SKPD' : 'Standar ASN'}</span>
                         </div>
                         <div class="body-row">
                             <span class="body-label">Harga Resmi</span>
@@ -2213,8 +2443,9 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         <div class="body-row">
                             <span class="body-label">Kelengkapan</span>
                             <span class="body-include-pin">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                                Include Pin Kab. Banjar
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                <span class="pin-text-full">Include Pin Kab. Banjar</span>
+                                <span class="pin-text-short">Include Pin</span>
                             </span>
                         </div>
                     </div>
