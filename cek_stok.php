@@ -49,6 +49,18 @@ $sizes_wanita = [58, 59, 60];
 
 // Default admin WhatsApp
 $admin_wa_default = '6281258902720';
+
+// Calculate absolute base URL for Open Graph (Mandatory for WhatsApp, Facebook, Telegram crawlers)
+$is_https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
+$og_protocol = $is_https ? "https://" : "http://";
+$og_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+$og_dir = rtrim(str_replace('\\', '/', dirname($_SERVER['PHP_SELF'])), '/');
+$og_dir_encoded = $og_dir ? implode('/', array_map('rawurlencode', explode('/', $og_dir))) : '';
+$og_base_url = $og_protocol . $og_host . ($og_dir_encoded ? $og_dir_encoded : '') . '/';
+
+$og_image_square = $og_base_url . 'assets/images/og-emutz-square.png';
+$og_image_cover  = $og_base_url . 'assets/images/og-emutz-cover.png';
+$og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -57,11 +69,52 @@ $admin_wa_default = '6281258902720';
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Katalog & Stok Mutz ASN KORPRI | Dewan Pengurus KORPRI Kab. Banjar</title>
     
+    <!-- Primary SEO Meta Tags -->
+    <meta name="title" content="Katalog & Stok Mutz ASN | E-MutZ KORPRI Kab. Banjar">
+    <meta name="description" content="Katalog resmi & ketersediaan stok topi Mutz ASN Standar dan Kepala SKPD (Eselon II) Dewan Pengurus KORPRI Kabupaten Banjar secara Real-Time.">
+    <meta name="keywords" content="mutz asn, korpri kabupaten banjar, topi mutz, pns pppk, dewan pengurus korpri, martapura, eselon II, stok topi asn">
+    <meta name="author" content="Dewan Pengurus KORPRI Kabupaten Banjar">
+    <meta name="theme-color" content="#1D4ED8">
+
+    <!-- Open Graph / WhatsApp / Facebook Meta Tags (Absolute URLs for Instant Logo Preview) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<?= htmlspecialchars($og_page_url) ?>">
+    <meta property="og:title" content="Katalog & Stok Mutz ASN | E-MutZ KORPRI Kab. Banjar">
+    <meta property="og:description" content="Informasi ketersediaan stok Mutz Standar ASN & Kepala SKPD Dewan Pengurus KORPRI Kab. Banjar secara Real-Time. Cek ukuran lingkar kepala & pesan via WhatsApp.">
+    <meta property="og:site_name" content="E-MutZ KORPRI Kabupaten Banjar">
+    <meta property="og:locale" content="id_ID">
+    
+    <!-- WhatsApp Chat Thumbnail (Square 1:1 format) -->
+    <meta property="og:image" content="<?= htmlspecialchars($og_image_square) ?>">
+    <meta property="og:image:secure_url" content="<?= htmlspecialchars($og_image_square) ?>">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="600">
+    <meta property="og:image:height" content="600">
+    <meta property="og:image:alt" content="Logo E-MutZ KORPRI Kabupaten Banjar">
+
+    <!-- Large Social Media Card (1200x630 format) -->
+    <meta property="og:image" content="<?= htmlspecialchars($og_image_cover) ?>">
+    <meta property="og:image:secure_url" content="<?= htmlspecialchars($og_image_cover) ?>">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Katalog Stok Mutz ASN KORPRI Kabupaten Banjar">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="<?= htmlspecialchars($og_page_url) ?>">
+    <meta name="twitter:title" content="Katalog & Stok Mutz ASN | E-MutZ KORPRI Kab. Banjar">
+    <meta name="twitter:description" content="Informasi stok Mutz Standar ASN & Kepala SKPD Dewan Pengurus KORPRI Kab. Banjar secara Real-Time.">
+    <meta name="twitter:image" content="<?= htmlspecialchars($og_image_cover) ?>">
+
+    <!-- Standard Link Previews & High-Res App Icons -->
+    <link rel="image_src" href="<?= htmlspecialchars($og_image_square) ?>">
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <link rel="icon" type="image/png" href="assets/images/logo.png">
     
     <style>
         /* ==========================================================================
@@ -959,6 +1012,8 @@ $admin_wa_default = '6281258902720';
             grid-template-columns: repeat(3, 1fr);
             gap: 22px;
             margin-bottom: 3.5rem;
+            min-height: 440px;
+            contain: layout style;
         }
         @media (max-width: 960px) {
             .stock-grid {
@@ -967,8 +1022,14 @@ $admin_wa_default = '6281258902720';
         }
 
         @keyframes cardPopIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
+            0% {
+                opacity: 0;
+                transform: translateY(12px) scale(0.985);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         .size-card {
@@ -980,18 +1041,24 @@ $admin_wa_default = '6281258902720';
             display: flex;
             flex-direction: column;
             position: relative;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-            animation: cardPopIn 0.25s ease-out backwards;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+            animation: cardPopIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) backwards;
             contain: content;
+            will-change: transform, opacity;
+            transform: translateZ(0);
         }
         .size-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-4px) translateZ(0);
             box-shadow: var(--shadow-lg);
             border-color: rgba(37, 99, 235, 0.35);
         }
         [data-theme="dark"] .size-card:hover {
             border-color: rgba(59, 130, 246, 0.4);
             box-shadow: 0 16px 35px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        #panduan, #spesifikasi {
+            scroll-margin-top: 85px;
         }
 
 
@@ -1292,7 +1359,6 @@ $admin_wa_default = '6281258902720';
            MODAL DIALOG & RESPONSIVE BOTTOM-SHEET
            ========================================================================== */
         .modal-backdrop {
-            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -1300,6 +1366,7 @@ $admin_wa_default = '6281258902720';
             height: 100%;
             background: rgba(15, 23, 42, 0.65);
             z-index: 1000;
+            display: flex;
             align-items: center;
             justify-content: center;
             padding: 1rem;
@@ -1307,11 +1374,15 @@ $admin_wa_default = '6281258902720';
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             opacity: 0;
-            transition: opacity 0.25s ease;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s;
+            will-change: opacity;
         }
         .modal-backdrop.active {
-            display: flex;
             opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
         }
         .modal-drag-handle {
             display: none;
@@ -1329,11 +1400,12 @@ $admin_wa_default = '6281258902720';
             position: relative;
             box-sizing: border-box;
             color: var(--text-main);
-            transform: scale(0.95);
-            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: scale(0.94) translateY(12px);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
         }
         .modal-backdrop.active .modal-card {
-            transform: scale(1);
+            transform: scale(1) translateY(0);
         }
 
         .modal-card input {
@@ -1389,18 +1461,19 @@ $admin_wa_default = '6281258902720';
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            transition: var(--transition-smooth);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
             font-family: var(--font-main);
+            will-change: transform;
+            transform: translateZ(0);
         }
         .floating-wa-btn:hover {
-            transform: translateY(-3px) scale(1.02);
+            transform: translateY(-3px) scale(1.02) translateZ(0);
             box-shadow: 0 10px 25px rgba(16, 185, 129, 0.5);
         }
 
         .btn-scroll-top {
-            display: none !important;
             width: 44px;
             height: 44px;
             border-radius: 50%;
@@ -1409,19 +1482,64 @@ $admin_wa_default = '6281258902720';
             border: 1px solid var(--glass-border-subtle) !important;
             box-shadow: var(--shadow-md) !important;
             cursor: pointer;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            transition: var(--transition-smooth);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(12px) scale(0.9) translateZ(0);
+            transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            will-change: transform, opacity;
         }
         .btn-scroll-top.visible {
-            display: inline-flex !important;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateY(0) scale(1) translateZ(0);
         }
         .btn-scroll-top:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) translateZ(0);
             box-shadow: var(--shadow-lg) !important;
-            color: var(--primary) !important;
+        }
+
+        /* Ultra-Smooth Floating Toast Notification */
+        .toast-notification {
+            position: fixed;
+            top: 76px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px) scale(0.96);
+            background: rgba(15, 23, 42, 0.94);
+            color: #FFFFFF;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 12px 22px;
+            border-radius: var(--radius-full);
+            font-size: 0.88rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 99999;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0.3s;
+            will-change: transform, opacity;
+        }
+        .toast-notification.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0) scale(1);
+            pointer-events: auto;
+        }
+        .toast-notification svg {
+            color: #10B981;
+            flex-shrink: 0;
         }
 
         /* ==========================================================================
@@ -2688,14 +2806,70 @@ $admin_wa_default = '6281258902720';
             window.open(url, '_blank');
         }
 
-        function copyKatalogLink() {
-            const url = window.location.href;
+        let toastTimeout = null;
+        function showToast(msg) {
+            let toast = document.getElementById('publicToast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'publicToast';
+                toast.className = 'toast-notification';
+                document.body.appendChild(toast);
+            }
+            toast.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>${msg}</span>
+            `;
+            toast.classList.add('show');
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2600);
+        }
+
+        async function copyKatalogLink() {
+            const shareTitle = 'Katalog & Stok Mutz ASN | E-MutZ KORPRI Kab. Banjar';
+            const shareText = 'Cek ketersediaan stok topi Mutz ASN Standar & Kepala SKPD Dewan Pengurus KORPRI Kab. Banjar secara Real-Time:';
+            const shareUrl = window.location.href;
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+            // On mobile devices, invoke native share sheet for WhatsApp / Telegram
+            if (isMobile && navigator.share) {
+                try {
+                    await navigator.share({
+                        title: shareTitle,
+                        text: shareText,
+                        url: shareUrl
+                    });
+                    return;
+                } catch (err) {
+                    if (err.name === 'AbortError') return;
+                }
+            }
+
+            // Copy to clipboard with fallback
+            let copied = false;
             if (navigator.clipboard) {
-                navigator.clipboard.writeText(url).then(() => {
-                    alert('Tautan Katalog Stok berhasil disalin! Anda dapat membagikannya ke WhatsApp.');
-                });
+                try {
+                    await navigator.clipboard.writeText(shareUrl);
+                    copied = true;
+                } catch (e) {}
+            }
+            if (!copied) {
+                try {
+                    const temp = document.createElement('input');
+                    temp.value = shareUrl;
+                    document.body.appendChild(temp);
+                    temp.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(temp);
+                    copied = true;
+                } catch (e) {}
+            }
+
+            if (copied) {
+                showToast('Tautan berhasil disalin! Siap dibagikan ke WhatsApp.');
             } else {
-                prompt('Salin tautan ini:', url);
+                prompt('Salin tautan ini untuk dibagikan ke WhatsApp:', shareUrl);
             }
         }
 
