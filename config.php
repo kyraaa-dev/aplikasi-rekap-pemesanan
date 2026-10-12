@@ -259,7 +259,7 @@ if ((!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) &&
 }
 
 $current_page = basename($_SERVER['PHP_SELF'] ?? '');
-$allowed_pages = ['login.php', 'api_files.php', 'proses_upload.php', 'cek_stok.php', 'katalog.php'];
+$allowed_pages = ['login.php', 'api_files.php', 'proses_upload.php', 'cek_stok.php', 'katalog.php', 'test.php'];
 
 // Izinkan setup.php HANYA jika database belum siap/tabel settings belum ada
 if ($current_page === 'setup.php') {
