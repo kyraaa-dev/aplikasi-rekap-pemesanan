@@ -299,8 +299,20 @@ if ($q_all_orders) {
         </div>
         
         <div class="panel fade-up" style="border: 3px solid #000; box-shadow: 6px 6px 0px #000; border-radius: 8px; margin-top: 1.5rem;">
-            <h2 style="font-weight: 900; text-transform: uppercase;">Selamat Datang di E-MutZ KORPRI</h2>
-            <p style="font-weight: 600; font-size: 1.05rem;">Gunakan menu di samping untuk mengelola Data SKPD, Menginput Pesanan, dan Melihat Rekapitulasi.</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+                <div>
+                    <h2 style="font-weight: 900; text-transform: uppercase; margin: 0 0 4px 0;">Selamat Datang di E-MutZ KORPRI</h2>
+                    <p style="font-weight: 600; font-size: 1rem; color: var(--gray); margin: 0;">Sistem Pengelolaan Rekapitulasi Pemesanan &amp; Ketersediaan Stok Topi Mutz ASN.</p>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <a href="cek_stok.php" target="_blank" class="btn" style="background: #00FFCC; color: #000; font-size: 0.85rem; padding: 8px 14px; text-decoration: none; border: 2px solid #000; box-shadow: 2px 2px 0px #000; font-weight: 800;">
+                        🌐 Buka Katalog Publik ↗
+                    </a>
+                    <a href="pesanan.php" class="btn" style="background: var(--primary); color: #000; font-size: 0.85rem; padding: 8px 14px; text-decoration: none; border: 2px solid #000; box-shadow: 2px 2px 0px #000; font-weight: 800;">
+                        + Input Pesanan
+                    </a>
+                </div>
+            </div>
         </div>
 
         <div class="panel fade-up delay-1" style="border: 3px solid #000; box-shadow: 6px 6px 0px #000; border-radius: 8px; margin-top: 1.5rem;">
@@ -325,8 +337,8 @@ if ($q_all_orders) {
             </div>
         </div>
 
-        <div class="panel fade-up delay-2" style="border: 3px solid #000; box-shadow: 6px 6px 0px #000; border-radius: 8px; margin-top: 1.5rem; background: #FFF;">
-            <h2 style="font-weight: 900; text-transform: uppercase; border-bottom: 4px solid #000; padding-bottom: 0.5rem;">Rincian Pesanan per SKPD</h2>
+        <div class="panel fade-up delay-2" style="border: 3px solid #000; box-shadow: 6px 6px 0px #000; border-radius: 8px; margin-top: 1.5rem;">
+            <h2 style="font-weight: 900; text-transform: uppercase; border-bottom: 4px solid var(--dark); padding-bottom: 0.5rem;">Rincian Pesanan per SKPD</h2>
             <div class="skpd-dashboard-grid">
                 <?php if(!empty($rincian_skpd)): ?>
                     <?php foreach($rincian_skpd as $nama => $details): ?>

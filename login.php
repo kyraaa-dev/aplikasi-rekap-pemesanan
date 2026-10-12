@@ -499,6 +499,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <span>Masuk ke Dashboard</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </button>
+
+                <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 2px dashed var(--gray-light); text-align: center;">
+                    <a href="cek_stok.php" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px; color: var(--text-color); font-weight: 800; font-size: 0.85rem; text-decoration: none; padding: 8px 14px; background: rgba(0, 255, 204, 0.2); border: 2px solid var(--dark); border-radius: 6px; box-shadow: 3px 3px 0px var(--dark); width: 100%; box-sizing: border-box;">
+                        <span>🌐 Cek Stok Mutz yang Ready (Publik) &rarr;</span>
+                    </a>
+                </div>
             </form>
 
             <div class="footer-note">
