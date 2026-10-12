@@ -1653,7 +1653,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             <div class="gov-info-strip">
                 <div class="gov-info-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                    <span>Sekretariat: <strong>Kantor Bupati Banjar, Martapura</strong></span>
+                    <span><strong>Sekretariat KORPRI Kabupaten Banjar Jl. A.Yani Nomor 2 Martapura</strong></span>
                 </div>
                 <div class="gov-info-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
@@ -2242,7 +2242,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             if (nama) msg += `• *Nama Pemesan:* ${nama}\n`;
             if (skpd) msg += `• *Asal SKPD:* ${skpd}\n`;
             
-            msg += `\nMohon informasi kesiapan fisik dan petunjuk pengambilannya di Kantor Bupati Banjar. Terima kasih!`;
+            msg += `\nMohon informasi kesiapan fisik dan petunjuk pengambilannya di Sekretariat KORPRI Kabupaten Banjar Jl. A.Yani Nomor 2 Martapura. Terima kasih!`;
 
             const phone = '<?= $admin_wa_default ?>';
             const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
