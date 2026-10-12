@@ -92,6 +92,7 @@ $admin_wa_default = '6281258902720';
             justify-content: space-between;
             gap: 1rem;
             box-sizing: border-box;
+            transition: all 0.2s ease;
         }
         [data-theme="dark"] .public-navbar {
             background: #18181B;
@@ -104,12 +105,18 @@ $admin_wa_default = '6281258902720';
             gap: 12px;
             text-decoration: none;
             color: inherit;
+            min-width: 0;
         }
         .brand-public img {
             width: 44px;
             height: 44px;
             object-fit: contain;
             border-radius: 6px;
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+        .brand-public:hover img {
+            transform: scale(1.05);
         }
         .brand-text-title {
             font-size: 1.15rem;
@@ -119,6 +126,7 @@ $admin_wa_default = '6281258902720';
             line-height: 1.1;
             margin: 0;
             color: inherit;
+            white-space: nowrap;
         }
         .brand-text-sub {
             font-size: 0.72rem;
@@ -127,12 +135,29 @@ $admin_wa_default = '6281258902720';
             margin: 0;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            white-space: nowrap;
         }
 
         .nav-actions {
             display: flex;
             align-items: center;
             gap: 10px;
+            flex-shrink: 0;
+        }
+        .nav-actions .btn {
+            border-radius: 6px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        .nav-actions .btn:hover {
+            transform: translate(-1px, -1px);
+        }
+        .nav-actions .btn:active {
+            transform: translate(1px, 1px);
+        }
+        .nav-btn-short {
+            display: none;
         }
 
         /* Container Layout */
@@ -144,7 +169,7 @@ $admin_wa_default = '6281258902720';
             box-sizing: border-box;
         }
 
-        /* Hero Section with High-Contrast Card Banner */
+        /* Hero Section */
         .hero-section {
             padding: 2rem 0 1.5rem 0;
             text-align: center;
@@ -158,6 +183,7 @@ $admin_wa_default = '6281258902720';
             padding: 2.25rem 1.75rem 2rem 1.75rem;
             margin-bottom: 2rem;
             text-align: center;
+            transition: box-shadow 0.2s ease;
         }
         [data-theme="dark"] .hero-card-banner {
             background: #18181B;
@@ -195,6 +221,7 @@ $admin_wa_default = '6281258902720';
             display: inline-block;
             box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
             animation: pulse-ring 1.8s infinite;
+            flex-shrink: 0;
         }
         @keyframes pulse-ring {
             0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
@@ -215,16 +242,12 @@ $admin_wa_default = '6281258902720';
         [data-theme="dark"] .hero-title {
             color: #FFFFFF !important;
         }
-        @media (max-width: 640px) {
-            .hero-title { font-size: 1.65rem; }
-            .hero-card-banner { padding: 1.5rem 1rem; }
-        }
 
         .hero-desc {
             font-size: 1.05rem;
             color: #374151;
             max-width: 720px;
-            margin: 0 auto 0 auto;
+            margin: 0 auto;
             line-height: 1.6;
             font-weight: 600;
         }
@@ -250,12 +273,20 @@ $admin_wa_default = '6281258902720';
             align-items: center;
             gap: 14px;
             color: #000;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
         [data-theme="dark"] .stat-banner-box {
             background: #18181B;
             border-color: #FAFAFA;
             box-shadow: 4px 4px 0px #FAFAFA;
             color: #FAFAFA;
+        }
+        .stat-banner-box:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px #000;
+        }
+        [data-theme="dark"] .stat-banner-box:hover {
+            box-shadow: 6px 6px 0px #FAFAFA;
         }
         .stat-banner-icon {
             width: 46px;
@@ -272,9 +303,15 @@ $admin_wa_default = '6281258902720';
             border-color: #FAFAFA;
         }
 
-        /* Category Switcher Tabs */
+        /* Category Switcher Tabs & Filters */
         .category-switcher-wrap {
             margin-bottom: 1.5rem;
+            position: sticky;
+            top: 70px;
+            z-index: 85;
+            background: var(--brutal-bg);
+            padding: 6px 0 10px 0;
+            transition: all 0.2s ease;
         }
         .category-tabs {
             display: grid;
@@ -291,11 +328,6 @@ $admin_wa_default = '6281258902720';
             border-color: #FAFAFA;
             box-shadow: 6px 6px 0px #FAFAFA;
         }
-        @media (max-width: 600px) {
-            .category-tabs {
-                grid-template-columns: 1fr;
-            }
-        }
 
         .tab-btn {
             background: transparent;
@@ -310,6 +342,8 @@ $admin_wa_default = '6281258902720';
             justify-content: space-between;
             gap: 12px;
             color: inherit;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         .tab-btn:hover {
             background: rgba(0, 0, 0, 0.04);
@@ -377,12 +411,6 @@ $admin_wa_default = '6281258902720';
             box-shadow: 6px 6px 0px #F59E0B;
             color: #FAFAFA;
         }
-        @media (max-width: 640px) {
-            .eselon-banner {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
         .eselon-badge-icon {
             width: 60px;
             height: 60px;
@@ -404,7 +432,8 @@ $admin_wa_default = '6281258902720';
             align-items: center;
             justify-content: center;
             gap: 12px;
-            margin-bottom: 2rem;
+            margin-top: 1rem;
+            margin-bottom: 0.85rem;
             flex-wrap: wrap;
         }
         .gender-pill {
@@ -421,6 +450,8 @@ $admin_wa_default = '6281258902720';
             align-items: center;
             gap: 8px;
             transition: transform 0.1s, box-shadow 0.1s;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         [data-theme="dark"] .gender-pill {
             background: #18181B;
@@ -444,6 +475,66 @@ $admin_wa_default = '6281258902720';
             border-color: #000000 !important;
             box-shadow: 2px 2px 0px #000000 !important;
         }
+        .pill-badge {
+            background: rgba(0,0,0,0.12);
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            font-weight: 800;
+        }
+
+        /* Interactive Quick Size Chips */
+        .quick-size-track {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 4px 2px 6px 2px;
+            margin-bottom: 0.5rem;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .quick-size-track::-webkit-scrollbar {
+            display: none;
+        }
+        .size-chip-btn {
+            background: #FFFFFF;
+            color: #000000;
+            border: 2px solid #000000;
+            box-shadow: 2px 2px 0px #000000;
+            border-radius: 999px;
+            padding: 6px 14px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: all 0.15s ease;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        [data-theme="dark"] .size-chip-btn {
+            background: #18181B;
+            color: #FAFAFA;
+            border-color: #FAFAFA;
+            box-shadow: 2px 2px 0px #FAFAFA;
+        }
+        .size-chip-btn:hover {
+            transform: translate(-1px, -1px);
+        }
+        .size-chip-btn.active {
+            background: #000000 !important;
+            color: #FFFFFF !important;
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0px #000000 !important;
+        }
+        [data-theme="dark"] .size-chip-btn.active {
+            background: #00FFCC !important;
+            color: #000000 !important;
+            border-color: #00FFCC !important;
+            box-shadow: 1px 1px 0px #00FFCC !important;
+        }
 
         /* Stock Cards Grid */
         .stock-grid {
@@ -451,6 +542,11 @@ $admin_wa_default = '6281258902720';
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
             margin-bottom: 3.5rem;
+        }
+
+        @keyframes cardPopIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .size-card {
@@ -464,6 +560,7 @@ $admin_wa_default = '6281258902720';
             position: relative;
             transition: transform 0.15s ease, box-shadow 0.15s ease;
             color: #000000;
+            animation: cardPopIn 0.22s ease-out backwards;
         }
         [data-theme="dark"] .size-card {
             background: #18181B;
@@ -584,10 +681,16 @@ $admin_wa_default = '6281258902720';
             justify-content: center;
             gap: 8px;
             transition: all 0.1s;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         .btn-order-wa:hover {
             transform: translate(-1px, -1px);
             box-shadow: 4px 4px 0px #000;
+        }
+        .btn-order-wa:active {
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0px #000;
         }
         .btn-order-wa.ready {
             background: #25D366;
@@ -619,6 +722,10 @@ $admin_wa_default = '6281258902720';
             border-color: #FAFAFA;
             box-shadow: 6px 6px 0px #FAFAFA;
             color: #FAFAFA;
+        }
+
+        .table-scroll-hint {
+            display: none;
         }
 
         .guide-table {
@@ -658,11 +765,6 @@ $admin_wa_default = '6281258902720';
             gap: 18px;
             margin-top: 1.5rem;
         }
-        @media (max-width: 680px) {
-            .comparison-grid {
-                grid-template-columns: 1fr;
-            }
-        }
         .comparison-card {
             border: 2px solid #000000;
             border-radius: 8px;
@@ -690,9 +792,14 @@ $admin_wa_default = '6281258902720';
             justify-content: center;
             padding: 1rem;
             box-sizing: border-box;
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
         }
         .modal-backdrop.active {
             display: flex;
+        }
+        .modal-drag-handle {
+            display: none;
         }
         .modal-card {
             background: #FFFFFF;
@@ -730,11 +837,17 @@ $admin_wa_default = '6281258902720';
             color: #FAFAFA;
         }
 
-        /* Floating WA Assistance Button */
-        .floating-wa-btn {
+        /* Floating Actions Group */
+        .floating-actions-wrap {
             position: fixed;
             bottom: 24px;
             right: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 95;
+        }
+        .floating-wa-btn {
             background: #25D366;
             color: #000000;
             border: 2px solid #000000;
@@ -744,15 +857,388 @@ $admin_wa_default = '6281258902720';
             font-weight: 900;
             font-size: 0.95rem;
             text-decoration: none;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 10px;
-            z-index: 90;
             transition: all 0.15s;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         .floating-wa-btn:hover {
             transform: translate(-2px, -2px);
             box-shadow: 6px 6px 0px #000000;
+        }
+        .floating-wa-btn:active {
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0px #000000;
+        }
+        .btn-scroll-top {
+            display: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            color: #000000;
+            border: 2px solid #000000;
+            box-shadow: 3px 3px 0px #000000;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        [data-theme="dark"] .btn-scroll-top {
+            background: #18181B;
+            color: #FAFAFA;
+            border-color: #FAFAFA;
+            box-shadow: 3px 3px 0px #FAFAFA;
+        }
+        .btn-scroll-top.visible {
+            display: inline-flex;
+        }
+        .btn-scroll-top:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 4px 4px 0px #000000;
+        }
+        .btn-scroll-top:active {
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0px #000000;
+        }
+
+        /* ==========================================================================
+           COMPREHENSIVE MOBILE & TABLET RESPONSIVE RULES (Max Width: 640px)
+           ========================================================================== */
+        @media (max-width: 640px) {
+            /* Top Navbar */
+            .public-navbar {
+                padding: 0.65rem 0.85rem;
+                gap: 0.5rem;
+            }
+            .brand-public {
+                gap: 8px;
+                max-width: calc(100% - 150px);
+            }
+            .brand-public img {
+                width: 36px;
+                height: 36px;
+            }
+            .brand-text-title {
+                font-size: 0.95rem;
+            }
+            .brand-text-sub {
+                font-size: 0.62rem;
+            }
+            .nav-actions {
+                gap: 6px;
+            }
+            .nav-actions .btn {
+                padding: 6px 10px !important;
+                font-size: 0.8rem !important;
+            }
+
+            /* Container */
+            .catalog-container {
+                padding: 0 0.85rem;
+            }
+
+            /* Hero */
+            .hero-section {
+                padding: 1.25rem 0 1rem 0;
+            }
+            .hero-card-banner {
+                padding: 1.25rem 1rem;
+                margin-bottom: 1.25rem;
+                border-radius: 10px;
+                box-shadow: 4px 4px 0px #000000;
+            }
+            [data-theme="dark"] .hero-card-banner {
+                box-shadow: 4px 4px 0px #FAFAFA;
+            }
+            .hero-title {
+                font-size: clamp(1.4rem, 5.5vw, 1.85rem);
+                margin-bottom: 0.65rem;
+                letter-spacing: -0.5px;
+            }
+            .hero-desc {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+            .live-badge {
+                font-size: 0.72rem;
+                padding: 5px 12px;
+                margin-bottom: 0.9rem;
+                max-width: 100%;
+                white-space: normal;
+                line-height: 1.3;
+            }
+
+            /* 2-Tier Compact Mobile Stat Banners */
+            .stat-banner-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+                margin-bottom: 1.5rem;
+            }
+            .stat-banner-box {
+                padding: 10px 12px;
+                gap: 10px;
+                border-radius: 8px;
+                box-shadow: 3px 3px 0px #000;
+            }
+            [data-theme="dark"] .stat-banner-box {
+                box-shadow: 3px 3px 0px #FAFAFA;
+            }
+            .stat-banner-box:first-child {
+                grid-column: 1 / -1;
+            }
+            .stat-banner-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 1.15rem;
+                border-radius: 6px;
+            }
+            .stat-val {
+                font-size: 1.25rem !important;
+            }
+            .stat-lbl {
+                font-size: 0.72rem !important;
+                line-height: 1.2;
+            }
+
+            /* Sticky Category & Filter Controls on Mobile */
+            .category-switcher-wrap {
+                top: 56px;
+                padding: 6px 0 8px 0;
+                margin-left: -0.85rem;
+                margin-right: -0.85rem;
+                padding-left: 0.85rem;
+                padding-right: 0.85rem;
+                background: rgba(253, 251, 247, 0.96);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            }
+            [data-theme="dark"] .category-switcher-wrap {
+                background: rgba(18, 18, 18, 0.96);
+            }
+            .category-tabs {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+                padding: 5px;
+                box-shadow: 4px 4px 0px #000;
+                border-radius: 8px;
+            }
+            [data-theme="dark"] .category-tabs {
+                box-shadow: 4px 4px 0px #FAFAFA;
+            }
+            .tab-btn {
+                padding: 8px 10px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+                border-radius: 6px;
+            }
+            .tab-title {
+                font-size: 0.82rem;
+                gap: 5px;
+            }
+            .tab-sub {
+                display: none;
+            }
+            .tab-price-tag {
+                font-size: 0.72rem;
+                padding: 2px 7px;
+                border-radius: 4px;
+            }
+
+            /* Segmented Gender Pills */
+            .gender-filter-bar {
+                display: flex;
+                gap: 8px;
+                margin-top: 8px;
+                margin-bottom: 8px;
+                width: 100%;
+            }
+            .gender-pill {
+                flex: 1 1 0;
+                justify-content: center;
+                padding: 9px 6px;
+                font-size: 0.85rem;
+                min-height: 42px;
+                box-shadow: 2px 2px 0px #000;
+                border-radius: 6px;
+                white-space: nowrap;
+            }
+            [data-theme="dark"] .gender-pill {
+                box-shadow: 2px 2px 0px #FAFAFA;
+            }
+
+            /* Quick Size Chips on Mobile */
+            .quick-size-track {
+                justify-content: flex-start;
+                padding: 2px 2px 4px 2px;
+                gap: 6px;
+            }
+            .size-chip-btn {
+                padding: 5px 11px;
+                font-size: 0.78rem;
+                box-shadow: 2px 2px 0px #000;
+            }
+
+            /* Eselon Banner */
+            .eselon-banner {
+                flex-direction: column;
+                text-align: center;
+                padding: 16px;
+                gap: 12px;
+            }
+
+            /* Stock Cards */
+            .stock-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+                margin-bottom: 2rem;
+            }
+            .size-card {
+                padding: 16px 14px;
+                box-shadow: 4px 4px 0px #000;
+                border-radius: 8px;
+            }
+            [data-theme="dark"] .size-card {
+                box-shadow: 4px 4px 0px #FAFAFA;
+            }
+            .size-card:active {
+                transform: scale(0.985);
+            }
+            .size-number-badge {
+                font-size: 1.85rem;
+            }
+            .size-sub-info {
+                font-size: 0.8rem;
+            }
+            .stock-qty-wrap {
+                padding: 10px 12px;
+                margin: 10px 0 12px 0;
+            }
+            .qty-number {
+                font-size: 1.85rem;
+            }
+            .btn-order-wa {
+                padding: 12px 14px;
+                font-size: 0.92rem;
+                min-height: 46px;
+            }
+            .btn-order-wa:active {
+                transform: scale(0.97);
+            }
+
+            /* Guide Box & Table */
+            .guide-box {
+                padding: 18px 14px;
+                margin-bottom: 2rem;
+                border-radius: 8px;
+                box-shadow: 4px 4px 0px #000;
+            }
+            [data-theme="dark"] .guide-box {
+                box-shadow: 4px 4px 0px #FAFAFA;
+            }
+            .table-scroll-hint {
+                display: flex !important;
+                align-items: center;
+                gap: 6px;
+                font-size: 0.75rem;
+                font-weight: 700;
+                color: var(--gray);
+                margin-bottom: 8px;
+            }
+            .guide-table th, .guide-table td {
+                padding: 8px 10px;
+                font-size: 0.8rem;
+            }
+
+            /* Comparison Cards */
+            .comparison-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .comparison-card {
+                padding: 14px;
+            }
+
+            /* Bottom Sheet WhatsApp Order Modal */
+            .modal-backdrop {
+                align-items: flex-end;
+                padding: 0;
+            }
+            .modal-drag-handle {
+                display: block;
+                width: 44px;
+                height: 5px;
+                background: #D1D5DB;
+                border-radius: 999px;
+                margin: 0 auto 14px auto;
+            }
+            [data-theme="dark"] .modal-drag-handle {
+                background: #4B5563;
+            }
+            .modal-card {
+                max-width: 100%;
+                border-radius: 20px 20px 0 0;
+                border-bottom: none;
+                max-height: 85vh;
+                overflow-y: auto;
+                padding: 16px 18px calc(24px + env(safe-area-inset-bottom, 0px)) 18px;
+                box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.35);
+                animation: slideUpSheet 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .modal-card input {
+                font-size: 16px !important;
+                padding: 11px 12px !important;
+            }
+
+            /* Floating Actions on Mobile */
+            .floating-actions-wrap {
+                bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+                right: 14px;
+                gap: 8px;
+            }
+            .floating-wa-btn {
+                padding: 10px 15px;
+                font-size: 0.84rem;
+                box-shadow: 3px 3px 0px #000;
+            }
+            .btn-scroll-top {
+                width: 40px;
+                height: 40px;
+                box-shadow: 2.5px 2.5px 0px #000;
+            }
+        }
+
+        @keyframes slideUpSheet {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        @media (max-width: 440px) {
+            .brand-text-sub {
+                display: none;
+            }
+            .nav-btn-text {
+                display: none;
+            }
+            .nav-btn-short {
+                display: inline;
+            }
+            .floating-wa-text {
+                display: none;
+            }
+            .floating-wa-btn {
+                padding: 10px 12px;
+                border-radius: 50%;
+                width: 42px;
+                height: 42px;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -780,16 +1266,18 @@ $admin_wa_default = '6281258902720';
             <!-- Quick Share Link Button -->
             <button onclick="copyKatalogLink()" class="btn" style="padding: 7px 12px; font-size: 0.85rem; background: #00FFCC; color: #000; border: 2px solid #000;" title="Salin Tautan Katalog">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-                <span style="font-weight: 800;">Bagikan</span>
+                <span class="nav-btn-text" style="font-weight: 800;">Bagikan</span>
             </button>
 
             <?php if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true): ?>
                 <a href="index.php" class="btn" style="padding: 7px 14px; font-size: 0.85rem; background: #FFE600; color: #000; border: 2px solid #000; font-weight: 800; text-decoration: none;">
-                    Dashboard &rarr;
+                    <span class="nav-btn-text">Dashboard &rarr;</span>
+                    <span class="nav-btn-short">Admin</span>
                 </a>
             <?php else: ?>
                 <a href="login.php" class="btn" style="padding: 7px 14px; font-size: 0.85rem; background: #FFFFFF; color: #000; border: 2px solid #000; font-weight: 800; text-decoration: none;">
-                    Login Petugas
+                    <span class="nav-btn-text">Login Petugas</span>
+                    <span class="nav-btn-short">Login</span>
                 </a>
             <?php endif; ?>
         </div>
@@ -817,31 +1305,31 @@ $admin_wa_default = '6281258902720';
                 <div class="stat-banner-box">
                     <div class="stat-banner-icon" style="background: #00FFCC; color: #000;">📦</div>
                     <div>
-                        <div style="font-size: 1.5rem; font-weight: 900; line-height: 1.1;"><?= number_format($total_stok_tersedia, 0, ',', '.') ?> Pcs</div>
-                        <div style="font-size: 0.8rem; font-weight: 700; color: var(--gray);">Total Stok di Sekretariat KORPRI</div>
+                        <div class="stat-val" style="font-size: 1.5rem; font-weight: 900; line-height: 1.1;"><?= number_format($total_stok_tersedia, 0, ',', '.') ?> Pcs</div>
+                        <div class="stat-lbl" style="font-size: 0.8rem; font-weight: 700; color: var(--gray);">Total Stok di Sekretariat KORPRI</div>
                     </div>
                 </div>
 
                 <div class="stat-banner-box">
                     <div class="stat-banner-icon" style="background: #60A5FA; color: #000;">🏷️</div>
                     <div>
-                        <div style="font-size: 1.5rem; font-weight: 900; line-height: 1.1;">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></div>
-                        <div style="font-size: 0.8rem; font-weight: 700; color: var(--gray);">Harga Mutz Standar ASN</div>
+                        <div class="stat-val" style="font-size: 1.5rem; font-weight: 900; line-height: 1.1;">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></div>
+                        <div class="stat-lbl" style="font-size: 0.8rem; font-weight: 700; color: var(--gray);">Harga Mutz Standar ASN</div>
                     </div>
                 </div>
 
                 <div class="stat-banner-box">
                     <div class="stat-banner-icon" style="background: #FBBF24; color: #000;">👑</div>
                     <div>
-                        <div style="font-size: 1.5rem; font-weight: 900; line-height: 1.1;">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></div>
-                        <div style="font-size: 0.8rem; font-weight: 700; color: var(--gray);">Harga Mutz Kepala SKPD (Eselon II)</div>
+                        <div class="stat-val" style="font-size: 1.5rem; font-weight: 900; line-height: 1.1;">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></div>
+                        <div class="stat-lbl" style="font-size: 0.8rem; font-weight: 700; color: var(--gray);">Harga Mutz Kepala SKPD (Eselon II)</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Main Category Switcher (Mutz Biasa vs Kepala SKPD) -->
-        <div class="category-switcher-wrap">
+        <!-- Main Category Switcher (Mutz Biasa vs Kepala SKPD) & Mobile Sticky Filter Bar -->
+        <div class="category-switcher-wrap" id="categorySwitcher">
             <div class="category-tabs">
                 <button type="button" class="tab-btn tab-biasa active" id="tabBtnBiasa" onclick="switchCategory('Biasa')">
                     <div>
@@ -863,6 +1351,24 @@ $admin_wa_default = '6281258902720';
                     <div class="tab-price-tag">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></div>
                 </button>
             </div>
+
+            <!-- Gender Selector Pills -->
+            <div class="gender-filter-bar">
+                <button type="button" class="gender-pill active" id="pillPria" onclick="switchGender('Laki-laki')">
+                    <span>👔 Pria (Laki-laki)</span>
+                    <span id="badgeCountPria" class="pill-badge">...</span>
+                </button>
+
+                <button type="button" class="gender-pill" id="pillWanita" onclick="switchGender('Perempuan')">
+                    <span>🧕 Wanita (Perempuan)</span>
+                    <span id="badgeCountWanita" class="pill-badge">...</span>
+                </button>
+            </div>
+
+            <!-- Dynamic Interactive Quick Size Filter Chips -->
+            <div class="quick-size-track" id="quickSizeChips">
+                <!-- Injected dynamically by JavaScript -->
+            </div>
         </div>
 
         <!-- Eselon II Special Info Banner -->
@@ -875,19 +1381,6 @@ $admin_wa_default = '6281258902720';
                     Dirancang khusus dengan <strong>bordir list benang emas tebal</strong> sesuai pedoman resmi seragam KORPRI bagi Pejabat Pimpinan Tinggi Pratama (Eselon II). Tersedia untuk ukuran kepala Pria maupun Wanita.
                 </p>
             </div>
-        </div>
-
-        <!-- Gender Selector Pills -->
-        <div class="gender-filter-bar">
-            <button type="button" class="gender-pill active" id="pillPria" onclick="switchGender('Laki-laki')">
-                <span>👔 Pria (Laki-laki)</span>
-                <span id="badgeCountPria" style="background: rgba(0,0,0,0.12); padding: 2px 7px; border-radius: 4px; font-size: 0.78rem;">...</span>
-            </button>
-
-            <button type="button" class="gender-pill" id="pillWanita" onclick="switchGender('Perempuan')">
-                <span>🧕 Wanita (Perempuan)</span>
-                <span id="badgeCountWanita" style="background: rgba(0,0,0,0.12); padding: 2px 7px; border-radius: 4px; font-size: 0.78rem;">...</span>
-            </button>
         </div>
 
         <!-- Cards Grid Container -->
@@ -910,7 +1403,11 @@ $admin_wa_default = '6281258902720';
                 Nomor ukuran topi mutz sesuai dengan <strong>lingkar kepala dalam satuan sentimeter (cm)</strong>. Gunakan pita meteran jahit melingkari kepala kira-kira 1 cm di atas telinga dan tepat di atas alis.
             </p>
 
-            <div style="overflow-x: auto;">
+            <div class="table-scroll-hint">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                <span>Geser tabel ke samping untuk melihat seluruh nomor (55 - 60)</span>
+            </div>
+            <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
                 <table class="guide-table">
                     <thead>
                         <tr>
@@ -986,12 +1483,13 @@ $admin_wa_default = '6281258902720';
         </section>
     </main>
 
-    <!-- Modal Form WhatsApp Pre-order / Pemesanan -->
+    <!-- Modal Form WhatsApp Pre-order / Pemesanan (Responsive Bottom-Sheet on Mobile) -->
     <div class="modal-backdrop" id="waOrderModal" onclick="closeOrderModal(event)">
         <div class="modal-card" onclick="event.stopPropagation()">
+            <div class="modal-drag-handle"></div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 2px solid var(--dark); padding-bottom: 10px;">
                 <h3 style="margin: 0; font-size: 1.2rem; font-weight: 900; color: inherit;" id="modalTitle">Konfirmasi Pemesanan</h3>
-                <button type="button" onclick="closeOrderModal()" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; font-weight: 900; color: inherit;">&times;</button>
+                <button type="button" onclick="closeOrderModal()" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; font-weight: 900; color: inherit; padding: 0 4px;">&times;</button>
             </div>
 
             <p style="font-size: 0.875rem; color: var(--gray); margin-top: 0; font-weight: 600;" id="modalSubtitle">
@@ -1019,12 +1517,12 @@ $admin_wa_default = '6281258902720';
 
             <div style="margin-bottom: 12px;">
                 <label style="display: block; font-size: 0.8rem; font-weight: 800; margin-bottom: 4px;">Nama Pemesan (Opsional):</label>
-                <input type="text" id="orderNama" placeholder="Contoh: Budi Santoso, S.IP" style="width: 100%; padding: 9px 10px; border: 2px solid var(--dark); border-radius: 4px; font-weight: 600; box-sizing: border-box; background: var(--white); color: var(--dark);">
+                <input type="text" id="orderNama" placeholder="Contoh: Budi Santoso, S.IP" style="width: 100%; border: 2px solid var(--dark); border-radius: 4px; font-weight: 600; box-sizing: border-box; background: var(--white); color: var(--dark);">
             </div>
 
             <div style="margin-bottom: 16px;">
                 <label style="display: block; font-size: 0.8rem; font-weight: 800; margin-bottom: 4px;">Asal Dinas / SKPD (Opsional):</label>
-                <input type="text" id="orderSkpd" placeholder="Contoh: Dinas Pendidikan" style="width: 100%; padding: 9px 10px; border: 2px solid var(--dark); border-radius: 4px; font-weight: 600; box-sizing: border-box; background: var(--white); color: var(--dark);">
+                <input type="text" id="orderSkpd" placeholder="Contoh: Dinas Pendidikan" style="width: 100%; border: 2px solid var(--dark); border-radius: 4px; font-weight: 600; box-sizing: border-box; background: var(--white); color: var(--dark);">
             </div>
 
             <button type="button" onclick="sendWhatsAppOrder()" class="btn" style="width: 100%; background: #25D366; color: #000; font-size: 1rem; justify-content: center; padding: 12px; border: 2px solid #000; box-shadow: 3px 3px 0px #000; font-weight: 800; cursor: pointer;">
@@ -1034,11 +1532,17 @@ $admin_wa_default = '6281258902720';
         </div>
     </div>
 
-    <!-- Floating WhatsApp Assistance Button -->
-    <a href="#" onclick="openGeneralWhatsApp(); return false;" class="floating-wa-btn" title="Hubungi Pengurus / Admin via WhatsApp">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-        <span>Tanya Stok via WA</span>
-    </a>
+    <!-- Floating Actions (WhatsApp + Scroll To Top) -->
+    <div class="floating-actions-wrap">
+        <button type="button" id="btnScrollTop" class="btn-scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Kembali ke atas">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+        </button>
+
+        <a href="#" onclick="openGeneralWhatsApp(); return false;" class="floating-wa-btn" title="Hubungi Pengurus / Admin via WhatsApp">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span class="floating-wa-text">Tanya Stok WA</span>
+        </a>
+    </div>
 
     <!-- Footer -->
     <footer class="public-footer">
@@ -1069,6 +1573,7 @@ $admin_wa_default = '6281258902720';
 
         let currentCategory = 'Biasa'; 
         let currentGender = 'Laki-laki'; 
+        let selectedSizeFilter = null; // null = tampilkan semua ukuran
 
         let selectedOrderData = {
             category: '',
@@ -1105,6 +1610,7 @@ $admin_wa_default = '6281258902720';
         // Switch Category
         function switchCategory(cat) {
             currentCategory = cat;
+            selectedSizeFilter = null; // Reset filter ukuran saat ganti kategori
             
             const tabBiasa = document.getElementById('tabBtnBiasa');
             const tabKepala = document.getElementById('tabBtnKepala');
@@ -1126,6 +1632,7 @@ $admin_wa_default = '6281258902720';
                 if (currentGender === 'Perempuan') pillWanita.classList.add('active-gold');
             }
 
+            renderQuickSizeChips();
             renderStockGrid();
             updateGenderCounts();
         }
@@ -1133,6 +1640,8 @@ $admin_wa_default = '6281258902720';
         // Switch Gender
         function switchGender(gender) {
             currentGender = gender;
+            selectedSizeFilter = null; // Reset filter ukuran saat ganti gender
+
             const pillPria = document.getElementById('pillPria');
             const pillWanita = document.getElementById('pillWanita');
 
@@ -1152,6 +1661,7 @@ $admin_wa_default = '6281258902720';
                 }
             }
 
+            renderQuickSizeChips();
             renderStockGrid();
         }
 
@@ -1170,18 +1680,61 @@ $admin_wa_default = '6281258902720';
             document.getElementById('badgeCountWanita').textContent = totalWanita + ' ready';
         }
 
+        // Render Quick Interactive Size Filter Chips
+        function renderQuickSizeChips() {
+            const track = document.getElementById('quickSizeChips');
+            if (!track) return;
+            track.innerHTML = '';
+
+            const allSizes = (currentGender === 'Laki-laki') ? SIZES_PRIA : SIZES_WANITA;
+            const stockObj = (STOK_DATA[currentCategory] && STOK_DATA[currentCategory][currentGender]) 
+                ? STOK_DATA[currentCategory][currentGender] 
+                : {};
+
+            // Chip 'Semua'
+            const btnAll = document.createElement('button');
+            btnAll.type = 'button';
+            btnAll.className = 'size-chip-btn' + (selectedSizeFilter === null ? ' active' : '');
+            btnAll.textContent = '✨ Semua Ukuran (' + allSizes.length + ')';
+            btnAll.onclick = function() {
+                selectedSizeFilter = null;
+                renderQuickSizeChips();
+                renderStockGrid();
+            };
+            track.appendChild(btnAll);
+
+            // Chips per nomor ukuran
+            allSizes.forEach(sz => {
+                const qty = stockObj[sz] !== undefined ? stockObj[sz] : 0;
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'size-chip-btn' + (selectedSizeFilter === sz ? ' active' : '');
+                btn.textContent = `No. ${sz} (${qty})`;
+                btn.onclick = function() {
+                    selectedSizeFilter = (selectedSizeFilter === sz) ? null : sz;
+                    renderQuickSizeChips();
+                    renderStockGrid();
+                };
+                track.appendChild(btn);
+            });
+        }
+
         function renderStockGrid() {
             const container = document.getElementById('stockGridContainer');
             container.innerHTML = '';
 
-            const sizes = (currentGender === 'Laki-laki') ? SIZES_PRIA : SIZES_WANITA;
+            const allSizes = (currentGender === 'Laki-laki') ? SIZES_PRIA : SIZES_WANITA;
+            const sizes = (selectedSizeFilter !== null && allSizes.includes(selectedSizeFilter))
+                ? [selectedSizeFilter]
+                : allSizes;
+
             const stockObj = (STOK_DATA[currentCategory] && STOK_DATA[currentCategory][currentGender]) 
                 ? STOK_DATA[currentCategory][currentGender] 
                 : {};
 
             const maxStockBaseline = 60;
 
-            sizes.forEach(sz => {
+            sizes.forEach((sz, idx) => {
                 const qty = stockObj[sz] !== undefined ? stockObj[sz] : 0;
                 
                 let statusBadge = '';
@@ -1225,6 +1778,7 @@ $admin_wa_default = '6281258902720';
 
                 const card = document.createElement('div');
                 card.className = 'size-card';
+                card.style.animationDelay = (idx * 0.04) + 's';
                 card.innerHTML = `
                     <div class="card-header-row">
                         <div>
@@ -1271,11 +1825,13 @@ $admin_wa_default = '6281258902720';
             }
 
             document.getElementById('waOrderModal').classList.add('active');
+            document.body.style.overflow = 'hidden'; // Lock background scrolling on mobile
         }
 
         function closeOrderModal(event) {
-            if (!event || event.target.id === 'waOrderModal' || event.target.tagName === 'BUTTON') {
+            if (!event || event.target.id === 'waOrderModal' || event.target.tagName === 'BUTTON' || event.target.closest('button')) {
                 document.getElementById('waOrderModal').classList.remove('active');
+                document.body.style.overflow = '';
             }
         }
 
@@ -1321,10 +1877,23 @@ $admin_wa_default = '6281258902720';
             }
         }
 
+        // Back to top scroll listener
+        window.addEventListener('scroll', function() {
+            const btn = document.getElementById('btnScrollTop');
+            if (btn) {
+                if (window.scrollY > 300) {
+                    btn.classList.add('visible');
+                } else {
+                    btn.classList.remove('visible');
+                }
+            }
+        });
+
         // Initialize on Load
         document.addEventListener('DOMContentLoaded', function() {
             switchCategory('Biasa');
             updateGenderCounts();
+            renderQuickSizeChips();
         });
     </script>
 </body>
