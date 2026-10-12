@@ -1136,20 +1136,52 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             font-weight: 700;
             color: var(--gov-slate);
         }
-        .body-include-pin {
+        .body-pin-banner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 5px 8px;
+            margin-top: 8px;
+            border-radius: 5px;
+            background: rgba(29, 78, 216, 0.06);
+            border: 1px solid rgba(29, 78, 216, 0.16);
+            color: var(--korpri-navy);
+            font-size: 0.76rem;
+            line-height: 1.25;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            transition: var(--transition);
+        }
+        [data-theme="dark"] .body-pin-banner {
+            background: rgba(59, 130, 246, 0.12);
+            border-color: rgba(59, 130, 246, 0.28);
+            color: #BFDBFE;
+        }
+        .body-pin-banner svg {
+            color: var(--korpri-gold);
+            flex-shrink: 0;
+        }
+        .pin-badge-txt {
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            color: var(--korpri-navy);
+            white-space: nowrap;
+        }
+        .pin-prefix {
+            color: var(--gov-muted);
+            font-weight: 500;
+        }
+        [data-theme="dark"] .pin-prefix {
+            color: #94A3B8;
+        }
+        .pin-highlight {
             font-weight: 700;
-            font-size: 0.78rem;
+            color: var(--korpri-blue);
         }
-        [data-theme="dark"] .body-include-pin {
+        [data-theme="dark"] .pin-highlight {
             color: #93C5FD;
-        }
-        .body-include-pin svg {
-            color: var(--korpri-gold);
-            flex-shrink: 0;
         }
 
         /* Card Action Button (Crisp WhatsApp CTA) */
@@ -1836,8 +1868,19 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             .body-value {
                 font-size: 0.76rem;
             }
-            .body-include-pin {
-                font-size: 0.68rem;
+            .body-pin-banner {
+                margin-top: 5px;
+                padding: 4px 4px;
+                font-size: 0.67rem;
+                gap: 4px;
+                border-radius: 4px;
+            }
+            .body-pin-banner svg {
+                width: 11px;
+                height: 11px;
+            }
+            .pin-badge-txt {
+                gap: 3px;
             }
             .btn-order-action {
                 padding: 7px 6px;
@@ -2544,12 +2587,12 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <span class="body-label">Harga Resmi</span>
                             <span class="body-value">Rp ${harga.toLocaleString('id-ID')}</span>
                         </div>
-                        <div class="body-row">
-                            <span class="body-label">Kelengkapan</span>
-                            <span class="body-include-pin">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                                <span class="pin-text-full">Include Pin Kab. Banjar</span>
-                                <span class="pin-text-short">Include Pin</span>
+                        <div class="body-pin-banner">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            <span class="pin-badge-txt">
+                                <span class="pin-prefix">Kelengkapan:</span>
+                                <span class="pin-highlight">Include Pin</span>
+                                <span class="pin-text-full">Kab. Banjar</span>
                             </span>
                         </div>
                     </div>
