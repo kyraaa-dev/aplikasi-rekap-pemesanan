@@ -4,6 +4,17 @@ $uri = urldecode(
     parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
 );
 
+// Direct handler for favicon.ico
+if ($uri === '/favicon.ico') {
+    $ico_source = __DIR__ . '/../assets/images/apple-touch-icon.png';
+    if (file_exists($ico_source)) {
+        header('Content-Type: image/png');
+        header('Cache-Control: public, max-age=86400');
+        readfile($ico_source);
+        exit;
+    }
+}
+
 // If asset slipped through, return false for web server
 if ($uri !== '/' && file_exists(__DIR__ . '/../' . $uri)) {
     return false;

@@ -52,14 +52,18 @@ $sizes_wanita = [58, 59, 60];
 $admin_wa_default = '6281258902720';
 
 // Calculate absolute base URL for Open Graph (WhatsApp, Telegram, Facebook crawlers)
-$is_https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
+$is_https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') 
+    || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)
+    || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+    || (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'vercel.app') !== false);
 $og_protocol = $is_https ? "https://" : "http://";
-$og_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+$og_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'aplikasi-rekap-pemesanan.vercel.app';
 $og_dir = rtrim(str_replace('\\', '/', dirname($_SERVER['PHP_SELF'])), '/');
 $og_dir_encoded = $og_dir ? implode('/', array_map('rawurlencode', explode('/', $og_dir))) : '';
 $og_base_url = $og_protocol . $og_host . ($og_dir_encoded ? $og_dir_encoded : '') . '/';
 
 $og_image_square = $og_base_url . 'assets/images/og-emutz-square.png';
+$og_image_logo   = $og_base_url . 'assets/images/logo.png';
 $og_image_cover  = $og_base_url . 'assets/images/og-emutz-cover.png';
 $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 ?>
@@ -68,21 +72,21 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Katalog Ketersediaan Stok Mutz ASN | Dewan Pengurus KORPRI Kab. Banjar</title>
+    <title>Pemesanan Mutz | Dewan Pengurus KORPRI Kab. Banjar</title>
     
     <!-- Primary SEO Meta Tags -->
-    <meta name="title" content="Katalog Ketersediaan Stok Mutz ASN | Dewan Pengurus KORPRI Kab. Banjar">
-    <meta name="description" content="Katalog resmi & ketersediaan stok fisik topi Mutz ASN Standar dan Kepala SKPD (Eselon II) Dewan Pengurus KORPRI Kabupaten Banjar secara Real-Time.">
-    <meta name="keywords" content="mutz asn, korpri kabupaten banjar, mutz standar, dewan pengurus korpri, martapura, eselon II, stok topi asn">
+    <meta name="title" content="Pemesanan Mutz | Dewan Pengurus KORPRI Kab. Banjar">
+    <meta name="description" content="Layanan resmi pemesanan & katalog ketersediaan stok fisik topi Mutz ASN Standar dan Kepala SKPD (Eselon II) Dewan Pengurus KORPRI Kabupaten Banjar secara Real-Time.">
+    <meta name="keywords" content="pemesanan mutz, mutz asn, korpri kabupaten banjar, mutz standar, dewan pengurus korpri, martapura, eselon II, stok topi asn">
     <meta name="author" content="Dewan Pengurus KORPRI Kabupaten Banjar">
     <meta name="theme-color" content="#0B1E3B">
 
     <!-- Open Graph / WhatsApp / Facebook Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="<?= htmlspecialchars($og_page_url) ?>">
-    <meta property="og:title" content="Katalog & Stok Mutz ASN | Dewan Pengurus KORPRI Kab. Banjar">
-    <meta property="og:description" content="Informasi stok Mutz Standar ASN & Kepala SKPD Dewan Pengurus KORPRI Kab. Banjar secara Real-Time. Cek ukuran lingkar kepala & pesan via WhatsApp.">
-    <meta property="og:site_name" content="Dewan Pengurus KORPRI Kabupaten Banjar">
+    <meta property="og:title" content="Pemesanan Mutz | Dewan Pengurus KORPRI Kab. Banjar">
+    <meta property="og:description" content="Layanan resmi pemesanan topi Mutz Standar ASN & Kepala SKPD Dewan Pengurus KORPRI Kab. Banjar. Cek ketersediaan ukuran lingkar kepala & pesan langsung.">
+    <meta property="og:site_name" content="Pemesanan Mutz ASN - KORPRI Kabupaten Banjar">
     <meta property="og:locale" content="id_ID">
     
     <!-- WhatsApp Chat Thumbnail (Square 1:1) -->
@@ -91,7 +95,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="600">
     <meta property="og:image:height" content="600">
-    <meta property="og:image:alt" content="Logo Dewan Pengurus KORPRI Kabupaten Banjar">
+    <meta property="og:image:alt" content="Logo Pemesanan Mutz KORPRI Kabupaten Banjar">
 
     <!-- Large Social Media Card (1200x630) -->
     <meta property="og:image" content="<?= htmlspecialchars($og_image_cover) ?>">
@@ -99,16 +103,17 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Katalog Stok Mutz ASN KORPRI Kabupaten Banjar">
+    <meta property="og:image:alt" content="Pemesanan Mutz ASN KORPRI Kabupaten Banjar">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="<?= htmlspecialchars($og_page_url) ?>">
-    <meta name="twitter:title" content="Katalog & Stok Mutz ASN | Dewan Pengurus KORPRI Kab. Banjar">
-    <meta name="twitter:description" content="Informasi stok Mutz Standar ASN & Kepala SKPD Dewan Pengurus KORPRI Kab. Banjar secara Real-Time.">
+    <meta name="twitter:title" content="Pemesanan Mutz | Dewan Pengurus KORPRI Kab. Banjar">
+    <meta name="twitter:description" content="Layanan resmi pemesanan topi Mutz Standar ASN & Kepala SKPD Dewan Pengurus KORPRI Kab. Banjar.">
     <meta name="twitter:image" content="<?= htmlspecialchars($og_image_cover) ?>">
 
     <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <link rel="shortcut icon" type="image/png" href="assets/images/logo.png">
     <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
