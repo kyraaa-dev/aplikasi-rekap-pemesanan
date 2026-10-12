@@ -1171,6 +1171,35 @@ $admin_wa_default = '6281258902720';
             background: var(--korpri-gold-gradient);
         }
 
+        .badge-include-pin {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.74rem;
+            font-weight: 800;
+            color: var(--primary);
+            background: rgba(37, 99, 235, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.22);
+            padding: 3px 9px;
+            border-radius: var(--radius-full);
+            letter-spacing: -0.01em;
+        }
+        .badge-include-pin.gold {
+            color: #B45309;
+            background: rgba(245, 158, 11, 0.12);
+            border-color: rgba(217, 119, 6, 0.28);
+        }
+        [data-theme="dark"] .badge-include-pin {
+            color: #93C5FD;
+            background: rgba(37, 99, 235, 0.2);
+            border-color: rgba(59, 130, 246, 0.35);
+        }
+        [data-theme="dark"] .badge-include-pin.gold {
+            color: #FDE68A;
+            background: rgba(245, 158, 11, 0.18);
+            border-color: rgba(245, 158, 11, 0.35);
+        }
+
         /* ==========================================================================
            MODAL DIALOG & RESPONSIVE BOTTOM-SHEET
            ========================================================================== */
@@ -1495,82 +1524,86 @@ $admin_wa_default = '6281258902720';
             }
 
             .catalog-container {
-                padding: 0 1rem;
+                padding: 0 0.85rem;
             }
 
             .hero-section {
-                padding: 1.5rem 0 1rem 0;
+                padding: 1.25rem 0 0.75rem 0;
             }
             .hero-card-banner {
-                padding: 1.5rem 1.15rem;
-                border-radius: var(--radius-lg);
-                margin-bottom: 1.5rem;
+                padding: 1.25rem 1rem;
+                border-radius: 20px;
+                margin-bottom: 1.25rem;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
             }
             .institution-ribbon {
-                padding: 5px 12px;
-                margin-bottom: 1rem;
+                padding: 4px 11px;
+                margin-bottom: 0.85rem;
             }
             .ribbon-text-main {
-                font-size: 0.74rem;
+                font-size: 0.72rem;
             }
             .ribbon-text-sub {
                 display: none;
             }
             .hero-title {
-                font-size: 1.45rem;
-                margin-bottom: 0.65rem;
+                font-size: 1.4rem;
+                margin-bottom: 0.5rem;
             }
             .hero-desc {
-                font-size: 0.88rem;
-                line-height: 1.5;
+                font-size: 0.84rem;
+                line-height: 1.45;
             }
 
-            /* Stat cards on mobile */
+            /* Stat cards on mobile - Sleek & Minimalist */
             .stat-banner-row {
                 grid-template-columns: 1fr 1fr;
-                gap: 10px;
-                margin-bottom: 1.5rem;
+                gap: 8px;
+                margin-bottom: 1.25rem;
             }
             .stat-banner-box:first-child {
                 grid-column: 1 / -1;
             }
             .stat-banner-box {
-                padding: 12px 14px;
-                gap: 12px;
-                border-radius: var(--radius-md);
+                padding: 10px 12px;
+                gap: 10px;
+                border-radius: 14px;
             }
             .stat-banner-icon {
-                width: 42px;
-                height: 42px;
-                font-size: 1.25rem;
-                border-radius: 12px;
+                width: 38px;
+                height: 38px;
+                font-size: 1.15rem;
+                border-radius: 10px;
             }
             .stat-val {
-                font-size: 1.2rem;
+                font-size: 1.15rem;
+                font-weight: 800;
             }
             .stat-lbl {
-                font-size: 0.74rem;
+                font-size: 0.71rem;
             }
 
-            /* Sticky Tab Controls on Mobile */
+            /* Sticky Tab Controls on Mobile - Ultra Minimalist */
             .category-switcher-wrap {
-                top: 50px;
-                padding: 8px 1rem 10px 1rem;
-                margin-left: -1rem;
-                margin-right: -1rem;
+                top: 48px;
+                padding: 6px 0.85rem 8px 0.85rem;
+                margin-left: -0.85rem;
+                margin-right: -0.85rem;
             }
             .category-tabs-container {
                 gap: 6px;
-                padding: 6px;
+                padding: 4px;
+                border-radius: 16px;
             }
             .tab-btn {
-                padding: 10px 10px;
+                padding: 8px 10px;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 4px;
+                gap: 3px;
+                border-radius: 12px;
             }
             .tab-title {
-                font-size: 0.88rem;
+                font-size: 0.84rem;
             }
             .tab-title-full {
                 display: none;
@@ -1582,15 +1615,21 @@ $admin_wa_default = '6281258902720';
                 display: none;
             }
             .tab-price-tag {
-                padding: 3px 8px;
-                font-size: 0.74rem;
+                padding: 2px 7px;
+                font-size: 0.71rem;
                 align-self: flex-start;
+                border-radius: var(--radius-full);
             }
 
-            /* Gender Pills on Mobile */
+            /* Gender Pills on Mobile - Clean Capsule */
+            .gender-filter-bar {
+                margin: 8px 0 10px 0;
+                gap: 8px;
+            }
             .gender-pill {
-                padding: 8px 16px;
-                font-size: 0.84rem;
+                padding: 7px 15px;
+                font-size: 0.82rem;
+                border-radius: var(--radius-full);
             }
             .pill-label-full {
                 display: none;
@@ -1599,24 +1638,38 @@ $admin_wa_default = '6281258902720';
                 display: inline;
             }
 
-            /* Stock Cards on Mobile */
+            /* Stock Cards on Mobile - Modern Clean Card */
             .stock-grid {
                 grid-template-columns: 1fr;
-                gap: 14px;
-                margin-bottom: 2.5rem;
+                gap: 11px;
+                margin-bottom: 2rem;
             }
             .size-card {
-                padding: 18px 16px;
-                border-radius: var(--radius-md);
+                padding: 14px 14px 15px 14px;
+                border-radius: 18px;
             }
             .size-number-badge {
-                font-size: 1.85rem;
+                font-size: 1.7rem;
+            }
+            .btn-order-wa {
+                padding: 11px 14px;
+                font-size: 0.88rem;
+                border-radius: 12px;
             }
 
-            /* Comparison Grid on Mobile */
+            /* Guide & Comparison Grid on Mobile */
+            .guide-box {
+                padding: 16px 14px;
+                border-radius: 18px;
+                margin-bottom: 2.25rem;
+            }
             .comparison-grid {
                 grid-template-columns: 1fr;
-                gap: 12px;
+                gap: 10px;
+            }
+            .comparison-card {
+                padding: 16px 14px;
+                border-radius: 18px;
             }
 
             /* Mobile Bottom Sheet Modal */
@@ -1980,8 +2033,8 @@ $admin_wa_default = '6281258902720';
             <!-- Gender Selector Pills -->
             <div class="gender-filter-bar">
                 <button type="button" class="gender-pill active" id="pillPria" onclick="switchGender('Laki-laki')">
-                    <span class="pill-label-full">👔 Pria (Laki-laki)</span>
-                    <span class="pill-label-short">👔 Pria</span>
+                    <span class="pill-label-full">👨 Pria (Laki-laki)</span>
+                    <span class="pill-label-short">👨 Pria</span>
                     <span id="badgeCountPria" class="pill-badge">...</span>
                 </button>
 
@@ -2080,29 +2133,37 @@ $admin_wa_default = '6281258902720';
                 </div>
             </div>
 
-            <!-- Comparison Table: Biasa vs Kepala SKPD -->
+            <!-- Comparison Table: Biasa dan Kepala SKPD -->
             <div style="margin-top: 2.25rem;" id="spesifikasi">
                 <h4 style="margin: 0 0 10px 0; font-size: 1.15rem; font-weight: 800; color: var(--text-main);">
-                    ⚖️ Perbedaan Mutz Biasa vs Kepala SKPD (Eselon II)
+                    ⚖️ Perbedaan Mutz Biasa dan Kepala SKPD (Eselon II)
                 </h4>
                 
                 <div class="comparison-grid">
                     <div class="comparison-card card-standar">
-                        <div style="font-size: 0.8rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.03em;">Standar ASN</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px;">
+                            <div style="font-size: 0.8rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.03em;">Standar ASN</div>
+                            <span class="badge-include-pin">📌 Include Pin Kab. Banjar</span>
+                        </div>
                         <h5 style="margin: 4px 0 8px 0; font-size: 1.1rem; font-weight: 800; color: var(--text-main);">Mutz Reguler (Biasa)</h5>
                         <ul style="padding-left: 18px; margin: 0; font-size: 0.875rem; line-height: 1.6; font-weight: 500; color: var(--text-muted);">
                             <li>Diperuntukkan bagi seluruh ASN (PNS dan PPPK).</li>
+                            <li><strong>Sudah termasuk (include) Pin Lambang Kabupaten Banjar</strong>.</li>
                             <li>Harga resmi: <strong style="color: var(--text-main);">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></strong>.</li>
                         </ul>
                     </div>
 
                     <div class="comparison-card card-eselon">
-                        <div style="font-size: 0.8rem; font-weight: 800; color: var(--korpri-gold); text-transform: uppercase; letter-spacing: 0.03em;">Pejabat Eselon II</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px;">
+                            <div style="font-size: 0.8rem; font-weight: 800; color: var(--korpri-gold); text-transform: uppercase; letter-spacing: 0.03em;">Pejabat Eselon II</div>
+                            <span class="badge-include-pin gold">📌 Include Pin Kab. Banjar</span>
+                        </div>
                         <h5 style="margin: 4px 0 8px 0; font-size: 1.1rem; font-weight: 800; color: var(--text-main);">Mutz Kepala SKPD</h5>
                         <ul style="padding-left: 18px; margin: 0; font-size: 0.875rem; line-height: 1.6; font-weight: 500; color: var(--text-muted);">
                             <li>Khusus Kepala Dinas, Kepala Badan, Asisten Sekda, Staf Ahli &amp; Sekda.</li>
                             <li>Bahan eksklusif premium dengan ketahanan bentuk lebih kokoh.</li>
                             <li>Aksen <strong style="color: var(--text-main);">Bordir List Benang Emas Tebal</strong> di sekeliling mutz.</li>
+                            <li><strong>Sudah termasuk (include) Pin Lambang Kabupaten Banjar</strong>.</li>
                             <li>Harga resmi: <strong style="color: var(--text-main);">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></strong>.</li>
                         </ul>
                     </div>
