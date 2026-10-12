@@ -2064,7 +2064,7 @@ $admin_wa_default = '6281258902720';
                                 Kepala SKPD
                             </span>
                         </div>
-                        <div class="tab-sub">Ready &amp; Buka Pre-Order (Eselon II)</div>
+                        <div class="tab-sub">Ready Stock (Eselon II)</div>
                     </div>
                     <div class="tab-price-tag">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></div>
                 </button>
@@ -2110,7 +2110,7 @@ $admin_wa_default = '6281258902720';
             </div>
             <div style="flex: 1; min-width: 0;">
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px;">
-                    <span style="font-size: 0.74rem; font-weight: 800; background: rgba(16, 185, 129, 0.15); color: #047857; padding: 2px 8px; border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: 0.03em;">Ready &amp; Buka Pre-Order</span>
+                    <span style="font-size: 0.74rem; font-weight: 800; background: rgba(16, 185, 129, 0.15); color: #047857; padding: 2px 8px; border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: 0.03em;">Ready Stock</span>
                     <span style="font-size: 0.74rem; font-weight: 800; background: rgba(217, 119, 6, 0.15); color: #B45309; padding: 2px 8px; border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: 0.03em;">Eksklusif Eselon II</span>
                     <span style="font-size: 0.75rem; font-weight: 700; color: #92400E;">Bordir List Benang Emas</span>
                 </div>
@@ -2118,7 +2118,7 @@ $admin_wa_default = '6281258902720';
                     Spesifikasi Mutz Kepala Dinas / Badan / Asisten
                 </h3>
                 <p style="margin: 0; font-size: 0.85rem; font-weight: 500; opacity: 0.9; line-height: 1.45;">
-                    Dirancang khusus dengan bordir list benang emas tebal resmi KORPRI bagi Pejabat Pimpinan Tinggi Pratama. Melayani pemesanan langsung &amp; Pre-Order resmi seluruh ukuran.
+                    Dirancang khusus dengan bordir list benang emas tebal resmi KORPRI bagi Pejabat Pimpinan Tinggi Pratama. Seluruh ukuran siap dipesan.
                 </p>
             </div>
         </div>
@@ -2468,8 +2468,8 @@ $admin_wa_default = '6281258902720';
             for (let sz in wanitaObj) { totalWanita += (wanitaObj[sz] || 0); }
 
             if (currentCategory === 'Kepala SKPD') {
-                document.getElementById('badgeCountPria').textContent = totalPria > 0 ? (totalPria + ' ready') : 'Buka Pre-Order';
-                document.getElementById('badgeCountWanita').textContent = totalWanita > 0 ? (totalWanita + ' ready') : 'Buka Pre-Order';
+                document.getElementById('badgeCountPria').textContent = totalPria > 0 ? (totalPria + ' ready') : 'Ready';
+                document.getElementById('badgeCountWanita').textContent = totalWanita > 0 ? (totalWanita + ' ready') : 'Ready';
             } else {
                 document.getElementById('badgeCountPria').textContent = totalPria > 0 ? (totalPria + ' ready') : 'Pre-Order';
                 document.getElementById('badgeCountWanita').textContent = totalWanita > 0 ? (totalWanita + ' ready') : 'Pre-Order';
@@ -2538,7 +2538,18 @@ $admin_wa_default = '6281258902720';
                 let barColor = '#10B981';
                 let btnHtml = '';
 
-                if (qty > 5) {
+                if (currentCategory === 'Kepala SKPD') {
+                    // Kepala SKPD: Selalu Ready
+                    statusBadge = '<span class="status-badge badge-ready"><span class="status-dot green"></span> Ready</span>';
+                    statusText = 'Ready';
+                    barColor = 'linear-gradient(90deg, #10B981, #059669)';
+                    btnHtml = `
+                        <button type="button" class="btn-order-wa ready" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, ${qty > 0 ? qty : 1})">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                            Pesan Ukuran ${sz} via WA
+                        </button>
+                    `;
+                } else if (qty > 5) {
                     statusBadge = '<span class="status-badge badge-ready"><span class="status-dot green"></span> Ready Stock</span>';
                     statusText = 'Tersedia';
                     barColor = 'linear-gradient(90deg, #10B981, #059669)';
@@ -2558,17 +2569,6 @@ $admin_wa_default = '6281258902720';
                             Ambil Sisa ${qty} Pcs
                         </button>
                     `;
-                } else if (currentCategory === 'Kepala SKPD') {
-                    // Kepala SKPD: Ready Buka Pre-Order
-                    statusBadge = '<span class="status-badge badge-preorder-gold"><span class="status-dot yellow"></span> Buka Pre-Order</span>';
-                    statusText = 'Ready Pre-Order';
-                    barColor = 'linear-gradient(90deg, #F59E0B, #D97706)';
-                    btnHtml = `
-                        <button type="button" class="btn-order-wa ready-gold" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, 0)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                            Pre-Order Ukuran ${sz} via WA
-                        </button>
-                    `;
                 } else {
                     statusBadge = '<span class="status-badge badge-empty"><span class="status-dot red"></span> Stok Habis</span>';
                     statusText = 'Habis';
@@ -2581,19 +2581,19 @@ $admin_wa_default = '6281258902720';
                     `;
                 }
 
-                const isKepalaPreOrder = (currentCategory === 'Kepala SKPD' && qty === 0);
-                const percent = isKepalaPreOrder ? 100 : Math.min(100, Math.round((qty / maxStockBaseline) * 100));
+                const isKepala = (currentCategory === 'Kepala SKPD');
+                const percent = isKepala ? 100 : Math.min(100, Math.round((qty / maxStockBaseline) * 100));
 
-                const qtyNumberHtml = isKepalaPreOrder
-                    ? `<div class="qty-number" style="color: #D97706; font-size: 1.55rem; padding-top: 4px; padding-bottom: 4px;">Ready <span style="font-size: 1rem; font-weight: 700;">Pre-Order</span></div>`
-                    : `<div class="qty-number" style="color: ${qty > 0 ? (qty <= 5 ? '#D97706' : '#059669') : '#DC2626'};">${qty} <span style="font-size: 1.1rem; font-weight: 700;">pcs</span></div>`;
+                const qtyNumberHtml = isKepala && qty === 0
+                    ? `<div class="qty-number" style="color: #059669; font-size: 1.85rem; padding-top: 2px; padding-bottom: 2px;">Ready <span style="font-size: 1.1rem; font-weight: 700;">Stock</span></div>`
+                    : `<div class="qty-number" style="color: ${qty > 0 || isKepala ? (qty <= 5 && !isKepala ? '#D97706' : '#059669') : '#DC2626'};">${qty > 0 ? qty : (isKepala ? 'Ready' : 0)} <span style="font-size: 1.1rem; font-weight: 700;">${qty > 0 ? 'pcs' : ''}</span></div>`;
 
-                const qtyLabelText = isKepalaPreOrder
-                    ? 'Buka Pre-Order Resmi di Sekretariat KORPRI'
+                const qtyLabelText = isKepala
+                    ? 'Ready di Sekretariat KORPRI'
                     : `${statusText} di Sekretariat KORPRI`;
 
-                const subtextInfo = (currentCategory === 'Kepala SKPD')
-                    ? `Eselon II (Bordir List Emas) &bull; Ready &amp; Buka Pre-Order &bull; ${currentGender}`
+                const subtextInfo = isKepala
+                    ? `Eselon II (Bordir List Emas) &bull; Ready &bull; ${currentGender}`
                     : `Standar Mutz ASN KORPRI &bull; ${currentGender}`;
 
                 const card = document.createElement('div');
@@ -2636,12 +2636,9 @@ $admin_wa_default = '6281258902720';
             document.getElementById('modalSize').textContent = 'Nomor ' + size + ' (Lingkar ~' + size + ' cm)';
             
             const statusElem = document.getElementById('modalStockStatus');
-            if (stock > 0) {
-                statusElem.textContent = 'Ready (' + stock + ' pcs tersedia)';
+            if (category === 'Kepala SKPD' || stock > 0) {
+                statusElem.textContent = 'Ready (Tersedia)';
                 statusElem.style.color = '#059669';
-            } else if (category === 'Kepala SKPD') {
-                statusElem.textContent = 'Ready Buka Pre-Order (Siap Dipesan via WA)';
-                statusElem.style.color = '#D97706';
             } else {
                 statusElem.textContent = 'Habis (Diteruskan sebagai Pre-Order)';
                 statusElem.style.color = '#DC2626';
@@ -2663,9 +2660,9 @@ $admin_wa_default = '6281258902720';
             const skpd = document.getElementById('orderSkpd').value.trim();
 
             const catText = selectedOrderData.category === 'Kepala SKPD' ? 'Mutz Kepala SKPD (Eselon II)' : 'Mutz Standar ASN (Biasa)';
-            const statusPesanan = (selectedOrderData.category === 'Kepala SKPD' && selectedOrderData.stock === 0)
-                ? 'Pre-Order Resmi Mutz Kepala SKPD'
-                : (selectedOrderData.stock > 0 ? 'Pemesanan Ready Stock' : 'Permintaan Pre-Order (Stok Habis)');
+            const statusPesanan = (selectedOrderData.category === 'Kepala SKPD' || selectedOrderData.stock > 0)
+                ? 'Pemesanan Ready Stock'
+                : 'Permintaan Pre-Order (Stok Habis)';
 
             let msg = `Halo Admin E-MutZ KORPRI,\n\n`;
             msg += `Saya ingin melakukan *${statusPesanan}* dengan rincian berikut:\n`;
