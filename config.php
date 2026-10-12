@@ -92,6 +92,11 @@ if (!empty($db_url) && $parsed = parse_url($db_url)) {
     $pass = get_env_var(['DB_PASS', 'DB_PASSWORD', 'DATABASE_PASSWORD', 'MYSQL_PASSWORD'], '');
     $db   = get_env_var(['DB_NAME', 'DB_DATABASE', 'DATABASE_NAME', 'MYSQL_DATABASE', 'TIDB_DATABASE_NAME'], 'rekap_mutz_asn');
     $port = (int)get_env_var(['DB_PORT', 'DATABASE_PORT', 'MYSQL_PORT', 'TIDB_PORT'], '3306');
+
+    // Jika terhubung ke Cloud (TiDB) dan DB_NAME bernilai 'sys' (katalog internal MySQL), otomatis arahkan ke database 'test'
+    if ($host !== 'localhost' && $host !== '127.0.0.1' && ($db === 'sys' || empty($db))) {
+        $db = 'test';
+    }
 }
 
 // Cek apakah berjalan di Vercel tapi env DB_HOST belum terdeteksi
@@ -147,6 +152,18 @@ try {
 } catch (Throwable $e) {
     $connected = false;
     $conn_error_msg = $e->getMessage();
+}
+
+if ($connected && $conn) {
+    // Pastikan database yang aktif memiliki tabel aplikasi
+    $chk_tbl = @$conn->query("SHOW TABLES LIKE 'stok_mutz'");
+    if (!$chk_tbl || $chk_tbl->num_rows === 0) {
+        $chk_test = @$conn->query("SHOW TABLES FROM test LIKE 'stok_mutz'");
+        if ($chk_test && $chk_test->num_rows > 0) {
+            @$conn->select_db('test');
+            $db = 'test';
+        }
+    }
 }
 
 if (!$connected || $conn->connect_error) {
@@ -259,7 +276,7 @@ if ((!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) &&
 }
 
 $current_page = basename($_SERVER['PHP_SELF'] ?? '');
-$allowed_pages = ['login.php', 'api_files.php', 'proses_upload.php', 'cek_stok.php', 'katalog.php', 'test.php'];
+$allowed_pages = ['login.php', 'api_files.php', 'proses_upload.php', 'cek_stok.php', 'katalog.php'];
 
 // Izinkan setup.php HANYA jika database belum siap/tabel settings belum ada
 if ($current_page === 'setup.php') {
