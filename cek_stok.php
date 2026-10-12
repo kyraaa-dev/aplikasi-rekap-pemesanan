@@ -169,7 +169,7 @@ $admin_wa_default = '6281258902720';
             height: 100vh;
             background-image: url('assets/images/bg-bupati-new.jpg');
             background-size: cover;
-            background-position: center 25%;
+            background-position: center 20%;
             background-repeat: no-repeat;
             z-index: -3;
             transform: scale(1.02);
@@ -186,18 +186,18 @@ $admin_wa_default = '6281258902720';
             height: 100vh;
             z-index: -2;
             pointer-events: none;
-            /* Light mode frosted overlay: crystal clear legibility with rich executive tint */
-            background: radial-gradient(circle at 50% 15%, rgba(248, 250, 252, 0.82) 0%, rgba(241, 245, 249, 0.94) 100%);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            /* Light mode frosted overlay: clear architectural view with executive frosted tint */
+            background: radial-gradient(circle at 50% 12%, rgba(248, 250, 252, 0.76) 0%, rgba(241, 245, 249, 0.90) 100%);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             transition: background 0.3s ease;
         }
 
         [data-theme="dark"] .public-bg-overlay {
             /* Dark mode frosted overlay: deep executive midnight glass */
-            background: radial-gradient(circle at 50% 15%, rgba(15, 23, 42, 0.82) 0%, rgba(10, 14, 26, 0.95) 100%);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: radial-gradient(circle at 50% 12%, rgba(15, 23, 42, 0.78) 0%, rgba(9, 13, 22, 0.92) 100%);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
         }
 
         /* Glass Surface Utility */
@@ -510,9 +510,17 @@ $admin_wa_default = '6281258902720';
            ========================================================================== */
         .stat-banner-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 16px;
             margin-bottom: 2rem;
+        }
+        @media (max-width: 840px) {
+            .stat-banner-row {
+                grid-template-columns: 1fr 1fr;
+            }
+            .stat-banner-box:first-child {
+                grid-column: 1 / -1;
+            }
         }
 
         .stat-banner-box {
@@ -578,13 +586,25 @@ $admin_wa_default = '6281258902720';
         .category-switcher-wrap {
             margin-bottom: 2rem;
             position: sticky;
-            top: 70px;
+            top: 62px;
             z-index: 85;
-            padding: 10px 0 14px 0;
+            padding: 12px 1.5rem 14px 1.5rem;
+            margin-left: -1.5rem;
+            margin-right: -1.5rem;
+            background: rgba(248, 250, 252, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
             transition: var(--transition-smooth);
+        }
+        [data-theme="dark"] .category-switcher-wrap {
+            background: rgba(9, 13, 22, 0.88);
+            border-bottom-color: rgba(255, 255, 255, 0.08);
         }
 
         .category-tabs-container {
+            max-width: 1100px;
+            margin: 0 auto;
             background: var(--glass-card);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -773,13 +793,18 @@ $admin_wa_default = '6281258902720';
         .quick-size-track {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 8px;
             overflow-x: auto;
-            padding: 4px 4px 6px 4px;
+            padding: 6px 4px;
             margin-bottom: 0.5rem;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
+        }
+        @media (min-width: 641px) {
+            .quick-size-track {
+                justify-content: center;
+            }
         }
         .quick-size-track::-webkit-scrollbar {
             display: none;
@@ -869,9 +894,14 @@ $admin_wa_default = '6281258902720';
            ========================================================================== */
         .stock-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 22px;
             margin-bottom: 3.5rem;
+        }
+        @media (max-width: 960px) {
+            .stock-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @keyframes cardPopIn {
@@ -1384,8 +1414,10 @@ $admin_wa_default = '6281258902720';
 
             /* Sticky Tab Controls on Mobile */
             .category-switcher-wrap {
-                top: 52px;
-                padding: 6px 0 10px 0;
+                top: 50px;
+                padding: 8px 1rem 10px 1rem;
+                margin-left: -1rem;
+                margin-right: -1rem;
             }
             .category-tabs-container {
                 gap: 6px;
