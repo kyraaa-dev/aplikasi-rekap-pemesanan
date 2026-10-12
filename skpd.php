@@ -45,6 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['quick_update_wa'])) {
 
 // Delete
 if (isset($_GET['del'])) {
+    $csrf = $_GET['csrf_token'] ?? '';
+    if (!verify_csrf_token($csrf)) {
+        header("Location: skpd.php?error_msg=" . urlencode("Token keamanan CSRF tidak valid. Silakan muat ulang halaman."));
+        exit;
+    }
     $id = (int)$_GET['del'];
     $stmt_del = $conn->prepare("DELETE FROM skpd WHERE id = ?");
     if ($stmt_del) {
@@ -210,7 +215,7 @@ $skpds = $conn->query("
                                         </button>
                                     <?php endif; ?>
                                     <a href="edit_skpd.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-secondary" style="padding: 5px 10px; font-size: 0.8rem; border-radius: 6px;">Edit</a>
-                                    <a href="skpd.php?del=<?= $row['id'] ?>" class="btn btn-sm btn-danger btn-confirm" data-confirm-title="Hapus SKPD" data-confirm-text="Hapus SKPD ini? Semua pesanan dari SKPD ini akan ikut terhapus secara permanen!" data-confirm-btn="Ya, Hapus" data-confirm-color="#EF4444" style="padding: 5px 10px; font-size: 0.8rem; border-radius: 6px;">Hapus</a>
+                                    <a href="skpd.php?del=<?= $row['id'] ?>&csrf_token=<?= generate_csrf_token() ?>" class="btn btn-sm btn-danger btn-confirm" data-confirm-title="Hapus SKPD" data-confirm-text="Hapus SKPD ini? Semua pesanan dari SKPD ini akan ikut terhapus secara permanen!" data-confirm-btn="Ya, Hapus" data-confirm-color="#EF4444" style="padding: 5px 10px; font-size: 0.8rem; border-radius: 6px;">Hapus</a>
                                 </div>
                             </td>
                         </tr>

@@ -18,6 +18,14 @@ $start_date = $_GET['start_date'] ?? '';
 $end_date = $_GET['end_date'] ?? '';
 $status_filter = $_GET['status_filter'] ?? '';
 
+// Validasi format tanggal YYYY-MM-DD
+if (!empty($start_date) && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $start_date)) {
+    $start_date = '';
+}
+if (!empty($end_date) && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $end_date)) {
+    $end_date = '';
+}
+
 $where = [];
 if (!empty($start_date) && !empty($end_date)) {
     $where[] = "created_at >= '$start_date 00:00:00' AND created_at <= '$end_date 23:59:59'";

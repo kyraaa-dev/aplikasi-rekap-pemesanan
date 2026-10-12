@@ -3,9 +3,19 @@ require 'config.php';
 
 // Bulk Action: Tandai Semua Pesanan SKPD Sudah Diambil
 if (isset($_GET['ambil_semua_skpd'])) {
+    $csrf = $_GET['csrf_token'] ?? '';
+    if (!verify_csrf_token($csrf)) {
+        header("Location: rekap.php?error_msg=" . urlencode("Token keamanan CSRF tidak valid. Silakan muat ulang halaman."));
+        exit;
+    }
     $skpd_id = (int)$_GET['ambil_semua_skpd'];
     if ($skpd_id > 0) {
-        $conn->query("UPDATE pesanan SET status_pengambilan = 'Sudah Diambil' WHERE skpd_id = $skpd_id");
+        $stmt_ab = $conn->prepare("UPDATE pesanan SET status_pengambilan = 'Sudah Diambil' WHERE skpd_id = ?");
+        if ($stmt_ab) {
+            $stmt_ab->bind_param("i", $skpd_id);
+            $stmt_ab->execute();
+            $stmt_ab->close();
+        }
         header("Location: rekap.php?notif=ambil_semua_sukses");
         exit;
     }
@@ -13,16 +23,26 @@ if (isset($_GET['ambil_semua_skpd'])) {
 
 // Bulk Action: Tandai Semua Pesanan SKPD Lunas
 if (isset($_GET['lunas_semua_skpd'])) {
+    $csrf = $_GET['csrf_token'] ?? '';
+    if (!verify_csrf_token($csrf)) {
+        header("Location: rekap.php?error_msg=" . urlencode("Token keamanan CSRF tidak valid. Silakan muat ulang halaman."));
+        exit;
+    }
     $skpd_id = (int)$_GET['lunas_semua_skpd'];
     if ($skpd_id > 0) {
-        $conn->query("UPDATE pesanan SET status_bayar = 'Lunas' WHERE skpd_id = $skpd_id");
+        $stmt_ln = $conn->prepare("UPDATE pesanan SET status_bayar = 'Lunas' WHERE skpd_id = ?");
+        if ($stmt_ln) {
+            $stmt_ln->bind_param("i", $skpd_id);
+            $stmt_ln->execute();
+            $stmt_ln->close();
+        }
         header("Location: rekap.php?notif=bayar_semua_sukses");
         exit;
     }
 }
 
-$start_date = $_GET['start_date'] ?? '';
-$end_date = $_GET['end_date'] ?? '';
+$start_date = (isset($_GET['start_date']) && preg_match('/^\d{4}-\d{2}-\d{2}$/', $_GET['start_date'])) ? $_GET['start_date'] : '';
+$end_date = (isset($_GET['end_date']) && preg_match('/^\d{4}-\d{2}-\d{2}$/', $_GET['end_date'])) ? $_GET['end_date'] : '';
 $status_filter = $_GET['status_filter'] ?? '';
 
 $where = [];
@@ -441,7 +461,7 @@ while ($t = $res_tagihan->fetch_assoc()) {
                             <td class="total-col" rowspan="<?= $rowspan ?>" style="text-align: center; vertical-align: middle;">
                                 <div style="font-weight: bold; color: <?= $sb_color ?>; margin-bottom: <?= ($sb !== 'Lunas' && $skpd_total > 0) ? '4px' : '0' ?>;"><?= $sb ?></div>
                                 <?php if ($sb !== 'Lunas' && $skpd_total > 0): ?>
-                                    <a href="rekap.php?lunas_semua_skpd=<?= $id ?>" 
+                                    <a href="rekap.php?lunas_semua_skpd=<?= $id ?>&csrf_token=<?= generate_csrf_token() ?>" 
                                        class="btn btn-sm btn-confirm hide-on-print" 
                                        data-confirm-title="Konfirmasi Pembayaran Lunas"
                                        data-confirm-text="Tandai SEMUA pesanan dari '<?= htmlspecialchars($nama, ENT_QUOTES) ?>' sebagai LUNAS?"
@@ -456,7 +476,7 @@ while ($t = $res_tagihan->fetch_assoc()) {
                             <td class="total-col" rowspan="<?= $rowspan ?>" style="text-align: center; vertical-align: middle;">
                                 <div style="font-weight: bold; color: <?= $sa_color ?>; margin-bottom: <?= ($sa !== 'Sudah Diambil' && $skpd_total > 0) ? '4px' : '0' ?>;"><?= $sa ?></div>
                                 <?php if ($sa !== 'Sudah Diambil' && $skpd_total > 0): ?>
-                                    <a href="rekap.php?ambil_semua_skpd=<?= $id ?>" 
+                                    <a href="rekap.php?ambil_semua_skpd=<?= $id ?>&csrf_token=<?= generate_csrf_token() ?>" 
                                        class="btn btn-sm btn-confirm hide-on-print" 
                                        data-confirm-title="Konfirmasi Pengambilan Barang"
                                        data-confirm-text="Tandai SEMUA pesanan dari '<?= htmlspecialchars($nama, ENT_QUOTES) ?>' sebagai SUDAH DIAMBIL?"
@@ -467,7 +487,6 @@ while ($t = $res_tagihan->fetch_assoc()) {
                                         Diambil
                                     </a>
                                 <?php endif; ?>
-                            </td>
                             </td>
                             <td class="total-col hide-on-print" rowspan="<?= $rowspan ?>" style="text-align: center; vertical-align: middle;">
                                 <?php if ($skpd_total > 0): ?>

@@ -3,9 +3,19 @@ require 'config.php';
 
 // Bulk Action: Tandai Semua Pesanan SKPD Sudah Diambil
 if (isset($_GET['ambil_semua_skpd'])) {
+    $csrf = $_GET['csrf_token'] ?? '';
+    if (!verify_csrf_token($csrf)) {
+        header("Location: index.php?error_msg=" . urlencode("Token keamanan CSRF tidak valid. Silakan muat ulang halaman."));
+        exit;
+    }
     $skpd_id = (int)$_GET['ambil_semua_skpd'];
     if ($skpd_id > 0) {
-        $conn->query("UPDATE pesanan SET status_pengambilan = 'Sudah Diambil' WHERE skpd_id = $skpd_id");
+        $stmt_ab = $conn->prepare("UPDATE pesanan SET status_pengambilan = 'Sudah Diambil' WHERE skpd_id = ?");
+        if ($stmt_ab) {
+            $stmt_ab->bind_param("i", $skpd_id);
+            $stmt_ab->execute();
+            $stmt_ab->close();
+        }
         header("Location: index.php?notif=ambil_semua_sukses");
         exit;
     }
@@ -13,9 +23,19 @@ if (isset($_GET['ambil_semua_skpd'])) {
 
 // Bulk Action: Tandai Semua Pesanan SKPD Lunas
 if (isset($_GET['lunas_semua_skpd'])) {
+    $csrf = $_GET['csrf_token'] ?? '';
+    if (!verify_csrf_token($csrf)) {
+        header("Location: index.php?error_msg=" . urlencode("Token keamanan CSRF tidak valid. Silakan muat ulang halaman."));
+        exit;
+    }
     $skpd_id = (int)$_GET['lunas_semua_skpd'];
     if ($skpd_id > 0) {
-        $conn->query("UPDATE pesanan SET status_bayar = 'Lunas' WHERE skpd_id = $skpd_id");
+        $stmt_ln = $conn->prepare("UPDATE pesanan SET status_bayar = 'Lunas' WHERE skpd_id = ?");
+        if ($stmt_ln) {
+            $stmt_ln->bind_param("i", $skpd_id);
+            $stmt_ln->execute();
+            $stmt_ln->close();
+        }
         header("Location: index.php?notif=bayar_semua_sukses");
         exit;
     }
@@ -467,7 +487,7 @@ if ($q_all_orders) {
                                     </button>
 
                                     <?php if ($status !== 'Lunas'): ?>
-                                        <a href="index.php?lunas_semua_skpd=<?= $current_skpd_id ?>" 
+                                        <a href="index.php?lunas_semua_skpd=<?= $current_skpd_id ?>&csrf_token=<?= generate_csrf_token() ?>" 
                                            class="btn-card-amber btn-confirm" 
                                            data-confirm-title="Konfirmasi Pembayaran Lunas" 
                                            data-confirm-text="Tandai SEMUA pesanan dari '<?= htmlspecialchars($nama, ENT_QUOTES) ?>' sebagai LUNAS?" 
@@ -479,7 +499,7 @@ if ($q_all_orders) {
                                             Set Lunas
                                         </a>
                                     <?php elseif ($status_ambil !== 'Sudah Diambil'): ?>
-                                        <a href="index.php?ambil_semua_skpd=<?= $current_skpd_id ?>" 
+                                        <a href="index.php?ambil_semua_skpd=<?= $current_skpd_id ?>&csrf_token=<?= generate_csrf_token() ?>" 
                                            class="btn-card-emerald btn-confirm" 
                                            data-confirm-title="Konfirmasi Pengambilan Barang" 
                                            data-confirm-text="Tandai SEMUA pesanan dari '<?= htmlspecialchars($nama, ENT_QUOTES) ?>' sebagai SUDAH DIAMBIL?" 
@@ -662,7 +682,7 @@ if ($q_all_orders) {
                         btnModalLunasSemua.style.display = 'none';
                     } else {
                         btnModalLunasSemua.style.display = 'inline-flex';
-                        btnModalLunasSemua.href = `index.php?lunas_semua_skpd=${encodeURIComponent(cleanId)}`;
+                        btnModalLunasSemua.href = `index.php?lunas_semua_skpd=${encodeURIComponent(cleanId)}&csrf_token=<?= generate_csrf_token() ?>`;
                         btnModalLunasSemua.setAttribute('data-confirm-text', `Tandai SEMUA pesanan dari ${cleanName} sebagai LUNAS?`);
                     }
                 }
@@ -673,7 +693,7 @@ if ($q_all_orders) {
                         btnModalAmbilSemua.style.display = 'none';
                     } else {
                         btnModalAmbilSemua.style.display = 'inline-flex';
-                        btnModalAmbilSemua.href = `index.php?ambil_semua_skpd=${encodeURIComponent(cleanId)}`;
+                        btnModalAmbilSemua.href = `index.php?ambil_semua_skpd=${encodeURIComponent(cleanId)}&csrf_token=<?= generate_csrf_token() ?>`;
                         btnModalAmbilSemua.setAttribute('data-confirm-text', `Tandai SEMUA pesanan dari ${cleanName} sebagai SUDAH DIAMBIL?`);
                     }
                 }

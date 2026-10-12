@@ -3,8 +3,18 @@ require 'config.php';
 
 // Handle Hapus Riwayat Retur
 if (isset($_GET['del_retur'])) {
+    $csrf = $_GET['csrf_token'] ?? '';
+    if (!verify_csrf_token($csrf)) {
+        header("Location: retur.php?error_msg=" . urlencode("Token keamanan CSRF tidak valid. Silakan muat ulang halaman."));
+        exit;
+    }
     $del_id = (int)$_GET['del_retur'];
-    $conn->query("DELETE FROM retur_pesanan WHERE id = $del_id");
+    $stmt_del = $conn->prepare("DELETE FROM retur_pesanan WHERE id = ?");
+    if ($stmt_del) {
+        $stmt_del->bind_param("i", $del_id);
+        $stmt_del->execute();
+        $stmt_del->close();
+    }
     header("Location: retur.php?notif=hapus_sukses");
     exit;
 }
@@ -242,7 +252,7 @@ $returs = $conn->query("
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                     Pesanan
                                 </a>
-                                <a href="retur.php?del_retur=<?= $row['id'] ?>" class="btn btn-sm btn-danger btn-hapus btn-confirm" data-confirm-title="Hapus Riwayat Retur" data-confirm-text="Apakah Anda yakin ingin menghapus catatan retur ini? (Hanya menghapus riwayat, tidak membatalkan retur pesanan)" data-confirm-btn="Ya, Hapus" data-confirm-color="#EF4444" style="display: inline-flex; align-items: center; gap: 4px; padding: 0.4rem 0.75rem; font-weight: 700; border-radius: 4px; border: 1.5px solid #000; background: #EF4444; color: #fff; text-decoration: none;">
+                                <a href="retur.php?del_retur=<?= $row['id'] ?>&csrf_token=<?= generate_csrf_token() ?>" class="btn btn-sm btn-danger btn-hapus btn-confirm" data-confirm-title="Hapus Riwayat Retur" data-confirm-text="Apakah Anda yakin ingin menghapus catatan retur ini? (Hanya menghapus riwayat, tidak membatalkan retur pesanan)" data-confirm-btn="Ya, Hapus" data-confirm-color="#EF4444" style="display: inline-flex; align-items: center; gap: 4px; padding: 0.4rem 0.75rem; font-weight: 700; border-radius: 4px; border: 1.5px solid #000; background: #EF4444; color: #fff; text-decoration: none;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                                 </a>
                             </td>

@@ -49,6 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['skpd_id'])) {
 }
 
 if (isset($_GET['del'])) {
+    $csrf = $_GET['csrf_token'] ?? '';
+    if (!verify_csrf_token($csrf)) {
+        header("Location: pesanan.php?error_msg=" . urlencode("Token keamanan CSRF tidak valid. Silakan muat ulang halaman."));
+        exit;
+    }
     $id = (int)$_GET['del'];
     
     // Kembalikan stok sebelum dihapus dan catat mutasi masuk
@@ -80,6 +85,11 @@ if (isset($_GET['del'])) {
 }
 
 if (isset($_GET['lunas'])) {
+    $csrf = $_GET['csrf_token'] ?? '';
+    if (!verify_csrf_token($csrf)) {
+        header("Location: pesanan.php?error_msg=" . urlencode("Token keamanan CSRF tidak valid. Silakan muat ulang halaman."));
+        exit;
+    }
     $id = (int)$_GET['lunas'];
     $stmt_lunas = $conn->prepare("UPDATE pesanan SET status_bayar = 'Lunas' WHERE id = ?");
     if ($stmt_lunas) {
@@ -92,9 +102,19 @@ if (isset($_GET['lunas'])) {
 }
 
 if (isset($_GET['update_status'])) {
+    $csrf = $_GET['csrf_token'] ?? '';
+    $is_ajax = isset($_GET['ajax']) ? true : false;
+    if (!verify_csrf_token($csrf)) {
+        if ($is_ajax) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => 'Token CSRF tidak valid']);
+            exit;
+        }
+        header("Location: pesanan.php?error_msg=" . urlencode("Token keamanan CSRF tidak valid. Silakan muat ulang halaman."));
+        exit;
+    }
     $id = (int)$_GET['update_status'];
     $status = $_GET['status'] ?? '';
-    $is_ajax = isset($_GET['ajax']) ? true : false;
     
     $valid_statuses = ['Menunggu Diproses', 'Sedang Dibuat', 'Siap Diambil', 'Sudah Diambil'];
     if (in_array($status, $valid_statuses)) {
@@ -436,7 +456,7 @@ $pesanans = $conn->query("
                             <td style="white-space: nowrap; position: sticky; right: 0; background: var(--white); z-index: 1; border-left: 1px solid var(--gray-light, #E5E7EB); box-shadow: -4px 0 10px rgba(0,0,0,0.05);">
                                 <div style="display: flex; gap: 6px; align-items: center; justify-content: center;">
                                     <?php if($row['status_bayar'] == 'Belum Lunas'): ?>
-                                    <a href="pesanan.php?lunas=<?= $row['id'] ?>" class="btn-confirm btn btn-sm" data-confirm-title="Konfirmasi Pembayaran" data-confirm-text="Tandai pesanan ini sebagai Lunas?" data-confirm-btn="Ya, Lunas" data-confirm-color="#10B981" title="Tandai Lunas" style="background-color: #10B981; color: white; padding: 5px 10px; font-size: 0.8rem; border-radius: 6px; border: 1px solid #000; box-shadow: 2px 2px 0px #000;">
+                                    <a href="pesanan.php?lunas=<?= $row['id'] ?>&csrf_token=<?= generate_csrf_token() ?>" class="btn-confirm btn btn-sm" data-confirm-title="Konfirmasi Pembayaran" data-confirm-text="Tandai pesanan ini sebagai Lunas?" data-confirm-btn="Ya, Lunas" data-confirm-color="#10B981" title="Tandai Lunas" style="background-color: #10B981; color: white; padding: 5px 10px; font-size: 0.8rem; border-radius: 6px; border: 1px solid #000; box-shadow: 2px 2px 0px #000;">
                                         Lunas
                                     </a>
                                     <?php else: ?>
@@ -455,7 +475,7 @@ $pesanans = $conn->query("
                                     </a>
                                     <?php endif; ?>
                                     
-                                    <a href="pesanan.php?del=<?= $row['id'] ?>" class="btn btn-sm btn-danger btn-confirm" data-confirm-title="Hapus Pesanan" data-confirm-text="Apakah Anda yakin ingin menghapus pesanan ini secara permanen?" data-confirm-btn="Ya, Hapus" data-confirm-color="#EF4444" title="Hapus Pesanan" style="padding: 5px 10px; font-size: 0.8rem; border-radius: 6px;">
+                                    <a href="pesanan.php?del=<?= $row['id'] ?>&csrf_token=<?= generate_csrf_token() ?>" class="btn btn-sm btn-danger btn-confirm" data-confirm-title="Hapus Pesanan" data-confirm-text="Apakah Anda yakin ingin menghapus pesanan ini secara permanen?" data-confirm-btn="Ya, Hapus" data-confirm-color="#EF4444" title="Hapus Pesanan" style="padding: 5px 10px; font-size: 0.8rem; border-radius: 6px;">
                                         Hapus
                                     </a>
                                 </div>
@@ -519,7 +539,7 @@ $pesanans = $conn->query("
             window.startBrutalLoader();
         }
 
-        fetch(`pesanan.php?update_status=${id}&status=${encodeURIComponent(newStatus)}&ajax=1`)
+        fetch(`pesanan.php?update_status=${id}&status=${encodeURIComponent(newStatus)}&csrf_token=<?= generate_csrf_token() ?>&ajax=1`)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {

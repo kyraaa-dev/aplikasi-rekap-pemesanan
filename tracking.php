@@ -3,9 +3,19 @@ require 'config.php';
 
 // Bulk Update: Tandai Sudah Diambil Semua
 if (isset($_POST['mark_done_skpd'])) {
+    $csrf = $_POST['csrf_token'] ?? '';
+    if (!verify_csrf_token($csrf)) {
+        header("Location: tracking.php?error_msg=" . urlencode("Token keamanan CSRF tidak valid. Silakan muat ulang halaman."));
+        exit;
+    }
     $sid = (int)$_POST['mark_done_skpd'];
     if ($sid > 0) {
-        $conn->query("UPDATE pesanan SET status_pengambilan = 'Sudah Diambil' WHERE skpd_id = $sid AND status_pengambilan = 'Siap Diambil'");
+        $stmt_track = $conn->prepare("UPDATE pesanan SET status_pengambilan = 'Sudah Diambil' WHERE skpd_id = ? AND status_pengambilan = 'Siap Diambil'");
+        if ($stmt_track) {
+            $stmt_track->bind_param("i", $sid);
+            $stmt_track->execute();
+            $stmt_track->close();
+        }
         header("Location: tracking.php");
         exit;
     }
@@ -159,6 +169,7 @@ if ($q_tracking) {
                     <?php endif; ?>
                     
                     <form method="POST" style="flex: 1; display: flex;">
+                        <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
                         <input type="hidden" name="mark_done_skpd" value="<?= $s['skpd_id'] ?>">
                         <button type="submit" onclick="return confirm('Tandai semua <?= $s['siap'] ?> pesanan yang Siap menjadi Sudah Diambil?')" style="width: 100%; background: var(--primary); color: var(--dark); padding: 0.5rem; border-radius: var(--border-radius); border: 2px solid var(--dark); font-weight: 800; cursor: pointer; font-size: 0.85rem; box-shadow: 2px 2px 0px var(--dark);">
                             📦 Serahkan

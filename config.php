@@ -259,7 +259,23 @@ if ((!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) &&
 }
 
 $current_page = basename($_SERVER['PHP_SELF'] ?? '');
-$allowed_pages = ['login.php', 'setup.php', 'api_files.php', 'proses_upload.php', 'cek_stok.php', 'katalog.php'];
+$allowed_pages = ['login.php', 'api_files.php', 'proses_upload.php', 'cek_stok.php', 'katalog.php'];
+
+// Izinkan setup.php HANYA jika database belum siap/tabel settings belum ada
+if ($current_page === 'setup.php') {
+    $is_already_setup = false;
+    if ($conn) {
+        $q_chk = @$conn->query("SELECT id FROM settings LIMIT 1");
+        if ($q_chk && $q_chk->num_rows > 0) {
+            $is_already_setup = true;
+        }
+    }
+    if ($is_already_setup && (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true)) {
+        header("Location: login.php?msg=" . urlencode("Aplikasi sudah terinstalasi. Silakan login sebagai admin untuk mengakses instalasi/setup."));
+        exit;
+    }
+    $allowed_pages[] = 'setup.php';
+}
 
 if (php_sapi_name() !== 'cli' && !in_array($current_page, $allowed_pages)) {
     if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
