@@ -61,9 +61,18 @@ function get_env_var($keys, $default = '') {
     foreach ($keys as $k) {
         $variants = [$k, strtoupper($k), strtolower($k)];
         foreach ($variants as $var) {
-            if (getenv($var) !== false && getenv($var) !== '') return trim(getenv($var));
-            if (isset($_ENV[$var]) && $_ENV[$var] !== '') return trim($_ENV[$var]);
-            if (isset($_SERVER[$var]) && $_SERVER[$var] !== '') return trim($_SERVER[$var]);
+            $val = null;
+            if (getenv($var) !== false && getenv($var) !== '') $val = getenv($var);
+            elseif (isset($_ENV[$var]) && $_ENV[$var] !== '') $val = $_ENV[$var];
+            elseif (isset($_SERVER[$var]) && $_SERVER[$var] !== '') $val = $_SERVER[$var];
+            
+            if ($val !== null) {
+                $val = trim($val);
+                if ((str_starts_with($val, '"') && str_ends_with($val, '"')) || (str_starts_with($val, "'") && str_ends_with($val, "'"))) {
+                    $val = substr($val, 1, -1);
+                }
+                return trim($val);
+            }
         }
     }
     return $default;
@@ -131,9 +140,9 @@ try {
     // Enable SSL jika menggunakan Cloud Host (bukan localhost)
     if ($host !== "localhost" && $host !== "127.0.0.1") {
         $conn->ssl_set(NULL, NULL, NULL, NULL, NULL);
-        $connected = @$conn->real_connect($host, $user, $pass, null, $port, NULL, MYSQLI_CLIENT_SSL);
+        $connected = @$conn->real_connect($host, $user, $pass, $db, $port, NULL, MYSQLI_CLIENT_SSL);
     } else {
-        $connected = @$conn->real_connect($host, $user, $pass, null, $port);
+        $connected = @$conn->real_connect($host, $user, $pass, $db, $port);
     }
 } catch (Throwable $e) {
     $connected = false;
@@ -142,10 +151,30 @@ try {
 
 if (!$connected || $conn->connect_error) {
     $err_show = $conn->connect_error ?: ($conn_error_msg ?: "Gagal terhubung ke host $host:$port");
-    die("<div style='font-family:sans-serif; padding:20px; background:#f8d7da; color:#721c24; border:1px solid #f5c6cb; border-radius:8px; max-width:600px; margin:40px auto;'>
-        <h3 style='margin-top:0;'>❌ Gagal Terhubung ke Database</h3>
-        <p>Error: " . htmlspecialchars($err_show) . "</p>
-        <p>Pastikan kredensial di <b>Environment Variables</b> Vercel sudah sesuai dengan data dari TiDB Cloud.</p>
+    $pass_preview = strlen($pass) > 0 ? (strlen($pass) . " karakter (Awal: " . substr($pass, 0, 2) . "... Akhir: ..." . substr($pass, -2) . ")") : "❌ Kosong";
+    die("<div style='font-family:sans-serif; padding:24px; background:#fff; color:#333; border:2px solid #EF4444; border-radius:12px; max-width:680px; margin:40px auto; box-shadow:0 4px 20px rgba(0,0,0,0.1); line-height:1.6;'>
+        <h3 style='margin-top:0; color:#DC2626;'>❌ Gagal Terhubung ke Database TiDB Cloud</h3>
+        <p><b>Pesan Error:</b> <code style='background:#FEE2E2; color:#991B1B; padding:4px 8px; border-radius:4px;'>$err_show</code></p>
+        
+        <table style='width:100%; border-collapse:collapse; margin:16px 0; font-size:14px; background:#F9FAFB;'>
+            <tr style='background:#E5E7EB; text-align:left;'>
+                <th style='padding:8px; border:1px solid #D1D5DB;'>Variabel</th>
+                <th style='padding:8px; border:1px solid #D1D5DB;'>Nilai yang Dibaca Vercel</th>
+            </tr>
+            <tr><td style='padding:8px; border:1px solid #D1D5DB;'><code>DB_HOST</code></td><td style='padding:8px; border:1px solid #D1D5DB;'>$host</td></tr>
+            <tr><td style='padding:8px; border:1px solid #D1D5DB;'><code>DB_PORT</code></td><td style='padding:8px; border:1px solid #D1D5DB;'>$port</td></tr>
+            <tr><td style='padding:8px; border:1px solid #D1D5DB;'><code>DB_USER</code></td><td style='padding:8px; border:1px solid #D1D5DB;'>$user</td></tr>
+            <tr><td style='padding:8px; border:1px solid #D1D5DB;'><code>DB_NAME</code></td><td style='padding:8px; border:1px solid #D1D5DB;'>$db</td></tr>
+            <tr><td style='padding:8px; border:1px solid #D1D5DB;'><code>DB_PASS</code></td><td style='padding:8px; border:1px solid #D1D5DB;'>$pass_preview</td></tr>
+        </table>
+
+        <div style='background:#FEF3C7; border-left:4px solid #F59E0B; padding:12px 14px; margin:16px 0; font-size:14px; color:#92400E;'>
+            <b>Penyebab Umum:</b>
+            <ul style='margin:6px 0 0 18px; padding:0;'>
+                <li><b>IP Access List di TiDB Cloud:</b> Buka dashboard TiDB Cloud &gt; pilih Cluster &gt; tab <b>Security</b> &gt; pastikan IP Access List mengizinkan <code>0.0.0.0/0</code> (Allow Access from Anywhere).</li>
+                <li><b>Password:</b> Pastikan <code>DB_PASS</code> di Vercel sama persis dengan password yang baru di-generate di TiDB Cloud.</li>
+            </ul>
+        </div>
     </div>");
 }
 
