@@ -967,8 +967,6 @@ $admin_wa_default = '6281258902720';
                         <h5 style="margin: 4px 0 8px 0; font-size: 1.1rem; font-weight: 900; color: inherit;">Mutz Reguler (Biasa)</h5>
                         <ul style="padding-left: 18px; margin: 0; font-size: 0.875rem; line-height: 1.6; font-weight: 600;">
                             <li>Diperuntukkan bagi seluruh ASN (PNS dan PPPK).</li>
-                            <li>Bahan drill resmi KORPRI yang nyaman dan adem.</li>
-                            <li>List kain standar warna khaki.</li>
                             <li>Harga resmi: <strong>Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></strong>.</li>
                         </ul>
                     </div>
