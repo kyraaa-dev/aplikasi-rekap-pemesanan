@@ -119,23 +119,32 @@ if (($host === "localhost" || $host === "127.0.0.1") && (isset($_SERVER['VERCEL'
 }
 
 // Inisialisasi koneksi dengan dukungan SSL untuk Cloud MySQL (TiDB Cloud)
+mysqli_report(MYSQLI_REPORT_OFF);
 $conn = mysqli_init();
 if (!$conn) {
     die("mysqli_init gagal");
 }
 
-// Enable SSL jika menggunakan Cloud Host (bukan localhost)
-if ($host !== "localhost" && $host !== "127.0.0.1") {
-    $conn->ssl_set(NULL, NULL, NULL, NULL, NULL);
-    $connected = @$conn->real_connect($host, $user, $pass, null, $port, NULL, MYSQLI_CLIENT_SSL);
-} else {
-    $connected = @$conn->real_connect($host, $user, $pass, null, $port);
+$connected = false;
+$conn_error_msg = '';
+try {
+    // Enable SSL jika menggunakan Cloud Host (bukan localhost)
+    if ($host !== "localhost" && $host !== "127.0.0.1") {
+        $conn->ssl_set(NULL, NULL, NULL, NULL, NULL);
+        $connected = @$conn->real_connect($host, $user, $pass, null, $port, NULL, MYSQLI_CLIENT_SSL);
+    } else {
+        $connected = @$conn->real_connect($host, $user, $pass, null, $port);
+    }
+} catch (Throwable $e) {
+    $connected = false;
+    $conn_error_msg = $e->getMessage();
 }
 
 if (!$connected || $conn->connect_error) {
+    $err_show = $conn->connect_error ?: ($conn_error_msg ?: "Gagal terhubung ke host $host:$port");
     die("<div style='font-family:sans-serif; padding:20px; background:#f8d7da; color:#721c24; border:1px solid #f5c6cb; border-radius:8px; max-width:600px; margin:40px auto;'>
         <h3 style='margin-top:0;'>❌ Gagal Terhubung ke Database</h3>
-        <p>Error: " . ($conn->connect_error ?: "Gagal terhubung ke host $host:$port") . "</p>
+        <p>Error: " . htmlspecialchars($err_show) . "</p>
         <p>Pastikan kredensial di <b>Environment Variables</b> Vercel sudah sesuai dengan data dari TiDB Cloud.</p>
     </div>");
 }
