@@ -43,14 +43,14 @@ if ($q_stok) {
     }
 }
 
-// Default standard sizes if empty in DB
+// Default standard sizes
 $sizes_pria = [55, 56, 57, 58, 59, 60];
 $sizes_wanita = [58, 59, 60];
 
 // Default admin WhatsApp
 $admin_wa_default = '6281258902720';
 
-// Calculate absolute base URL for Open Graph (Mandatory for WhatsApp, Facebook, Telegram crawlers)
+// Calculate absolute base URL for Open Graph (WhatsApp, Telegram, Facebook crawlers)
 $is_https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
 $og_protocol = $is_https ? "https://" : "http://";
 $og_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
@@ -67,32 +67,32 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Katalog & Stok Mutz ASN KORPRI | Dewan Pengurus KORPRI Kab. Banjar</title>
+    <title>Katalog Ketersediaan Stok Mutz ASN | Dewan Pengurus KORPRI Kab. Banjar</title>
     
     <!-- Primary SEO Meta Tags -->
-    <meta name="title" content="Katalog & Stok Mutz ASN | E-MutZ KORPRI Kab. Banjar">
-    <meta name="description" content="Katalog resmi & ketersediaan stok topi Mutz ASN Standar dan Kepala SKPD (Eselon II) Dewan Pengurus KORPRI Kabupaten Banjar secara Real-Time.">
-    <meta name="keywords" content="mutz asn, korpri kabupaten banjar, topi mutz, pns pppk, dewan pengurus korpri, martapura, eselon II, stok topi asn">
+    <meta name="title" content="Katalog Ketersediaan Stok Mutz ASN | Dewan Pengurus KORPRI Kab. Banjar">
+    <meta name="description" content="Katalog resmi & ketersediaan stok fisik topi Mutz ASN Standar dan Kepala SKPD (Eselon II) Dewan Pengurus KORPRI Kabupaten Banjar secara Real-Time.">
+    <meta name="keywords" content="mutz asn, korpri kabupaten banjar, mutz standar, dewan pengurus korpri, martapura, eselon II, stok topi asn">
     <meta name="author" content="Dewan Pengurus KORPRI Kabupaten Banjar">
-    <meta name="theme-color" content="#1D4ED8">
+    <meta name="theme-color" content="#0B1E3B">
 
-    <!-- Open Graph / WhatsApp / Facebook Meta Tags (Absolute URLs for Instant Logo Preview) -->
+    <!-- Open Graph / WhatsApp / Facebook Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="<?= htmlspecialchars($og_page_url) ?>">
-    <meta property="og:title" content="Katalog & Stok Mutz ASN | E-MutZ KORPRI Kab. Banjar">
-    <meta property="og:description" content="Informasi ketersediaan stok Mutz Standar ASN & Kepala SKPD Dewan Pengurus KORPRI Kab. Banjar secara Real-Time. Cek ukuran lingkar kepala & pesan via WhatsApp.">
-    <meta property="og:site_name" content="E-MutZ KORPRI Kabupaten Banjar">
+    <meta property="og:title" content="Katalog & Stok Mutz ASN | Dewan Pengurus KORPRI Kab. Banjar">
+    <meta property="og:description" content="Informasi stok Mutz Standar ASN & Kepala SKPD Dewan Pengurus KORPRI Kab. Banjar secara Real-Time. Cek ukuran lingkar kepala & pesan via WhatsApp.">
+    <meta property="og:site_name" content="Dewan Pengurus KORPRI Kabupaten Banjar">
     <meta property="og:locale" content="id_ID">
     
-    <!-- WhatsApp Chat Thumbnail (Square 1:1 format) -->
+    <!-- WhatsApp Chat Thumbnail (Square 1:1) -->
     <meta property="og:image" content="<?= htmlspecialchars($og_image_square) ?>">
     <meta property="og:image:secure_url" content="<?= htmlspecialchars($og_image_square) ?>">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="600">
     <meta property="og:image:height" content="600">
-    <meta property="og:image:alt" content="Logo E-MutZ KORPRI Kabupaten Banjar">
+    <meta property="og:image:alt" content="Logo Dewan Pengurus KORPRI Kabupaten Banjar">
 
-    <!-- Large Social Media Card (1200x630 format) -->
+    <!-- Large Social Media Card (1200x630) -->
     <meta property="og:image" content="<?= htmlspecialchars($og_image_cover) ?>">
     <meta property="og:image:secure_url" content="<?= htmlspecialchars($og_image_cover) ?>">
     <meta property="og:image:type" content="image/png">
@@ -100,96 +100,110 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Katalog Stok Mutz ASN KORPRI Kabupaten Banjar">
 
-    <!-- Twitter Card Meta Tags -->
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="<?= htmlspecialchars($og_page_url) ?>">
-    <meta name="twitter:title" content="Katalog & Stok Mutz ASN | E-MutZ KORPRI Kab. Banjar">
+    <meta name="twitter:title" content="Katalog & Stok Mutz ASN | Dewan Pengurus KORPRI Kab. Banjar">
     <meta name="twitter:description" content="Informasi stok Mutz Standar ASN & Kepala SKPD Dewan Pengurus KORPRI Kab. Banjar secara Real-Time.">
     <meta name="twitter:image" content="<?= htmlspecialchars($og_image_cover) ?>">
 
-    <!-- Standard Link Previews & High-Res App Icons -->
-    <link rel="image_src" href="<?= htmlspecialchars($og_image_square) ?>">
     <link rel="icon" type="image/png" href="assets/images/logo.png">
     <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         /* ==========================================================================
-           MODERN EXECUTIVE GLASSMORPHISM DESIGN SYSTEM (NO BRUTALISM)
+           AUTHENTIC OFFICIAL GOVERNMENT PORTAL DESIGN SYSTEM
            Dewan Pengurus KORPRI Kabupaten Banjar
+           No AI Slop: Clean, Authoritative, High Legibility, Crisp Hairline Borders
            ========================================================================== */
         :root {
-            --font-main: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             
-            /* Modern Palette */
-            --primary: #1D4ED8;
-            --primary-hover: #1E40AF;
-            --primary-light: #EFF6FF;
-            --primary-gradient: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+            /* Official Dignified Government Palette */
+            --korpri-navy: #0B1E3B;
+            --korpri-navy-dark: #07152B;
+            --korpri-navy-light: #162E56;
+            --korpri-blue: #1D4ED8;
+            --korpri-blue-subtle: #EFF6FF;
             
-            --korpri-gold: #D97706;
-            --korpri-gold-light: #FEF3C7;
-            --korpri-gold-gradient: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            --korpri-gold: #B48228;
+            --korpri-gold-light: #FBF6E9;
+            --korpri-gold-border: #E8D5A3;
             
-            --success: #059669;
-            --success-light: #D1FAE5;
-            --success-gradient: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            --gov-slate: #0F172A;
+            --gov-muted: #475569;
+            --gov-subtle: #64748B;
+            --gov-hairline: #E2E8F0;
+            --gov-hairline-subtle: #F1F5F9;
+            --gov-canvas: #F8FAFC;
+            --gov-surface: #FFFFFF;
             
-            --warning: #D97706;
-            --warning-light: #FEF3C7;
+            --status-green: #15803D;
+            --status-green-bg: #F0FDF4;
+            --status-green-border: #BBF7D0;
             
-            --danger: #DC2626;
-            --danger-light: #FEE2E2;
+            --status-amber: #B45309;
+            --status-amber-bg: #FFFBEB;
+            --status-amber-border: #FDE68A;
             
-            /* Glassmorphism High-Performance Light Tokens */
-            --bg-body: #F8FAFC;
-            --text-main: #0F172A;
-            --text-muted: #64748B;
-            --text-subtle: #94A3B8;
+            --status-red: #B91C1C;
+            --status-red-bg: #FEF2F2;
+            --status-red-border: #FECACA;
             
-            --glass-card: rgba(255, 255, 255, 0.94);
-            --glass-card-hover: #FFFFFF;
-            --glass-nav: rgba(255, 255, 255, 0.92);
-            --glass-border: rgba(255, 255, 255, 0.85);
-            --glass-border-subtle: rgba(226, 232, 240, 0.85);
-            
-            --shadow-sm: 0 2px 8px -2px rgba(15, 23, 42, 0.05);
-            --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
-            --shadow-lg: 0 20px 35px -10px rgba(15, 23, 42, 0.12), 0 10px 15px -5px rgba(15, 23, 42, 0.04);
-            --shadow-glow: 0 0 25px -5px rgba(37, 99, 235, 0.25);
-            
-            --radius-sm: 8px;
-            --radius-md: 14px;
-            --radius-lg: 20px;
-            --radius-xl: 28px;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
             --radius-full: 9999px;
             
-            --transition-smooth: all 0.2s ease;
+            --shadow-subtle: 0 1px 3px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.03);
+            --shadow-card: 0 4px 12px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -2px rgba(15, 23, 42, 0.03);
+            --shadow-float: 0 12px 28px -4px rgba(11, 30, 59, 0.12), 0 4px 10px -2px rgba(11, 30, 59, 0.06);
+            
+            --transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Dark Mode Tokens */
+        /* Dignified Dark Mode */
         [data-theme="dark"] {
-            --bg-body: #090D16;
-            --text-main: #F8FAFC;
-            --text-muted: #94A3B8;
-            --text-subtle: #64748B;
+            --korpri-navy: #0F203C;
+            --korpri-navy-dark: #081122;
+            --korpri-navy-light: #1A345E;
+            --korpri-blue: #3B82F6;
+            --korpri-blue-subtle: rgba(59, 130, 246, 0.12);
             
-            --glass-card: rgba(17, 24, 39, 0.92);
-            --glass-card-hover: rgba(24, 32, 47, 0.96);
-            --glass-nav: rgba(15, 23, 42, 0.92);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --glass-border-subtle: rgba(255, 255, 255, 0.08);
+            --korpri-gold: #D4AF37;
+            --korpri-gold-light: rgba(212, 175, 55, 0.12);
+            --korpri-gold-border: rgba(212, 175, 55, 0.3);
             
-            --shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 12px 30px -5px rgba(0, 0, 0, 0.45);
-            --shadow-lg: 0 24px 45px -10px rgba(0, 0, 0, 0.6);
-            --shadow-glow: 0 0 30px -5px rgba(59, 130, 246, 0.35);
+            --gov-slate: #F8FAFC;
+            --gov-muted: #94A3B8;
+            --gov-subtle: #64748B;
+            --gov-hairline: #1E293B;
+            --gov-hairline-subtle: #172033;
+            --gov-canvas: #090F1D;
+            --gov-surface: #0F172A;
+            
+            --status-green: #34D399;
+            --status-green-bg: rgba(16, 185, 129, 0.12);
+            --status-green-border: rgba(16, 185, 129, 0.3);
+            
+            --status-amber: #FBBF24;
+            --status-amber-bg: rgba(245, 158, 11, 0.12);
+            --status-amber-border: rgba(245, 158, 11, 0.3);
+            
+            --status-red: #F87171;
+            --status-red-bg: rgba(239, 68, 68, 0.12);
+            --status-red-border: rgba(239, 68, 68, 0.3);
+            
+            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.3);
+            --shadow-card: 0 4px 12px -2px rgba(0, 0, 0, 0.4);
+            --shadow-float: 0 12px 30px -4px rgba(0, 0, 0, 0.6);
         }
 
-        /* Base Resets & Ultra-Smooth Scrolling */
+        /* Reset & Base */
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
@@ -198,2156 +212,1624 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
         html {
             scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
+            -webkit-text-size-adjust: 100%;
         }
 
-        body.public-catalog-page {
-            font-family: var(--font-main);
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            min-height: 100vh;
-            width: 100%;
-            overflow-x: hidden;
-            line-height: 1.5;
+        body.gov-portal {
+            font-family: var(--font-sans);
+            background-color: var(--gov-canvas);
+            color: var(--gov-slate);
+            line-height: 1.55;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
             position: relative;
         }
 
-        /* ==========================================================================
-           AUTHENTIC EXECUTIVE GOVERNMENT BACKGROUND (Clean, Dignified, No AI-Slop)
-           GPU Hardware Accelerated (Zero Scroll Jitter)
-           ========================================================================== */
-        .public-bg-fixed {
+        /* Official Architectural Background Texture (Dignified & Subtle) */
+        .gov-bg-backdrop {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 45%, #E2E8F0 100%);
-            z-index: -4;
-            pointer-events: none;
-        }
-
-        .public-bg-heritage {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100vw;
-            height: 100vh;
-            background-image: url('assets/images/bg-bupati.jpg');
-            background-size: cover;
-            background-position: center 30%;
-            background-repeat: no-repeat;
-            opacity: 0.12;
-            filter: grayscale(85%) contrast(110%);
+            width: 100%;
+            height: 100%;
             z-index: -3;
-            transform: translateZ(0);
             pointer-events: none;
+            background-image: 
+                radial-gradient(ellipse at 50% 0%, rgba(11, 30, 59, 0.04) 0%, transparent 70%),
+                linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+        }
+        [data-theme="dark"] .gov-bg-backdrop {
+            background-image: 
+                radial-gradient(ellipse at 50% 0%, rgba(30, 58, 138, 0.15) 0%, transparent 70%),
+                linear-gradient(180deg, #090F1D 0%, #060A14 100%);
         }
 
-        .public-bg-overlay {
+        /* Subtle KORPRI Watermark */
+        .gov-bg-seal {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -2;
-            pointer-events: none;
-            /* High-performance pure GPU alpha gradient */
-            background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.08) 0%, transparent 65%),
-                        radial-gradient(circle at 15% 45%, rgba(217, 119, 6, 0.05) 0%, transparent 55%);
-            transition: background 0.3s ease;
-        }
-
-        [data-theme="dark"] .public-bg-fixed {
-            background: linear-gradient(180deg, #090E17 0%, #0F172A 50%, #060911 100%);
-        }
-        [data-theme="dark"] .public-bg-heritage {
-            opacity: 0.08;
-            filter: grayscale(100%) brightness(75%);
-        }
-        [data-theme="dark"] .public-bg-overlay {
-            background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.12) 0%, transparent 65%),
-                        radial-gradient(circle at 85% 45%, rgba(245, 158, 11, 0.06) 0%, transparent 55%);
-        }
-
-        /* Official Authentic KORPRI Seal Watermark (GPU-Accelerated) */
-        .public-bg-watermark {
-            position: fixed;
-            top: 48%;
+            top: 45%;
             left: 50%;
-            transform: translate(-50%, -50%) translateZ(0);
-            width: min(65vw, 460px);
-            height: min(65vw, 460px);
+            transform: translate(-50%, -50%);
+            width: min(70vw, 420px);
+            height: min(70vw, 420px);
             background-image: url('assets/images/korpri-badge.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            opacity: 0.035;
+            opacity: 0.025;
             z-index: -2;
             pointer-events: none;
         }
-        [data-theme="dark"] .public-bg-watermark {
-            opacity: 0.045;
-        }
-
-        /* High-Performance Frosted Glass Surface Utility */
-        .glass-panel {
-            background: var(--glass-card);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-md);
-            border-radius: var(--radius-lg);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            transform: translateZ(0);
+        [data-theme="dark"] .gov-bg-seal {
+            opacity: 0.035;
         }
 
         /* ==========================================================================
-           MODERN FROSTED NAVBAR
+           TOP OFFICIAL HEADER (Clean, Prestigious Government Standard)
            ========================================================================== */
-        .public-navbar {
+        .gov-top-accent {
+            height: 3px;
+            width: 100%;
+            background: linear-gradient(90deg, #0B1E3B 0%, #B48228 35%, #D4AF37 50%, #B48228 65%, #0B1E3B 100%);
             position: sticky;
             top: 0;
-            left: 0;
-            width: 100%;
+            z-index: 101;
+        }
+
+        .gov-header {
+            position: sticky;
+            top: 3px;
             z-index: 100;
-            background: var(--glass-nav);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--glass-border-subtle);
-            box-shadow: var(--shadow-sm);
+            background: var(--gov-surface);
+            border-bottom: 1px solid var(--gov-hairline);
+            box-shadow: var(--shadow-subtle);
             padding: 0.75rem 1.5rem;
+        }
+
+        .gov-header-inner {
+            max-width: 1140px;
+            margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
-            transition: transform 0.2s ease;
-            transform: translateZ(0);
         }
 
-        .brand-public {
+        .gov-brand {
             display: flex;
             align-items: center;
             gap: 12px;
             text-decoration: none;
             color: inherit;
-            min-width: 0;
         }
 
-        .brand-logo-wrap {
-            position: relative;
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            background: #FFFFFF;
-            padding: 2px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        .gov-brand-seal {
+            width: 42px;
+            height: 42px;
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
+            background: #FFFFFF;
+            border: 1px solid var(--gov-hairline);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
             flex-shrink: 0;
-            transition: transform 0.2s ease;
+            padding: 3px;
         }
-        .brand-public:hover .brand-logo-wrap {
-            transform: scale(1.05);
-        }
-        .brand-logo-wrap img {
+        .gov-brand-seal img {
             width: 100%;
             height: 100%;
             object-fit: contain;
         }
 
-        .brand-title {
-            font-size: 1.12rem;
+        .gov-brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .gov-brand-title {
+            font-size: 0.98rem;
             font-weight: 800;
-            letter-spacing: -0.02em;
-            color: var(--text-main);
-            line-height: 1.15;
-            margin: 0;
+            letter-spacing: 0.02em;
+            color: var(--korpri-navy);
+            line-height: 1.2;
+            text-transform: uppercase;
         }
-        .brand-title span {
-            color: var(--primary);
+        [data-theme="dark"] .gov-brand-title {
+            color: #93C5FD;
         }
-        .brand-sub {
-            font-size: 0.75rem;
+        .gov-brand-sub {
+            font-size: 0.76rem;
             font-weight: 600;
-            color: var(--text-muted);
-            margin-top: 1px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            color: var(--gov-subtle);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
         }
 
-        .nav-actions {
+        .gov-nav-actions {
             display: flex;
             align-items: center;
-            gap: 10px;
-            flex-shrink: 0;
+            gap: 8px;
         }
 
-        /* Modern Pill Buttons */
-        .nav-btn {
+        .btn-gov-nav {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 7px;
+            gap: 6px;
             padding: 8px 14px;
-            border-radius: var(--radius-full);
-            font-size: 0.85rem;
-            font-weight: 700;
+            border-radius: var(--radius-sm);
+            font-size: 0.84rem;
+            font-weight: 600;
             cursor: pointer;
             text-decoration: none;
-            border: 1px solid transparent;
-            transition: var(--transition-smooth);
-            font-family: var(--font-main);
+            font-family: var(--font-sans);
+            transition: var(--transition);
+            border: 1px solid var(--gov-hairline);
+            background: var(--gov-surface);
+            color: var(--gov-slate);
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
+        .btn-gov-nav:hover {
+            border-color: var(--korpri-blue);
+            color: var(--korpri-blue);
+            background: var(--gov-hairline-subtle);
+        }
 
-        .nav-btn-icon {
+        .btn-gov-icon {
             width: 38px;
             height: 38px;
             padding: 0;
-            border-radius: var(--radius-full);
-            background: var(--glass-card);
-            color: var(--text-main);
-            border: 1px solid var(--glass-border-subtle);
-            box-shadow: var(--shadow-sm);
-        }
-        .nav-btn-icon:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-            color: var(--primary);
         }
 
-        .nav-btn-share {
-            background: rgba(37, 99, 235, 0.08);
-            color: var(--primary);
-            border-color: rgba(37, 99, 235, 0.2);
-        }
-        .nav-btn-share:hover {
-            background: var(--primary);
+        .btn-gov-primary {
+            background: var(--korpri-navy);
+            border-color: var(--korpri-navy);
             color: #FFFFFF;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
         }
-
-        .nav-btn-admin {
-            background: var(--primary-gradient);
+        .btn-gov-primary:hover {
+            background: var(--korpri-navy-light);
+            border-color: var(--korpri-navy-light);
             color: #FFFFFF;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
         }
-        .nav-btn-admin:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+        [data-theme="dark"] .btn-gov-primary {
+            background: #1D4ED8;
+            border-color: #1D4ED8;
+            color: #FFFFFF;
         }
-
-        .nav-btn-short {
-            display: none;
+        [data-theme="dark"] .btn-gov-primary:hover {
+            background: #2563EB;
+            border-color: #2563EB;
         }
 
         /* ==========================================================================
-           MAIN CONTENT CONTAINER
+           MAIN CONTAINER
            ========================================================================== */
-        .catalog-container {
+        .gov-container {
             width: 100%;
             max-width: 1140px;
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 2rem 1.5rem 3.5rem 1.5rem;
             box-sizing: border-box;
+            flex: 1;
         }
 
         /* ==========================================================================
-           HERO SECTION WITH INSTITUTION BADGE & LIVE PULSE
+           OFFICIAL HERO & INSTITUTIONAL HEADER
            ========================================================================== */
-        .hero-section {
-            padding: 2.25rem 0 1.5rem 0;
-            text-align: center;
-        }
-
-        .hero-card-banner {
-            position: relative;
-            padding: 2.5rem 2rem 2.25rem 2rem;
+        .gov-hero {
+            background: var(--gov-surface);
+            border: 1px solid var(--gov-hairline);
+            border-radius: var(--radius-lg);
+            padding: 2.25rem 2rem 2rem 2rem;
             margin-bottom: 2rem;
-            border-radius: var(--radius-xl);
-            overflow: hidden;
+            box-shadow: var(--shadow-subtle);
+            position: relative;
             text-align: center;
         }
 
-        /* Top subtle glowing accent line */
-        .hero-card-banner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 10%;
-            right: 10%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #3B82F6, #F59E0B, transparent);
-            border-radius: 999px;
-        }
-
-        /* Institution Header Ribbon */
-        .institution-ribbon {
+        .gov-authority-badge {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
-            flex-wrap: wrap;
-            background: rgba(37, 99, 235, 0.08);
-            border: 1px solid rgba(37, 99, 235, 0.2);
-            padding: 7px 20px;
+            background: var(--gov-hairline-subtle);
+            border: 1px solid var(--gov-hairline);
+            padding: 6px 14px;
             border-radius: var(--radius-full);
-            margin-bottom: 1.25rem;
-            text-align: center;
-            transition: var(--transition-smooth);
-        }
-        [data-theme="dark"] .institution-ribbon {
-            background: rgba(37, 99, 235, 0.15);
-            border-color: rgba(59, 130, 246, 0.3);
-        }
-        .ribbon-text-main {
-            font-size: 0.84rem;
-            font-weight: 800;
+            font-size: 0.76rem;
+            font-weight: 700;
             letter-spacing: 0.05em;
             text-transform: uppercase;
-            color: var(--primary);
-            line-height: 1.2;
+            color: var(--korpri-navy);
+            margin-bottom: 1.25rem;
         }
-        [data-theme="dark"] .ribbon-text-main {
+        [data-theme="dark"] .gov-authority-badge {
+            background: var(--korpri-blue-subtle);
+            border-color: rgba(59, 130, 246, 0.3);
             color: #93C5FD;
         }
-        .ribbon-text-sub {
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            letter-spacing: 0.02em;
+
+        .gov-hero-h1 {
+            font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+            font-weight: 800;
+            color: var(--korpri-navy);
+            line-height: 1.2;
+            letter-spacing: -0.025em;
+            margin: 0 auto 0.85rem auto;
+            max-width: 820px;
         }
-        [data-theme="dark"] .ribbon-text-sub {
-            color: rgba(255, 255, 255, 0.7);
+        [data-theme="dark"] .gov-hero-h1 {
+            color: #F8FAFC;
         }
 
-        /* Live Realtime Indicator Pill */
-        .live-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--success-light);
-            color: var(--success);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            padding: 6px 16px;
-            border-radius: var(--radius-full);
-            font-size: 0.82rem;
-            font-weight: 700;
-            margin-bottom: 1.25rem;
-            letter-spacing: 0.01em;
-            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
-        }
-        [data-theme="dark"] .live-badge {
-            background: rgba(6, 78, 59, 0.7);
-            color: #A7F3D0;
-            border-color: rgba(52, 211, 153, 0.3);
-        }
-        .live-pulse {
-            width: 8px;
-            height: 8px;
-            background: #10B981;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-            animation: pulse-ring 2s infinite;
-            flex-shrink: 0;
-        }
-        @keyframes pulse-ring {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 7px rgba(16, 185, 129, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-        }
-
-        .hero-title {
-            font-size: clamp(1.8rem, 4vw, 2.6rem);
-            font-weight: 900;
-            line-height: 1.18;
-            letter-spacing: -0.03em;
-            margin: 0 auto 1rem auto;
-            max-width: 860px;
-            color: var(--text-main);
-        }
-        .hero-title .gradient-text {
-            background: linear-gradient(135deg, #1E40AF 0%, #2563EB 50%, #0284C7 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        [data-theme="dark"] .hero-title .gradient-text {
-            background: linear-gradient(135deg, #60A5FA 0%, #93C5FD 50%, #38BDF8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-desc {
-            font-size: 1.05rem;
-            color: var(--text-muted);
+        .gov-hero-sub {
+            font-size: 0.98rem;
+            color: var(--gov-muted);
             max-width: 720px;
-            margin: 0 auto;
+            margin: 0 auto 1.5rem auto;
             line-height: 1.6;
             font-weight: 500;
         }
-        .hero-desc strong {
-            color: var(--text-main);
-            font-weight: 700;
-        }
 
-        /* ==========================================================================
-           3 STAT HIGHLIGHT CARDS (EXECUTIVE GLASS)
-           ========================================================================== */
-        .stat-banner-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-bottom: 2rem;
-        }
-        @media (max-width: 840px) {
-            .stat-banner-row {
-                grid-template-columns: 1fr 1fr;
-            }
-            .stat-banner-box:first-child {
-                grid-column: 1 / -1;
-            }
-        }
-
-        .stat-banner-box {
-            padding: 1.25rem 1.4rem;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            text-align: left;
-            position: relative;
-            overflow: hidden;
-        }
-        .stat-banner-box:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .stat-banner-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 16px;
+        /* Official Info Strip (Replaces generic SaaS stat cards) */
+        .gov-info-strip {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            transition: transform 0.25s ease;
-        }
-        .stat-banner-icon svg {
-            width: 24px;
-            height: 24px;
-            stroke: currentColor;
-            flex-shrink: 0;
-        }
-        .stat-banner-box:hover .stat-banner-icon {
-            transform: scale(1.08);
+            gap: 1.75rem;
+            flex-wrap: wrap;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--gov-hairline);
+            font-size: 0.85rem;
+            color: var(--gov-muted);
         }
 
-        .stat-banner-icon.emerald {
-            background: var(--success-gradient);
-            color: #FFFFFF;
-        }
-        .stat-banner-icon.blue {
-            background: var(--primary-gradient);
-            color: #FFFFFF;
-        }
-        .stat-banner-icon.gold {
-            background: var(--korpri-gold-gradient);
-            color: #FFFFFF;
-        }
-
-        .stat-val {
-            font-size: 1.45rem;
-            font-weight: 900;
-            line-height: 1.1;
-            letter-spacing: -0.02em;
-            color: var(--text-main);
-        }
-        .stat-lbl {
-            font-size: 0.82rem;
+        .gov-info-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
             font-weight: 600;
-            color: var(--text-muted);
-            margin-top: 3px;
+        }
+        .gov-info-item svg {
+            color: var(--korpri-gold);
+            flex-shrink: 0;
+        }
+        .gov-info-item strong {
+            color: var(--gov-slate);
         }
 
         /* ==========================================================================
-           CATEGORY SWITCHER & FILTER CONTROLS (iOS STYLE SEGMENTED)
+           PRODUCT SELECTION CARDS (Mutz Standar vs Kepala SKPD)
+           Tactile, Clear, Authoritative Presentation
            ========================================================================== */
-        .category-switcher-wrap {
-            margin-bottom: 2rem;
-            position: sticky;
-            top: 62px;
-            z-index: 85;
-            padding: 12px 1.5rem 14px 1.5rem;
-            margin-left: -1.5rem;
-            margin-right: -1.5rem;
-            background: rgba(248, 250, 252, 0.88);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-            transition: var(--transition-smooth);
-        }
-        [data-theme="dark"] .category-switcher-wrap {
-            background: rgba(9, 13, 22, 0.88);
-            border-bottom-color: rgba(255, 255, 255, 0.08);
-        }
-
-        .category-tabs-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            background: var(--glass-card);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-md);
-            border-radius: var(--radius-lg);
-            padding: 8px;
+        .gov-product-selector {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 16px;
+            margin-bottom: 1.5rem;
         }
 
-        .tab-btn {
-            background: transparent;
-            border: none;
-            border-radius: var(--radius-md);
-            padding: 14px 18px;
+        .product-choice-card {
+            background: var(--gov-surface);
+            border: 2px solid var(--gov-hairline);
+            border-radius: var(--radius-lg);
+            padding: 18px 20px;
             cursor: pointer;
             text-align: left;
-            transition: var(--transition-smooth);
+            transition: var(--transition);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+        }
+        .product-choice-card:hover {
+            border-color: #CBD5E1;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-card);
+        }
+        [data-theme="dark"] .product-choice-card:hover {
+            border-color: #334155;
+        }
+
+        /* Active State - Standar */
+        .product-choice-card.active.choice-standar {
+            border-color: var(--korpri-blue);
+            background: var(--gov-surface);
+            box-shadow: 0 0 0 1px var(--korpri-blue), var(--shadow-card);
+        }
+        [data-theme="dark"] .product-choice-card.active.choice-standar {
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 1px #3B82F6, var(--shadow-card);
+        }
+
+        /* Active State - Kepala SKPD */
+        .product-choice-card.active.choice-kepala {
+            border-color: var(--korpri-gold);
+            background: var(--gov-surface);
+            box-shadow: 0 0 0 1px var(--korpri-gold), var(--shadow-card);
+        }
+
+        .choice-check-radio {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid #CBD5E1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+            transition: var(--transition);
+        }
+        .choice-check-radio::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: transparent;
+            transition: var(--transition);
+        }
+        .product-choice-card.active.choice-standar .choice-check-radio {
+            border-color: var(--korpri-blue);
+        }
+        .product-choice-card.active.choice-standar .choice-check-radio::after {
+            background: var(--korpri-blue);
+        }
+        .product-choice-card.active.choice-kepala .choice-check-radio {
+            border-color: var(--korpri-gold);
+        }
+        .product-choice-card.active.choice-kepala .choice-check-radio::after {
+            background: var(--korpri-gold);
+        }
+
+        .choice-meta-title {
+            font-size: 1.08rem;
+            font-weight: 800;
+            color: var(--gov-slate);
+            line-height: 1.25;
+            margin-bottom: 3px;
+        }
+        .choice-meta-desc {
+            font-size: 0.82rem;
+            color: var(--gov-muted);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .choice-tags-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .tag-micro {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+        .tag-micro-blue {
+            background: var(--korpri-blue-subtle);
+            color: var(--korpri-blue);
+            border: 1px solid rgba(29, 78, 216, 0.2);
+        }
+        .tag-micro-gold {
+            background: var(--korpri-gold-light);
+            color: #8D6415;
+            border: 1px solid var(--korpri-gold-border);
+        }
+        [data-theme="dark"] .tag-micro-gold {
+            color: #FDE68A;
+        }
+        .tag-micro-green {
+            background: var(--status-green-bg);
+            color: var(--status-green);
+            border: 1px solid var(--status-green-border);
+        }
+
+        .choice-price-block {
+            text-align: right;
+            flex-shrink: 0;
+        }
+        .choice-price-val {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--gov-slate);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+        .choice-price-label {
+            font-size: 0.72rem;
+            color: var(--gov-subtle);
+            font-weight: 600;
+            margin-top: 2px;
+            text-transform: uppercase;
+        }
+
+        /* ==========================================================================
+           UNIFIED FILTER TOOLBAR (Gender & Size Filter in One Crisp Strip)
+           ========================================================================== */
+        .gov-filter-toolbar {
+            background: var(--gov-surface);
+            border: 1px solid var(--gov-hairline);
+            border-radius: var(--radius-md);
+            padding: 10px 14px;
+            margin-bottom: 1.75rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            color: var(--text-muted);
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            font-family: var(--font-main);
-            position: relative;
-        }
-        .tab-btn:hover:not(.active) {
-            background: rgba(0, 0, 0, 0.03);
-            color: var(--text-main);
-        }
-        [data-theme="dark"] .tab-btn:hover:not(.active) {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* Active State - Standar ASN */
-        .tab-btn.active.tab-biasa {
-            background: #FFFFFF;
-            color: var(--primary);
-            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.15), 0 1px 3px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(37, 99, 235, 0.2);
-        }
-        [data-theme="dark"] .tab-btn.active.tab-biasa {
-            background: rgba(30, 41, 59, 0.9);
-            color: #93C5FD;
-            border-color: rgba(59, 130, 246, 0.3);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Active State - Kepala SKPD */
-        .tab-btn.active.tab-kepala {
-            background: #FFFFFF;
-            color: #B45309;
-            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.2), 0 1px 3px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-        }
-        [data-theme="dark"] .tab-btn.active.tab-kepala {
-            background: rgba(45, 33, 10, 0.85);
-            color: #FCD34D;
-            border-color: rgba(245, 158, 11, 0.4);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        .tab-title {
-            font-size: 1.05rem;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            letter-spacing: -0.01em;
-            margin-bottom: 2px;
-            color: inherit;
-        }
-        .tab-title-full, .tab-title-short {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-        }
-        .tab-icon-svg {
-            flex-shrink: 0;
-            stroke: currentColor;
-        }
-        .tab-title-short {
-            display: none;
-        }
-        .tab-sub {
-            font-size: 0.8rem;
-            font-weight: 600;
-            opacity: 0.8;
-            color: var(--text-muted);
-        }
-        .tab-btn.active .tab-sub {
-            color: inherit;
-            opacity: 0.9;
-        }
-
-        .tab-price-tag {
-            background: rgba(15, 23, 42, 0.06);
-            color: var(--text-main);
-            padding: 6px 14px;
-            border-radius: var(--radius-full);
-            font-weight: 800;
-            font-size: 0.88rem;
-            white-space: nowrap;
-            letter-spacing: -0.01em;
-            transition: var(--transition-smooth);
-        }
-        .tab-btn.active.tab-biasa .tab-price-tag {
-            background: var(--primary-gradient);
-            color: #FFFFFF;
-            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
-        }
-        .tab-btn.active.tab-kepala .tab-price-tag {
-            background: var(--korpri-gold-gradient);
-            color: #FFFFFF;
-            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
-        }
-        [data-theme="dark"] .tab-price-tag {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--text-main);
-        }
-
-        /* Gender Filter Bar */
-        .gender-filter-bar {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 1rem;
-            margin-bottom: 0.85rem;
             flex-wrap: wrap;
+            box-shadow: var(--shadow-subtle);
         }
 
-        .gender-pill {
-            background: var(--glass-card);
-            color: var(--text-main);
-            border: 1px solid var(--glass-border-subtle);
-            box-shadow: var(--shadow-sm);
-            padding: 10px 22px;
-            border-radius: var(--radius-full);
-            font-size: 0.92rem;
-            font-weight: 700;
-            cursor: pointer;
+        .gender-segmented-control {
             display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            font-family: var(--font-main);
-        }
-        .gender-pill:hover:not(.active) {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-            color: var(--primary);
-        }
-        .gender-pill.active {
-            background: var(--primary-gradient);
-            color: #FFFFFF;
-            border-color: transparent;
-            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
-            transform: translateY(-1px);
-        }
-        .gender-pill.active-gold {
-            background: var(--korpri-gold-gradient);
-            color: #FFFFFF;
-            border-color: transparent;
-            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);
-            transform: translateY(-1px);
+            background: var(--gov-hairline-subtle);
+            border: 1px solid var(--gov-hairline);
+            border-radius: var(--radius-sm);
+            padding: 3px;
+            gap: 3px;
         }
 
-        .pill-badge {
-            background: rgba(0, 0, 0, 0.08);
-            color: inherit;
-            padding: 2px 8px;
-            border-radius: var(--radius-full);
-            font-size: 0.78rem;
-            font-weight: 700;
-        }
-        .gender-pill.active .pill-badge,
-        .gender-pill.active-gold .pill-badge {
-            background: rgba(255, 255, 255, 0.25);
-            color: #FFFFFF;
-        }
-        .pill-label-full, .pill-label-short {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-        }
-        .pill-icon-svg {
-            flex-shrink: 0;
-            stroke: currentColor;
-        }
-        .pill-label-short {
-            display: none;
-        }
-
-        /* Interactive Quick Size Chips */
-        .quick-size-track {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 8px;
-            overflow-x: auto;
-            padding: 6px 4px;
-            margin-bottom: 0.5rem;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-        }
-        @media (min-width: 641px) {
-            .quick-size-track {
-                justify-content: center;
-            }
-        }
-        .quick-size-track::-webkit-scrollbar {
-            display: none;
-        }
-
-        .size-chip-btn {
-            background: var(--glass-card);
-            color: var(--text-main);
-            border: 1px solid var(--glass-border-subtle);
-            box-shadow: var(--shadow-sm);
-            border-radius: var(--radius-full);
+        .btn-segment {
+            border: none;
+            background: transparent;
             padding: 7px 16px;
+            border-radius: 4px;
             font-size: 0.84rem;
             font-weight: 700;
+            color: var(--gov-muted);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+            font-family: var(--font-sans);
+            user-select: none;
+        }
+        .btn-segment:hover:not(.active) {
+            color: var(--gov-slate);
+        }
+        .btn-segment.active {
+            background: var(--gov-surface);
+            color: var(--korpri-navy);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        [data-theme="dark"] .btn-segment.active {
+            background: #1E293B;
+            color: #93C5FD;
+        }
+
+        .segment-counter {
+            font-size: 0.74rem;
+            font-weight: 600;
+            padding: 1px 6px;
+            border-radius: 4px;
+            background: var(--gov-hairline);
+            color: var(--gov-muted);
+        }
+        .btn-segment.active .segment-counter {
+            background: var(--korpri-blue-subtle);
+            color: var(--korpri-blue);
+        }
+        [data-theme="dark"] .btn-segment.active .segment-counter {
+            background: rgba(59, 130, 246, 0.2);
+            color: #93C5FD;
+        }
+
+        .size-chips-scroller {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            padding: 2px 0;
+        }
+        .size-chips-scroller::-webkit-scrollbar {
+            display: none;
+        }
+
+        .btn-size-chip {
+            border: 1px solid var(--gov-hairline);
+            background: var(--gov-surface);
+            color: var(--gov-muted);
+            border-radius: var(--radius-sm);
+            padding: 6px 12px;
+            font-size: 0.82rem;
+            font-weight: 700;
             cursor: pointer;
             white-space: nowrap;
-            flex-shrink: 0;
-            transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+            transition: var(--transition);
+            font-family: var(--font-sans);
             user-select: none;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            -webkit-tap-highlight-color: transparent;
-            font-family: var(--font-main);
+            gap: 4px;
         }
-        .size-chip-btn:hover:not(.active) {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-            border-color: var(--primary);
+        .btn-size-chip:hover:not(.active) {
+            border-color: #94A3B8;
+            color: var(--gov-slate);
         }
-        .size-chip-btn.active {
-            background: var(--text-main);
-            color: var(--bg-body);
-            border-color: var(--text-main);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transform: translateY(-1px);
+        .btn-size-chip.active {
+            background: var(--korpri-navy);
+            border-color: var(--korpri-navy);
+            color: #FFFFFF;
         }
-        [data-theme="dark"] .size-chip-btn.active {
-            background: #FFFFFF;
-            color: #0F172A;
-            border-color: #FFFFFF;
-            box-shadow: 0 4px 14px rgba(255, 255, 255, 0.2);
+        [data-theme="dark"] .btn-size-chip.active {
+            background: #1D4ED8;
+            border-color: #1D4ED8;
+            color: #FFFFFF;
         }
 
-        /* ==========================================================================
-           ESELON II SPECIAL INFO BANNER
-           ========================================================================== */
-        .eselon-banner {
-            background: linear-gradient(135deg, rgba(254, 243, 199, 0.95) 0%, rgba(253, 230, 138, 0.85) 100%);
-            border: 1px solid rgba(245, 158, 11, 0.35);
-            box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.15);
-            border-radius: var(--radius-lg);
-            padding: 18px 22px;
+        /* Eselon II Callout Bar (Clean Governmental Notice) */
+        .gov-eselon-alert {
+            background: var(--korpri-gold-light);
+            border: 1px solid var(--korpri-gold-border);
+            border-radius: var(--radius-md);
+            padding: 14px 18px;
             margin-bottom: 1.75rem;
             display: flex;
             align-items: center;
-            gap: 18px;
-            color: #78350F;
-            text-align: left;
-            transition: var(--transition-smooth);
+            gap: 14px;
+            color: #784C0B;
         }
-        [data-theme="dark"] .eselon-banner {
-            background: linear-gradient(135deg, rgba(45, 33, 10, 0.95) 0%, rgba(61, 43, 0, 0.85) 100%);
-            border-color: rgba(245, 158, 11, 0.4);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+        [data-theme="dark"] .gov-eselon-alert {
+            background: rgba(212, 175, 55, 0.08);
+            border-color: rgba(212, 175, 55, 0.25);
             color: #FEF3C7;
         }
-
-        .eselon-badge-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--korpri-gold-gradient);
+        .eselon-icon-wrap {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            background: var(--korpri-gold);
             color: #FFFFFF;
-            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
             flex-shrink: 0;
-            box-shadow: 0 4px 14px rgba(217, 119, 6, 0.3);
+        }
+        .eselon-alert-title {
+            font-size: 0.92rem;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+        .eselon-alert-desc {
+            font-size: 0.84rem;
+            line-height: 1.45;
+            font-weight: 500;
         }
 
         /* ==========================================================================
-           MODERN STOCK CARDS GRID
+           AUTHENTIC STOCK GRID (Clean Product Presentation, Zero Slop)
            ========================================================================== */
-        .stock-grid {
+        .gov-stock-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 22px;
-            margin-bottom: 3.5rem;
-            min-height: 440px;
-            contain: layout style;
+            gap: 16px;
+            margin-bottom: 3rem;
+            min-height: 320px;
         }
         @media (max-width: 960px) {
-            .stock-grid {
+            .gov-stock-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        @keyframes cardPopIn {
-            0% {
-                opacity: 0;
-                transform: translateY(12px) scale(0.985);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .size-card {
-            background: var(--glass-card);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-md);
-            border-radius: var(--radius-lg);
-            padding: 24px 22px;
+        .stock-item-card {
+            background: var(--gov-surface);
+            border: 1px solid var(--gov-hairline);
+            border-radius: var(--radius-md);
+            padding: 20px;
             display: flex;
             flex-direction: column;
+            transition: var(--transition);
+            box-shadow: var(--shadow-subtle);
             position: relative;
-            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
-            animation: cardPopIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-            contain: content;
-            will-change: transform, opacity;
-            transform: translateZ(0);
         }
-        .size-card:hover {
-            transform: translateY(-4px) translateZ(0);
-            box-shadow: var(--shadow-lg);
-            border-color: rgba(37, 99, 235, 0.35);
+        .stock-item-card:hover {
+            transform: translateY(-2px);
+            border-color: #CBD5E1;
+            box-shadow: var(--shadow-card);
         }
-        [data-theme="dark"] .size-card:hover {
-            border-color: rgba(59, 130, 246, 0.4);
-            box-shadow: 0 16px 35px -5px rgba(0, 0, 0, 0.5);
+        [data-theme="dark"] .stock-item-card:hover {
+            border-color: #334155;
         }
 
-        #panduan, #spesifikasi {
-            scroll-margin-top: 85px;
-        }
-
-
-        .card-header-row {
+        .stock-card-head {
             display: flex;
-            justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 16px;
+            justify-content: space-between;
+            margin-bottom: 14px;
         }
-        .size-number-badge {
-            font-size: 2.1rem;
-            font-weight: 900;
+
+        .size-display-wrap {
+            display: flex;
+            flex-direction: column;
+        }
+        .size-num-title {
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: var(--gov-slate);
             line-height: 1;
             letter-spacing: -0.03em;
-            color: var(--text-main);
         }
-        .size-sub-info {
-            font-size: 0.82rem;
+        .size-circumference {
+            font-size: 0.8rem;
+            color: var(--gov-subtle);
             font-weight: 600;
-            color: var(--text-muted);
-            margin-top: 5px;
+            margin-top: 4px;
         }
 
-        /* Modern Status Pill Badges */
-        .status-badge {
-            padding: 5px 12px;
-            border-radius: var(--radius-full);
-            font-size: 0.78rem;
-            font-weight: 700;
+        /* Clean Status Badges */
+        .status-pill {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            white-space: nowrap !important;
-            flex-shrink: 0 !important;
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            font-size: 0.76rem;
+            font-weight: 700;
             letter-spacing: 0.01em;
+            white-space: nowrap;
         }
-        .status-dot {
-            width: 7px;
-            height: 7px;
+        .status-dot-sm {
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             display: inline-block;
+        }
+
+        .pill-avail-ready {
+            background: var(--status-green-bg);
+            color: var(--status-green);
+            border: 1px solid var(--status-green-border);
+        }
+        .pill-avail-ready .status-dot-sm {
+            background: #16A34A;
+        }
+
+        .pill-avail-low {
+            background: var(--status-amber-bg);
+            color: var(--status-amber);
+            border: 1px solid var(--status-amber-border);
+        }
+        .pill-avail-low .status-dot-sm {
+            background: #D97706;
+        }
+
+        .pill-avail-empty {
+            background: var(--status-red-bg);
+            color: var(--status-red);
+            border: 1px solid var(--status-red-border);
+        }
+        .pill-avail-empty .status-dot-sm {
+            background: #DC2626;
+        }
+
+        /* Middle Body of Card */
+        .stock-card-body {
+            background: var(--gov-hairline-subtle);
+            border: 1px solid var(--gov-hairline);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            margin-bottom: 16px;
+        }
+        .body-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            margin-bottom: 4px;
+        }
+        .body-row:last-child {
+            margin-bottom: 0;
+        }
+        .body-label {
+            color: var(--gov-muted);
+            font-weight: 500;
+        }
+        .body-value {
+            font-weight: 700;
+            color: var(--gov-slate);
+        }
+        .body-include-pin {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--korpri-navy);
+            font-weight: 700;
+            font-size: 0.78rem;
+        }
+        [data-theme="dark"] .body-include-pin {
+            color: #93C5FD;
+        }
+        .body-include-pin svg {
+            color: var(--korpri-gold);
             flex-shrink: 0;
         }
-        .status-dot.green { background: #10B981; box-shadow: 0 0 6px rgba(16, 185, 129, 0.6); }
-        .status-dot.yellow { background: #F59E0B; box-shadow: 0 0 6px rgba(245, 158, 11, 0.6); }
-        .status-dot.red { background: #EF4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
-        .badge-ready {
-            background: var(--success-light);
-            color: var(--success);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-        [data-theme="dark"] .badge-ready {
-            background: rgba(6, 78, 59, 0.5);
-            color: #6EE7B7;
-            border-color: rgba(52, 211, 153, 0.3);
-        }
 
-        .badge-low {
-            background: var(--warning-light);
-            color: var(--warning);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-        }
-        [data-theme="dark"] .badge-low {
-            background: rgba(120, 53, 15, 0.5);
-            color: #FCD34D;
-            border-color: rgba(245, 158, 11, 0.3);
-        }
-
-        .badge-empty {
-            background: var(--danger-light);
-            color: var(--danger);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-        [data-theme="dark"] .badge-empty {
-            background: rgba(127, 29, 29, 0.5);
-            color: #FCA5A5;
-            border-color: rgba(248, 113, 113, 0.3);
-        }
-
-        .badge-preorder-gold {
-            background: rgba(245, 158, 11, 0.12);
-            color: #B45309;
-            border: 1px solid rgba(217, 119, 6, 0.35);
-        }
-        [data-theme="dark"] .badge-preorder-gold {
-            background: rgba(245, 158, 11, 0.2);
-            color: #FCD34D;
-            border-color: rgba(245, 158, 11, 0.4);
-        }
-
-        /* Stock Quantity Meter */
-        .stock-qty-wrap {
-            margin: 12px 0 16px 0;
-            padding: 16px;
-            background: rgba(241, 245, 249, 0.6);
-            border: 1px solid var(--glass-border-subtle);
-            border-radius: var(--radius-md);
-            text-align: center;
-        }
-        [data-theme="dark"] .stock-qty-wrap {
-            background: rgba(15, 23, 42, 0.6);
-        }
-
-        .qty-number {
-            font-size: 2.2rem;
-            font-weight: 900;
-            line-height: 1;
-            margin-bottom: 3px;
-            letter-spacing: -0.02em;
-        }
-        .qty-label {
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            letter-spacing: 0.01em;
-        }
-
-        .stock-progress-bar {
-            height: 7px;
-            background: rgba(203, 213, 225, 0.6);
-            border-radius: var(--radius-full);
-            overflow: hidden;
-            margin-top: 10px;
-        }
-        [data-theme="dark"] .stock-progress-bar {
-            background: rgba(51, 65, 85, 0.8);
-        }
-        .stock-progress-fill {
-            height: 100%;
-            border-radius: var(--radius-full);
-            transition: width 0.4s ease;
-        }
-
-        /* Modern CTA Buttons */
-        .btn-order-wa {
+        /* Card Action Button (Crisp WhatsApp CTA) */
+        .btn-order-action {
             margin-top: auto;
             width: 100%;
-            padding: 12px 16px;
-            border-radius: var(--radius-md);
-            border: none;
-            font-weight: 800;
-            font-size: 0.92rem;
-            text-align: center;
-            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid transparent;
+            font-size: 0.88rem;
+            font-weight: 700;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            transition: var(--transition-smooth);
+            gap: 7px;
+            transition: var(--transition);
+            font-family: var(--font-sans);
             user-select: none;
             -webkit-tap-highlight-color: transparent;
-            font-family: var(--font-main);
+            text-decoration: none;
         }
-        .btn-order-wa.ready {
-            background: var(--success-gradient);
+
+        .btn-order-action.ready-wa {
+            background: #15803D;
             color: #FFFFFF;
-            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+            border-color: #15803D;
         }
-        .btn-order-wa.ready:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        .btn-order-action.ready-wa:hover {
+            background: #166534;
+            border-color: #166534;
+            transform: translateY(-1px);
         }
-        .btn-order-wa.ready-gold {
-            background: var(--korpri-gold-gradient);
-            color: #FFFFFF;
-            box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35);
+
+        .btn-order-action.preorder-wa {
+            background: var(--gov-surface);
+            color: var(--gov-slate);
+            border-color: var(--gov-hairline);
         }
-        .btn-order-wa.ready-gold:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(217, 119, 6, 0.45);
+        .btn-order-action.preorder-wa:hover {
+            background: var(--gov-hairline-subtle);
+            border-color: #94A3B8;
+            transform: translateY(-1px);
         }
-        .btn-order-wa.preorder {
-            background: rgba(100, 116, 139, 0.1);
-            color: var(--text-main);
-            border: 1px solid var(--glass-border-subtle);
+
+        /* ==========================================================================
+           EDITORIAL SIZE GUIDE & SPECIFICATION SECTION
+           ========================================================================== */
+        .gov-section-card {
+            background: var(--gov-surface);
+            border: 1px solid var(--gov-hairline);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-subtle);
         }
-        .btn-order-wa.preorder:hover {
-            background: rgba(100, 116, 139, 0.18);
-            transform: translateY(-2px);
+
+        .section-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            padding-bottom: 0.85rem;
+            border-bottom: 1px solid var(--gov-hairline);
         }
-        [data-theme="dark"] .btn-order-wa.preorder {
-            background: rgba(255, 255, 255, 0.08);
+        .section-h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--korpri-navy);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        [data-theme="dark"] .section-h2 {
             color: #F8FAFC;
         }
 
-        /* ==========================================================================
-           SIZE GUIDE & COMPARISON SECTION
-           ========================================================================== */
-        .guide-box {
-            padding: 30px;
-            margin-bottom: 3.5rem;
-        }
-
-        .guide-table {
+        .gov-editorial-table {
             width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin-top: 1.25rem;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            border: 1px solid var(--glass-border-subtle);
+            border-collapse: collapse;
+            font-size: 0.86rem;
+            margin-top: 1rem;
         }
-        .guide-table th, .guide-table td {
-            padding: 12px 14px;
+        .gov-editorial-table th, 
+        .gov-editorial-table td {
+            padding: 11px 14px;
             text-align: center;
-            font-size: 0.88rem;
-            border-bottom: 1px solid var(--glass-border-subtle);
+            border: 1px solid var(--gov-hairline);
         }
-        .guide-table th {
-            background: rgba(37, 99, 235, 0.08);
-            color: var(--primary);
+        .gov-editorial-table th {
+            background: var(--gov-hairline-subtle);
+            color: var(--korpri-navy);
             font-weight: 800;
             text-transform: uppercase;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             letter-spacing: 0.03em;
         }
-        [data-theme="dark"] .guide-table th {
-            background: rgba(37, 99, 235, 0.2);
+        [data-theme="dark"] .gov-editorial-table th {
             color: #93C5FD;
         }
-        .guide-table td.subhead {
-            background: rgba(241, 245, 249, 0.5);
-            font-weight: 700;
-            color: var(--text-main);
+        .gov-editorial-table td.subhead-col {
             text-align: left;
-        }
-        [data-theme="dark"] .guide-table td.subhead {
-            background: rgba(30, 41, 59, 0.5);
-        }
-        .guide-table tbody tr:last-child td {
-            border-bottom: none;
+            font-weight: 700;
+            background: var(--gov-hairline-subtle);
+            color: var(--gov-slate);
+            white-space: nowrap;
         }
 
-        /* Comparison Grid */
-        .comparison-grid {
+        .hijab-callout-box {
+            background: var(--korpri-blue-subtle);
+            border: 1px solid rgba(29, 78, 216, 0.2);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            margin-top: 1.25rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.86rem;
+            color: var(--gov-slate);
+            line-height: 1.5;
+        }
+        .hijab-callout-box svg {
+            color: var(--korpri-blue);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Comparison 2-Column Grid */
+        .gov-spec-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 18px;
-            margin-top: 1.5rem;
+            gap: 16px;
+            margin-top: 1.25rem;
         }
-        .comparison-card {
+        .spec-box {
+            border: 1px solid var(--gov-hairline);
             border-radius: var(--radius-md);
-            padding: 22px;
-            background: rgba(248, 250, 252, 0.7);
-            border: 1px solid var(--glass-border-subtle);
-            position: relative;
-            overflow: hidden;
+            padding: 18px;
+            background: var(--gov-hairline-subtle);
         }
-        [data-theme="dark"] .comparison-card {
-            background: rgba(15, 23, 42, 0.6);
+        .spec-box.eselon {
+            border-color: var(--korpri-gold-border);
+            background: var(--korpri-gold-light);
         }
-        .comparison-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-        }
-        .comparison-card.card-standar::before {
-            background: var(--primary-gradient);
-        }
-        .comparison-card.card-eselon::before {
-            background: var(--korpri-gold-gradient);
+        [data-theme="dark"] .spec-box.eselon {
+            background: rgba(212, 175, 55, 0.06);
+            border-color: rgba(212, 175, 55, 0.25);
         }
 
-        .badge-include-pin {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
+        .spec-badge {
             font-size: 0.74rem;
             font-weight: 800;
-            color: var(--primary);
-            background: rgba(37, 99, 235, 0.08);
-            border: 1px solid rgba(37, 99, 235, 0.22);
-            padding: 3px 9px;
-            border-radius: var(--radius-full);
-            letter-spacing: -0.01em;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 6px;
+            display: inline-block;
         }
-        .badge-include-pin.gold {
-            color: #B45309;
-            background: rgba(245, 158, 11, 0.12);
-            border-color: rgba(217, 119, 6, 0.28);
+        .spec-badge.standar { color: var(--korpri-blue); }
+        .spec-badge.eselon { color: var(--korpri-gold); }
+
+        .spec-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--gov-slate);
+            margin-bottom: 10px;
         }
-        [data-theme="dark"] .badge-include-pin {
-            color: #93C5FD;
-            background: rgba(37, 99, 235, 0.2);
-            border-color: rgba(59, 130, 246, 0.35);
+        .spec-list {
+            padding-left: 18px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--gov-muted);
+            font-weight: 500;
         }
-        [data-theme="dark"] .badge-include-pin.gold {
-            color: #FDE68A;
-            background: rgba(245, 158, 11, 0.18);
-            border-color: rgba(245, 158, 11, 0.35);
+        .spec-list li {
+            margin-bottom: 4px;
         }
 
         /* ==========================================================================
-           MODAL DIALOG & RESPONSIVE BOTTOM-SHEET
+           MODAL & FLOATING DIALOG
            ========================================================================== */
-        .modal-backdrop {
+        .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(15, 23, 42, 0.65);
+            background: rgba(11, 30, 59, 0.65);
             z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 1rem;
-            box-sizing: border-box;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s;
-            will-change: opacity;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
         }
-        .modal-backdrop.active {
+        .modal-overlay.active {
             opacity: 1;
             visibility: visible;
             pointer-events: auto;
         }
-        .modal-drag-handle {
-            display: none;
-        }
-        .modal-card {
-            background: var(--glass-card);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-lg);
+
+        .modal-window {
+            background: var(--gov-surface);
+            border: 1px solid var(--gov-hairline);
             border-radius: var(--radius-lg);
-            max-width: 480px;
+            box-shadow: var(--shadow-float);
+            max-width: 460px;
             width: 100%;
-            padding: 26px;
-            position: relative;
-            box-sizing: border-box;
-            color: var(--text-main);
-            transform: scale(0.94) translateY(12px);
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: transform;
+            padding: 24px;
+            transform: scale(0.97);
+            transition: transform 0.2s ease;
         }
-        .modal-backdrop.active .modal-card {
-            transform: scale(1) translateY(0);
+        .modal-overlay.active .modal-window {
+            transform: scale(1);
         }
 
-        .modal-card input {
-            width: 100%;
-            padding: 12px 14px;
+        .modal-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--gov-hairline);
+            margin-bottom: 14px;
+        }
+        .modal-title-text {
+            font-size: 1.12rem;
+            font-weight: 800;
+            color: var(--korpri-navy);
+        }
+        [data-theme="dark"] .modal-title-text {
+            color: #F8FAFC;
+        }
+        .btn-modal-close {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--gov-subtle);
+            line-height: 1;
+            padding: 2px 6px;
+        }
+
+        .modal-summary-box {
+            background: var(--gov-hairline-subtle);
+            border: 1px solid var(--gov-hairline);
             border-radius: var(--radius-sm);
-            border: 1px solid var(--glass-border-subtle);
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--text-main);
-            font-family: var(--font-main);
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: var(--transition-smooth);
-            outline: none;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+            font-size: 0.84rem;
         }
-        .modal-card input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        .modal-summary-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
         }
-        [data-theme="dark"] .modal-card input {
-            background: rgba(30, 41, 59, 0.8);
-            border-color: rgba(255, 255, 255, 0.12);
+        .modal-summary-line:last-child {
+            margin-bottom: 0;
+            border-top: 1px dashed var(--gov-hairline);
+            padding-top: 6px;
+            margin-top: 6px;
         }
 
-        /* ==========================================================================
-           FLOATING ACTIONS GROUP (WHATSAPP + SCROLL TO TOP)
-           ========================================================================== */
-        .floating-actions-wrap {
+        .gov-form-group {
+            margin-bottom: 14px;
+        }
+        .gov-form-label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--gov-slate);
+            margin-bottom: 5px;
+        }
+        .gov-form-input {
+            width: 100%;
+            padding: 9px 12px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--gov-hairline);
+            background: var(--gov-surface);
+            color: var(--gov-slate);
+            font-size: 0.88rem;
+            font-family: var(--font-sans);
+            outline: none;
+            transition: var(--transition);
+        }
+        .gov-form-input:focus {
+            border-color: var(--korpri-blue);
+            box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
+        }
+
+        /* Floating Actions Container (No Collision with Cards) */
+        .gov-floating-actions {
             position: fixed;
             bottom: 24px;
             right: 24px;
+            z-index: 99;
             display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 12px;
-            z-index: 95;
-            pointer-events: none;
-        }
-        .floating-actions-wrap > * {
-            pointer-events: auto;
-        }
-
-        .floating-wa-btn {
-            background: var(--success-gradient);
-            color: #FFFFFF;
-            border: none;
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
-            border-radius: var(--radius-full);
-            padding: 12px 22px;
-            font-weight: 800;
-            font-size: 0.94rem;
-            text-decoration: none;
-            display: inline-flex;
             align-items: center;
             gap: 10px;
-            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            font-family: var(--font-main);
-            will-change: transform;
-            transform: translateZ(0);
-        }
-        .floating-wa-btn:hover {
-            transform: translateY(-3px) scale(1.02) translateZ(0);
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.5);
         }
 
-        .btn-scroll-top {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: var(--glass-card) !important;
-            color: var(--text-main) !important;
-            border: 1px solid var(--glass-border-subtle) !important;
-            box-shadow: var(--shadow-md) !important;
-            cursor: pointer;
+        .btn-floating-wa {
             display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #15803D;
+            color: #FFFFFF;
+            padding: 10px 18px;
+            border-radius: var(--radius-full);
+            font-size: 0.86rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 6px 18px rgba(21, 128, 61, 0.35);
+            transition: var(--transition);
+            user-select: none;
+        }
+        .btn-floating-wa:hover {
+            background: #166534;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(21, 128, 61, 0.45);
+        }
+
+        .btn-gov-top {
+            width: 42px;
+            height: 42px;
+            border-radius: var(--radius-full);
+            background: var(--gov-surface);
+            border: 1px solid var(--gov-hairline);
+            color: var(--gov-slate);
+            box-shadow: var(--shadow-card);
+            cursor: pointer;
+            display: flex;
             align-items: center;
             justify-content: center;
+            transition: var(--transition);
             opacity: 0;
             visibility: hidden;
-            pointer-events: none;
-            transform: translateY(12px) scale(0.9) translateZ(0);
-            transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            will-change: transform, opacity;
+            transform: translateY(8px);
         }
-        .btn-scroll-top.visible {
+        .btn-gov-top.visible {
             opacity: 1;
             visibility: visible;
-            pointer-events: auto;
-            transform: translateY(0) scale(1) translateZ(0);
+            transform: translateY(0);
         }
-        .btn-scroll-top:hover {
-            transform: translateY(-3px) translateZ(0);
-            box-shadow: var(--shadow-lg) !important;
+        .btn-gov-top:hover {
+            border-color: var(--korpri-blue);
+            color: var(--korpri-blue);
         }
 
-        /* Ultra-Smooth Floating Toast Notification */
-        .toast-notification {
+        /* Floating Toast Notification */
+        .gov-toast {
             position: fixed;
-            top: 76px;
+            top: 70px;
             left: 50%;
-            transform: translateX(-50%) translateY(-20px) scale(0.96);
-            background: rgba(15, 23, 42, 0.94);
+            transform: translateX(-50%) translateY(-20px);
+            background: var(--korpri-navy);
             color: #FFFFFF;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            padding: 12px 22px;
+            padding: 10px 20px;
             border-radius: var(--radius-full);
-            font-size: 0.88rem;
-            font-weight: 700;
+            font-size: 0.86rem;
+            font-weight: 600;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            z-index: 99999;
+            gap: 8px;
+            box-shadow: var(--shadow-float);
+            z-index: 10000;
             opacity: 0;
             visibility: hidden;
+            transition: var(--transition);
             pointer-events: none;
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0.3s;
-            will-change: transform, opacity;
         }
-        .toast-notification.show {
+        .gov-toast.show {
             opacity: 1;
             visibility: visible;
-            transform: translateX(-50%) translateY(0) scale(1);
-            pointer-events: auto;
-        }
-        .toast-notification svg {
-            color: #10B981;
-            flex-shrink: 0;
+            transform: translateX(-50%) translateY(0);
         }
 
         /* ==========================================================================
-           MODERN EXECUTIVE KORPRI FOOTER
+           MINIMALIST OFFICIAL FOOTER (No Wasted Space, 100% Dignified)
            ========================================================================== */
-        .public-footer {
+        .gov-footer {
+            background: var(--gov-surface);
+            border-top: 1px solid var(--gov-hairline);
+            padding: 1.75rem 1.5rem;
+            margin-top: auto;
             position: relative;
-            background: var(--glass-nav);
-            border-top: 1px solid var(--glass-border-subtle);
-            padding: 2.25rem 1.5rem;
-            width: 100%;
-            box-sizing: border-box;
-            margin-top: 3.5rem;
-            color: var(--text-main);
-            overflow: hidden;
         }
-
-        /* Official KORPRI Royal Gold & Navy Accent Line */
-        .public-footer::before {
-            content: "";
+        .gov-footer::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #1E40AF 0%, #D97706 35%, #F59E0B 50%, #D97706 65%, #2563EB 100%);
-            opacity: 0.95;
+            height: 2px;
+            background: linear-gradient(90deg, #0B1E3B 0%, #B48228 50%, #0B1E3B 100%);
         }
 
-        .footer-desktop-wrap {
-            display: block;
-        }
-
-        .footer-mobile-wrap {
-            display: none;
-        }
-
-        .footer-inner {
+        .gov-footer-inner {
             max-width: 1140px;
             margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 1.25rem;
             flex-wrap: wrap;
-            gap: 1.5rem;
         }
 
-        .footer-brand-wrap {
+        .footer-identity {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
-
-        .footer-logo-mini {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: #FFFFFF;
-            padding: 3px;
-            border: 1.5px solid rgba(217, 119, 6, 0.4);
-            box-shadow: 0 2px 10px rgba(30, 58, 138, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .footer-seal {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
             flex-shrink: 0;
         }
-        .footer-logo-mini img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .footer-brand-title {
-            font-size: 0.98rem;
+        .footer-name {
+            font-size: 0.92rem;
             font-weight: 800;
-            color: var(--text-main);
+            color: var(--gov-slate);
             line-height: 1.2;
-            letter-spacing: -0.01em;
         }
-        .footer-brand-sub {
-            font-size: 0.74rem;
-            color: var(--text-muted);
+        .footer-address-txt {
+            font-size: 0.78rem;
+            color: var(--gov-subtle);
             font-weight: 500;
-            margin-top: 1px;
-        }
-        .footer-address {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 0.76rem;
-            color: var(--text-muted);
-            margin-top: 5px;
-            font-weight: 500;
+            gap: 5px;
+            margin-top: 2px;
         }
-        .footer-address svg {
+        .footer-address-txt svg {
             color: var(--korpri-gold);
             flex-shrink: 0;
         }
 
-        .footer-links-group {
+        .footer-nav-links {
             display: flex;
             align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .footer-link-pill {
-            color: var(--text-muted);
-            text-decoration: none;
+            gap: 14px;
             font-size: 0.82rem;
             font-weight: 600;
-            padding: 6px 14px;
-            border-radius: var(--radius-full);
-            background: rgba(15, 23, 42, 0.03);
-            border: 1px solid var(--glass-border-subtle);
-            transition: var(--transition-smooth);
         }
-        .footer-link-pill:hover {
-            color: var(--primary);
-            background: rgba(37, 99, 235, 0.08);
-            border-color: rgba(37, 99, 235, 0.25);
-            transform: translateY(-1px);
+        .footer-nav-links a {
+            color: var(--gov-muted);
+            text-decoration: none;
+            transition: var(--transition);
         }
-        [data-theme="dark"] .footer-link-pill {
-            background: rgba(255, 255, 255, 0.05);
-        }
-        [data-theme="dark"] .footer-link-pill:hover {
-            color: #93C5FD;
-            background: rgba(37, 99, 235, 0.15);
-            border-color: rgba(59, 130, 246, 0.3);
+        .footer-nav-links a:hover {
+            color: var(--korpri-blue);
         }
 
-        .footer-bottom-bar {
+        .footer-copyright-bar {
             max-width: 1140px;
-            margin: 1.5rem auto 0 auto;
-            padding-top: 1.25rem;
-            border-top: 1px solid var(--glass-border-subtle);
+            margin: 1.25rem auto 0 auto;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gov-hairline);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
             font-size: 0.76rem;
-            color: var(--text-subtle);
-            font-weight: 500;
-        }
-
-        .footer-status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.74rem;
-            font-weight: 700;
-            color: var(--success);
-            background: var(--success-light);
-            padding: 3px 10px;
-            border-radius: var(--radius-full);
-        }
-        [data-theme="dark"] .footer-status-pill {
-            background: rgba(6, 78, 59, 0.5);
-            color: #6EE7B7;
-        }
-        .footer-status-dot {
-            width: 6px;
-            height: 6px;
-            background: #10B981;
-            border-radius: 50%;
+            color: var(--gov-subtle);
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         /* ==========================================================================
-           COMPREHENSIVE MOBILE & TABLET RESPONSIVENESS (Max Width: 640px)
+           RESPONSIVE MOBILE BREAKPOINTS (Max Width: 680px)
            ========================================================================== */
-        @media (max-width: 640px) {
-            .public-navbar {
+        @media (max-width: 680px) {
+            .gov-header {
                 padding: 0.65rem 1rem;
-                gap: 0.5rem;
             }
-            .brand-logo-wrap {
+            .gov-brand-seal {
                 width: 36px;
                 height: 36px;
-                border-radius: 10px;
             }
-            .brand-title {
-                font-size: 0.98rem;
+            .gov-brand-title {
+                font-size: 0.88rem;
             }
-            .brand-sub {
+            .gov-brand-sub {
                 display: none;
             }
-            .nav-actions {
-                gap: 6px;
-            }
-            .nav-btn {
+            .btn-gov-nav {
                 padding: 7px 11px;
                 font-size: 0.78rem;
             }
-            .nav-btn-text {
+            .btn-nav-label-long {
                 display: none;
             }
-            .nav-btn-short {
-                display: inline;
+
+            .gov-container {
+                padding: 1.25rem 1rem 5.5rem 1rem;
             }
 
-            .catalog-container {
-                padding: 0 0.85rem;
-            }
-
-            .hero-section {
-                padding: 1.25rem 0 0.75rem 0;
-            }
-            .hero-card-banner {
-                padding: 1.25rem 1rem;
-                border-radius: 20px;
+            .gov-hero {
+                padding: 1.5rem 1.15rem;
                 margin-bottom: 1.25rem;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
             }
-            .institution-ribbon {
-                padding: 5px 12px;
-                margin-bottom: 0.85rem;
-                gap: 5px;
-            }
-            .ribbon-text-main {
-                font-size: 0.72rem;
-            }
-            .ribbon-text-sub {
+            .gov-authority-badge {
+                padding: 4px 10px;
                 font-size: 0.68rem;
-                display: inline;
+                margin-bottom: 0.85rem;
             }
-            .hero-title {
-                font-size: 1.4rem;
+            .gov-hero-h1 {
+                font-size: 1.45rem;
                 margin-bottom: 0.5rem;
             }
-            .hero-desc {
-                font-size: 0.84rem;
-                line-height: 1.45;
+            .gov-hero-sub {
+                font-size: 0.86rem;
+                margin-bottom: 1rem;
             }
-
-            /* Stat cards on mobile - Sleek & Minimalist */
-            .stat-banner-row {
-                grid-template-columns: 1fr 1fr;
-                gap: 8px;
-                margin-bottom: 1.25rem;
-            }
-            .stat-banner-box:first-child {
-                grid-column: 1 / -1;
-            }
-            .stat-banner-box {
-                padding: 10px 12px;
-                gap: 10px;
-                border-radius: 14px;
-            }
-            .stat-banner-icon {
-                width: 38px;
-                height: 38px;
-                font-size: 1.15rem;
-                border-radius: 10px;
-            }
-            .stat-banner-icon svg {
-                width: 19px;
-                height: 19px;
-            }
-            .stat-val {
-                font-size: 1.15rem;
-                font-weight: 800;
-            }
-            .stat-lbl {
-                font-size: 0.71rem;
-            }
-
-            /* Sticky Tab Controls on Mobile - Ultra Minimalist */
-            .category-switcher-wrap {
-                top: 48px;
-                padding: 6px 0.85rem 8px 0.85rem;
-                margin-left: -0.85rem;
-                margin-right: -0.85rem;
-            }
-            .category-tabs-container {
-                gap: 6px;
-                padding: 4px;
-                border-radius: 16px;
-            }
-            .tab-btn {
-                padding: 8px 10px;
+            .gov-info-strip {
+                gap: 0.85rem;
+                font-size: 0.78rem;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 3px;
-                border-radius: 12px;
-            }
-            .tab-title {
-                font-size: 0.84rem;
-            }
-            .tab-title-full {
-                display: none !important;
-            }
-            .tab-title-short {
-                display: inline-flex !important;
-                align-items: center;
-                gap: 5px;
-            }
-            .tab-title-short .tab-icon-svg {
-                width: 13px;
-                height: 13px;
-            }
-            .tab-sub {
-                display: none;
-            }
-            .tab-price-tag {
-                padding: 2px 7px;
-                font-size: 0.71rem;
-                align-self: flex-start;
-                border-radius: var(--radius-full);
             }
 
-            /* Gender Pills on Mobile - Clean Capsule */
-            .gender-filter-bar {
-                margin: 8px 0 10px 0;
-                gap: 8px;
-            }
-            .gender-pill {
-                padding: 7px 15px;
-                font-size: 0.82rem;
-                border-radius: var(--radius-full);
-            }
-            .pill-label-full {
-                display: none !important;
-            }
-            .pill-label-short {
-                display: inline-flex !important;
-                align-items: center;
-                gap: 5px;
-            }
-            .pill-label-short .pill-icon-svg {
-                width: 13px;
-                height: 13px;
-            }
-
-            /* Stock Cards on Mobile - Modern Clean Card */
-            .stock-grid {
-                grid-template-columns: 1fr;
-                gap: 11px;
-                margin-bottom: 2rem;
-            }
-            .size-card {
-                padding: 14px 14px 15px 14px;
-                border-radius: 18px;
-            }
-            .size-number-badge {
-                font-size: 1.7rem;
-            }
-            .btn-order-wa {
-                padding: 11px 14px;
-                font-size: 0.88rem;
-                border-radius: 12px;
-            }
-
-            /* Guide & Comparison Grid on Mobile */
-            .guide-box {
-                padding: 16px 14px;
-                border-radius: 18px;
-                margin-bottom: 2.25rem;
-            }
-            .comparison-grid {
+            /* Product Selector on Mobile */
+            .gov-product-selector {
                 grid-template-columns: 1fr;
                 gap: 10px;
+                margin-bottom: 1.25rem;
             }
-            .comparison-card {
-                padding: 16px 14px;
-                border-radius: 18px;
+            .product-choice-card {
+                padding: 14px 16px;
             }
-
-            /* Mobile Bottom Sheet Modal */
-            .modal-backdrop {
-                align-items: flex-end;
-                padding: 0;
+            .choice-meta-title {
+                font-size: 1rem;
             }
-            .modal-drag-handle {
-                display: block;
-                width: 44px;
-                height: 5px;
-                background: var(--text-subtle);
-                opacity: 0.5;
-                border-radius: var(--radius-full);
-                margin: 0 auto 16px auto;
-            }
-            .modal-card {
-                max-width: 100%;
-                border-radius: 24px 24px 0 0;
-                border-bottom: none;
-                padding: 16px 20px calc(24px + env(safe-area-inset-bottom, 0px)) 20px;
-                animation: slideUpSheet 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            }
-            @keyframes slideUpSheet {
-                from { transform: translateY(100%); }
-                to { transform: translateY(0); }
+            .choice-price-val {
+                font-size: 1.15rem;
             }
 
-            /* Floating Actions on Mobile */
-            .floating-actions-wrap {
-                bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+            /* Filter Toolbar on Mobile */
+            .gov-filter-toolbar {
+                padding: 8px 10px;
+                margin-bottom: 1.25rem;
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .gender-segmented-control {
+                width: 100%;
+                display: flex;
+            }
+            .btn-segment {
+                flex: 1;
+                justify-content: center;
+                padding: 8px 10px;
+                font-size: 0.8rem;
+            }
+
+            /* Stock Grid on Mobile */
+            .gov-stock-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin-bottom: 2.5rem;
+            }
+            .stock-item-card {
+                padding: 16px;
+            }
+            .size-num-title {
+                font-size: 1.6rem;
+            }
+
+            /* Size Guide & Spec on Mobile */
+            .gov-section-card {
+                padding: 1.25rem 1rem;
+                margin-bottom: 1.5rem;
+            }
+            .gov-spec-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            /* Floating Button on Mobile */
+            .gov-floating-actions {
+                bottom: 14px;
                 right: 14px;
                 gap: 8px;
             }
-            .floating-wa-btn {
-                padding: 10px 16px;
-                font-size: 0.85rem;
-            }
-            .btn-scroll-top {
-                width: 40px;
-                height: 40px;
+            .btn-floating-wa {
+                padding: 9px 14px;
+                font-size: 0.82rem;
             }
 
-            /* Minimalist Executive KORPRI Mobile Footer */
-            .footer-desktop-wrap {
-                display: none !important;
+            /* Footer on Mobile (Clean Minimalist) */
+            .gov-footer {
+                padding: 1.25rem 1rem;
             }
-            .footer-mobile-wrap {
-                display: block !important;
-                width: 100%;
-                margin: 0 auto;
-                text-align: center;
-            }
-
-            .public-footer {
-                padding: 1.25rem 1rem calc(5.5rem + env(safe-area-inset-bottom, 0px)) 1rem;
-                margin-top: 1.75rem;
-            }
-
-            .footer-mobile-minimal {
-                display: flex;
+            .gov-footer-inner {
                 flex-direction: column;
-                align-items: center;
-                gap: 7px;
-                width: 100%;
+                align-items: flex-start;
+                gap: 0.85rem;
+            }
+            .footer-nav-links {
+                gap: 10px;
+                flex-wrap: wrap;
+                font-size: 0.78rem;
+            }
+            .footer-copyright-bar {
+                margin-top: 1rem;
+                padding-top: 0.85rem;
             }
 
-            .footer-mobile-mini-brand {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
+            /* Bottom Sheet on Mobile */
+            .modal-overlay {
+                align-items: flex-end;
+                padding: 0;
             }
-
-            .footer-mobile-mini-title {
-                font-size: 0.88rem;
-                font-weight: 800;
-                color: var(--text-main);
-                line-height: 1.2;
-            }
-
-            .footer-mobile-mini-loc {
-                display: inline-flex;
-                align-items: center;
-                gap: 4px;
-                font-size: 0.74rem;
-                font-weight: 600;
-                color: var(--korpri-gold);
-            }
-            [data-theme="dark"] .footer-mobile-mini-loc {
-                color: #FCD34D;
-            }
-
-            .footer-mobile-mini-links {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
-                font-size: 0.75rem;
-                font-weight: 600;
-                color: var(--text-subtle);
-                margin: 2px 0;
-            }
-            .footer-mobile-mini-links a {
-                color: var(--text-muted);
-                text-decoration: none;
-            }
-            .footer-mobile-mini-links a:hover {
-                color: var(--primary);
-            }
-
-            .footer-mobile-mini-copy {
-                font-size: 0.71rem;
-                color: var(--text-subtle);
-                font-weight: 500;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .floating-wa-text {
-                display: none;
-            }
-            .floating-wa-btn {
-                padding: 11px;
-                border-radius: 50%;
-                width: 44px;
-                height: 44px;
-                justify-content: center;
+            .modal-window {
+                max-width: 100%;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+                padding: 20px 18px 26px 18px;
             }
         }
     </style>
 </head>
-<body class="public-catalog-page">
-    <script>
-        if(localStorage.getItem('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-    </script>
+<body class="gov-portal">
+    <!-- Top Accent Bar -->
+    <div class="gov-top-accent"></div>
 
-    <!-- Kantor Bupati / Dewan Pengurus KORPRI Background -->
-    <div class="public-bg-fixed" aria-hidden="true"></div>
-    <div class="public-bg-heritage" aria-hidden="true"></div>
-    <div class="public-bg-watermark" aria-hidden="true"></div>
-    <div class="public-bg-overlay" aria-hidden="true"></div>
+    <!-- Official Dignified Backdrop -->
+    <div class="gov-bg-backdrop" aria-hidden="true"></div>
+    <div class="gov-bg-seal" aria-hidden="true"></div>
 
-    <!-- Frosted Top Navbar -->
-    <header class="public-navbar">
-        <a href="cek_stok.php" class="brand-public">
-            <div class="brand-logo-wrap">
-                <img src="assets/images/logo.png?v=2" alt="Logo KORPRI" width="40" height="40">
+    <!-- Top Header -->
+    <header class="gov-header">
+        <div class="gov-header-inner">
+            <a href="cek_stok.php" class="gov-brand" title="Dewan Pengurus KORPRI Kabupaten Banjar">
+                <div class="gov-brand-seal">
+                    <img src="assets/images/korpri-badge.png" alt="Logo KORPRI" width="36" height="36">
+                </div>
+                <div class="gov-brand-text">
+                    <span class="gov-brand-title">DEWAN PENGURUS KORPRI</span>
+                    <span class="gov-brand-sub">KABUPATEN BANJAR</span>
+                </div>
+            </a>
+
+            <div class="gov-nav-actions">
+                <!-- Theme Toggle -->
+                <button id="themeToggleBtn" class="btn-gov-nav btn-gov-icon" title="Ganti Tema Tampilan" aria-label="Ganti Tema">
+                    <svg id="themeIconSvg" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+
+                <!-- Share Button -->
+                <button onclick="shareKatalog()" class="btn-gov-nav" title="Bagikan Tautan Katalog">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                    <span class="btn-nav-label-long">Bagikan</span>
+                </button>
+
+                <!-- Admin Link -->
+                <?php if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true): ?>
+                    <a href="index.php" class="btn-gov-nav btn-gov-primary">
+                        <span>Dashboard</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </a>
+                <?php else: ?>
+                    <a href="login.php" class="btn-gov-nav btn-gov-primary">
+                        <span>Portal Petugas</span>
+                    </a>
+                <?php endif; ?>
             </div>
-            <div>
-                <h1 class="brand-title">E-MutZ <span>KORPRI</span></h1>
-                <p class="brand-sub">
-                    <span>Sekretariat KORPRI Kab. Banjar</span>
-                </p>
-            </div>
-        </a>
-
-        <div class="nav-actions">
-            <!-- Theme Toggle -->
-            <button id="themeTogglePublic" class="nav-btn nav-btn-icon" title="Ganti Tema">
-                <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-            </button>
-
-            <!-- Quick Share Link Button -->
-            <button onclick="copyKatalogLink()" class="nav-btn nav-btn-share" title="Salin Tautan Katalog">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-                <span class="nav-btn-text">Bagikan</span>
-                <span class="nav-btn-short">Share</span>
-            </button>
-
-            <?php if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true): ?>
-                <a href="index.php" class="nav-btn nav-btn-admin">
-                    <span class="nav-btn-text">Dashboard &rarr;</span>
-                    <span class="nav-btn-short">Admin</span>
-                </a>
-            <?php else: ?>
-                <a href="login.php" class="nav-btn nav-btn-admin">
-                    <span class="nav-btn-text">Login Petugas</span>
-                    <span class="nav-btn-short">Login</span>
-                </a>
-            <?php endif; ?>
         </div>
     </header>
 
-    <main class="catalog-container">
+    <main class="gov-container">
         <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="hero-card-banner glass-panel">
-                <!-- Institution Badge -->
-                <div class="institution-ribbon">
-                    <span class="ribbon-text-main">DEWAN PENGURUS KORPRI KABUPATEN BANJAR</span>
-                </div>
-
-                <br>
-
-                <!-- Live Update Indicator -->
-                <div class="live-badge">
-                    <span class="live-pulse"></span>
-                    <span>Update Stok Real-Time dari Sekretariat KORPRI</span>
-                </div>
-
-                <h2 class="hero-title">
-                    Ketersediaan Stok <span class="gradient-text">Mutz ASN</span>
-                </h2>
-                <p class="hero-desc">
-                    Informasi ukuran yang tersedia untuk <strong>Mutz Standar ASN</strong> dan <strong>Mutz Khusus Kepala SKPD / Pejabat Eselon II</strong>. Cek nomor lingkar kepala Anda sebelum melakukan pemesanan.
-                </p>
+        <section class="gov-hero">
+            <div class="gov-authority-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span>LAYANAN RESMI PENGADAAN MUTZ ASN</span>
             </div>
 
-            <!-- Stat Highlights -->
-            <div class="stat-banner-row">
-                <div class="stat-banner-box glass-panel">
-                    <div class="stat-banner-icon emerald">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                    </div>
-                    <div>
-                        <div class="stat-val"><?= number_format($total_stok_tersedia, 0, ',', '.') ?> Pcs</div>
-                        <div class="stat-lbl">Total Stok di Sekretariat KORPRI</div>
-                    </div>
-                </div>
+            <h1 class="gov-hero-h1">
+                Katalog Ketersediaan Stok Mutz ASN
+            </h1>
 
-                <div class="stat-banner-box glass-panel">
-                    <div class="stat-banner-icon blue">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-                    </div>
-                    <div>
-                        <div class="stat-val">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></div>
-                        <div class="stat-lbl">Mutz Standar ASN</div>
-                    </div>
-                </div>
+            <p class="gov-hero-sub">
+                Informasi ketersediaan fisik topi Mutz resmi bagi Aparatur Sipil Negara (PNS &amp; PPPK) serta Kepala SKPD (Pejabat Eselon II) di lingkungan Pemerintah Kabupaten Banjar secara Real-Time.
+            </p>
 
-                <div class="stat-banner-box glass-panel">
-                    <div class="stat-banner-icon gold">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-                    </div>
-                    <div>
-                        <div class="stat-val">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></div>
-                        <div class="stat-lbl">Mutz Kepala SKPD (Eselon II)</div>
-                    </div>
+            <div class="gov-info-strip">
+                <div class="gov-info-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <span>Sekretariat: <strong>Kantor Bupati Banjar, Martapura</strong></span>
+                </div>
+                <div class="gov-info-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    <span>Status: <strong>Update Real-Time</strong></span>
+                </div>
+                <div class="gov-info-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                    <span>Total Fisik Tersedia: <strong><?= number_format($total_stok_tersedia, 0, ',', '.') ?> Pcs</strong></span>
                 </div>
             </div>
         </section>
 
-        <!-- Main Category Switcher (Mutz Biasa vs Kepala SKPD) & Mobile Sticky Filter Bar -->
-        <div class="category-switcher-wrap" id="categorySwitcher">
-            <div class="category-tabs-container">
-                <button type="button" class="tab-btn tab-biasa active" id="tabBtnBiasa" onclick="switchCategory('Biasa')">
+        <!-- Product Type Selector (Tactile 2-Card Segmented Choice) -->
+        <div class="gov-product-selector">
+            <!-- Card Standar ASN -->
+            <div class="product-choice-card choice-standar active" id="cardChoiceStandar" onclick="selectCategory('Biasa')">
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <div class="choice-check-radio"></div>
                     <div>
-                        <div class="tab-title">
-                            <span class="tab-title-full">
-                                <svg class="tab-icon-svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-                                Standar ASN
-                            </span>
-                            <span class="tab-title-short">
-                                <svg class="tab-icon-svg" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-                                Standar ASN
-                            </span>
+                        <div class="choice-meta-title">Mutz Standar ASN</div>
+                        <div class="choice-meta-desc">Diperuntukkan bagi seluruh ASN (PNS &amp; PPPK)</div>
+                        <div class="choice-tags-row">
+                            <span class="tag-micro tag-micro-blue">Include Pin Kab. Banjar</span>
+                            <span class="tag-micro tag-micro-green"><?= number_format($total_stok_biasa, 0, ',', '.') ?> Pcs Tersedia</span>
                         </div>
-                        <div class="tab-sub">Diperuntukkan bagi seluruh ASN (PNS &amp; PPPK)</div>
                     </div>
-                    <div class="tab-price-tag">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></div>
-                </button>
-
-                <button type="button" class="tab-btn tab-kepala" id="tabBtnKepala" onclick="switchCategory('Kepala SKPD')">
-                    <div>
-                        <div class="tab-title">
-                            <span class="tab-title-full">
-                                <svg class="tab-icon-svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-                                Kepala SKPD (Eselon II)
-                            </span>
-                            <span class="tab-title-short">
-                                <svg class="tab-icon-svg" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-                                Kepala SKPD
-                            </span>
-                        </div>
-                        <div class="tab-sub">Ready Stock (Eselon II)</div>
-                    </div>
-                    <div class="tab-price-tag">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></div>
-                </button>
-            </div>
-
-            <!-- Gender Selector Pills -->
-            <div class="gender-filter-bar">
-                <button type="button" class="gender-pill active" id="pillPria" onclick="switchGender('Laki-laki')">
-                    <span class="pill-label-full">
-                        <svg class="pill-icon-svg" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        Pria (Laki-laki)
-                    </span>
-                    <span class="pill-label-short">
-                        <svg class="pill-icon-svg" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        Pria
-                    </span>
-                    <span id="badgeCountPria" class="pill-badge">...</span>
-                </button>
-
-                <button type="button" class="gender-pill" id="pillWanita" onclick="switchGender('Perempuan')">
-                    <span class="pill-label-full">
-                        <svg class="pill-icon-svg" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 1 5 5c0 2.22-1.2 4.16-3 5.2V14a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2v-1.8C8.2 11.16 7 9.22 7 7a5 5 0 0 1 5-5z"></path><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg>
-                        Wanita (Perempuan)
-                    </span>
-                    <span class="pill-label-short">
-                        <svg class="pill-icon-svg" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 1 5 5c0 2.22-1.2 4.16-3 5.2V14a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2v-1.8C8.2 11.16 7 9.22 7 7a5 5 0 0 1 5-5z"></path><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg>
-                        Wanita
-                    </span>
-                    <span id="badgeCountWanita" class="pill-badge">...</span>
-                </button>
-            </div>
-
-            <!-- Dynamic Interactive Quick Size Filter Chips -->
-            <div class="quick-size-track" id="quickSizeChips">
-                <!-- Injected dynamically by JavaScript -->
-            </div>
-        </div>
-
-        <!-- Eselon II Special Info Banner -->
-        <div id="eselonNotice" class="eselon-banner" style="display: none;">
-            <div class="eselon-badge-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-            </div>
-            <div style="flex: 1; min-width: 0;">
-                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px;">
-                    <span style="font-size: 0.74rem; font-weight: 800; background: rgba(16, 185, 129, 0.15); color: #047857; padding: 2px 8px; border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: 0.03em;">Ready Stock</span>
-                    <span style="font-size: 0.74rem; font-weight: 800; background: rgba(217, 119, 6, 0.15); color: #B45309; padding: 2px 8px; border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: 0.03em;">Eksklusif Eselon II</span>
-                    <span style="font-size: 0.75rem; font-weight: 700; color: #92400E;">Bordir List Benang Emas</span>
                 </div>
-                <h3 style="margin: 0 0 4px 0; font-size: 1.05rem; font-weight: 800; color: inherit; line-height: 1.3;">
-                    Spesifikasi Mutz Kepala Dinas / Badan / Asisten
-                </h3>
-                <p style="margin: 0; font-size: 0.85rem; font-weight: 500; opacity: 0.9; line-height: 1.45;">
-                    Dirancang khusus dengan bordir list benang emas tebal resmi KORPRI bagi Pejabat Pimpinan Tinggi Pratama. Seluruh ukuran siap dipesan.
-                </p>
+                <div class="choice-price-block">
+                    <div class="choice-price-val">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></div>
+                    <div class="choice-price-label">Harga Satuan</div>
+                </div>
+            </div>
+
+            <!-- Card Kepala SKPD (Eselon II) -->
+            <div class="product-choice-card choice-kepala" id="cardChoiceKepala" onclick="selectCategory('Kepala SKPD')">
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <div class="choice-check-radio"></div>
+                    <div>
+                        <div class="choice-meta-title">Mutz Kepala SKPD (Eselon II)</div>
+                        <div class="choice-meta-desc">Pejabat Pimpinan Tinggi Pratama / Kepala Dinas</div>
+                        <div class="choice-tags-row">
+                            <span class="tag-micro tag-micro-green">Ready Stock</span>
+                            <span class="tag-micro tag-micro-gold">Bordir List Benang Emas</span>
+                            <span class="tag-micro tag-micro-blue">Include Pin</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="choice-price-block">
+                    <div class="choice-price-val">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></div>
+                    <div class="choice-price-label">Harga Satuan</div>
+                </div>
             </div>
         </div>
 
-        <!-- Cards Grid Container -->
-        <div class="stock-grid" id="stockGridContainer">
-            <!-- Rendered dynamically by JavaScript -->
-        </div>
-
-        <!-- Size Guide & How to Measure Section -->
-        <section class="guide-box glass-panel" id="panduan">
-            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 1rem;">
-                <h3 style="margin: 0; font-size: 1.3rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4Z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/><path d="m4.5 13.5 2 2"/></svg>
-                    Panduan Ukuran &amp; Cara Mengukur Lingkar Kepala
-                </h3>
-                <span style="font-size: 0.8rem; font-weight: 700; background: var(--warning-light); color: var(--warning); padding: 4px 12px; border-radius: var(--radius-full);">
-                    Tips Akurasi
-                </span>
+        <!-- Unified Filter Toolbar (Gender & Size) -->
+        <div class="gov-filter-toolbar">
+            <!-- Gender Segmented Switch -->
+            <div class="gender-segmented-control" role="group" aria-label="Pilihan Jenis Kelamin">
+                <button type="button" class="btn-segment active" id="btnGenderPria" onclick="selectGender('Laki-laki')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <span>Pria</span>
+                    <span class="segment-counter" id="counterPria">...</span>
+                </button>
+                <button type="button" class="btn-segment" id="btnGenderWanita" onclick="selectGender('Perempuan')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2a5 5 0 0 1 5 5c0 2.22-1.2 4.16-3 5.2V14a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2v-1.8C8.2 11.16 7 9.22 7 7a5 5 0 0 1 5-5z"></path><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg>
+                    <span>Wanita</span>
+                    <span class="segment-counter" id="counterWanita">...</span>
+                </button>
             </div>
 
-            <p style="font-size: 0.92rem; line-height: 1.6; color: var(--text-muted); font-weight: 500;">
-                Nomor ukuran topi mutz sesuai dengan <strong>lingkar kepala dalam satuan sentimeter (cm)</strong>. Gunakan pita meteran jahit melingkari kepala kira-kira 1 cm di atas telinga dan tepat di atas alis.
+            <!-- Size Filter Chips -->
+            <div class="size-chips-scroller" id="sizeChipsTrack">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
+
+        <!-- Eselon II Callout Bar -->
+        <div class="gov-eselon-alert" id="eselonNoticeBar" style="display: none;">
+            <div class="eselon-icon-wrap">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+            </div>
+            <div>
+                <div class="eselon-alert-title">Spesifikasi Khusus Pejabat Eselon II (Ready Stock)</div>
+                <div class="eselon-alert-desc">Dilengkapi aksen bordir list benang emas tebal resmi KORPRI untuk Kepala Dinas, Kepala Badan, Asisten Sekda, Staf Ahli, dan Sekda. Seluruh ukuran ready dan include Pin Lambang Kabupaten Banjar.</div>
+            </div>
+        </div>
+
+        <!-- Stock Cards Grid Container -->
+        <div class="gov-stock-grid" id="stockCardsContainer">
+            <!-- Dynamically populated by JavaScript -->
+        </div>
+
+        <!-- Official Size Guide & Specifications -->
+        <section class="gov-section-card" id="panduan">
+            <div class="section-header-row">
+                <h2 class="section-h2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--korpri-blue);"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4Z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/><path d="m4.5 13.5 2 2"/></svg>
+                    <span>Panduan Nomor Ukuran &amp; Cara Mengukur</span>
+                </h2>
+                <span class="tag-micro tag-micro-gold">Pedoman Resmi</span>
+            </div>
+
+            <p style="font-size: 0.9rem; color: var(--gov-muted); line-height: 1.6;">
+                Nomor ukuran topi Mutz ASN mengacu pada <strong>lingkar kepala dalam satuan sentimeter (cm)</strong>. Ukur menggunakan pita meteran kain melingkari kepala sekitar 1 cm di atas telinga dan tepat di atas alis.
             </p>
 
             <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
-                <table class="guide-table">
+                <table class="gov-editorial-table">
                     <thead>
                         <tr>
                             <th>Nomor Mutz</th>
-                            <th>Ukuran 55</th>
-                            <th>Ukuran 56</th>
-                            <th>Ukuran 57</th>
-                            <th>Ukuran 58</th>
-                            <th>Ukuran 59</th>
-                            <th>Ukuran 60</th>
+                            <th>No. 55</th>
+                            <th>No. 56</th>
+                            <th>No. 57</th>
+                            <th>No. 58</th>
+                            <th>No. 59</th>
+                            <th>No. 60</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="subhead">Lingkar Kepala (cm)</td>
-                            <td>54.5 - 55.4 cm</td>
-                            <td>55.5 - 56.4 cm</td>
-                            <td>56.5 - 57.4 cm</td>
-                            <td>57.5 - 58.4 cm</td>
-                            <td>58.5 - 59.4 cm</td>
-                            <td>59.5 - 60.5 cm</td>
+                            <td class="subhead-col">Lingkar Kepala</td>
+                            <td>54.5 – 55.4 cm</td>
+                            <td>55.5 – 56.4 cm</td>
+                            <td>56.5 – 57.4 cm</td>
+                            <td>57.5 – 58.4 cm</td>
+                            <td>58.5 – 59.4 cm</td>
+                            <td>59.5 – 60.5 cm</td>
                         </tr>
                         <tr>
-                            <td class="subhead">Kategori Rekomendasi</td>
-                            <td>S (Kecil)</td>
-                            <td>M (Sedang)</td>
-                            <td>L (Standar Pria)</td>
-                            <td>L - XL (Standar Wanita)</td>
-                            <td>XL (Besar / Berhijab)</td>
-                            <td>XXL (Ekstra / Berhijab)</td>
+                            <td class="subhead-col">Rekomendasi Pemakaian</td>
+                            <td>Ukuran S (Kecil)</td>
+                            <td>Ukuran M (Sedang)</td>
+                            <td>Standar ASN Pria</td>
+                            <td>Standar ASN Wanita</td>
+                            <td>Berhijab / Rambut Tebal</td>
+                            <td>Ekstra / Berhijab Longgar</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <div style="margin-top: 1.5rem; background: rgba(37, 99, 235, 0.08); border: 1px solid rgba(37, 99, 235, 0.2); border-radius: var(--radius-md); padding: 14px 18px; color: var(--primary);">
-                <div style="display: flex; gap: 12px; align-items: flex-start;">
-                    <div style="color: var(--primary); flex-shrink: 0; margin-top: 2px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                    </div>
-                    <div style="font-size: 0.88rem; line-height: 1.5; font-weight: 600; color: var(--text-main);">
-                        <strong style="color: var(--primary);">Catatan untuk ASN Wanita (Berhijab/Sanggul):</strong> Disarankan memilih 1 hingga 2 nomor lebih besar (biasanya No. 58 s/d 60) untuk memberikan ruang hijab agar topi tidak menekan kepala dan tetap nyaman serta tegak rapi saat dikenakan.
-                    </div>
+            <div class="hijab-callout-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <div>
+                    <strong>Petunjuk untuk ASN Wanita (Berhijab / Sanggul):</strong> Disarankan memilih <strong>1 hingga 2 nomor lebih besar</strong> (umumnya No. 58 sampai No. 60) untuk memberikan kelonggaran lipatan kain hijab agar topi tidak menekan dahi dan tetap berdiri tegak rapi.
                 </div>
             </div>
 
-            <!-- Comparison Table: Biasa dan Kepala SKPD -->
-            <div style="margin-top: 2.25rem;" id="spesifikasi">
-                <h4 style="margin: 0 0 10px 0; font-size: 1.15rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--korpri-gold);"><circle cx="12" cy="12" r="10"></circle><path d="m16 10-4 4-2-2"></path></svg>
-                    Perbedaan Mutz Biasa dan Kepala SKPD (Eselon II)
-                </h4>
-                
-                <div class="comparison-grid">
-                    <div class="comparison-card card-standar">
-                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px;">
-                            <div style="font-size: 0.8rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.03em;">Standar ASN</div>
-                            <span class="badge-include-pin">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                                Include Pin Kab. Banjar
-                            </span>
-                        </div>
-                        <h5 style="margin: 4px 0 8px 0; font-size: 1.1rem; font-weight: 800; color: var(--text-main);">Mutz Reguler (Biasa)</h5>
-                        <ul style="padding-left: 18px; margin: 0; font-size: 0.875rem; line-height: 1.6; font-weight: 500; color: var(--text-muted);">
+            <!-- Perbedaan Spesifikasi Standar vs Kepala SKPD -->
+            <div style="margin-top: 2rem;" id="spesifikasi">
+                <h3 style="font-size: 1.12rem; font-weight: 800; color: var(--gov-slate); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--korpri-gold);"><circle cx="12" cy="12" r="10"></circle><path d="m16 10-4 4-2-2"></path></svg>
+                    <span>Perbedaan Mutz Standar dan Kepala SKPD (Eselon II)</span>
+                </h3>
+
+                <div class="gov-spec-grid">
+                    <div class="spec-box">
+                        <span class="spec-badge standar">Standar ASN (Biasa)</span>
+                        <div class="spec-title">Mutz Standar KORPRI</div>
+                        <ul class="spec-list">
                             <li>Diperuntukkan bagi seluruh ASN (PNS dan PPPK).</li>
-                            <li><strong>Sudah termasuk (include) Pin Lambang Kabupaten Banjar</strong>.</li>
-                            <li>Harga resmi: <strong style="color: var(--text-main);">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></strong>.</li>
+                            <li><strong>Sudah termasuk (include) Pin Logam Lambang Kab. Banjar</strong>.</li>
+                            <li>Bahan standar kedinasan resmi rapi &amp; tahan lama.</li>
+                            <li>Harga resmi: <strong>Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></strong>.</li>
                         </ul>
                     </div>
 
-                    <div class="comparison-card card-eselon">
-                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px;">
-                            <div style="font-size: 0.8rem; font-weight: 800; color: var(--korpri-gold); text-transform: uppercase; letter-spacing: 0.03em;">Pejabat Eselon II</div>
-                            <span class="badge-include-pin gold">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                                Include Pin Kab. Banjar
-                            </span>
-                        </div>
-                        <h5 style="margin: 4px 0 8px 0; font-size: 1.1rem; font-weight: 800; color: var(--text-main);">Mutz Kepala SKPD</h5>
-                        <ul style="padding-left: 18px; margin: 0; font-size: 0.875rem; line-height: 1.6; font-weight: 500; color: var(--text-muted);">
+                    <div class="spec-box eselon">
+                        <span class="spec-badge eselon">Pejabat Eselon II</span>
+                        <div class="spec-title">Mutz Kepala SKPD</div>
+                        <ul class="spec-list">
                             <li>Khusus Kepala Dinas, Kepala Badan, Asisten Sekda, Staf Ahli &amp; Sekda.</li>
-                            <li>Bahan eksklusif premium dengan ketahanan bentuk lebih kokoh.</li>
-                            <li>Aksen <strong style="color: var(--text-main);">Bordir List Benang Emas Tebal</strong> di sekeliling mutz.</li>
-                            <li><strong>Sudah termasuk (include) Pin Lambang Kabupaten Banjar</strong>.</li>
-                            <li>Harga resmi: <strong style="color: var(--text-main);">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></strong>.</li>
+                            <li>Aksen <strong>Bordir List Benang Emas Tebal</strong> di sekeliling mutz.</li>
+                            <li><strong>Sudah termasuk (include) Pin Logam Lambang Kab. Banjar</strong>.</li>
+                            <li>Bahan kokoh premium tahan lipatan.</li>
+                            <li>Harga resmi: <strong>Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></strong> (Ready Stock).</li>
                         </ul>
                     </div>
                 </div>
@@ -2355,130 +1837,105 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         </section>
     </main>
 
-    <!-- Modal Form WhatsApp Pre-order / Pemesanan (Responsive Bottom-Sheet on Mobile) -->
-    <div class="modal-backdrop" id="waOrderModal" onclick="closeOrderModal(event)">
-        <div class="modal-card" onclick="event.stopPropagation()">
-            <div class="modal-drag-handle"></div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border-subtle); padding-bottom: 10px;">
-                <h3 style="margin: 0; font-size: 1.2rem; font-weight: 800; color: var(--text-main);" id="modalTitle">Konfirmasi Pemesanan</h3>
-                <button type="button" onclick="closeOrderModal()" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; font-weight: 800; color: var(--text-muted); padding: 0 4px; line-height: 1;">&times;</button>
+    <!-- Modal Form WhatsApp Booking -->
+    <div class="modal-overlay" id="waOrderModal" onclick="closeOrderModal(event)">
+        <div class="modal-window" onclick="event.stopPropagation()">
+            <div class="modal-head">
+                <span class="modal-title-text" id="modalTitle">Konfirmasi Pemesanan</span>
+                <button type="button" class="btn-modal-close" onclick="closeOrderModal()">&times;</button>
             </div>
 
-            <p style="font-size: 0.875rem; color: var(--text-muted); margin-top: 0; font-weight: 500;" id="modalSubtitle">
-                Pesanan akan langsung diteruskan ke WhatsApp Pengurus/Admin Rekap KORPRI.
+            <p style="font-size: 0.84rem; color: var(--gov-muted); margin-bottom: 14px; font-weight: 500;">
+                Format pesanan akan dikirimkan langsung ke nomor WhatsApp Pengurus / Admin Sekretariat KORPRI.
             </p>
 
-            <div style="background: rgba(241, 245, 249, 0.7); border: 1px solid var(--glass-border-subtle); border-radius: var(--radius-md); padding: 14px; margin-bottom: 16px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-                    <span style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted);">Kategori:</span>
-                    <strong style="font-size: 0.88rem; color: var(--text-main);" id="modalCat">-</strong>
+            <div class="modal-summary-box">
+                <div class="modal-summary-line">
+                    <span style="color: var(--gov-subtle);">Jenis Mutz:</span>
+                    <strong id="modalCat">-</strong>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-                    <span style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted);">Peruntukan:</span>
-                    <strong style="font-size: 0.88rem; color: var(--text-main);" id="modalGender">-</strong>
+                <div class="modal-summary-line">
+                    <span style="color: var(--gov-subtle);">Peruntukan:</span>
+                    <strong id="modalGender">-</strong>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-                    <span style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted);">Nomor Ukuran:</span>
-                    <strong style="font-size: 1.05rem; color: var(--primary);" id="modalSize">-</strong>
+                <div class="modal-summary-line">
+                    <span style="color: var(--gov-subtle);">Nomor Ukuran:</span>
+                    <strong style="color: var(--korpri-blue);" id="modalSize">-</strong>
                 </div>
-                <div style="display: flex; justify-content: space-between; border-top: 1px dashed var(--glass-border-subtle); padding-top: 6px; margin-top: 6px;">
-                    <span style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted);">Status Stok:</span>
-                    <strong style="font-size: 0.88rem;" id="modalStockStatus">-</strong>
+                <div class="modal-summary-line">
+                    <span style="color: var(--gov-subtle);">Status:</span>
+                    <strong id="modalStockStatus">-</strong>
                 </div>
             </div>
 
-            <div style="margin-bottom: 12px;">
-                <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 6px; color: var(--text-main);">Nama Pemesan (Opsional):</label>
-                <input type="text" id="orderNama" placeholder="Contoh: Budi Santoso, S.IP">
+            <div class="gov-form-group">
+                <label class="gov-form-label" for="orderNama">Nama Pemesan (Opsional):</label>
+                <input type="text" id="orderNama" class="gov-form-input" placeholder="Contoh: Budi Santoso, S.IP">
             </div>
 
-            <div style="margin-bottom: 18px;">
-                <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 6px; color: var(--text-main);">Asal Dinas / SKPD (Opsional):</label>
-                <input type="text" id="orderSkpd" placeholder="Contoh: Dinas Pendidikan">
+            <div class="gov-form-group">
+                <label class="gov-form-label" for="orderSkpd">Asal Dinas / SKPD (Opsional):</label>
+                <input type="text" id="orderSkpd" class="gov-form-input" placeholder="Contoh: Dinas Pendidikan">
             </div>
 
-            <button type="button" onclick="sendWhatsAppOrder()" class="btn-order-wa ready" style="padding: 13px; font-size: 0.95rem;">
+            <button type="button" onclick="submitWhatsAppOrder()" class="btn-order-action ready-wa" style="padding: 12px; font-size: 0.94rem;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                Lanjutkan ke WhatsApp &rarr;
+                <span>Lanjutkan ke WhatsApp &rarr;</span>
             </button>
         </div>
     </div>
 
-    <!-- Floating Actions (WhatsApp + Scroll To Top) -->
-    <div class="floating-actions-wrap">
-        <button type="button" id="btnScrollTop" class="btn-scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Kembali ke atas">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+    <!-- Floating Actions (Bottom-Right) -->
+    <div class="gov-floating-actions">
+        <button type="button" id="btnScrollTop" class="btn-gov-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Kembali ke atas">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
         </button>
 
-        <a href="#" onclick="openGeneralWhatsApp(); return false;" class="floating-wa-btn" title="Hubungi Pengurus / Admin via WhatsApp">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-            <span class="floating-wa-text">Tanya Stok WA</span>
+        <a href="#" onclick="openDirectWhatsApp(); return false;" class="btn-floating-wa" title="Hubungi Sekretariat KORPRI via WhatsApp">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span>Tanya Admin WA</span>
         </a>
     </div>
 
-    <!-- Modern Executive KORPRI Footer -->
-    <footer class="public-footer">
-        <!-- Desktop Footer Layout -->
-        <div class="footer-desktop-wrap">
-            <div class="footer-inner">
-                <div class="footer-brand-wrap">
-                    <div class="footer-logo-mini">
-                        <img src="assets/images/korpri-badge.png" alt="Logo KORPRI" width="30" height="30">
-                    </div>
-                    <div>
-                        <div class="footer-brand-title">E-MutZ KORPRI</div>
-                        <div class="footer-brand-sub">Dewan Pengurus KORPRI Kabupaten Banjar</div>
-                    </div>
-                </div>
-
-                <nav class="footer-links-group" aria-label="Navigasi Footer">
-                    <a href="#panduan" class="footer-link-pill">Panduan Ukuran</a>
-                    <a href="#spesifikasi" class="footer-link-pill">Spesifikasi Eselon II</a>
-                    <a href="login.php" class="footer-link-pill">Portal Petugas</a>
-                </nav>
-            </div>
-
-            <div class="footer-bottom-bar">
+    <!-- Minimalist Official Footer -->
+    <footer class="gov-footer">
+        <div class="gov-footer-inner">
+            <div class="footer-identity">
+                <img src="assets/images/korpri-badge.png" alt="Logo KORPRI" class="footer-seal" width="32" height="32">
                 <div>
-                    &copy; <?= date('Y') ?> Dewan Pengurus KORPRI Kabupaten Banjar. Seluruh Hak Cipta Dilindungi.
-                </div>
-                <div class="footer-status-pill">
-                    <span class="footer-status-dot"></span>
-                    <span>Layanan Resmi Aktif</span>
+                    <div class="footer-name">Dewan Pengurus KORPRI Kabupaten Banjar</div>
+                    <div class="footer-address-txt">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <span>Jl. A. Yani No. 2 Martapura</span>
+                    </div>
                 </div>
             </div>
+
+            <nav class="footer-nav-links" aria-label="Navigasi Footer">
+                <a href="#panduan">Panduan Ukuran</a>
+                <span>&bull;</span>
+                <a href="#spesifikasi">Spesifikasi Eselon II</a>
+                <span>&bull;</span>
+                <a href="login.php">Portal Petugas</a>
+            </nav>
         </div>
 
-        <!-- Mobile-Tailored Minimalist Footer Layout -->
-        <div class="footer-mobile-wrap">
-            <div class="footer-mobile-minimal">
-                <div class="footer-mobile-mini-brand">
-                    <img src="assets/images/korpri-badge.png" alt="Logo KORPRI" width="22" height="22">
-                    <span class="footer-mobile-mini-title">Dewan Pengurus KORPRI Kab. Banjar</span>
-                </div>
-                <div class="footer-mobile-mini-loc">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                    <span>Jl. A. Yani No. 2 Martapura</span>
-                </div>
-                <nav class="footer-mobile-mini-links" aria-label="Navigasi Footer Mobile">
-                    <a href="#panduan">Panduan Ukuran</a>
-                    <span>&bull;</span>
-                    <a href="#spesifikasi">Spesifikasi Eselon II</a>
-                    <span>&bull;</span>
-                    <a href="login.php">Portal Petugas</a>
-                </nav>
-                <div class="footer-mobile-mini-copy">
-                    &copy; <?= date('Y') ?> KORPRI Kab. Banjar
-                </div>
+        <div class="footer-copyright-bar">
+            <div>&copy; <?= date('Y') ?> Dewan Pengurus KORPRI Kabupaten Banjar. Seluruh Hak Cipta Dilindungi.</div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: #16A34A; display: inline-block;"></span>
+                <span>Layanan Publik Resmi Aktif</span>
             </div>
         </div>
     </footer>
 
-    <!-- Client-side Interactive Logic -->
+    <!-- Client-side Logic -->
     <script>
         const STOK_DATA = <?= json_encode($stok_data) ?>;
         const SIZES_PRIA = <?= json_encode($sizes_pria) ?>;
         const SIZES_WANITA = <?= json_encode($sizes_wanita) ?>;
+        const HARGA_BIASA = <?= (int)HARGA_BIASA ?>;
+        const HARGA_KEPALA = <?= (int)HARGA_KEPALA ?>;
 
         let currentCategory = 'Biasa'; 
         let currentGender = 'Laki-laki'; 
@@ -2492,19 +1949,19 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         };
 
         // Theme Toggle
-        const themeTogglePublic = document.getElementById('themeTogglePublic');
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
         function updateThemeIcon() {
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            if (themeTogglePublic) {
-                themeTogglePublic.innerHTML = isDark 
-                    ? '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>'
-                    : '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+            if (themeToggleBtn) {
+                themeToggleBtn.innerHTML = isDark 
+                    ? '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>'
+                    : '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
             }
         }
         updateThemeIcon();
 
-        if (themeTogglePublic) {
-            themeTogglePublic.addEventListener('click', function() {
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', function() {
                 if (document.documentElement.getAttribute('data-theme') === 'dark') {
                     document.documentElement.removeAttribute('data-theme');
                     localStorage.setItem('theme', 'light');
@@ -2516,65 +1973,51 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             });
         }
 
-        // Switch Category
-        function switchCategory(cat) {
+        // Category Switcher
+        function selectCategory(cat) {
             currentCategory = cat;
-            selectedSizeFilter = null; // Reset filter ukuran saat ganti kategori
-            
-            const tabBiasa = document.getElementById('tabBtnBiasa');
-            const tabKepala = document.getElementById('tabBtnKepala');
-            const eselonNotice = document.getElementById('eselonNotice');
-            const pillPria = document.getElementById('pillPria');
-            const pillWanita = document.getElementById('pillWanita');
+            selectedSizeFilter = null; // Reset size filter
+
+            const cardStandar = document.getElementById('cardChoiceStandar');
+            const cardKepala = document.getElementById('cardChoiceKepala');
+            const eselonBar = document.getElementById('eselonNoticeBar');
 
             if (cat === 'Biasa') {
-                tabBiasa.classList.add('active');
-                tabKepala.classList.remove('active');
-                eselonNotice.style.display = 'none';
-                pillPria.classList.remove('active-gold');
-                pillWanita.classList.remove('active-gold');
+                cardStandar.classList.add('active');
+                cardKepala.classList.remove('active');
+                eselonBar.style.display = 'none';
             } else {
-                tabKepala.classList.add('active');
-                tabBiasa.classList.remove('active');
-                eselonNotice.style.display = 'flex';
-                if (currentGender === 'Laki-laki') pillPria.classList.add('active-gold');
-                if (currentGender === 'Perempuan') pillWanita.classList.add('active-gold');
+                cardKepala.classList.add('active');
+                cardStandar.classList.remove('active');
+                eselonBar.style.display = 'flex';
             }
 
-            renderQuickSizeChips();
-            renderStockGrid();
-            updateGenderCounts();
+            renderSizeChips();
+            renderStockCards();
+            updateCounters();
         }
 
-        // Switch Gender
-        function switchGender(gender) {
+        // Gender Switcher
+        function selectGender(gender) {
             currentGender = gender;
-            selectedSizeFilter = null; // Reset filter ukuran saat ganti gender
+            selectedSizeFilter = null;
 
-            const pillPria = document.getElementById('pillPria');
-            const pillWanita = document.getElementById('pillWanita');
+            const btnPria = document.getElementById('btnGenderPria');
+            const btnWanita = document.getElementById('btnGenderWanita');
 
             if (gender === 'Laki-laki') {
-                pillPria.classList.add('active');
-                pillWanita.classList.remove('active');
-                if (currentCategory === 'Kepala SKPD') {
-                    pillPria.classList.add('active-gold');
-                    pillWanita.classList.remove('active-gold');
-                }
+                btnPria.classList.add('active');
+                btnWanita.classList.remove('active');
             } else {
-                pillWanita.classList.add('active');
-                pillPria.classList.remove('active');
-                if (currentCategory === 'Kepala SKPD') {
-                    pillWanita.classList.add('active-gold');
-                    pillPria.classList.remove('active-gold');
-                }
+                btnWanita.classList.add('active');
+                btnPria.classList.remove('active');
             }
 
-            renderQuickSizeChips();
-            renderStockGrid();
+            renderSizeChips();
+            renderStockCards();
         }
 
-        function updateGenderCounts() {
+        function updateCounters() {
             const dataCat = STOK_DATA[currentCategory] || {};
             
             let totalPria = 0;
@@ -2586,17 +2029,17 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             for (let sz in wanitaObj) { totalWanita += (wanitaObj[sz] || 0); }
 
             if (currentCategory === 'Kepala SKPD') {
-                document.getElementById('badgeCountPria').textContent = totalPria > 0 ? (totalPria + ' ready') : 'Ready';
-                document.getElementById('badgeCountWanita').textContent = totalWanita > 0 ? (totalWanita + ' ready') : 'Ready';
+                document.getElementById('counterPria').textContent = 'Ready';
+                document.getElementById('counterWanita').textContent = 'Ready';
             } else {
-                document.getElementById('badgeCountPria').textContent = totalPria > 0 ? (totalPria + ' ready') : 'Pre-Order';
-                document.getElementById('badgeCountWanita').textContent = totalWanita > 0 ? (totalWanita + ' ready') : 'Pre-Order';
+                document.getElementById('counterPria').textContent = totalPria + ' Pcs';
+                document.getElementById('counterWanita').textContent = totalWanita + ' Pcs';
             }
         }
 
-        // Render Quick Interactive Size Filter Chips
-        function renderQuickSizeChips() {
-            const track = document.getElementById('quickSizeChips');
+        // Size Filter Chips
+        function renderSizeChips() {
+            const track = document.getElementById('sizeChipsTrack');
             if (!track) return;
             track.innerHTML = '';
 
@@ -2605,36 +2048,42 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 ? STOK_DATA[currentCategory][currentGender] 
                 : {};
 
-            // Chip 'Semua'
+            // Chip "Semua Ukuran"
             const btnAll = document.createElement('button');
             btnAll.type = 'button';
-            btnAll.className = 'size-chip-btn' + (selectedSizeFilter === null ? ' active' : '');
-            btnAll.textContent = 'Semua (' + allSizes.length + ')';
+            btnAll.className = 'btn-size-chip' + (selectedSizeFilter === null ? ' active' : '');
+            btnAll.textContent = 'Semua Ukuran (' + allSizes.length + ')';
             btnAll.onclick = function() {
                 selectedSizeFilter = null;
-                renderQuickSizeChips();
-                renderStockGrid();
+                renderSizeChips();
+                renderStockCards();
             };
             track.appendChild(btnAll);
 
-            // Chips per nomor ukuran
+            // Per Size Chip
             allSizes.forEach(sz => {
                 const qty = stockObj[sz] !== undefined ? stockObj[sz] : 0;
                 const btn = document.createElement('button');
                 btn.type = 'button';
-                btn.className = 'size-chip-btn' + (selectedSizeFilter === sz ? ' active' : '');
-                btn.textContent = `No. ${sz} (${qty})`;
+                btn.className = 'btn-size-chip' + (selectedSizeFilter === sz ? ' active' : '');
+                
+                const label = (currentCategory === 'Kepala SKPD') 
+                    ? `No. ${sz}` 
+                    : `No. ${sz} (${qty})`;
+
+                btn.textContent = label;
                 btn.onclick = function() {
                     selectedSizeFilter = (selectedSizeFilter === sz) ? null : sz;
-                    renderQuickSizeChips();
-                    renderStockGrid();
+                    renderSizeChips();
+                    renderStockCards();
                 };
                 track.appendChild(btn);
             });
         }
 
-        function renderStockGrid() {
-            const container = document.getElementById('stockGridContainer');
+        // Stock Cards Rendering (Crisp, Dignified, No AI Slop Progress Bars)
+        function renderStockCards() {
+            const container = document.getElementById('stockCardsContainer');
             container.innerHTML = '';
 
             const allSizes = (currentGender === 'Laki-laki') ? SIZES_PRIA : SIZES_WANITA;
@@ -2646,152 +2095,153 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 ? STOK_DATA[currentCategory][currentGender] 
                 : {};
 
-            const maxStockBaseline = 60;
+            const isKepala = (currentCategory === 'Kepala SKPD');
+            const harga = isKepala ? HARGA_KEPALA : HARGA_BIASA;
 
-            sizes.forEach((sz, idx) => {
+            sizes.forEach(sz => {
                 const qty = stockObj[sz] !== undefined ? stockObj[sz] : 0;
-                
-                let statusBadge = '';
-                let statusText = '';
-                let barColor = '#10B981';
-                let btnHtml = '';
 
-                if (currentCategory === 'Kepala SKPD') {
-                    // Kepala SKPD: Selalu Ready
-                    statusBadge = '<span class="status-badge badge-ready"><span class="status-dot green"></span> Ready</span>';
-                    statusText = 'Ready';
-                    barColor = 'linear-gradient(90deg, #10B981, #059669)';
-                    btnHtml = `
-                        <button type="button" class="btn-order-wa ready" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, ${qty > 0 ? qty : 1})">
+                let statusPillHtml = '';
+                let btnActionHtml = '';
+                let stockText = '';
+
+                if (isKepala) {
+                    // Eselon II selalu Ready Stock
+                    statusPillHtml = `
+                        <span class="status-pill pill-avail-ready">
+                            <span class="status-dot-sm"></span> Ready Stock
+                        </span>
+                    `;
+                    stockText = 'Ready Stock di Sekretariat';
+                    btnActionHtml = `
+                        <button type="button" class="btn-order-action ready-wa" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, ${qty > 0 ? qty : 1})">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                            Pesan Ukuran ${sz} via WA
+                            <span>Pesan Ukuran ${sz} via WA</span>
                         </button>
                     `;
                 } else if (qty > 5) {
-                    statusBadge = '<span class="status-badge badge-ready"><span class="status-dot green"></span> Ready Stock</span>';
-                    statusText = 'Tersedia';
-                    barColor = 'linear-gradient(90deg, #10B981, #059669)';
-                    btnHtml = `
-                        <button type="button" class="btn-order-wa ready" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, ${qty})">
+                    statusPillHtml = `
+                        <span class="status-pill pill-avail-ready">
+                            <span class="status-dot-sm"></span> Tersedia (${qty} pcs)
+                        </span>
+                    `;
+                    stockText = `Tersedia ${qty} pcs`;
+                    btnActionHtml = `
+                        <button type="button" class="btn-order-action ready-wa" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, ${qty})">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                            Pesan Ukuran ${sz} via WA
+                            <span>Pesan Ukuran ${sz} via WA</span>
                         </button>
                     `;
                 } else if (qty > 0) {
-                    statusBadge = `<span class="status-badge badge-low"><span class="status-dot yellow"></span> Sisa ${qty} Pcs</span>`;
-                    statusText = 'Menipis';
-                    barColor = 'linear-gradient(90deg, #F59E0B, #D97706)';
-                    btnHtml = `
-                        <button type="button" class="btn-order-wa ready" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, ${qty})">
+                    statusPillHtml = `
+                        <span class="status-pill pill-avail-low">
+                            <span class="status-dot-sm"></span> Sisa ${qty} pcs
+                        </span>
+                    `;
+                    stockText = `Tersisa ${qty} pcs`;
+                    btnActionHtml = `
+                        <button type="button" class="btn-order-action ready-wa" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, ${qty})">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                            Ambil Sisa ${qty} Pcs
+                            <span>Ambil Sisa ${qty} pcs via WA</span>
                         </button>
                     `;
                 } else {
-                    statusBadge = '<span class="status-badge badge-empty"><span class="status-dot red"></span> Stok Habis</span>';
-                    statusText = 'Habis';
-                    barColor = 'linear-gradient(90deg, #EF4444, #DC2626)';
-                    btnHtml = `
-                        <button type="button" class="btn-order-wa preorder" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, 0)">
+                    statusPillHtml = `
+                        <span class="status-pill pill-avail-empty">
+                            <span class="status-dot-sm"></span> Habis (Pre-Order)
+                        </span>
+                    `;
+                    stockText = 'Stok Fisik Habis';
+                    btnActionHtml = `
+                        <button type="button" class="btn-order-action preorder-wa" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, 0)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
-                            Pre-Order Ukuran ${sz}
+                            <span>Pre-Order Ukuran ${sz} via WA</span>
                         </button>
                     `;
                 }
 
-                const isKepala = (currentCategory === 'Kepala SKPD');
-                const percent = isKepala ? 100 : Math.min(100, Math.round((qty / maxStockBaseline) * 100));
-
-                const qtyNumberHtml = isKepala && qty === 0
-                    ? `<div class="qty-number" style="color: #059669; font-size: 1.85rem; padding-top: 2px; padding-bottom: 2px;">Ready <span style="font-size: 1.1rem; font-weight: 700;">Stock</span></div>`
-                    : `<div class="qty-number" style="color: ${qty > 0 || isKepala ? (qty <= 5 && !isKepala ? '#D97706' : '#059669') : '#DC2626'};">${qty > 0 ? qty : (isKepala ? 'Ready' : 0)} <span style="font-size: 1.1rem; font-weight: 700;">${qty > 0 ? 'pcs' : ''}</span></div>`;
-
-                const qtyLabelText = isKepala
-                    ? 'Ready di Sekretariat KORPRI'
-                    : `${statusText} di Sekretariat KORPRI`;
-
-                const subtextInfo = isKepala
-                    ? `Eselon II (Bordir List Emas) &bull; Ready &bull; ${currentGender}`
-                    : `Standar Mutz ASN KORPRI &bull; ${currentGender}`;
-
                 const card = document.createElement('div');
-                card.className = 'size-card';
-                card.style.animationDelay = (idx * 0.04) + 's';
+                card.className = 'stock-item-card';
                 card.innerHTML = `
-                    <div class="card-header-row">
-                        <div>
-                            <div class="size-number-badge">Uk. ${sz}</div>
-                            <div class="size-sub-info">Lingkar Kepala ~${sz} cm</div>
+                    <div class="stock-card-head">
+                        <div class="size-display-wrap">
+                            <div class="size-num-title">No. ${sz}</div>
+                            <div class="size-circumference">Lingkar Kepala ~${sz} cm</div>
                         </div>
-                        ${statusBadge}
+                        ${statusPillHtml}
                     </div>
 
-                    <div class="stock-qty-wrap">
-                        ${qtyNumberHtml}
-                        <div class="qty-label">${qtyLabelText}</div>
-                        <div class="stock-progress-bar">
-                            <div class="stock-progress-fill" style="width: ${percent}%; background: ${barColor};"></div>
+                    <div class="stock-card-body">
+                        <div class="body-row">
+                            <span class="body-label">Kategori</span>
+                            <span class="body-value">${isKepala ? 'Kepala SKPD (Eselon II)' : 'Standar ASN'}</span>
+                        </div>
+                        <div class="body-row">
+                            <span class="body-label">Harga Resmi</span>
+                            <span class="body-value">Rp ${harga.toLocaleString('id-ID')}</span>
+                        </div>
+                        <div class="body-row">
+                            <span class="body-label">Kelengkapan</span>
+                            <span class="body-include-pin">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Include Pin Kab. Banjar
+                            </span>
                         </div>
                     </div>
 
-                    <div style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted); margin-bottom: 14px; line-height: 1.4;">
-                        ${subtextInfo}
-                    </div>
-
-                    ${btnHtml}
+                    ${btnActionHtml}
                 `;
 
                 container.appendChild(card);
             });
         }
 
-        // WhatsApp Ordering Modal Helpers
+        // WhatsApp Ordering Dialog
         function openOrderModal(category, gender, size, stock) {
             selectedOrderData = { category, gender, size, stock };
 
-            document.getElementById('modalCat').textContent = category === 'Kepala SKPD' ? 'Kepala SKPD / Eselon II' : 'Mutz Standar ASN (Biasa)';
-            document.getElementById('modalGender').textContent = gender;
+            document.getElementById('modalCat').textContent = (category === 'Kepala SKPD') ? 'Kepala SKPD (Eselon II)' : 'Mutz Standar ASN (Biasa)';
+            document.getElementById('modalGender').textContent = (gender === 'Laki-laki') ? 'Pria' : 'Wanita';
             document.getElementById('modalSize').textContent = 'Nomor ' + size + ' (Lingkar ~' + size + ' cm)';
             
             const statusElem = document.getElementById('modalStockStatus');
             if (category === 'Kepala SKPD' || stock > 0) {
-                statusElem.textContent = 'Ready (Tersedia)';
-                statusElem.style.color = '#059669';
+                statusElem.textContent = 'Ready Stock (Tersedia)';
+                statusElem.style.color = '#15803D';
             } else {
-                statusElem.textContent = 'Habis (Diteruskan sebagai Pre-Order)';
-                statusElem.style.color = '#DC2626';
+                statusElem.textContent = 'Habis (Permintaan Pre-Order)';
+                statusElem.style.color = '#B91C1C';
             }
 
             document.getElementById('waOrderModal').classList.add('active');
-            document.body.style.overflow = 'hidden'; // Lock background scrolling on mobile
+            document.body.style.overflow = 'hidden';
         }
 
         function closeOrderModal(event) {
-            if (!event || event.target.id === 'waOrderModal' || event.target.tagName === 'BUTTON' || event.target.closest('button')) {
+            if (!event || event.target.id === 'waOrderModal' || event.target.classList.contains('btn-modal-close') || event.target.tagName === 'BUTTON') {
                 document.getElementById('waOrderModal').classList.remove('active');
                 document.body.style.overflow = '';
             }
         }
 
-        function sendWhatsAppOrder() {
+        function submitWhatsAppOrder() {
             const nama = document.getElementById('orderNama').value.trim();
             const skpd = document.getElementById('orderSkpd').value.trim();
 
-            const catText = selectedOrderData.category === 'Kepala SKPD' ? 'Mutz Kepala SKPD (Eselon II)' : 'Mutz Standar ASN (Biasa)';
-            const statusPesanan = (selectedOrderData.category === 'Kepala SKPD' || selectedOrderData.stock > 0)
-                ? 'Pemesanan Ready Stock'
-                : 'Permintaan Pre-Order (Stok Habis)';
+            const isKepala = (selectedOrderData.category === 'Kepala SKPD');
+            const catText = isKepala ? 'Mutz Kepala SKPD (Eselon II)' : 'Mutz Standar ASN (Biasa)';
+            const statusPesanan = (isKepala || selectedOrderData.stock > 0) ? 'Pemesanan Ready Stock' : 'Permintaan Pre-Order';
 
-            let msg = `Halo Admin E-MutZ KORPRI,\n\n`;
-            msg += `Saya ingin melakukan *${statusPesanan}* dengan rincian berikut:\n`;
-            msg += `• *Kategori:* ${catText}\n`;
-            msg += `• *Peruntukan:* ${selectedOrderData.gender}\n`;
-            msg += `• *Ukuran Topi:* No. ${selectedOrderData.size}\n`;
+            let msg = `Halo Admin Sekretariat KORPRI Kab. Banjar,\n\n`;
+            msg += `Saya ingin mengajukan *${statusPesanan}* dengan rincian berikut:\n`;
+            msg += `• *Kategori Mutz:* ${catText}\n`;
+            msg += `• *Peruntukan:* ${selectedOrderData.gender === 'Laki-laki' ? 'Pria' : 'Wanita'}\n`;
+            msg += `• *Nomor Ukuran:* No. ${selectedOrderData.size} (Lingkar ~${selectedOrderData.size} cm)\n`;
             
             if (nama) msg += `• *Nama Pemesan:* ${nama}\n`;
-            if (skpd) msg += `• *Asal SKPD / Instansi:* ${skpd}\n`;
+            if (skpd) msg += `• *Asal SKPD:* ${skpd}\n`;
             
-            msg += `\nMohon informasi ketersediaan fisik dan prosedur pengambilan/pembayarannya ya. Terima kasih!`;
+            msg += `\nMohon informasi kesiapan fisik dan petunjuk pengambilannya di Kantor Bupati Banjar. Terima kasih!`;
 
             const phone = '<?= $admin_wa_default ?>';
             const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
@@ -2799,40 +2249,40 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             closeOrderModal();
         }
 
-        function openGeneralWhatsApp() {
-            const msg = `Halo Admin E-MutZ KORPRI,\n\nSaya ingin menanyakan informasi ketersediaan stok topi mutz ASN (Standar / Kepala SKPD).`;
+        function openDirectWhatsApp() {
+            const msg = `Halo Admin Sekretariat KORPRI Kab. Banjar,\n\nSaya ingin menanyakan informasi ketersediaan stok topi Mutz ASN resmi.`;
             const phone = '<?= $admin_wa_default ?>';
             const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
             window.open(url, '_blank');
         }
 
-        let toastTimeout = null;
-        function showToast(msg) {
-            let toast = document.getElementById('publicToast');
+        // Share & Toast
+        let toastTimer = null;
+        function showNotification(msg) {
+            let toast = document.getElementById('govToast');
             if (!toast) {
                 toast = document.createElement('div');
-                toast.id = 'publicToast';
-                toast.className = 'toast-notification';
+                toast.id = 'govToast';
+                toast.className = 'gov-toast';
                 document.body.appendChild(toast);
             }
             toast.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 <span>${msg}</span>
             `;
             toast.classList.add('show');
-            if (toastTimeout) clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
                 toast.classList.remove('show');
             }, 2600);
         }
 
-        async function copyKatalogLink() {
-            const shareTitle = 'Katalog & Stok Mutz ASN | E-MutZ KORPRI Kab. Banjar';
-            const shareText = 'Cek ketersediaan stok topi Mutz ASN Standar & Kepala SKPD Dewan Pengurus KORPRI Kab. Banjar secara Real-Time:';
+        async function shareKatalog() {
+            const shareTitle = 'Katalog Ketersediaan Stok Mutz ASN | Dewan Pengurus KORPRI Kab. Banjar';
+            const shareText = 'Cek ketersediaan stok fisik topi Mutz ASN Standar & Kepala SKPD Dewan Pengurus KORPRI Kab. Banjar secara Real-Time:';
             const shareUrl = window.location.href;
             const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-            // On mobile devices, invoke native share sheet for WhatsApp / Telegram
             if (isMobile && navigator.share) {
                 try {
                     await navigator.share({
@@ -2846,7 +2296,6 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 }
             }
 
-            // Copy to clipboard with fallback
             let copied = false;
             if (navigator.clipboard) {
                 try {
@@ -2867,16 +2316,16 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             }
 
             if (copied) {
-                showToast('Tautan berhasil disalin! Siap dibagikan ke WhatsApp.');
+                showNotification('Tautan katalog berhasil disalin ke clipboard!');
             } else {
-                prompt('Salin tautan ini untuk dibagikan ke WhatsApp:', shareUrl);
+                prompt('Salin tautan ini untuk dibagikan:', shareUrl);
             }
         }
 
-        // Ultra-smooth throttled back-to-top scroll listener (Zero jank)
-        let isScrollTicking = false;
+        // Scroll to Top Listener
+        let scrollTicking = false;
         window.addEventListener('scroll', function() {
-            if (!isScrollTicking) {
+            if (!scrollTicking) {
                 window.requestAnimationFrame(function() {
                     const btn = document.getElementById('btnScrollTop');
                     if (btn) {
@@ -2886,17 +2335,17 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             btn.classList.remove('visible');
                         }
                     }
-                    isScrollTicking = false;
+                    scrollTicking = false;
                 });
-                isScrollTicking = true;
+                scrollTicking = true;
             }
         }, { passive: true });
 
-        // Initialize on Load
+        // Init on DOM ready
         document.addEventListener('DOMContentLoaded', function() {
-            switchCategory('Biasa');
-            updateGenderCounts();
-            renderQuickSizeChips();
+            selectCategory('Biasa');
+            updateCounters();
+            renderSizeChips();
         });
     </script>
 </body>
