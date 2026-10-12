@@ -2398,7 +2398,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     btnActionHtml = `
                         <button type="button" class="btn-order-action ready-wa" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, ${qty})">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                            <span class="btn-text-full">Ambil Sisa ${qty} pcs via WA</span>
+                            <span class="btn-text-full">Pesan Ukuran ${sz} via WA</span>
                             <span class="btn-text-short">Pesan WA</span>
                         </button>
                     `;
@@ -2406,16 +2406,16 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     statusPillHtml = `
                         <span class="status-pill pill-avail-empty">
                             <span class="status-dot-sm"></span>
-                            <span class="pill-text-full">Habis (Pre-Order)</span>
-                            <span class="pill-text-short">Pre-Order</span>
+                            <span class="pill-text-full">Pesan (Stok Habis)</span>
+                            <span class="pill-text-short">Pesan</span>
                         </span>
                     `;
                     stockText = 'Stok Fisik Habis';
                     btnActionHtml = `
-                        <button type="button" class="btn-order-action preorder-wa" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, 0)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
-                            <span class="btn-text-full">Pre-Order Ukuran ${sz} via WA</span>
-                            <span class="btn-text-short">Pre-Order WA</span>
+                        <button type="button" class="btn-order-action ready-wa" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, 0)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                            <span class="btn-text-full">Pesan Ukuran ${sz} via WA</span>
+                            <span class="btn-text-short">Pesan WA</span>
                         </button>
                     `;
                 }
@@ -2470,7 +2470,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 statusElem.textContent = 'Ready Stock (Tersedia)';
                 statusElem.style.color = '#15803D';
             } else {
-                statusElem.textContent = 'Habis (Permintaan Pre-Order)';
+                statusElem.textContent = 'Pemesanan (Stok Fisik Habis)';
                 statusElem.style.color = '#B91C1C';
             }
 
@@ -2491,7 +2491,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
             const isKepala = (selectedOrderData.category === 'Kepala SKPD');
             const catText = isKepala ? 'Mutz Kepala SKPD (Eselon II)' : 'Mutz Standar ASN (Biasa)';
-            const statusPesanan = (isKepala || selectedOrderData.stock > 0) ? 'Pemesanan Ready Stock' : 'Permintaan Pre-Order';
+            const statusPesanan = (isKepala || selectedOrderData.stock > 0) ? 'Pemesanan Ready Stock' : 'Pemesanan Mutz ASN';
 
             let msg = `Halo Admin Sekretariat KORPRI Kab. Banjar,\n\n`;
             msg += `Saya ingin mengajukan *${statusPesanan}* dengan rincian berikut:\n`;
