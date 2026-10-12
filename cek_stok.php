@@ -1,12 +1,13 @@
 <?php
+define('ALLOW_DB_FAIL', true);
 require_once 'config.php';
 
 // Fetch current stock from database
-$q_stok = $conn->query("
+$q_stok = $conn ? $conn->query("
     SELECT jenis_mutz, jenis_kelamin, ukuran, jumlah_stok 
     FROM stok_mutz 
     ORDER BY jenis_mutz ASC, jenis_kelamin ASC, ukuran ASC
-");
+") : null;
 
 $stok_data = [
     'Biasa' => [

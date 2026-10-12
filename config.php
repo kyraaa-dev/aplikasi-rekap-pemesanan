@@ -95,7 +95,7 @@ if (!empty($db_url) && $parsed = parse_url($db_url)) {
 }
 
 // Cek apakah berjalan di Vercel tapi env DB_HOST belum terdeteksi
-if (($host === "localhost" || $host === "127.0.0.1") && (isset($_SERVER['VERCEL']) || isset($_ENV['VERCEL']) || getenv('VERCEL'))) {
+if (!defined('ALLOW_DB_FAIL') && ($host === "localhost" || $host === "127.0.0.1") && (isset($_SERVER['VERCEL']) || isset($_ENV['VERCEL']) || getenv('VERCEL'))) {
     $detected_host = get_env_var('DB_HOST', '(tidak terdeteksi)');
     $detected_port = get_env_var('DB_PORT', '(tidak terdeteksi)');
     $detected_user = get_env_var('DB_USER', '(tidak terdeteksi)');
@@ -150,35 +150,39 @@ try {
 }
 
 if (!$connected || $conn->connect_error) {
-    $err_show = $conn->connect_error ?: ($conn_error_msg ?: "Gagal terhubung ke host $host:$port");
-    $pass_preview = strlen($pass) > 0 ? (strlen($pass) . " karakter (Awal: " . substr($pass, 0, 2) . "... Akhir: ..." . substr($pass, -2) . ")") : "❌ Kosong";
-    die("<div style='font-family:sans-serif; padding:24px; background:#fff; color:#333; border:2px solid #EF4444; border-radius:12px; max-width:680px; margin:40px auto; box-shadow:0 4px 20px rgba(0,0,0,0.1); line-height:1.6;'>
-        <h3 style='margin-top:0; color:#DC2626;'>❌ Gagal Terhubung ke Database TiDB Cloud</h3>
-        <p><b>Pesan Error:</b> <code style='background:#FEE2E2; color:#991B1B; padding:4px 8px; border-radius:4px;'>$err_show</code></p>
-        
-        <table style='width:100%; border-collapse:collapse; margin:16px 0; font-size:14px; background:#F9FAFB;'>
-            <tr style='background:#E5E7EB; text-align:left;'>
-                <th style='padding:8px; border:1px solid #D1D5DB;'>Variabel</th>
-                <th style='padding:8px; border:1px solid #D1D5DB;'>Nilai yang Dibaca Vercel</th>
-            </tr>
-            <tr><td style='padding:8px; border:1px solid #D1D5DB;'><code>DB_HOST</code></td><td style='padding:8px; border:1px solid #D1D5DB;'>$host</td></tr>
-            <tr><td style='padding:8px; border:1px solid #D1D5DB;'><code>DB_PORT</code></td><td style='padding:8px; border:1px solid #D1D5DB;'>$port</td></tr>
-            <tr><td style='padding:8px; border:1px solid #D1D5DB;'><code>DB_USER</code></td><td style='padding:8px; border:1px solid #D1D5DB;'>$user</td></tr>
-            <tr><td style='padding:8px; border:1px solid #D1D5DB;'><code>DB_NAME</code></td><td style='padding:8px; border:1px solid #D1D5DB;'>$db</td></tr>
-            <tr><td style='padding:8px; border:1px solid #D1D5DB;'><code>DB_PASS</code></td><td style='padding:8px; border:1px solid #D1D5DB;'>$pass_preview</td></tr>
-        </table>
+    if (defined('ALLOW_DB_FAIL') && ALLOW_DB_FAIL === true) {
+        $conn = false;
+    } else {
+        $err_show = $conn->connect_error ?: ($conn_error_msg ?: "Gagal terhubung ke host $host:$port");
+        $pass_preview = strlen($pass) > 0 ? (strlen($pass) . " karakter (Awal: " . substr($pass, 0, 2) . "... Akhir: ..." . substr($pass, -2) . ")") : "❌ Kosong";
+        die("<div style='font-family:sans-serif; padding:24px; background:#fff; color:#333; border:2px solid #EF4444; border-radius:12px; max-width:680px; margin:40px auto; box-shadow:0 4px 20px rgba(0,0,0,0.1); line-height:1.6;'>
+            <h3 style='margin-top:0; color:#DC2626;'>❌ Gagal Terhubung ke Database TiDB Cloud</h3>
+            <p><b>Pesan Error:</b> <code style='background:#FEE2E2; color:#991B1B; padding:4px 8px; border-radius:4px;'>$err_show</code></p>
+            
+            <table style='width:100%; border-collapse:collapse; margin:16px 0; font-size:14px; background:#F9FAFB;'>
+                <tr style='background:#E5E7EB; text-align:left;'>
+                    <th style='padding:8px; border:1px solid #D1D5DB;'>Variabel</th>
+                    <th style='padding:8px; border:1px solid #D1D5DB;'>Nilai yang Dibaca Vercel</th>
+                </tr>
+                <tr><td style='padding:8px; border:1px solid #D1D5DB;'><code>DB_HOST</code></td><td style='padding:8px; border:1px solid #D1D5DB;'>$host</td></tr>
+                <tr><td style='padding:8px; border:1px solid #D1D5DB;'><code>DB_PORT</code></td><td style='padding:8px; border:1px solid #D1D5DB;'>$port</td></tr>
+                <tr><td style='padding:8px; border:1px solid #D1D5DB;'><code>DB_USER</code></td><td style='padding:8px; border:1px solid #D1D5DB;'>$user</td></tr>
+                <tr><td style='padding:8px; border:1px solid #D1D5DB;'><code>DB_NAME</code></td><td style='padding:8px; border:1px solid #D1D5DB;'>$db</td></tr>
+                <tr><td style='padding:8px; border:1px solid #D1D5DB;'><code>DB_PASS</code></td><td style='padding:8px; border:1px solid #D1D5DB;'>$pass_preview</td></tr>
+            </table>
 
-        <div style='background:#FEF3C7; border-left:4px solid #F59E0B; padding:12px 14px; margin:16px 0; font-size:14px; color:#92400E;'>
-            <b>Penyebab Umum:</b>
-            <ul style='margin:6px 0 0 18px; padding:0;'>
-                <li><b>IP Access List di TiDB Cloud:</b> Buka dashboard TiDB Cloud &gt; pilih Cluster &gt; tab <b>Security</b> &gt; pastikan IP Access List mengizinkan <code>0.0.0.0/0</code> (Allow Access from Anywhere).</li>
-                <li><b>Password:</b> Pastikan <code>DB_PASS</code> di Vercel sama persis dengan password yang baru di-generate di TiDB Cloud.</li>
-            </ul>
-        </div>
-    </div>");
+            <div style='background:#FEF3C7; border-left:4px solid #F59E0B; padding:12px 14px; margin:16px 0; font-size:14px; color:#92400E;'>
+                <b>Penyebab Umum:</b>
+                <ul style='margin:6px 0 0 18px; padding:0;'>
+                    <li><b>IP Access List di TiDB Cloud:</b> Buka dashboard TiDB Cloud &gt; pilih Cluster &gt; tab <b>Security</b> &gt; pastikan IP Access List mengizinkan <code>0.0.0.0/0</code> (Allow Access from Anywhere).</li>
+                    <li><b>Password:</b> Pastikan <code>DB_PASS</code> di Vercel sama persis dengan password yang baru di-generate di TiDB Cloud.</li>
+                </ul>
+            </div>
+        </div>");
+    }
 }
 
-if (!isset($skip_db_select)) {
+if ($conn && !isset($skip_db_select)) {
     if (!$conn->select_db($db)) {
         die("<div style='font-family:sans-serif; padding:20px; background:#fff3cd; color:#856404; border:1px solid #ffeeba; border-radius:8px; max-width:600px; margin:40px auto;'>
             <h3 style='margin-top:0;'>⚠️ Database '$db' belum siap</h3>
@@ -265,7 +269,7 @@ if (php_sapi_name() !== 'cli' && !in_array($current_page, $allowed_pages)) {
 }
 // Global Settings
 $app_settings = [];
-if (!isset($skip_db_select)) {
+if ($conn && !isset($skip_db_select)) {
     $q_settings = $conn->query("SELECT * FROM settings LIMIT 1");
     if ($q_settings && $q_settings->num_rows > 0) {
         $app_settings = $q_settings->fetch_assoc();
