@@ -1123,10 +1123,15 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             align-items: center;
             justify-content: space-between;
             font-size: 0.82rem;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
         .body-row:last-child {
             margin-bottom: 0;
+        }
+        .body-row-pin {
+            margin-top: 6px;
+            padding-top: 6px;
+            border-top: 1px dashed var(--gov-hairline);
         }
         .body-label {
             color: var(--gov-muted);
@@ -1136,52 +1141,21 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             font-weight: 700;
             color: var(--gov-slate);
         }
-        .body-pin-banner {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            padding: 5px 8px;
-            margin-top: 8px;
-            border-radius: 5px;
-            background: rgba(29, 78, 216, 0.06);
-            border: 1px solid rgba(29, 78, 216, 0.16);
-            color: var(--korpri-navy);
-            font-size: 0.76rem;
-            line-height: 1.25;
-            text-align: center;
-            width: 100%;
-            box-sizing: border-box;
-            transition: var(--transition);
-        }
-        [data-theme="dark"] .body-pin-banner {
-            background: rgba(59, 130, 246, 0.12);
-            border-color: rgba(59, 130, 246, 0.28);
-            color: #BFDBFE;
-        }
-        .body-pin-banner svg {
-            color: var(--korpri-gold);
-            flex-shrink: 0;
-        }
-        .pin-badge-txt {
+        .body-pin-val {
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            white-space: nowrap;
-        }
-        .pin-prefix {
-            color: var(--gov-muted);
-            font-weight: 500;
-        }
-        [data-theme="dark"] .pin-prefix {
-            color: #94A3B8;
-        }
-        .pin-highlight {
             font-weight: 700;
             color: var(--korpri-blue);
+            font-size: 0.78rem;
+            white-space: nowrap;
         }
-        [data-theme="dark"] .pin-highlight {
+        [data-theme="dark"] .body-pin-val {
             color: #93C5FD;
+        }
+        .body-pin-val svg {
+            color: var(--korpri-gold);
+            flex-shrink: 0;
         }
 
         /* Card Action Button (Crisp WhatsApp CTA) */
@@ -1868,19 +1842,18 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             .body-value {
                 font-size: 0.76rem;
             }
-            .body-pin-banner {
+            .body-row-pin {
                 margin-top: 5px;
-                padding: 4px 4px;
-                font-size: 0.67rem;
-                gap: 4px;
-                border-radius: 4px;
+                padding-top: 5px;
+                border-top: 1px dashed var(--gov-hairline);
             }
-            .body-pin-banner svg {
+            .body-pin-val {
+                font-size: 0.73rem;
+                gap: 3px;
+            }
+            .body-pin-val svg {
                 width: 11px;
                 height: 11px;
-            }
-            .pin-badge-txt {
-                gap: 3px;
             }
             .btn-order-action {
                 padding: 7px 6px;
@@ -2587,12 +2560,12 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <span class="body-label">Harga Resmi</span>
                             <span class="body-value">Rp ${harga.toLocaleString('id-ID')}</span>
                         </div>
-                        <div class="body-pin-banner">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                            <span class="pin-badge-txt">
-                                <span class="pin-prefix">Kelengkapan:</span>
-                                <span class="pin-highlight">Include Pin</span>
-                                <span class="pin-text-full">Kab. Banjar</span>
+                        <div class="body-row body-row-pin">
+                            <span class="body-label">Kelengkapan</span>
+                            <span class="body-pin-val">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                <span class="pin-text-full">+ Pin Kab. Banjar</span>
+                                <span class="pin-text-short">+ Pin Banjar</span>
                             </span>
                         </div>
                     </div>
