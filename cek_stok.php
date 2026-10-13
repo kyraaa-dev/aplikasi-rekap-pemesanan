@@ -2194,8 +2194,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
             </div>
             <div>
-                <div class="eselon-alert-title">Spesifikasi Khusus Pejabat Eselon II (Ready Stock)</div>
-                <div class="eselon-alert-desc">Dilengkapi aksen bordir list benang emas tebal resmi KORPRI untuk Kepala Dinas, Kepala Badan, Asisten Sekda, Staf Ahli, dan Sekda. Seluruh ukuran ready dan include Pin Lambang Kabupaten Banjar.</div>
+                <div class="eselon-alert-title">Spesifikasi Khusus Pejabat Eselon II</div>
+                <div class="eselon-alert-desc">Dilengkapi aksen bordir list benang emas tebal resmi KORPRI untuk Kepala Dinas, Kepala Badan, Asisten Sekda, Staf Ahli, dan Sekda. Sudah include Pin Logam Lambang Kabupaten Banjar.</div>
             </div>
         </div>
 
@@ -2496,13 +2496,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             const wanitaObj = dataCat['Perempuan'] || {};
             for (let sz in wanitaObj) { totalWanita += (wanitaObj[sz] || 0); }
 
-            if (currentCategory === 'Kepala SKPD') {
-                document.getElementById('counterPria').textContent = 'Ready';
-                document.getElementById('counterWanita').textContent = 'Ready';
-            } else {
-                document.getElementById('counterPria').textContent = totalPria + ' Pcs';
-                document.getElementById('counterWanita').textContent = totalWanita + ' Pcs';
-            }
+            document.getElementById('counterPria').textContent = totalPria + ' Pcs';
+            document.getElementById('counterWanita').textContent = totalWanita + ' Pcs';
         }
 
         // Size Filter Chips
@@ -2534,12 +2529,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 const btn = document.createElement('button');
                 btn.type = 'button';
                 btn.className = 'btn-size-chip' + (selectedSizeFilter === sz ? ' active' : '');
-                
-                const label = (currentCategory === 'Kepala SKPD') 
-                    ? `No. ${sz}` 
-                    : `No. ${sz} (${qty})`;
-
-                btn.textContent = label;
+                btn.textContent = `No. ${sz} (${qty})`;
                 btn.onclick = function() {
                     selectedSizeFilter = (selectedSizeFilter === sz) ? null : sz;
                     renderSizeChips();
@@ -2573,24 +2563,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 let btnActionHtml = '';
                 let stockText = '';
 
-                if (isKepala) {
-                    // Eselon II selalu Ready Stock
-                    statusPillHtml = `
-                        <span class="status-pill pill-avail-ready">
-                            <span class="status-dot-sm"></span>
-                            <span class="pill-text-full">Ready Stock</span>
-                            <span class="pill-text-short">Ready</span>
-                        </span>
-                    `;
-                    stockText = 'Ready Stock di Sekretariat';
-                    btnActionHtml = `
-                        <button type="button" class="btn-order-action ready-wa" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, ${qty > 0 ? qty : 1})">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                            <span class="btn-text-full">Pesan Ukuran ${sz} via WA</span>
-                            <span class="btn-text-short">Pesan WA</span>
-                        </button>
-                    `;
-                } else if (qty > 5) {
+                if (qty > 5) {
                     statusPillHtml = `
                         <span class="status-pill pill-avail-ready">
                             <span class="status-dot-sm"></span>
@@ -2685,11 +2658,11 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             document.getElementById('modalSize').textContent = 'Nomor ' + size + ' (Lingkar ~' + size + ' cm)';
             
             const statusElem = document.getElementById('modalStockStatus');
-            if (category === 'Kepala SKPD' || stock > 0) {
-                statusElem.textContent = 'Ready Stock (Tersedia)';
+            if (stock > 0) {
+                statusElem.textContent = `Ready Stock (${stock} Pcs Tersedia)`;
                 statusElem.style.color = '#15803D';
             } else {
-                statusElem.textContent = 'Pemesanan (Stok Fisik Habis)';
+                statusElem.textContent = 'Pemesanan (Stok Fisik Habis / Pre-Order)';
                 statusElem.style.color = '#B91C1C';
             }
 
@@ -2728,7 +2701,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
             const isKepala = (selectedOrderData.category === 'Kepala SKPD');
             const catText = isKepala ? 'Mutz Kepala SKPD (Eselon II)' : 'Mutz Standar ASN (Biasa)';
-            const statusPesanan = (isKepala || selectedOrderData.stock > 0) ? 'Pemesanan Ready Stock' : 'Pemesanan Mutz ASN';
+            const statusPesanan = (selectedOrderData.stock > 0) ? 'Pemesanan Ready Stock' : 'Pemesanan Mutz ASN (Pre-Order)';
 
             let msg = `Halo Admin Sekretariat KORPRI Kab. Banjar,\n\n`;
             msg += `Saya ingin mengajukan *${statusPesanan}* dengan rincian berikut:\n`;
