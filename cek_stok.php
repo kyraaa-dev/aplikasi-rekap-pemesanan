@@ -351,22 +351,22 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         }
 
         .gov-brand-seal {
-            width: 42px;
-            height: 42px;
-            border-radius: var(--radius-sm);
+            width: 38px;
+            height: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #FFFFFF;
-            border: 1px solid var(--gov-hairline);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            background: transparent;
+            border: none;
+            box-shadow: none;
             flex-shrink: 0;
-            padding: 3px;
+            padding: 0;
         }
         .gov-brand-seal img {
             width: 100%;
             height: 100%;
             object-fit: contain;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.08));
         }
 
         .gov-brand-text {
