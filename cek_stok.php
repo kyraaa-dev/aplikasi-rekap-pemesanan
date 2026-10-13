@@ -104,8 +104,8 @@ try {
 
     $is_office_open = false;
     if ($current_day_wita >= 1 && $current_day_wita <= 4) {
-        // Senin s/d Kamis: 08:00 - 16:30 WITA
-        $is_office_open = ($current_hi_wita >= 800 && $current_hi_wita <= 1630);
+        // Senin s/d Kamis: 08:00 - 15:00 WITA
+        $is_office_open = ($current_hi_wita >= 800 && $current_hi_wita <= 1500);
     } elseif ($current_day_wita === 5) {
         // Jumat: 08:00 - 11:30 WITA
         $is_office_open = ($current_hi_wita >= 800 && $current_hi_wita <= 1130);
@@ -2620,7 +2620,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <span class="schedule-day">
                                 <strong>Senin – Kamis</strong>
                             </span>
-                            <span class="schedule-hours">08.00 – 16.30 WITA</span>
+                            <span class="schedule-hours">08.00 – 15.00 WITA</span>
                         </li>
                         <li class="schedule-item">
                             <span class="schedule-day">
