@@ -2134,6 +2134,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         <div class="choice-meta-title">Mutz Standar ASN</div>
                         <div class="choice-meta-desc">Diperuntukkan bagi seluruh ASN (PNS &amp; PPPK)</div>
                         <div class="choice-tags-row">
+                            <span class="tag-micro tag-micro-green">Ready Stock</span>
                             <span class="tag-micro tag-micro-blue">Include Pin Kab. Banjar</span>
                         </div>
                     </div>
