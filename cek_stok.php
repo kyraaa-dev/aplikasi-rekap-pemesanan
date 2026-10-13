@@ -467,11 +467,6 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         .gov-hero {
             position: relative;
             background-color: #07172F;
-            background-image: 
-                radial-gradient(ellipse at 50% 35%, rgba(13, 38, 80, 0.52) 0%, rgba(7, 20, 46, 0.76) 60%, rgba(3, 10, 24, 0.92) 100%),
-                url('assets/images/batik-korpri.jpg?v=2');
-            background-size: cover;
-            background-position: center;
             border: 1px solid rgba(212, 175, 55, 0.5);
             border-radius: var(--radius-lg);
             padding: 2.25rem 2rem 2rem 2rem;
@@ -482,11 +477,62 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             color: #FFFFFF;
         }
         [data-theme="dark"] .gov-hero {
-            background-image: 
-                radial-gradient(ellipse at 50% 35%, rgba(10, 28, 62, 0.60) 0%, rgba(5, 16, 38, 0.82) 60%, rgba(2, 6, 18, 0.95) 100%),
-                url('assets/images/batik-korpri.jpg?v=2');
             border-color: rgba(212, 175, 55, 0.45);
             box-shadow: 0 16px 40px -4px rgba(0, 0, 0, 0.7), 0 0 20px rgba(212, 175, 55, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animated Batik Background Layer (Slow, repeating smooth pan) */
+        .gov-hero-batik {
+            position: absolute;
+            top: -12%;
+            left: -12%;
+            width: 124%;
+            height: 124%;
+            background-image: url('assets/images/batik-korpri.jpg?v=2');
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+            pointer-events: none;
+            will-change: transform;
+            animation: heroBatikSlide 26s ease-in-out infinite alternate;
+        }
+
+        /* Ambient Glass/Radial Overlay for perfect text contrast */
+        .gov-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 35%, rgba(13, 38, 80, 0.52) 0%, rgba(7, 20, 46, 0.76) 60%, rgba(3, 10, 24, 0.92) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        [data-theme="dark"] .gov-hero-overlay {
+            background: radial-gradient(ellipse at 50% 35%, rgba(10, 28, 62, 0.60) 0%, rgba(5, 16, 38, 0.82) 60%, rgba(2, 6, 18, 0.95) 100%);
+        }
+
+        /* Content Container (Keeps text crisp & interactive on top) */
+        .gov-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Keyframes for Slow Majestic Batik Sliding Pan */
+        @keyframes heroBatikSlide {
+            0% {
+                transform: translate3d(0%, 0%, 0) scale(1.04);
+            }
+            50% {
+                transform: translate3d(-5%, -2%, 0) scale(1.08);
+            }
+            100% {
+                transform: translate3d(4%, 1.5%, 0) scale(1.04);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .gov-hero-batik {
+                animation: none;
+                transform: none;
+            }
         }
 
         /* Subtle gold accent top highlight */
@@ -499,6 +545,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             height: 2px;
             background: linear-gradient(90deg, transparent, #D4AF37, #FBBF24, transparent);
             border-radius: var(--radius-full);
+            z-index: 3;
+            pointer-events: none;
         }
 
         .gov-authority-badge {
@@ -2084,41 +2132,45 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
     </header>
 
     <main class="gov-container">
-        <!-- Hero Section -->
+        <!-- Hero Section with Animated Batik Background -->
         <section class="gov-hero">
-            <div class="gov-authority-badge">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                <span>LAYANAN RESMI PENGADAAN MUTZ ASN</span>
-            </div>
-
-            <h1 class="gov-hero-h1">
-                Katalog Ketersediaan Stok Mutz ASN
-            </h1>
-
-            <p class="gov-hero-sub">
-                Informasi ketersediaan fisik topi Mutz resmi bagi Aparatur Sipil Negara (PNS &amp; PPPK) serta Kepala SKPD (Pejabat Eselon II) di lingkungan Pemerintah Kabupaten Banjar secara Real-Time.
-            </p>
-
-            <div class="gov-info-strip">
-                <div class="gov-info-location">
-                    <div class="loc-pin-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                    </div>
-                    <div class="loc-text-block">
-                        <span class="loc-instansi">Sekretariat KORPRI Kabupaten Banjar</span>
-                        <span class="loc-divider">•</span>
-                        <span class="loc-alamat">Jl. A. Yani Nomor 2 Martapura</span>
-                    </div>
+            <div class="gov-hero-batik" aria-hidden="true"></div>
+            <div class="gov-hero-overlay" aria-hidden="true"></div>
+            <div class="gov-hero-content">
+                <div class="gov-authority-badge">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <span>LAYANAN RESMI PENGADAAN MUTZ ASN</span>
                 </div>
 
-                <div class="gov-info-meta-row">
-                    <div class="gov-meta-chip">
-                        <span class="meta-pulse-dot"></span>
-                        <span>Status: <strong>Update Real-Time</strong></span>
+                <h1 class="gov-hero-h1">
+                    Katalog Ketersediaan Stok Mutz ASN
+                </h1>
+
+                <p class="gov-hero-sub">
+                    Informasi ketersediaan fisik topi Mutz resmi bagi Aparatur Sipil Negara (PNS &amp; PPPK) serta Kepala SKPD (Pejabat Eselon II) di lingkungan Pemerintah Kabupaten Banjar secara Real-Time.
+                </p>
+
+                <div class="gov-info-strip">
+                    <div class="gov-info-location">
+                        <div class="loc-pin-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        </div>
+                        <div class="loc-text-block">
+                            <span class="loc-instansi">Sekretariat KORPRI Kabupaten Banjar</span>
+                            <span class="loc-divider">•</span>
+                            <span class="loc-alamat">Jl. A. Yani Nomor 2 Martapura</span>
+                        </div>
                     </div>
-                    <div class="gov-meta-chip">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-                        <span>Total Stok: <strong><?= number_format($total_stok_tersedia, 0, ',', '.') ?> Pcs</strong></span>
+
+                    <div class="gov-info-meta-row">
+                        <div class="gov-meta-chip">
+                            <span class="meta-pulse-dot"></span>
+                            <span>Status: <strong>Update Real-Time</strong></span>
+                        </div>
+                        <div class="gov-meta-chip">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                            <span>Total Stok: <strong><?= number_format($total_stok_tersedia, 0, ',', '.') ?> Pcs</strong></span>
+                        </div>
                     </div>
                 </div>
             </div>
