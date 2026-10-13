@@ -51,11 +51,16 @@ $sizes_wanita = [58, 59, 60];
 // Fetch list of SKPD from database with fallback list
 $skpd_options = [];
 if ($conn) {
+    @$conn->query("UPDATE skpd SET nama_skpd = 'BAPPERIDA' WHERE nama_skpd = 'BAPPEDALITBANG'");
     $q_skpd = @$conn->query("SELECT nama_skpd FROM skpd ORDER BY nama_skpd ASC");
     if ($q_skpd) {
         while ($s = $q_skpd->fetch_assoc()) {
             if (!empty($s['nama_skpd'])) {
-                $skpd_options[] = $s['nama_skpd'];
+                $nama = trim($s['nama_skpd']);
+                if (strcasecmp($nama, 'BAPPEDALITBANG') === 0) {
+                    $nama = 'BAPPERIDA';
+                }
+                $skpd_options[] = $nama;
             }
         }
     }
@@ -64,7 +69,7 @@ if ($conn) {
 // Fallback comprehensive list if DB not connected or empty
 if (empty($skpd_options)) {
     $skpd_options = [
-        'BAPPEDALITBANG', 'BKPSDM', 'BPBD', 'BPKPAD', 
+        'BAPPERIDA', 'BKPSDM', 'BPBD', 'BPKPAD', 
         'DINAS KESEHATAN', 'DINAS PENDIDIKAN', 'DINAS PERTANIAN', 'DINSOSP3AKP2B', 
         'DISBUDPORAPAR', 'DISDUKCAPIL', 'DISHUB', 'DISKOMINFO/DKISP', 
         'DISNAKERTRANS', 'DISPERSIP', 'DKPP', 'DKUMPP', 

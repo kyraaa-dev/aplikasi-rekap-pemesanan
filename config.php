@@ -217,6 +217,9 @@ if ($conn && !isset($skip_db_select)) {
     if ($check_wa && $check_wa->num_rows == 0) {
         @$conn->query("ALTER TABLE skpd ADD COLUMN no_wa VARCHAR(30) NULL AFTER nama_skpd");
     }
+
+    // Auto-update nama dinas/SKPD BAPPEDALITBANG menjadi BAPPERIDA
+    @$conn->query("UPDATE skpd SET nama_skpd = 'BAPPERIDA' WHERE nama_skpd = 'BAPPEDALITBANG'");
 }
 
 // Authentication Check & Persistent Session
