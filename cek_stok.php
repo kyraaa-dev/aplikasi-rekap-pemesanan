@@ -1846,14 +1846,27 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 margin-top: 5px;
                 padding-top: 5px;
                 border-top: 1px dashed var(--gov-hairline);
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 2px;
+            }
+            .body-row-pin .body-label {
+                font-size: 0.67rem;
+                color: var(--gov-muted);
+                line-height: 1.2;
             }
             .body-pin-val {
-                font-size: 0.73rem;
-                gap: 3px;
+                font-size: 0.72rem;
+                gap: 3.5px;
+                white-space: normal;
+                line-height: 1.25;
+                color: var(--korpri-blue);
+                width: 100%;
             }
             .body-pin-val svg {
                 width: 11px;
                 height: 11px;
+                flex-shrink: 0;
             }
             .btn-order-action {
                 padding: 7px 6px;
@@ -2564,8 +2577,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <span class="body-label">Kelengkapan</span>
                             <span class="body-pin-val">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                                <span class="pin-text-full">+ Pin Kab. Banjar</span>
-                                <span class="pin-text-short">+ Pin Banjar</span>
+                                <span>+ Pin Kab. Banjar</span>
                             </span>
                         </div>
                     </div>
