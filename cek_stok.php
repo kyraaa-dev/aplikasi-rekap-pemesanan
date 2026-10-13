@@ -87,6 +87,34 @@ if (empty($skpd_options)) {
 // Default admin WhatsApp
 $admin_wa_default = '6281258902720';
 
+// Sekretariat KORPRI Kabupaten Banjar Coordinates & Maps URLs
+$office_lat = -3.4088348290815493;
+$office_lng = 114.84823236685016;
+$maps_search_url = "https://www.google.com/maps/search/?api=1&query={$office_lat},{$office_lng}";
+$maps_dir_url = "https://www.google.com/maps/dir/?api=1&destination={$office_lat},{$office_lng}";
+$maps_embed_url = "https://maps.google.com/maps?q={$office_lat},{$office_lng}&hl=id&z=17&output=embed";
+
+// Service Hours check in WITA (UTC+8)
+try {
+    $wita_tz = new DateTimeZone('Asia/Makassar');
+    $wita_now = new DateTime('now', $wita_tz);
+    $current_day_wita = (int)$wita_now->format('N'); // 1 (Senin) to 7 (Minggu)
+    $current_hi_wita = (int)$wita_now->format('Hi'); // e.g. 0930
+    $current_time_str = $wita_now->format('H:i');
+
+    $is_office_open = false;
+    if ($current_day_wita >= 1 && $current_day_wita <= 4) {
+        // Senin s/d Kamis: 08:00 - 16:30 WITA
+        $is_office_open = ($current_hi_wita >= 800 && $current_hi_wita <= 1630);
+    } elseif ($current_day_wita === 5) {
+        // Jumat: 08:00 - 11:30 WITA
+        $is_office_open = ($current_hi_wita >= 800 && $current_hi_wita <= 1130);
+    }
+} catch (Exception $e) {
+    $is_office_open = false;
+    $current_time_str = date('H:i');
+}
+
 // Calculate absolute base URL for Open Graph (WhatsApp, Telegram, Facebook crawlers)
 $is_https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') 
     || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)
@@ -620,6 +648,16 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .gov-info-location:hover {
+            background: rgba(15, 23, 42, 0.78);
+            border-color: rgba(212, 175, 55, 0.55);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
         }
         .loc-pin-icon {
             width: 26px;
@@ -1385,8 +1423,199 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             color: var(--gov-muted);
             font-weight: 500;
         }
-        .spec-list li {
-            margin-bottom: 4px;
+        /* ==========================================================================
+           OFFICIAL SERVICE HOURS & GOOGLE MAPS LOCATION SECTION
+           ========================================================================== */
+        .gov-office-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 1.25rem;
+        }
+        @media (max-width: 860px) {
+            .gov-office-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .office-card {
+            background: var(--gov-hairline-subtle);
+            border: 1px solid var(--gov-hairline);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+        [data-theme="dark"] .office-card {
+            background: rgba(15, 32, 60, 0.45);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .office-subhead {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        .office-subhead-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--gov-slate);
+        }
+        [data-theme="dark"] .office-subhead-title {
+            color: #F8FAFC;
+        }
+
+        .schedule-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 16px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .schedule-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 12px;
+            background: var(--gov-surface);
+            border: 1px solid var(--gov-hairline);
+            border-radius: var(--radius-sm);
+            font-size: 0.86rem;
+        }
+        .schedule-day {
+            font-weight: 600;
+            color: var(--gov-slate);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .schedule-hours {
+            font-weight: 700;
+            color: var(--korpri-blue);
+        }
+        [data-theme="dark"] .schedule-hours {
+            color: #93C5FD;
+        }
+        .schedule-hours.closed {
+            color: var(--status-red);
+            font-weight: 600;
+        }
+
+        .office-notice-box {
+            background: var(--korpri-gold-light);
+            border: 1px solid var(--korpri-gold-border);
+            border-radius: var(--radius-sm);
+            padding: 11px 13px;
+            margin-top: auto;
+            font-size: 0.82rem;
+            color: #784C0B;
+            line-height: 1.45;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        [data-theme="dark"] .office-notice-box {
+            background: rgba(212, 175, 55, 0.08);
+            border-color: rgba(212, 175, 55, 0.25);
+            color: #FEF3C7;
+        }
+
+        .location-map-wrap {
+            width: 100%;
+            height: 200px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 1px solid var(--gov-hairline);
+            margin-bottom: 14px;
+            position: relative;
+            background: #E2E8F0;
+        }
+        .location-map-wrap iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+
+        .location-meta-details {
+            margin-bottom: 14px;
+        }
+        .loc-instansi-name {
+            font-size: 0.96rem;
+            font-weight: 800;
+            color: var(--gov-slate);
+            margin-bottom: 3px;
+        }
+        .loc-full-address {
+            font-size: 0.86rem;
+            color: var(--gov-muted);
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        .loc-coords-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.76rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            background: var(--gov-surface);
+            border: 1px solid var(--gov-hairline);
+            border-radius: var(--radius-sm);
+            padding: 3px 8px;
+            color: var(--gov-subtle);
+        }
+
+        .location-actions-row {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+            flex-wrap: wrap;
+        }
+        .btn-map-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            flex: 1;
+            min-width: 140px;
+            user-select: none;
+        }
+        .btn-map-primary {
+            background: #1D4ED8;
+            color: #FFFFFF;
+            border: 1px solid #1D4ED8;
+        }
+        .btn-map-primary:hover {
+            background: #1E40AF;
+            border-color: #1E40AF;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.25);
+            color: #FFFFFF;
+        }
+        .btn-map-secondary {
+            background: var(--gov-surface);
+            color: var(--gov-slate);
+            border: 1px solid var(--gov-hairline);
+        }
+        .btn-map-secondary:hover {
+            background: var(--gov-hairline-subtle);
+            border-color: #94A3B8;
+            transform: translateY(-1px);
+            color: var(--korpri-blue);
         }
 
         /* ==========================================================================
@@ -2151,7 +2380,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 </p>
 
                 <div class="gov-info-strip">
-                    <div class="gov-info-location">
+                    <a href="#lokasi-pelayanan" class="gov-info-location" title="Lihat Jam Pelayanan &amp; Lokasi Kantor Sekretariat KORPRI">
                         <div class="loc-pin-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         </div>
@@ -2160,7 +2389,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <span class="loc-divider">•</span>
                             <span class="loc-alamat">Jl. A. Yani Nomor 2 Martapura</span>
                         </div>
-                    </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity: 0.75; margin-left: 2px;"><path d="m6 9 6 6 6-6"/></svg>
+                    </a>
 
                     <div class="gov-info-meta-row">
                         <div class="gov-meta-chip">
@@ -2346,6 +2576,127 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 </div>
             </div>
         </section>
+
+        <!-- Official Service Hours & Google Maps Location Section -->
+        <section class="gov-section-card" id="lokasi-pelayanan">
+            <div class="section-header-row">
+                <h2 class="section-h2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--korpri-blue);"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <span>Jam Pelayanan &amp; Lokasi Sekretariat KORPRI</span>
+                </h2>
+                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                    <?php if ($is_office_open): ?>
+                        <span class="tag-micro tag-micro-green" title="Waktu Saat Ini: <?= htmlspecialchars($current_time_str) ?> WITA">
+                            <span class="meta-pulse-dot" style="width: 7px; height: 7px;"></span>
+                            <span>Buka Pelayanan (WITA)</span>
+                        </span>
+                    <?php else: ?>
+                        <span class="tag-micro" style="background: rgba(100, 116, 139, 0.15); color: var(--gov-muted);" title="Waktu Saat Ini: <?= htmlspecialchars($current_time_str) ?> WITA">
+                            <span class="status-indicator-dot" style="background: #94A3B8; width: 6px; height: 6px;"></span>
+                            <span>Di Luar Jam Layanan (WITA)</span>
+                        </span>
+                    <?php endif; ?>
+                    <span class="tag-micro tag-micro-gold">Layanan Langsung</span>
+                </div>
+            </div>
+
+            <p style="font-size: 0.9rem; color: var(--gov-muted); line-height: 1.6; margin-bottom: 0.5rem;">
+                Sekretariat Dewan Pengurus KORPRI melayani pengambilan fisik topi Mutz resmi, penukaran ukuran, serta konsultasi pemesanan bagi seluruh ASN dan perwakilan SKPD Kabupaten Banjar.
+            </p>
+
+            <div class="gov-office-grid">
+                <!-- Kolom Kiri: Jam Kerja Kedinasan -->
+                <div class="office-card">
+                    <div class="office-subhead">
+                        <div class="office-subhead-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--korpri-blue);"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                            <span>Jadwal Jam Kerja Kedinasan</span>
+                        </div>
+                        <span style="font-size: 0.78rem; color: var(--gov-subtle); font-weight: 600;">Zona WITA (GMT+8)</span>
+                    </div>
+
+                    <ul class="schedule-list">
+                        <li class="schedule-item">
+                            <span class="schedule-day">
+                                <strong>Senin – Kamis</strong>
+                            </span>
+                            <span class="schedule-hours">08.00 – 16.30 WITA</span>
+                        </li>
+                        <li class="schedule-item">
+                            <span class="schedule-day">
+                                <strong>Jumat</strong>
+                            </span>
+                            <span class="schedule-hours">08.00 – 11.30 WITA</span>
+                        </li>
+                        <li class="schedule-item">
+                            <span class="schedule-day">
+                                <strong>Sabtu &amp; Minggu</strong>
+                            </span>
+                            <span class="schedule-hours closed">Tutup (Libur Akhir Pekan)</span>
+                        </li>
+                        <li class="schedule-item">
+                            <span class="schedule-day">
+                                <strong>Hari Libur Nasional</strong>
+                            </span>
+                            <span class="schedule-hours closed">Tutup Pelayanan</span>
+                        </li>
+                    </ul>
+
+                    <div class="office-notice-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0; margin-top: 1px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        <div>
+                            <strong>Catatan:</strong> Pemesanan via WhatsApp dapat dikirimkan sewaktu-waktu (24 jam) dan akan segera ditindaklanjuti admin pada hari &amp; jam kerja kedinasan.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: Lokasi & Navigasi Google Maps -->
+                <div class="office-card">
+                    <div class="office-subhead">
+                        <div class="office-subhead-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--korpri-gold);"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            <span>Lokasi Kantor Sekretariat</span>
+                        </div>
+                        <a href="<?= htmlspecialchars($maps_search_url) ?>" target="_blank" rel="noopener" class="tag-micro tag-micro-blue" style="text-decoration: none;">
+                            <span>Google Maps &nearr;</span>
+                        </a>
+                    </div>
+
+                    <!-- Embed Google Maps -->
+                    <div class="location-map-wrap">
+                        <iframe 
+                            src="<?= htmlspecialchars($maps_embed_url) ?>" 
+                            title="Peta Lokasi Sekretariat KORPRI Kabupaten Banjar"
+                            loading="lazy" 
+                            allowfullscreen="" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+
+                    <div class="location-meta-details">
+                        <div class="loc-instansi-name">Sekretariat Dewan Pengurus KORPRI Kab. Banjar</div>
+                        <div class="loc-full-address">
+                            Jl. Ahmad Yani Nomor 2, Martapura, Kabupaten Banjar, Kalimantan Selatan 70611
+                        </div>
+                        <div class="loc-coords-pill" title="Koordinat GPS Resmi">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                            <span><?= number_format($office_lat, 6) ?>, <?= number_format($office_lng, 6) ?></span>
+                        </div>
+                    </div>
+
+                    <div class="location-actions-row">
+                        <a href="<?= htmlspecialchars($maps_search_url) ?>" target="_blank" rel="noopener" class="btn-map-action btn-map-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            <span>Buka di Google Maps</span>
+                        </a>
+                        <a href="<?= htmlspecialchars($maps_dir_url) ?>" target="_blank" rel="noopener" class="btn-map-action btn-map-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+                            <span>Petunjuk Arah</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Modal Form WhatsApp Booking -->
@@ -2430,15 +2781,17 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <span>Layanan Publik Resmi</span>
                         </span>
                     </div>
-                    <div class="footer-address-txt">
+                    <a href="<?= htmlspecialchars($maps_search_url) ?>" target="_blank" rel="noopener" class="footer-address-txt" title="Buka Lokasi di Google Maps" style="text-decoration: none; color: inherit;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         <span>Jl. A. Yani Nomor 2 Martapura, Kabupaten Banjar</span>
-                    </div>
+                    </a>
                 </div>
             </div>
 
             <nav class="footer-nav-links" aria-label="Navigasi Footer">
                 <a href="#panduan">Panduan Ukuran</a>
+                <span class="footer-nav-dot">&bull;</span>
+                <a href="#lokasi-pelayanan">Jam Layanan &amp; Peta</a>
                 <span class="footer-nav-dot">&bull;</span>
                 <a href="login.php">Portal Petugas</a>
             </nav>
