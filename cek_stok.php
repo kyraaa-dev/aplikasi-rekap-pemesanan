@@ -2068,7 +2068,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         <div class="choice-tags-row">
                             <span class="tag-micro tag-micro-green">Ready Stock</span>
                             <span class="tag-micro tag-micro-gold">Bordir List Benang Emas</span>
-                            <span class="tag-micro tag-micro-blue">Include Pin</span>
+                            <span class="tag-micro tag-micro-blue">Include Pin Kab. Banjar</span>
                         </div>
                     </div>
                 </div>
