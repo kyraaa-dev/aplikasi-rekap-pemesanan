@@ -466,26 +466,27 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
            ========================================================================== */
         .gov-hero {
             position: relative;
-            background-color: #0B1E3B;
+            background-color: #07172F;
             background-image: 
-                linear-gradient(135deg, rgba(7, 21, 43, 0.88) 0%, rgba(11, 30, 59, 0.82) 50%, rgba(15, 41, 77, 0.88) 100%),
-                url('assets/images/batik-korpri.jpg');
+                radial-gradient(ellipse at 50% 35%, rgba(13, 38, 80, 0.52) 0%, rgba(7, 20, 46, 0.76) 60%, rgba(3, 10, 24, 0.92) 100%),
+                url('assets/images/batik-korpri.jpg?v=2');
             background-size: cover;
             background-position: center;
-            border: 1px solid rgba(212, 175, 55, 0.4);
+            border: 1px solid rgba(212, 175, 55, 0.5);
             border-radius: var(--radius-lg);
             padding: 2.25rem 2rem 2rem 2rem;
             margin-bottom: 2rem;
-            box-shadow: 0 8px 24px -4px rgba(11, 30, 59, 0.16), 0 2px 6px -2px rgba(11, 30, 59, 0.08);
+            box-shadow: 0 14px 36px -4px rgba(7, 21, 43, 0.4), 0 0 20px rgba(212, 175, 55, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
             text-align: center;
             overflow: hidden;
             color: #FFFFFF;
         }
         [data-theme="dark"] .gov-hero {
             background-image: 
-                linear-gradient(135deg, rgba(4, 12, 26, 0.92) 0%, rgba(8, 20, 42, 0.86) 50%, rgba(11, 30, 59, 0.92) 100%),
-                url('assets/images/batik-korpri.jpg');
-            border-color: rgba(212, 175, 55, 0.35);
+                radial-gradient(ellipse at 50% 35%, rgba(10, 28, 62, 0.60) 0%, rgba(5, 16, 38, 0.82) 60%, rgba(2, 6, 18, 0.95) 100%),
+                url('assets/images/batik-korpri.jpg?v=2');
+            border-color: rgba(212, 175, 55, 0.45);
+            box-shadow: 0 16px 40px -4px rgba(0, 0, 0, 0.7), 0 0 20px rgba(212, 175, 55, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         /* Subtle gold accent top highlight */
@@ -2299,8 +2300,6 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
             <nav class="footer-nav-links" aria-label="Navigasi Footer">
                 <a href="#panduan">Panduan Ukuran</a>
-                <span>&bull;</span>
-                <a href="#spesifikasi">Spesifikasi Eselon II</a>
                 <span>&bull;</span>
                 <a href="login.php">Portal Petugas</a>
             </nav>
