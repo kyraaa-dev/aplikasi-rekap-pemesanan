@@ -1553,12 +1553,12 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         }
 
         /* ==========================================================================
-           MINIMALIST OFFICIAL FOOTER (No Wasted Space, 100% Dignified)
+           MINIMALIST OFFICIAL FOOTER (Precise, Dignified, Zero Overlap)
            ========================================================================== */
         .gov-footer {
             background: var(--gov-surface);
             border-top: 1px solid var(--gov-hairline);
-            padding: 1.75rem 1.5rem;
+            padding: 2.25rem 1.5rem 2.25rem 1.5rem;
             margin-top: auto;
             position: relative;
         }
@@ -1569,7 +1569,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             left: 0;
             right: 0;
             height: 2px;
-            background: linear-gradient(90deg, #0B1E3B 0%, #B48228 50%, #0B1E3B 100%);
+            background: linear-gradient(90deg, #0B1E3B 0%, #B48228 35%, #0B1E3B 70%, #15803D 100%);
         }
 
         .gov-footer-inner {
@@ -1578,35 +1578,74 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 1.25rem;
+            gap: 1.5rem;
             flex-wrap: wrap;
         }
 
         .footer-identity {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 14px;
         }
         .footer-seal {
-            width: 32px;
-            height: 32px;
+            width: 38px;
+            height: 38px;
             object-fit: contain;
             flex-shrink: 0;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
+        }
+        .footer-identity-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .footer-title-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
         .footer-name {
-            font-size: 0.92rem;
+            font-size: 0.95rem;
             font-weight: 800;
             color: var(--gov-slate);
-            line-height: 1.2;
+            line-height: 1.25;
+            letter-spacing: -0.01em;
+        }
+        .footer-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(22, 163, 74, 0.08);
+            border: 1px solid rgba(22, 163, 74, 0.22);
+            color: #15803D;
+            padding: 2px 9px;
+            border-radius: var(--radius-full);
+            font-weight: 700;
+            font-size: 0.72rem;
+            letter-spacing: 0.01em;
+            vertical-align: middle;
+        }
+        [data-theme="dark"] .footer-status-pill {
+            background: rgba(34, 197, 94, 0.12);
+            border-color: rgba(34, 197, 94, 0.3);
+            color: #4ADE80;
+        }
+        .status-indicator-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #16A34A;
+            display: inline-block;
+            box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
         }
         .footer-address-txt {
-            font-size: 0.78rem;
-            color: var(--gov-subtle);
+            font-size: 0.80rem;
+            color: var(--gov-muted);
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 5px;
-            margin-top: 2px;
+            gap: 6px;
         }
         .footer-address-txt svg {
             color: var(--korpri-gold);
@@ -1616,31 +1655,37 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         .footer-nav-links {
             display: flex;
             align-items: center;
-            gap: 14px;
-            font-size: 0.82rem;
+            gap: 12px;
+            font-size: 0.84rem;
             font-weight: 600;
         }
         .footer-nav-links a {
             color: var(--gov-muted);
             text-decoration: none;
             transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: var(--radius-sm);
         }
         .footer-nav-links a:hover {
             color: var(--korpri-blue);
+            background: var(--korpri-blue-subtle);
+        }
+        .footer-nav-dot {
+            color: var(--gov-hairline);
+            font-size: 0.75rem;
         }
 
         .footer-copyright-bar {
             max-width: 1140px;
-            margin: 1.25rem auto 0 auto;
-            padding-top: 1rem;
+            margin: 1.5rem auto 0 auto;
+            padding-top: 1.15rem;
             border-top: 1px solid var(--gov-hairline);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.76rem;
+            font-size: 0.78rem;
             color: var(--gov-subtle);
-            flex-wrap: wrap;
-            gap: 8px;
+            padding-right: 250px; /* Ruang aman presisi agar tombol floating WA & Top tidak menutupi teks */
+        }
+        .footer-copy-text {
+            line-height: 1.45;
         }
 
         /* ==========================================================================
@@ -1921,23 +1966,59 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 font-size: 0.82rem;
             }
 
-            /* Footer on Mobile (Clean Minimalist) */
+            /* Footer on Mobile (Centered, Balanced, Zero Floating Button Overlap) */
             .gov-footer {
-                padding: 1.25rem 1rem;
+                padding: 2rem 1.25rem 6.5rem 1.25rem; /* 6.5rem padding bawah agar tombol floating melayang aman di ruang kosong */
+                text-align: center;
             }
             .gov-footer-inner {
                 flex-direction: column;
-                align-items: flex-start;
-                gap: 0.85rem;
+                align-items: center;
+                text-align: center;
+                gap: 1.25rem;
+            }
+            .footer-identity {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 10px;
+            }
+            .footer-seal {
+                width: 40px;
+                height: 40px;
+            }
+            .footer-identity-details {
+                align-items: center;
+                text-align: center;
+                gap: 6px;
+            }
+            .footer-title-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 6px;
+            }
+            .footer-name {
+                font-size: 0.92rem;
+            }
+            .footer-address-txt {
+                justify-content: center;
+                font-size: 0.76rem;
+                text-align: center;
             }
             .footer-nav-links {
-                gap: 10px;
-                flex-wrap: wrap;
-                font-size: 0.78rem;
+                justify-content: center;
+                gap: 8px;
+                font-size: 0.80rem;
             }
             .footer-copyright-bar {
-                margin-top: 1rem;
-                padding-top: 0.85rem;
+                margin-top: 1.25rem;
+                padding-top: 1rem;
+                padding-right: 0;
+                text-align: center;
+            }
+            .footer-copy-text {
+                font-size: 0.75rem;
+                line-height: 1.5;
             }
 
             /* Bottom Sheet on Mobile */
@@ -2054,7 +2135,6 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         <div class="choice-meta-desc">Diperuntukkan bagi seluruh ASN (PNS &amp; PPPK)</div>
                         <div class="choice-tags-row">
                             <span class="tag-micro tag-micro-blue">Include Pin Kab. Banjar</span>
-                            <span class="tag-micro tag-micro-green"><?= number_format($total_stok_biasa, 0, ',', '.') ?> Pcs Tersedia</span>
                         </div>
                     </div>
                 </div>
@@ -2288,29 +2368,31 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
     <footer class="gov-footer">
         <div class="gov-footer-inner">
             <div class="footer-identity">
-                <img src="assets/images/korpri-badge.png" alt="Logo KORPRI" class="footer-seal" width="32" height="32">
-                <div>
-                    <div class="footer-name">Sekretariat KORPRI Kabupaten Banjar</div>
+                <img src="assets/images/korpri-badge.png" alt="Logo KORPRI" class="footer-seal" width="38" height="38">
+                <div class="footer-identity-details">
+                    <div class="footer-title-row">
+                        <span class="footer-name">Sekretariat KORPRI Kabupaten Banjar</span>
+                        <span class="footer-status-pill">
+                            <span class="status-indicator-dot"></span>
+                            <span>Layanan Publik Resmi</span>
+                        </span>
+                    </div>
                     <div class="footer-address-txt">
                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                        <span>Jl. A. Yani Nomor 2 Martapura</span>
+                        <span>Jl. A. Yani Nomor 2 Martapura, Kabupaten Banjar</span>
                     </div>
                 </div>
             </div>
 
             <nav class="footer-nav-links" aria-label="Navigasi Footer">
                 <a href="#panduan">Panduan Ukuran</a>
-                <span>&bull;</span>
+                <span class="footer-nav-dot">&bull;</span>
                 <a href="login.php">Portal Petugas</a>
             </nav>
         </div>
 
         <div class="footer-copyright-bar">
-            <div>&copy; <?= date('Y') ?> Sekretariat KORPRI Kabupaten Banjar. Seluruh Hak Cipta Dilindungi.</div>
-            <div style="display: flex; align-items: center; gap: 6px;">
-                <span style="width: 7px; height: 7px; border-radius: 50%; background: #16A34A; display: inline-block;"></span>
-                <span>Layanan Publik Resmi Aktif</span>
-            </div>
+            <div class="footer-copy-text">&copy; <?= date('Y') ?> Sekretariat KORPRI Kabupaten Banjar. Seluruh Hak Cipta Dilindungi.</div>
         </div>
     </footer>
 
