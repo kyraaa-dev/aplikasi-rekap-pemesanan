@@ -179,6 +179,11 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
     <link rel="icon" type="image/png" href="assets/images/logo.png">
     <link rel="shortcut icon" type="image/png" href="assets/images/logo.png">
     <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="E-MutZ KORPRI">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1639,7 +1644,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             width: 100%;
             height: 100%;
             background: rgba(11, 30, 59, 0.65);
-            z-index: 1000;
+            z-index: 2000;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -2494,6 +2499,222 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 padding: 20px 18px 26px 18px;
             }
         }
+
+        /* ==========================================================================
+           PWA INSTALL PROMPT & MOBILE BANNER (Fitur Tampilan #5)
+           ========================================================================== */
+        .gov-pwa-banner {
+            position: fixed;
+            bottom: 16px;
+            left: 14px;
+            right: 14px;
+            max-width: 480px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(11, 30, 59, 0.98) 0%, rgba(7, 21, 43, 0.98) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1.5px solid rgba(212, 175, 55, 0.45);
+            border-radius: 14px;
+            padding: 12px 14px;
+            box-shadow: 0 16px 36px rgba(7, 21, 43, 0.5), 0 0 20px rgba(212, 175, 55, 0.15);
+            z-index: 996;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            transform: translateY(160%);
+            opacity: 0;
+            transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, bottom 0.3s ease;
+            pointer-events: none;
+            color: #FFFFFF;
+        }
+        .gov-pwa-banner.banner-visible {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        body.has-dock-visible .gov-pwa-banner {
+            bottom: calc(76px + env(safe-area-inset-bottom, 10px));
+        }
+        [data-theme="dark"] .gov-pwa-banner {
+            background: linear-gradient(135deg, rgba(6, 15, 30, 0.98) 0%, rgba(3, 9, 20, 0.98) 100%);
+            border-color: rgba(212, 175, 55, 0.55);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75), 0 0 20px rgba(212, 175, 55, 0.12);
+        }
+        .pwa-banner-left {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            min-width: 0;
+            flex: 1;
+        }
+        .pwa-banner-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(212, 175, 55, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        }
+        .pwa-banner-icon img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+        .pwa-banner-text {
+            min-width: 0;
+        }
+        .pwa-banner-title {
+            font-size: 0.84rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .pwa-banner-desc {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.78);
+            margin-top: 1px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .pwa-banner-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .btn-pwa-install {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+            color: #07152B;
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 7px 13px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35);
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .btn-pwa-install:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(212, 175, 55, 0.48);
+        }
+        .btn-pwa-install:active {
+            transform: scale(0.97);
+        }
+        .btn-pwa-close {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            width: 28px;
+            height: 28px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.25rem;
+            line-height: 1;
+            transition: var(--transition);
+        }
+        .btn-pwa-close:hover {
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* PWA Guide Modal */
+        .pwa-modal-guide-card {
+            background: var(--gov-hairline-subtle);
+            border: 1px solid var(--gov-hairline);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            margin-bottom: 12px;
+        }
+        .pwa-guide-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 0.88rem;
+            margin-bottom: 8px;
+        }
+        .pwa-guide-header.ios {
+            color: #1D4ED8;
+        }
+        [data-theme="dark"] .pwa-guide-header.ios {
+            color: #93C5FD;
+        }
+        .pwa-guide-header.android {
+            color: #15803D;
+        }
+        [data-theme="dark"] .pwa-guide-header.android {
+            color: #86EFAC;
+        }
+        .pwa-guide-steps {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 0.82rem;
+            color: var(--gov-slate);
+            line-height: 1.55;
+        }
+        .pwa-guide-steps li {
+            margin-bottom: 6px;
+        }
+        .pwa-guide-steps li:last-child {
+            margin-bottom: 0;
+        }
+        .pwa-guide-highlight {
+            font-weight: 700;
+            color: var(--gov-navy);
+            background: rgba(212, 175, 55, 0.15);
+            padding: 1px 5px;
+            border-radius: 3px;
+        }
+        [data-theme="dark"] .pwa-guide-highlight {
+            color: #FDE68A;
+            background: rgba(212, 175, 55, 0.22);
+        }
+
+        /* Toast feedback */
+        .gov-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: #0B1E3B;
+            color: #FFFFFF;
+            border: 1px solid #D4AF37;
+            border-radius: 30px;
+            padding: 10px 22px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 28px rgba(0,0,0,0.3);
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+        .gov-toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="gov-portal">
@@ -2527,6 +2748,12 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 <button onclick="shareKatalog()" class="btn-gov-nav" title="Bagikan Tautan Katalog">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                     <span class="btn-nav-label-long">Bagikan</span>
+                </button>
+
+                <!-- PWA Install Button in Header -->
+                <button id="headerPwaInstallBtn" class="btn-gov-nav" onclick="triggerPwaInstall()" title="Pasang Aplikasi E-MutZ di Layar Depan HP" style="display: none;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line><polyline points="9 9 12 12 15 9"></polyline><line x1="12" y1="6" x2="12" y2="12"></line></svg>
+                    <span class="btn-nav-label-long">Pasang App</span>
                 </button>
 
                 <!-- Admin Link -->
@@ -3015,6 +3242,83 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             <div class="footer-copy-text">&copy; <?= date('Y') ?> Sekretariat KORPRI Kabupaten Banjar. Seluruh Hak Cipta Dilindungi.</div>
         </div>
     </footer>
+
+    <!-- PWA Install Banner Mobile (Fitur Tampilan #5) -->
+    <aside class="gov-pwa-banner" id="pwaBanner" role="region" aria-label="Pasang Aplikasi E-MutZ KORPRI">
+        <div class="pwa-banner-left">
+            <div class="pwa-banner-icon">
+                <img src="assets/images/korpri-badge.png" alt="Logo KORPRI" width="32" height="32">
+            </div>
+            <div class="pwa-banner-text">
+                <div class="pwa-banner-title">
+                    <span>Pasang E-MutZ KORPRI</span>
+                </div>
+                <div class="pwa-banner-desc">Buka instan dari layar utama HP Anda</div>
+            </div>
+        </div>
+        <div class="pwa-banner-actions">
+            <button type="button" class="btn-pwa-install" onclick="triggerPwaInstall()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Pasang</span>
+            </button>
+            <button type="button" class="btn-pwa-close" onclick="dismissPwaBanner()" title="Tutup pemberitahuan" aria-label="Tutup">
+                &times;
+            </button>
+        </div>
+    </aside>
+
+    <!-- Modal Panduan Pasang PWA (Khusus Safari iOS & Panduan Manual) -->
+    <div class="modal-overlay" id="pwaGuideModal" onclick="closePwaGuideModal(event)">
+        <div class="modal-window" onclick="event.stopPropagation()" style="max-width: 500px;">
+            <div class="modal-head">
+                <span class="modal-title-text" style="display: flex; align-items: center; gap: 8px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="color: var(--korpri-gold);"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line><polyline points="9 9 12 12 15 9"></polyline><line x1="12" y1="6" x2="12" y2="12"></line></svg>
+                    <span>Pasang E-MutZ di Layar Depan HP</span>
+                </span>
+                <button type="button" class="btn-modal-close" onclick="closePwaGuideModal()">&times;</button>
+            </div>
+
+            <p style="font-size: 0.85rem; color: var(--gov-slate); margin: 0 0 14px 0; line-height: 1.5;">
+                Pasang <strong>E-MutZ KORPRI</strong> di layar utama ponsel / tablet Anda agar dapat dibuka cepat seperti aplikasi resmi tanpa perlu mengetik link lagi:
+            </p>
+
+            <!-- Guide Safari iOS -->
+            <div class="pwa-modal-guide-card">
+                <div class="pwa-guide-header ios">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                    <span>Pengguna iPhone / iPad (Safari)</span>
+                </div>
+                <ol class="pwa-guide-steps">
+                    <li>Ketuk tombol <strong>Bagikan / Share</strong> (<span class="pwa-guide-highlight">ikon kotak panah ke atas &uarr;</span>) pada bilah navigasi bawah Safari.</li>
+                    <li>Gulir menu ke bawah lalu pilih opsi <span class="pwa-guide-highlight">"Tambahkan ke Layar Utama" (Add to Home Screen)</span>.</li>
+                    <li>Ketuk <span class="pwa-guide-highlight">"Tambah" (Add)</span> di sudut kanan atas layar. Selesai!</li>
+                </ol>
+            </div>
+
+            <!-- Guide Android Chrome / Edge -->
+            <div class="pwa-modal-guide-card" style="margin-bottom: 18px;">
+                <div class="pwa-guide-header android">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    <span>Pengguna Android (Chrome / Edge / Samsung)</span>
+                </div>
+                <ol class="pwa-guide-steps">
+                    <li>Ketuk ikon <strong>menu titik tiga (&vellip;)</strong> di sudut kanan atas browser.</li>
+                    <li>Pilih menu <span class="pwa-guide-highlight">"Install app"</span> atau <span class="pwa-guide-highlight">"Tambahkan ke Layar Utama"</span>.</li>
+                    <li>Konfirmasi dengan menekan tombol <strong>Install / Tambah</strong>.</li>
+                </ol>
+            </div>
+
+            <button type="button" class="btn-modal-submit" onclick="closePwaGuideModal()" style="width: 100%; justify-content: center;">
+                <span>Saya Mengerti &#128077;</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Feedback Toast -->
+    <div id="govToast" class="gov-toast" role="status" aria-live="polite">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        <span id="govToastMsg">Aplikasi Terpasang!</span>
+    </div>
 
     <!-- Client-side Logic -->
     <script>
@@ -3548,8 +3852,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     if (dock) {
                         if (window.scrollY > 180) {
                             dock.classList.add('dock-visible');
+                            document.body.classList.add('has-dock-visible');
                         } else {
                             dock.classList.remove('dock-visible');
+                            document.body.classList.remove('has-dock-visible');
                         }
                     }
 
@@ -3559,12 +3865,128 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             }
         }, { passive: true });
 
+        // ==========================================================================
+        // PWA (PROGRESSIVE WEB APP) INSTALLATION LOGIC (Fitur Tampilan #5)
+        // ==========================================================================
+        let deferredPwaPrompt = null;
+        const PWA_DISMISS_KEY = 'emutz_pwa_dismissed_until';
+
+        function isRunningStandalone() {
+            return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) 
+                || (window.navigator.standalone === true);
+        }
+
+        function isPwaDismissedRecently() {
+            try {
+                const until = localStorage.getItem(PWA_DISMISS_KEY);
+                if (!until) return false;
+                return (Date.now() < parseInt(until, 10));
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function showPwaBanner() {
+            if (isRunningStandalone()) return;
+            if (isPwaDismissedRecently()) return;
+            const banner = document.getElementById('pwaBanner');
+            if (banner) {
+                banner.classList.add('banner-visible');
+            }
+        }
+
+        function dismissPwaBanner() {
+            const banner = document.getElementById('pwaBanner');
+            if (banner) {
+                banner.classList.remove('banner-visible');
+            }
+            try {
+                // Jangan munculkan banner otomatis selama 7 hari jika sudah ditutup pengguna
+                const sevenDaysLater = Date.now() + (7 * 24 * 60 * 60 * 1000);
+                localStorage.setItem(PWA_DISMISS_KEY, sevenDaysLater.toString());
+            } catch (e) {}
+        }
+
+        function triggerPwaInstall() {
+            if (deferredPwaPrompt) {
+                deferredPwaPrompt.prompt();
+                deferredPwaPrompt.userChoice.then(function(choiceResult) {
+                    if (choiceResult && choiceResult.outcome === 'accepted') {
+                        dismissPwaBanner();
+                        showToast('Memasang E-MutZ KORPRI...');
+                    }
+                    deferredPwaPrompt = null;
+                });
+            } else {
+                openPwaGuideModal();
+            }
+        }
+
+        function openPwaGuideModal() {
+            const modal = document.getElementById('pwaGuideModal');
+            if (modal) modal.classList.add('active');
+        }
+
+        function closePwaGuideModal(event) {
+            if (!event || event.target.id === 'pwaGuideModal' || event.target.classList.contains('btn-modal-close') || event.target.tagName === 'BUTTON') {
+                const modal = document.getElementById('pwaGuideModal');
+                if (modal) modal.classList.remove('active');
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('govToast');
+            const toastMsg = document.getElementById('govToastMsg');
+            if (toast && toastMsg) {
+                toastMsg.textContent = msg;
+                toast.classList.add('show');
+                setTimeout(function() {
+                    toast.classList.remove('show');
+                }, 4000);
+            }
+        }
+
+        // Tangkap trigger native install browser (Chrome, Edge, Samsung Internet)
+        window.addEventListener('beforeinstallprompt', function(e) {
+            e.preventDefault();
+            deferredPwaPrompt = e;
+            const headerBtn = document.getElementById('headerPwaInstallBtn');
+            if (headerBtn) headerBtn.style.display = 'inline-flex';
+            setTimeout(showPwaBanner, 1500);
+        });
+
+        // Event saat aplikasi telah selesai dipasang
+        window.addEventListener('appinstalled', function() {
+            deferredPwaPrompt = null;
+            dismissPwaBanner();
+            const headerBtn = document.getElementById('headerPwaInstallBtn');
+            if (headerBtn) headerBtn.style.display = 'none';
+            showToast('E-MutZ KORPRI Berhasil Terpasang di HP! 🎉');
+        });
+
+        // Daftarkan Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js').catch(function() {});
+            });
+        }
+
         // Init on DOM ready
         document.addEventListener('DOMContentLoaded', function() {
             selectCategory('Biasa');
             updateCounters();
             renderSizeChips();
             updateMobileDock();
+
+            // Cek instalasi PWA
+            if (!isRunningStandalone()) {
+                const headerBtn = document.getElementById('headerPwaInstallBtn');
+                if (headerBtn) headerBtn.style.display = 'inline-flex';
+                // Tampilkan banner di layar mobile setelah 2.5 detik
+                if (window.innerWidth <= 768 && !isPwaDismissedRecently()) {
+                    setTimeout(showPwaBanner, 2500);
+                }
+            }
         });
     </script>
 </body>

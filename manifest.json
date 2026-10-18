@@ -1,12 +1,12 @@
 {
   "name": "E-MutZ KORPRI - Rekap Pesanan ASN",
   "short_name": "E-MutZ KORPRI",
-  "description": "Sistem Rekapitulasi & Manajemen Pemesanan Topi MutZ KORPRI ASN",
-  "start_url": "index.php",
+  "description": "Layanan Resmi Pemesanan & Katalog Stok Topi MutZ KORPRI Kabupaten Banjar",
+  "start_url": "cek_stok.php",
   "id": "emutz-korpri-app",
   "display": "standalone",
-  "background_color": "#F8FAFC",
-  "theme_color": "#2563EB",
+  "background_color": "#0B1E3B",
+  "theme_color": "#0B1E3B",
   "orientation": "portrait-primary",
   "icons": [
     {
@@ -26,6 +26,22 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Katalog Stok Mutz",
+      "short_name": "Katalog",
+      "description": "Cek ketersediaan ukuran & stok fisik mutz ASN",
+      "url": "cek_stok.php",
+      "icons": [{ "src": "assets/images/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Portal Petugas KORPRI",
+      "short_name": "Petugas",
+      "description": "Masuk ke dashboard manajemen pemesanan",
+      "url": "index.php",
+      "icons": [{ "src": "assets/images/icon-192.png", "sizes": "192x192" }]
     }
   ],
   "categories": ["business", "productivity", "government", "utilities"]
