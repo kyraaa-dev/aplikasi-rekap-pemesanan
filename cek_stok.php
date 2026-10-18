@@ -509,20 +509,25 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             box-shadow: 0 16px 40px -4px rgba(0, 0, 0, 0.7), 0 0 20px rgba(212, 175, 55, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
-        /* Animated Batik Background Layer (Slow, repeating smooth pan) */
+        /* Animated Batik Background Layer - Ken Burns Cinematic Effect */
         .gov-hero-batik {
             position: absolute;
-            top: -12%;
-            left: -12%;
-            width: 124%;
-            height: 124%;
+            top: -15%;
+            left: -15%;
+            width: 130%;
+            height: 130%;
             background-image: url('assets/images/batik-korpri.jpg?v=2');
             background-size: cover;
             background-position: center;
             z-index: 0;
             pointer-events: none;
             will-change: transform;
-            animation: heroBatikSlide 26s ease-in-out infinite alternate;
+            transform-origin: center center;
+            filter: brightness(0.96) saturate(1.08);
+            animation: heroKenBurnsCinematic 32s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+        }
+        [data-theme="dark"] .gov-hero-batik {
+            filter: brightness(0.82) saturate(1.05);
         }
 
         /* Ambient Glass/Radial Overlay for perfect text contrast */
@@ -543,16 +548,22 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             z-index: 2;
         }
 
-        /* Keyframes for Slow Majestic Batik Sliding Pan */
-        @keyframes heroBatikSlide {
+        /* Keyframes for Ken Burns Cinematic Effect: Multi-stage slow zoom & diagonal pan */
+        @keyframes heroKenBurnsCinematic {
             0% {
-                transform: translate3d(0%, 0%, 0) scale(1.04);
+                transform: scale(1.06) translate3d(0%, 0%, 0);
+            }
+            25% {
+                transform: scale(1.14) translate3d(-3%, -2.5%, 0);
             }
             50% {
-                transform: translate3d(-5%, -2%, 0) scale(1.08);
+                transform: scale(1.20) translate3d(2.5%, -3.5%, 0);
+            }
+            75% {
+                transform: scale(1.14) translate3d(-2%, 2%, 0);
             }
             100% {
-                transform: translate3d(4%, 1.5%, 0) scale(1.04);
+                transform: scale(1.06) translate3d(3%, 3%, 0);
             }
         }
 
@@ -1801,6 +1812,11 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             color: var(--korpri-blue);
         }
 
+        /* Mobile Floating Quick-Action Dock (Fitur Tampilan #7 - Desktop Hidden) */
+        .gov-mobile-dock {
+            display: none;
+        }
+
         /* Floating Toast Notification */
         .gov-toast {
             position: fixed;
@@ -2232,20 +2248,188 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 gap: 12px;
             }
 
+            /* Mobile Floating Quick-Action Dock (Fitur Tampilan #7) */
+            .gov-mobile-dock {
+                display: block;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 995;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border-top: 1px solid rgba(226, 232, 240, 0.95);
+                box-shadow: 0 -6px 24px rgba(11, 30, 59, 0.12);
+                padding: 10px 14px;
+                padding-bottom: max(10px, env(safe-area-inset-bottom, 10px));
+                transform: translateY(115%);
+                transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+                opacity: 0;
+                pointer-events: none;
+            }
+            .gov-mobile-dock.dock-visible {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: auto;
+            }
+            [data-theme="dark"] .gov-mobile-dock {
+                background: rgba(11, 22, 44, 0.96);
+                border-top-color: rgba(255, 255, 255, 0.12);
+                box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.65);
+            }
+            .mobile-dock-inner {
+                max-width: 500px;
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+            }
+            .mobile-dock-info {
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+                min-width: 0;
+                flex: 1;
+            }
+            .dock-meta-line {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                flex-wrap: nowrap;
+                overflow: hidden;
+            }
+            .dock-cat-badge {
+                font-size: 0.68rem;
+                font-weight: 800;
+                padding: 2px 7px;
+                border-radius: var(--radius-sm);
+                text-transform: uppercase;
+                letter-spacing: 0.02em;
+                white-space: nowrap;
+                background: var(--korpri-blue-subtle);
+                color: var(--korpri-blue);
+                border: 1px solid rgba(29, 78, 216, 0.2);
+            }
+            .dock-cat-badge.eselon {
+                background: var(--korpri-gold-light);
+                color: #8D6415;
+                border-color: var(--korpri-gold-border);
+            }
+            [data-theme="dark"] .dock-cat-badge.eselon {
+                color: #FDE68A;
+                background: rgba(212, 175, 55, 0.18);
+            }
+            .dock-size-pill {
+                display: inline-flex;
+                align-items: center;
+            }
+            .dock-size-select {
+                font-family: var(--font-sans);
+                font-size: 0.8rem;
+                font-weight: 800;
+                color: var(--gov-slate);
+                background: var(--gov-hairline-subtle);
+                border: 1.5px solid var(--gov-hairline);
+                border-radius: var(--radius-sm);
+                padding: 3px 22px 3px 7px;
+                cursor: pointer;
+                outline: none;
+                appearance: none;
+                -webkit-appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 6px center;
+                transition: var(--transition);
+            }
+            .dock-size-select:focus {
+                border-color: var(--korpri-blue);
+            }
+            [data-theme="dark"] .dock-size-select {
+                background-color: #1E293B;
+                color: #F8FAFC;
+                border-color: #334155;
+            }
+            .dock-stock-tag {
+                font-size: 0.72rem;
+                font-weight: 700;
+                white-space: nowrap;
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+            }
+            .dock-stock-tag.ready {
+                color: var(--status-green);
+            }
+            .dock-stock-tag.low {
+                color: var(--status-amber);
+            }
+            .dock-stock-tag.empty {
+                color: var(--status-red);
+            }
+            .dock-price-line {
+                display: flex;
+                align-items: baseline;
+                gap: 6px;
+                line-height: 1.15;
+            }
+            .dock-price-val {
+                font-size: 1.08rem;
+                font-weight: 800;
+                color: var(--gov-slate);
+                letter-spacing: -0.015em;
+            }
+            .dock-include-tag {
+                font-size: 0.7rem;
+                font-weight: 600;
+                color: var(--gov-subtle);
+            }
+            .btn-dock-order {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 7px;
+                background: linear-gradient(135deg, #16A34A 0%, #15803D 100%);
+                color: #FFFFFF;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: var(--radius-md);
+                padding: 10px 18px;
+                font-size: 0.88rem;
+                font-weight: 800;
+                font-family: var(--font-sans);
+                cursor: pointer;
+                white-space: nowrap;
+                box-shadow: 0 4px 14px rgba(21, 128, 61, 0.4);
+                transition: var(--transition);
+                user-select: none;
+                -webkit-tap-highlight-color: transparent;
+                min-height: 44px;
+                flex-shrink: 0;
+            }
+            .btn-dock-order:hover {
+                background: linear-gradient(135deg, #15803D 0%, #166534 100%);
+                transform: translateY(-1px);
+                box-shadow: 0 6px 18px rgba(21, 128, 61, 0.48);
+            }
+            .btn-dock-order:active {
+                transform: scale(0.97);
+            }
+
             /* Floating Button on Mobile */
             .gov-floating-actions {
-                bottom: 14px;
-                right: 14px;
+                bottom: calc(76px + env(safe-area-inset-bottom, 10px)) !important;
+                right: 14px !important;
+                z-index: 994 !important;
                 gap: 8px;
             }
             .btn-floating-wa {
-                padding: 9px 14px;
-                font-size: 0.82rem;
+                display: none !important; /* Digantikan secara sempurna oleh Mobile Quick Action Dock */
             }
 
             /* Footer on Mobile (Centered, Balanced, Zero Floating Button Overlap) */
             .gov-footer {
-                padding: 2rem 1.25rem 6.5rem 1.25rem; /* 6.5rem padding bawah agar tombol floating melayang aman di ruang kosong */
+                padding: 2rem 1.25rem calc(6.5rem + env(safe-area-inset-bottom, 10px)) 1.25rem !important;
                 text-align: center;
             }
             .gov-footer-inner {
@@ -2756,6 +2940,36 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         </div>
     </div>
 
+    <!-- Mobile Floating Quick-Action Dock (Fitur Tampilan #7) -->
+    <div class="gov-mobile-dock" id="mobileDock" aria-label="Aksi Cepat Pemesanan Mobile">
+        <div class="mobile-dock-inner">
+            <div class="mobile-dock-info">
+                <div class="dock-meta-line">
+                    <span class="dock-cat-badge" id="dockCatBadge">Standar Pria</span>
+                    <span class="dock-size-pill">
+                        <select id="dockSizeSelect" class="dock-size-select" onchange="onDockSizeChange(this.value)" aria-label="Pilih Ukuran Cepat">
+                            <!-- Populated dynamically via JS -->
+                        </select>
+                    </span>
+                    <span class="dock-stock-tag" id="dockStockTag">
+                        <span class="meta-pulse-dot" id="dockPulseDot" style="width: 6px; height: 6px;"></span>
+                        <span id="dockStockText">...</span>
+                    </span>
+                </div>
+                <div class="dock-price-line">
+                    <span class="dock-price-val" id="dockPriceVal">Rp 55.000</span>
+                    <span class="dock-include-tag">+ Pin Kab. Banjar</span>
+                </div>
+            </div>
+            <div class="mobile-dock-btn-wrap">
+                <button type="button" class="btn-dock-order" onclick="openOrderModalFromDock()" id="btnDockOrder" title="Pesan Ukuran Terpilih via WhatsApp">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    <span>Pesan WA</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Floating Actions (Bottom-Right) -->
     <div class="gov-floating-actions">
         <button type="button" id="btnScrollTop" class="btn-gov-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Kembali ke atas">
@@ -2868,6 +3082,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             renderSizeChips();
             renderStockCards();
             updateCounters();
+            updateMobileDock();
         }
 
         // Gender Switcher
@@ -2888,6 +3103,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
             renderSizeChips();
             renderStockCards();
+            updateMobileDock();
         }
 
         function updateCounters() {
@@ -2925,6 +3141,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 selectedSizeFilter = null;
                 renderSizeChips();
                 renderStockCards();
+                updateMobileDock();
             };
             track.appendChild(btnAll);
 
@@ -2939,6 +3156,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     selectedSizeFilter = (selectedSizeFilter === sz) ? null : sz;
                     renderSizeChips();
                     renderStockCards();
+                    updateMobileDock();
                 };
                 track.appendChild(btn);
             });
@@ -3198,7 +3416,120 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             }
         }
 
-        // Scroll to Top Listener
+        // ==========================================================================
+        // MOBILE FLOATING QUICK-ACTION DOCK LOGIC (Fitur Tampilan #7)
+        // ==========================================================================
+        let currentDockSize = null;
+
+        function updateMobileDock() {
+            const dock = document.getElementById('mobileDock');
+            if (!dock) return;
+
+            const isKepala = (currentCategory === 'Kepala SKPD');
+            const harga = isKepala ? HARGA_KEPALA : HARGA_BIASA;
+            const allSizes = (currentGender === 'Laki-laki') ? SIZES_PRIA : SIZES_WANITA;
+            const stockObj = (STOK_DATA[currentCategory] && STOK_DATA[currentCategory][currentGender]) 
+                ? STOK_DATA[currentCategory][currentGender] 
+                : {};
+
+            // Prioritaskan ukuran yang dipilih dari chips halaman jika ada
+            if (selectedSizeFilter !== null && allSizes.includes(selectedSizeFilter)) {
+                currentDockSize = selectedSizeFilter;
+            } else if (!currentDockSize || !allSizes.includes(currentDockSize)) {
+                // Default ke ukuran standar yang paling umum
+                currentDockSize = (currentGender === 'Laki-laki') ? 57 : 59;
+                if (!allSizes.includes(currentDockSize)) {
+                    currentDockSize = allSizes[0];
+                }
+            }
+
+            // Update Badge Kategori & Gender
+            const catBadge = document.getElementById('dockCatBadge');
+            if (catBadge) {
+                if (isKepala) {
+                    catBadge.textContent = 'Eselon II ' + (currentGender === 'Laki-laki' ? 'Pria' : 'Wanita');
+                    catBadge.classList.add('eselon');
+                } else {
+                    catBadge.textContent = 'Standar ' + (currentGender === 'Laki-laki' ? 'Pria' : 'Wanita');
+                    catBadge.classList.remove('eselon');
+                }
+            }
+
+            // Populate Dropdown Ukuran Cepat di Dock
+            const sizeSelect = document.getElementById('dockSizeSelect');
+            if (sizeSelect) {
+                sizeSelect.innerHTML = '';
+                allSizes.forEach(sz => {
+                    const qty = stockObj[sz] !== undefined ? stockObj[sz] : 0;
+                    const opt = document.createElement('option');
+                    opt.value = sz;
+                    opt.textContent = `No. ${sz} (${qty > 0 ? qty + ' pcs' : 'Habis'})`;
+                    if (sz === currentDockSize) opt.selected = true;
+                    sizeSelect.appendChild(opt);
+                });
+            }
+
+            // Update Tampilan Harga Resmi
+            const priceVal = document.getElementById('dockPriceVal');
+            if (priceVal) {
+                priceVal.textContent = 'Rp ' + harga.toLocaleString('id-ID');
+            }
+
+            // Update Indikator Status Ketersediaan Fisik
+            const qty = stockObj[currentDockSize] !== undefined ? stockObj[currentDockSize] : 0;
+            const stockTag = document.getElementById('dockStockTag');
+            const stockText = document.getElementById('dockStockText');
+            const pulseDot = document.getElementById('dockPulseDot');
+
+            if (stockTag && stockText) {
+                stockTag.classList.remove('ready', 'low', 'empty');
+                if (qty > 5) {
+                    stockTag.classList.add('ready');
+                    stockText.textContent = `Ready (${qty} pcs)`;
+                    if (pulseDot) {
+                        pulseDot.style.background = '#22C55E';
+                        pulseDot.style.boxShadow = '0 0 6px #22C55E';
+                    }
+                } else if (qty > 0) {
+                    stockTag.classList.add('low');
+                    stockText.textContent = `Sisa ${qty} pcs`;
+                    if (pulseDot) {
+                        pulseDot.style.background = '#F59E0B';
+                        pulseDot.style.boxShadow = '0 0 6px #F59E0B';
+                    }
+                } else {
+                    stockTag.classList.add('empty');
+                    stockText.textContent = 'Pre-Order';
+                    if (pulseDot) {
+                        pulseDot.style.background = '#EF4444';
+                        pulseDot.style.boxShadow = '0 0 6px #EF4444';
+                    }
+                }
+            }
+        }
+
+        function onDockSizeChange(newSize) {
+            currentDockSize = parseInt(newSize, 10);
+            selectedSizeFilter = currentDockSize;
+            renderSizeChips();
+            renderStockCards();
+            updateMobileDock();
+        }
+
+        function openOrderModalFromDock() {
+            const allSizes = (currentGender === 'Laki-laki') ? SIZES_PRIA : SIZES_WANITA;
+            if (!currentDockSize || !allSizes.includes(currentDockSize)) {
+                currentDockSize = (currentGender === 'Laki-laki') ? 57 : 59;
+                if (!allSizes.includes(currentDockSize)) currentDockSize = allSizes[0];
+            }
+            const stockObj = (STOK_DATA[currentCategory] && STOK_DATA[currentCategory][currentGender]) 
+                ? STOK_DATA[currentCategory][currentGender] 
+                : {};
+            const qty = stockObj[currentDockSize] !== undefined ? stockObj[currentDockSize] : 0;
+            openOrderModal(currentCategory, currentGender, currentDockSize, qty);
+        }
+
+        // Scroll Listener: Mengatur visibilitas Scroll-to-Top dan Mobile Dock
         let scrollTicking = false;
         window.addEventListener('scroll', function() {
             if (!scrollTicking) {
@@ -3211,6 +3542,17 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             btn.classList.remove('visible');
                         }
                     }
+
+                    // Tampilkan Mobile Dock otomatis saat user mulai menjelajah (scroll > 180px)
+                    const dock = document.getElementById('mobileDock');
+                    if (dock) {
+                        if (window.scrollY > 180) {
+                            dock.classList.add('dock-visible');
+                        } else {
+                            dock.classList.remove('dock-visible');
+                        }
+                    }
+
                     scrollTicking = false;
                 });
                 scrollTicking = true;
@@ -3222,6 +3564,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             selectCategory('Biasa');
             updateCounters();
             renderSizeChips();
+            updateMobileDock();
         });
     </script>
 </body>
