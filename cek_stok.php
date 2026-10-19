@@ -315,12 +315,23 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             z-index: -3;
             pointer-events: none;
             background-image: 
-                radial-gradient(ellipse at 50% 0%, rgba(11, 30, 59, 0.04) 0%, transparent 70%),
+                radial-gradient(ellipse at 15% 15%, rgba(29, 78, 216, 0.08) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 25%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 90%, rgba(11, 30, 59, 0.06) 0%, transparent 60%),
                 linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+            background-size: 130% 130%;
+            animation: ambientAuroraFlow 22s ease-in-out infinite alternate;
+        }
+        @keyframes ambientAuroraFlow {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 50% 30%; }
+            100% { background-position: 100% 10%; }
         }
         [data-theme="dark"] .gov-bg-backdrop {
             background-image: 
-                radial-gradient(ellipse at 50% 0%, rgba(30, 58, 138, 0.15) 0%, transparent 70%),
+                radial-gradient(ellipse at 15% 15%, rgba(59, 130, 246, 0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 25%, rgba(212, 175, 55, 0.14) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 90%, rgba(15, 32, 60, 0.3) 0%, transparent 60%),
                 linear-gradient(180deg, #090F1D 0%, #060A14 100%);
         }
 
@@ -783,18 +794,24 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         .product-choice-card.active.choice-standar {
             border-color: var(--korpri-blue);
             background: var(--gov-surface);
-            box-shadow: 0 0 0 1px var(--korpri-blue), var(--shadow-card);
+            box-shadow: 0 0 0 1.5px var(--korpri-blue), 0 8px 24px -4px rgba(29, 78, 216, 0.2);
+            transform: translateY(-2px);
         }
         [data-theme="dark"] .product-choice-card.active.choice-standar {
             border-color: #3B82F6;
-            box-shadow: 0 0 0 1px #3B82F6, var(--shadow-card);
+            box-shadow: 0 0 0 1.5px #3B82F6, 0 10px 28px -4px rgba(59, 130, 246, 0.25);
         }
 
         /* Active State - Kepala SKPD */
         .product-choice-card.active.choice-kepala {
             border-color: var(--korpri-gold);
             background: var(--gov-surface);
-            box-shadow: 0 0 0 1px var(--korpri-gold), var(--shadow-card);
+            box-shadow: 0 0 0 1.5px var(--korpri-gold), 0 8px 24px -4px rgba(212, 175, 55, 0.25);
+            transform: translateY(-2px);
+        }
+        [data-theme="dark"] .product-choice-card.active.choice-kepala {
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 1.5px #D4AF37, 0 10px 28px -4px rgba(212, 175, 55, 0.3);
         }
 
         .choice-check-radio {
@@ -868,6 +885,24 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             background: var(--korpri-gold-light);
             color: #8D6415;
             border: 1px solid var(--korpri-gold-border);
+            position: relative;
+            overflow: hidden;
+        }
+        .tag-micro-gold::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -150%;
+            width: 70%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+            transform: rotate(25deg);
+            animation: goldShimmerSweep 4.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            pointer-events: none;
+        }
+        @keyframes goldShimmerSweep {
+            0%, 40% { left: -150%; }
+            70%, 100% { left: 200%; }
         }
         [data-theme="dark"] .tag-micro-gold {
             color: #FDE68A;
@@ -876,6 +911,20 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             background: var(--status-green-bg);
             color: var(--status-green);
             border: 1px solid var(--status-green-border);
+            position: relative;
+            overflow: hidden;
+        }
+        .tag-micro-green::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -150%;
+            width: 70%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transform: rotate(25deg);
+            animation: goldShimmerSweep 5s cubic-bezier(0.4, 0, 0.2, 1) infinite 1.5s;
+            pointer-events: none;
         }
 
         .choice-price-block {
@@ -1137,14 +1186,27 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             transition: var(--transition);
             box-shadow: var(--shadow-subtle);
             position: relative;
+            overflow: hidden;
         }
         .stock-item-card:hover {
-            transform: translateY(-2px);
-            border-color: #CBD5E1;
-            box-shadow: var(--shadow-card);
+            transform: translateY(-4px);
+            border-color: rgba(29, 78, 216, 0.35);
+            box-shadow: 0 12px 28px -4px rgba(11, 30, 59, 0.12), 0 0 1px rgba(11, 30, 59, 0.2);
         }
         [data-theme="dark"] .stock-item-card:hover {
-            border-color: #334155;
+            border-color: rgba(212, 175, 55, 0.35);
+            box-shadow: 0 14px 32px -4px rgba(0, 0, 0, 0.7), 0 0 15px rgba(212, 175, 55, 0.1);
+        }
+
+        @keyframes cardFadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(16px) scale(0.97);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         .stock-card-head {
@@ -2689,6 +2751,769 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             background: rgba(212, 175, 55, 0.22);
         }
 
+        /* ==========================================================================
+           OFFICIAL PRODUCT PHOTO GALLERY & LIGHTBOX (5 FOTO FISIK MUTZ & PIN)
+           ========================================================================== */
+        .gov-gallery-section {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .gallery-badge-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--korpri-gold);
+            background: var(--korpri-gold-light);
+            border: 1px solid var(--korpri-gold-border);
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            margin-bottom: 6px;
+        }
+        [data-theme="dark"] .gallery-badge-top {
+            background: rgba(212, 175, 55, 0.12);
+            border-color: rgba(212, 175, 55, 0.3);
+            color: #FDE68A;
+        }
+
+        .gallery-lead-desc {
+            font-size: 0.88rem;
+            color: var(--gov-muted);
+            line-height: 1.6;
+            margin: 0.4rem 0 1.25rem;
+        }
+
+        .gallery-filter-pills {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn-gallery-tab {
+            padding: 6px 14px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--gov-hairline);
+            background: var(--gov-surface);
+            color: var(--gov-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-gallery-tab:hover {
+            border-color: var(--korpri-blue);
+            color: var(--korpri-blue);
+        }
+        .btn-gallery-tab.active {
+            background: var(--korpri-navy);
+            border-color: var(--korpri-navy);
+            color: #FFFFFF;
+        }
+        [data-theme="dark"] .btn-gallery-tab.active {
+            background: var(--korpri-blue);
+            border-color: var(--korpri-blue);
+            color: #FFFFFF;
+        }
+
+        .gallery-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px;
+            margin-top: 1.25rem;
+        }
+        @media (max-width: 1200px) {
+            .gallery-cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (max-width: 860px) {
+            .gallery-cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+        }
+        @media (max-width: 520px) {
+            .gallery-cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .gallery-card-item {
+            background: var(--gov-hairline-subtle);
+            border: 1px solid var(--gov-hairline);
+            border-radius: var(--radius-md);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+        .gallery-card-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-float);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+        .gallery-card-item.card-eselon {
+            border-color: rgba(212, 175, 55, 0.35);
+        }
+        .gallery-card-item.card-pin {
+            border-color: rgba(21, 128, 61, 0.35);
+        }
+
+        .gallery-img-box {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3 / 2;
+            overflow: hidden;
+            background: #F3F4F6;
+            cursor: pointer;
+        }
+        [data-theme="dark"] .gallery-img-box {
+            background: #111827;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .gallery-img-box:hover .gallery-img {
+            transform: scale(1.08);
+        }
+
+        .gallery-floating-tags {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            z-index: 2;
+        }
+        .tag-pill-gold {
+            background: rgba(180, 130, 40, 0.94);
+            color: #FFFFFF;
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        .tag-pill-blue {
+            background: rgba(29, 78, 216, 0.94);
+            color: #FFFFFF;
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        .tag-pill-emerald {
+            background: rgba(21, 128, 61, 0.94);
+            color: #FFFFFF;
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        .tag-pill-dark {
+            background: rgba(15, 23, 42, 0.85);
+            color: #FFFFFF;
+            font-size: 0.66rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+        }
+
+        .gallery-hover-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(11, 30, 59, 0.45);
+            backdrop-filter: blur(2px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.22s ease;
+            z-index: 3;
+        }
+        .gallery-img-box:hover .gallery-hover-overlay {
+            opacity: 1;
+        }
+
+        .overlay-zoom-btn {
+            background: #FFFFFF;
+            color: var(--korpri-navy);
+            padding: 7px 15px;
+            border-radius: 30px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            transform: scale(0.95);
+            transition: transform 0.2s ease;
+        }
+        .gallery-img-box:hover .overlay-zoom-btn {
+            transform: scale(1);
+        }
+
+        .gallery-card-content {
+            padding: 12px 13px 13px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        .gallery-card-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+        .gallery-card-title {
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: var(--gov-slate);
+            line-height: 1.35;
+            margin: 0;
+        }
+        .gallery-num-badge {
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: var(--gov-subtle);
+            background: var(--gov-hairline);
+            padding: 1px 6px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .gallery-card-desc {
+            font-size: 0.78rem;
+            color: var(--gov-muted);
+            line-height: 1.5;
+            margin: 4px 0 10px;
+        }
+
+        .gallery-card-features {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-bottom: 12px;
+        }
+        .feature-chip {
+            font-size: 0.72rem;
+            color: var(--gov-slate);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+        }
+        .feature-chip svg {
+            color: var(--status-green);
+            flex-shrink: 0;
+        }
+
+        .gallery-card-footer {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: auto;
+            padding-top: 10px;
+            border-top: 1px dashed var(--gov-hairline);
+        }
+        .gallery-price-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+        .gallery-price-val {
+            font-size: 0.94rem;
+            font-weight: 800;
+            color: var(--korpri-navy);
+        }
+        [data-theme="dark"] .gallery-price-val {
+            color: #93C5FD;
+        }
+        .gallery-price-sub {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--status-green);
+            background: var(--status-green-bg);
+            padding: 1px 6px;
+            border-radius: 3px;
+        }
+
+        .btn-gallery-action {
+            width: 100%;
+            padding: 7px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 0.78rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+        }
+        .btn-action-gold {
+            background: var(--korpri-gold-light);
+            color: var(--korpri-gold);
+            border: 1px solid var(--korpri-gold-border);
+        }
+        .btn-action-gold:hover {
+            background: var(--korpri-gold);
+            color: #FFFFFF;
+        }
+        .btn-action-blue {
+            background: var(--korpri-blue-subtle);
+            color: var(--korpri-blue);
+            border: 1px solid rgba(29, 78, 216, 0.2);
+        }
+        .btn-action-blue:hover {
+            background: var(--korpri-blue);
+            color: #FFFFFF;
+        }
+        .btn-action-emerald {
+            background: var(--status-green-bg);
+            color: var(--status-green);
+            border: 1px solid var(--status-green-border);
+        }
+        .btn-action-emerald:hover {
+            background: var(--status-green);
+            color: #FFFFFF;
+        }
+
+        /* Lightbox Modal */
+        .gov-lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(7, 15, 30, 0.88);
+            backdrop-filter: blur(8px);
+            z-index: 2500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+        }
+        .gov-lightbox-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .gov-lightbox-window {
+            background: var(--gov-surface);
+            border: 1px solid var(--gov-hairline);
+            border-radius: var(--radius-lg);
+            max-width: 960px;
+            width: 100%;
+            max-height: 92vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: var(--shadow-float);
+            display: flex;
+            flex-direction: column;
+            animation: zoomModalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes zoomModalIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .btn-lightbox-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--gov-hairline-subtle);
+            border: 1px solid var(--gov-hairline);
+            color: var(--gov-slate);
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: var(--transition);
+        }
+        .btn-lightbox-close:hover {
+            background: #EF4444;
+            color: #FFFFFF;
+            border-color: #EF4444;
+        }
+
+        .btn-lightbox-nav {
+            position: absolute;
+            top: 40%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(15, 23, 42, 0.8);
+            color: #FFFFFF;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: var(--transition);
+            backdrop-filter: blur(4px);
+        }
+        .btn-lightbox-nav.prev { left: 14px; }
+        .btn-lightbox-nav.next { right: 14px; }
+        .btn-lightbox-nav:hover {
+            background: var(--korpri-blue);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .lightbox-body {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            min-height: 460px;
+        }
+        @media (max-width: 768px) {
+            .lightbox-body {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .lightbox-media-wrap {
+            position: relative;
+            background: #F3F4F6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            overflow: hidden;
+        }
+        [data-theme="dark"] .lightbox-media-wrap {
+            background: #0B1424;
+        }
+
+        .lightbox-main-img {
+            max-width: 100%;
+            max-height: 52vh;
+            object-fit: contain;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-card);
+            transition: transform 0.3s ease;
+        }
+
+        .lightbox-counter-badge {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(15, 23, 42, 0.85);
+            color: #FFFFFF;
+            font-size: 0.74rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .lightbox-info-panel {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .lightbox-tag-pill {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--korpri-gold);
+            background: var(--korpri-gold-light);
+            border: 1px solid var(--korpri-gold-border);
+            padding: 3px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+        .lightbox-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--gov-slate);
+            margin: 0 0 6px;
+            line-height: 1.35;
+        }
+        .lightbox-spec-badge {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--korpri-blue);
+            margin-bottom: 12px;
+        }
+        .lightbox-desc {
+            font-size: 0.86rem;
+            color: var(--gov-muted);
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+        .lightbox-features-title {
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--gov-subtle);
+            letter-spacing: 0.04em;
+            margin-bottom: 6px;
+        }
+        .lightbox-features-ul {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 0.82rem;
+            color: var(--gov-slate);
+            line-height: 1.6;
+        }
+        .lightbox-features-ul li {
+            margin-bottom: 4px;
+        }
+
+        .lightbox-footer-action {
+            background: var(--gov-hairline-subtle);
+            border: 1px solid var(--gov-hairline);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .lightbox-price-label {
+            font-size: 0.74rem;
+            color: var(--gov-subtle);
+            display: block;
+        }
+        .lightbox-price-val {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--korpri-navy);
+        }
+        [data-theme="dark"] .lightbox-price-val {
+            color: #F8FAFC;
+        }
+        .lightbox-pin-note {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--status-green);
+            display: block;
+            margin-top: 2px;
+        }
+        .btn-lightbox-select {
+            background: var(--korpri-blue);
+            color: #FFFFFF;
+            padding: 10px 18px;
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            font-weight: 800;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+        .btn-lightbox-select:hover {
+            background: #1E40AF;
+            transform: translateY(-1px);
+        }
+
+        .lightbox-thumbs-strip {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid var(--gov-hairline);
+            overflow-x: auto;
+        }
+        .lightbox-thumb-btn {
+            width: 54px;
+            height: 38px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 2px solid transparent;
+            padding: 0;
+            cursor: pointer;
+            flex-shrink: 0;
+            background: #E5E7EB;
+            transition: var(--transition);
+        }
+        .lightbox-thumb-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .lightbox-thumb-btn.active {
+            border-color: var(--korpri-gold);
+            transform: scale(1.08);
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Selector Thumbnail Previews */
+        .choice-thumb-box {
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin-left: 12px;
+            flex-shrink: 0;
+        }
+        .choice-thumb-img {
+            width: 64px;
+            height: 42px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid var(--gov-hairline);
+            background: #FFF;
+            box-shadow: var(--shadow-subtle);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .choice-thumb-img:hover {
+            transform: scale(1.05);
+        }
+        .choice-thumb-pin {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            width: 22px;
+            height: 22px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1.5px solid #FFFFFF;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+            background: #FFF;
+        }
+
+        /* Spec Box Photos Row */
+        .spec-photos-row {
+            display: flex;
+            gap: 8px;
+            margin: 12px 0 6px;
+            flex-wrap: wrap;
+        }
+        .spec-photo-thumb {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            cursor: pointer;
+            background: var(--gov-surface);
+            border: 1px solid var(--gov-hairline);
+            border-radius: 6px;
+            padding: 4px;
+            transition: var(--transition);
+        }
+        .spec-photo-thumb:hover {
+            border-color: var(--korpri-gold);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-subtle);
+        }
+        .spec-photo-thumb img {
+            width: 58px;
+            height: 38px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .spec-photo-thumb span {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--gov-muted);
+        }
+
+        /* Order Modal Photo Preview */
+        .modal-summary-grid {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+        @media (max-width: 480px) {
+            .modal-summary-grid {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+        .modal-summary-thumb-box {
+            position: relative;
+            width: 82px;
+            height: 56px;
+            flex-shrink: 0;
+            cursor: pointer;
+            margin: 0 auto;
+        }
+        .modal-order-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid var(--gov-hairline);
+            box-shadow: var(--shadow-subtle);
+        }
+        .modal-order-pin-badge {
+            position: absolute;
+            bottom: -6px;
+            right: -6px;
+            background: #FFFFFF;
+            border: 1px solid var(--gov-hairline);
+            border-radius: 20px;
+            padding: 1px 6px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 0.62rem;
+            font-weight: 800;
+            color: var(--status-green);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+        [data-theme="dark"] .modal-order-pin-badge {
+            background: #0F172A;
+            border-color: #334155;
+        }
+        .modal-order-pin-badge img {
+            width: 14px;
+            height: 14px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+        .modal-summary-lines {
+            flex: 1;
+        }
+
+        .gov-chip-gallery {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .gov-chip-gallery:hover {
+            border-color: var(--korpri-gold);
+            color: var(--korpri-gold);
+            transform: translateY(-1px);
+        }
+
         /* Toast feedback */
         .gov-toast {
             position: fixed;
@@ -2810,10 +3635,242 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         </div>
                         <div class="gov-meta-chip">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-                            <span>Total Stok: <strong><?= number_format($total_stok_tersedia, 0, ',', '.') ?> Pcs</strong></span>
+                            <span>Total Stok: <strong id="heroTotalStockVal"><?= number_format($total_stok_tersedia, 0, ',', '.') ?> Pcs</strong></span>
                         </div>
+                        <a href="#galeri-produk" class="gov-meta-chip gov-chip-gallery" title="Lihat 5 Foto Fisik Resmi Topi Mutz & Pin">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                            <span>Galeri <strong>5 Foto Fisik</strong></span>
+                        </a>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Galeri Fisik & Visual Produk Resmi (5 Foto Fisik & Pin Daerah) -->
+        <section class="gov-section-card gov-gallery-section" id="galeri-produk">
+            <div class="section-header-row">
+                <div>
+                    <div class="gallery-badge-top">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <span>DOKUMENTASI FOTO FISIK RESMI PENGURUS KORPRI</span>
+                    </div>
+                    <h2 class="section-h2" style="margin-top: 4px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--korpri-gold);"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                        <span>Galeri Fisik Topi Mutz &amp; Pin Lambang Daerah</span>
+                    </h2>
+                </div>
+                <div class="gallery-filter-pills" role="tablist" aria-label="Filter Galeri Produk">
+                    <button type="button" class="btn-gallery-tab active" onclick="filterGalleryCards('all', this)">Semua (5)</button>
+                    <button type="button" class="btn-gallery-tab" onclick="filterGalleryCards('Kepala SKPD', this)">Kepala SKPD (2)</button>
+                    <button type="button" class="btn-gallery-tab" onclick="filterGalleryCards('Biasa', this)">Standar ASN (2)</button>
+                    <button type="button" class="btn-gallery-tab" onclick="filterGalleryCards('Pin', this)">Pin Banjar (1)</button>
+                </div>
+            </div>
+
+            <p class="gallery-lead-desc">
+                Dokumentasi resolusi tinggi wujud fisik topi Mutz resmi ASN Kabupaten Banjar. Klik foto untuk memperbesar, melihat detail kerapian bordir benang emas, bentuk lengkung hijab, serta emblem pin logam kuningan lambang kebanggaan daerah.
+            </p>
+
+            <div class="gallery-cards-grid" id="galleryCardsGrid">
+                <!-- 1. Mutz Kepala SKPD Eselon 2 Pria -->
+                <article class="gallery-card-item card-eselon" data-cat="Kepala SKPD" data-gender="Laki-laki">
+                    <div class="gallery-img-box" onclick="openProductLightbox(0)" role="button" tabindex="0" title="Klik untuk memperbesar foto Mutz Kepala SKPD Pria">
+                        <img src="assets/images/mutz-eselon-pria.jpg" alt="Foto Resmi Mutz Kepala SKPD Eselon 2 Pria" class="gallery-img" loading="lazy">
+                        <div class="gallery-floating-tags">
+                            <span class="tag-pill-gold">Eselon II • Pria</span>
+                            <span class="tag-pill-dark">Bordir Emas</span>
+                        </div>
+                        <div class="gallery-hover-overlay">
+                            <div class="overlay-zoom-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                                <span>Perbesar Foto</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-card-content">
+                        <div>
+                            <div class="gallery-card-title-row">
+                                <h3 class="gallery-card-title">Mutz Kepala SKPD (Eselon II) Pria</h3>
+                                <span class="gallery-num-badge">Foto #1</span>
+                            </div>
+                            <p class="gallery-card-desc">Bentuk lurus tegak berwibawa dengan aksen bordir pita benang emas tebal ganda untuk Pejabat Eselon II Pria.</p>
+                            <div class="gallery-card-features">
+                                <span class="feature-chip"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Bordir Benang Emas Ganda</span>
+                                <span class="feature-chip"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> + Free Pin Kab. Banjar</span>
+                            </div>
+                        </div>
+                        <div class="gallery-card-footer">
+                            <div class="gallery-price-wrap">
+                                <span class="gallery-price-val">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></span>
+                                <span class="gallery-price-sub">Ready Stock</span>
+                            </div>
+                            <button type="button" class="btn-gallery-action btn-action-gold" onclick="selectProductFromGallery(0)">
+                                <span>Pilih Model &amp; Cek Stok</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 2. Mutz Kepala SKPD Eselon 2 Wanita -->
+                <article class="gallery-card-item card-eselon" data-cat="Kepala SKPD" data-gender="Perempuan">
+                    <div class="gallery-img-box" onclick="openProductLightbox(1)" role="button" tabindex="0" title="Klik untuk memperbesar foto Mutz Kepala SKPD Wanita">
+                        <img src="assets/images/mutz-eselon-wanita.jpg" alt="Foto Resmi Mutz Kepala SKPD Eselon 2 Wanita" class="gallery-img" loading="lazy">
+                        <div class="gallery-floating-tags">
+                            <span class="tag-pill-gold">Eselon II • Wanita</span>
+                            <span class="tag-pill-dark">Bordir Emas</span>
+                        </div>
+                        <div class="gallery-hover-overlay">
+                            <div class="overlay-zoom-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                                <span>Perbesar Foto</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-card-content">
+                        <div>
+                            <div class="gallery-card-title-row">
+                                <h3 class="gallery-card-title">Mutz Kepala SKPD (Eselon II) Wanita</h3>
+                                <span class="gallery-num-badge">Foto #2</span>
+                            </div>
+                            <p class="gallery-card-desc">Siluet lengkung perahu anggun &amp; ergonomis dengan bordir benang emas tebal. Nyaman saat berhijab / bersanggul.</p>
+                            <div class="gallery-card-features">
+                                <span class="feature-chip"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Siluet Lengkung Hijab</span>
+                                <span class="feature-chip"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> + Free Pin Kab. Banjar</span>
+                            </div>
+                        </div>
+                        <div class="gallery-card-footer">
+                            <div class="gallery-price-wrap">
+                                <span class="gallery-price-val">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></span>
+                                <span class="gallery-price-sub">Ready Stock</span>
+                            </div>
+                            <button type="button" class="btn-gallery-action btn-action-gold" onclick="selectProductFromGallery(1)">
+                                <span>Pilih Model &amp; Cek Stok</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 3. Mutz Standar ASN Pria -->
+                <article class="gallery-card-item card-standar" data-cat="Biasa" data-gender="Laki-laki">
+                    <div class="gallery-img-box" onclick="openProductLightbox(2)" role="button" tabindex="0" title="Klik untuk memperbesar foto Mutz Standar ASN Pria">
+                        <img src="assets/images/mutz-standar-pria.jpg" alt="Foto Resmi Mutz Standar ASN Pria" class="gallery-img" loading="lazy">
+                        <div class="gallery-floating-tags">
+                            <span class="tag-pill-blue">Standar • Pria</span>
+                            <span class="tag-pill-dark">Lis Kuning</span>
+                        </div>
+                        <div class="gallery-hover-overlay">
+                            <div class="overlay-zoom-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                                <span>Perbesar Foto</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-card-content">
+                        <div>
+                            <div class="gallery-card-title-row">
+                                <h3 class="gallery-card-title">Mutz Standar ASN Pria</h3>
+                                <span class="gallery-num-badge">Foto #3</span>
+                            </div>
+                            <p class="gallery-card-desc">Topi mutz kedinasan resmi KORPRI bentuk tegak lurus dengan lis pita kuning standar bagi seluruh ASN (PNS &amp; PPPK) pria.</p>
+                            <div class="gallery-card-features">
+                                <span class="feature-chip"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Seluruh ASN (PNS &amp; PPPK)</span>
+                                <span class="feature-chip"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> + Free Pin Kab. Banjar</span>
+                            </div>
+                        </div>
+                        <div class="gallery-card-footer">
+                            <div class="gallery-price-wrap">
+                                <span class="gallery-price-val">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></span>
+                                <span class="gallery-price-sub">Ready Stock</span>
+                            </div>
+                            <button type="button" class="btn-gallery-action btn-action-blue" onclick="selectProductFromGallery(2)">
+                                <span>Pilih Model &amp; Cek Stok</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 4. Mutz Standar ASN Wanita -->
+                <article class="gallery-card-item card-standar" data-cat="Biasa" data-gender="Perempuan">
+                    <div class="gallery-img-box" onclick="openProductLightbox(3)" role="button" tabindex="0" title="Klik untuk memperbesar foto Mutz Standar ASN Wanita">
+                        <img src="assets/images/mutz-standar-wanita.jpg" alt="Foto Resmi Mutz Standar ASN Wanita" class="gallery-img" loading="lazy">
+                        <div class="gallery-floating-tags">
+                            <span class="tag-pill-blue">Standar • Wanita</span>
+                            <span class="tag-pill-dark">Lis Kuning</span>
+                        </div>
+                        <div class="gallery-hover-overlay">
+                            <div class="overlay-zoom-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                                <span>Perbesar Foto</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-card-content">
+                        <div>
+                            <div class="gallery-card-title-row">
+                                <h3 class="gallery-card-title">Mutz Standar ASN Wanita</h3>
+                                <span class="gallery-num-badge">Foto #4</span>
+                            </div>
+                            <p class="gallery-card-desc">Model siluet melengkung ergonomis dengan lis kuning standar, dirancang pas dan rapi saat mengenakan jilbab atau sanggul.</p>
+                            <div class="gallery-card-features">
+                                <span class="feature-chip"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Siluet Lengkung Hijab</span>
+                                <span class="feature-chip"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> + Free Pin Kab. Banjar</span>
+                            </div>
+                        </div>
+                        <div class="gallery-card-footer">
+                            <div class="gallery-price-wrap">
+                                <span class="gallery-price-val">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></span>
+                                <span class="gallery-price-sub">Ready Stock</span>
+                            </div>
+                            <button type="button" class="btn-gallery-action btn-action-blue" onclick="selectProductFromGallery(3)">
+                                <span>Pilih Model &amp; Cek Stok</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 5. Pin Logam Kabupaten Banjar -->
+                <article class="gallery-card-item card-pin" data-cat="Pin" data-gender="Semua">
+                    <div class="gallery-img-box" onclick="openProductLightbox(4)" role="button" tabindex="0" title="Klik untuk memperbesar foto Pin Logam Kabupaten Banjar">
+                        <img src="assets/images/pin-kab-banjar.jpg" alt="Foto Resmi Pin Logam Lambang Kabupaten Banjar" class="gallery-img" loading="lazy">
+                        <div class="gallery-floating-tags">
+                            <span class="tag-pill-emerald">Include Gratis</span>
+                            <span class="tag-pill-dark">Kuningan Emas</span>
+                        </div>
+                        <div class="gallery-hover-overlay">
+                            <div class="overlay-zoom-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                                <span>Perbesar Foto</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-card-content">
+                        <div>
+                            <div class="gallery-card-title-row">
+                                <h3 class="gallery-card-title">Pin Logam Lambang Kab. Banjar</h3>
+                                <span class="gallery-num-badge">Foto #5</span>
+                            </div>
+                            <p class="gallery-card-desc">Lencana resmi logam kuningan emas berkilau tulisan "BANJAR - BARAKAT". Sudah otomatis disertakan di setiap pembelian mutz.</p>
+                            <div class="gallery-card-features">
+                                <span class="feature-chip"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Logam Kuningan Tahan Karat</span>
+                                <span class="feature-chip"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Gratis di Setiap Pembelian</span>
+                            </div>
+                        </div>
+                        <div class="gallery-card-footer">
+                            <div class="gallery-price-wrap">
+                                <span class="gallery-price-val" style="color: var(--status-green);">SUDAH INCLUDE</span>
+                                <span class="gallery-price-sub">Gratis / Lengkap</span>
+                            </div>
+                            <button type="button" class="btn-gallery-action btn-action-emerald" onclick="openProductLightbox(4)">
+                                <span>Lihat Detail Pin</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            </button>
+                        </div>
+                    </div>
+                </article>
             </div>
         </section>
 
@@ -2821,7 +3878,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         <div class="gov-product-selector">
             <!-- Card Standar ASN -->
             <div class="product-choice-card choice-standar active" id="cardChoiceStandar" onclick="selectCategory('Biasa')">
-                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                <div style="display: flex; gap: 12px; align-items: flex-start; flex: 1;">
                     <div class="choice-check-radio"></div>
                     <div>
                         <div class="choice-meta-title">Mutz Standar ASN</div>
@@ -2832,6 +3889,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         </div>
                     </div>
                 </div>
+                <div class="choice-thumb-box" title="Foto Resmi Mutz Standar ASN + Pin (Klik untuk memperbesar)" onclick="event.stopPropagation(); openProductLightbox(currentGender === 'Perempuan' ? 3 : 2);">
+                    <img src="assets/images/mutz-standar-pria.jpg" alt="Mutz Standar ASN" class="choice-thumb-img" id="thumbChoiceStandar">
+                    <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Banjar" class="choice-thumb-pin" title="Include Pin Logam">
+                </div>
                 <div class="choice-price-block">
                     <div class="choice-price-val">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></div>
                     <div class="choice-price-label">Harga Satuan</div>
@@ -2840,7 +3901,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
             <!-- Card Kepala SKPD (Eselon II) -->
             <div class="product-choice-card choice-kepala" id="cardChoiceKepala" onclick="selectCategory('Kepala SKPD')">
-                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                <div style="display: flex; gap: 12px; align-items: flex-start; flex: 1;">
                     <div class="choice-check-radio"></div>
                     <div>
                         <div class="choice-meta-title">Mutz Kepala SKPD (Eselon II)</div>
@@ -2851,6 +3912,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <span class="tag-micro tag-micro-blue">Include Pin Kab. Banjar</span>
                         </div>
                     </div>
+                </div>
+                <div class="choice-thumb-box" title="Foto Resmi Mutz Kepala SKPD + Pin (Klik untuk memperbesar)" onclick="event.stopPropagation(); openProductLightbox(currentGender === 'Perempuan' ? 1 : 0);">
+                    <img src="assets/images/mutz-eselon-pria.jpg" alt="Mutz Kepala SKPD" class="choice-thumb-img" id="thumbChoiceKepala">
+                    <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Banjar" class="choice-thumb-pin" title="Include Pin Logam">
                 </div>
                 <div class="choice-price-block">
                     <div class="choice-price-val">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></div>
@@ -2965,6 +4030,22 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     <div class="spec-box">
                         <span class="spec-badge standar">Standar ASN (Biasa)</span>
                         <div class="spec-title">Mutz Standar KORPRI</div>
+
+                        <div class="spec-photos-row">
+                            <div class="spec-photo-thumb" onclick="openProductLightbox(2)" title="Klik untuk memperbesar foto Mutz Standar ASN Pria">
+                                <img src="assets/images/mutz-standar-pria.jpg" alt="Mutz Standar Pria">
+                                <span>Pria</span>
+                            </div>
+                            <div class="spec-photo-thumb" onclick="openProductLightbox(3)" title="Klik untuk memperbesar foto Mutz Standar ASN Wanita">
+                                <img src="assets/images/mutz-standar-wanita.jpg" alt="Mutz Standar Wanita">
+                                <span>Wanita</span>
+                            </div>
+                            <div class="spec-photo-thumb" onclick="openProductLightbox(4)" title="Klik untuk memperbesar foto Pin Logam Lambang Kab. Banjar">
+                                <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Kab Banjar">
+                                <span style="color: var(--status-green);">+ Pin Free</span>
+                            </div>
+                        </div>
+
                         <ul class="spec-list">
                             <li>Diperuntukkan bagi seluruh ASN (PNS dan PPPK).</li>
                             <li><strong>Sudah termasuk (include) Pin Logam Lambang Kab. Banjar</strong>.</li>
@@ -2976,6 +4057,22 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     <div class="spec-box eselon">
                         <span class="spec-badge eselon">Pejabat Eselon II</span>
                         <div class="spec-title">Mutz Kepala SKPD</div>
+
+                        <div class="spec-photos-row">
+                            <div class="spec-photo-thumb" onclick="openProductLightbox(0)" title="Klik untuk memperbesar foto Mutz Kepala SKPD Pria">
+                                <img src="assets/images/mutz-eselon-pria.jpg" alt="Mutz Kepala SKPD Pria">
+                                <span>Pria</span>
+                            </div>
+                            <div class="spec-photo-thumb" onclick="openProductLightbox(1)" title="Klik untuk memperbesar foto Mutz Kepala SKPD Wanita">
+                                <img src="assets/images/mutz-eselon-wanita.jpg" alt="Mutz Kepala SKPD Wanita">
+                                <span>Wanita</span>
+                            </div>
+                            <div class="spec-photo-thumb" onclick="openProductLightbox(4)" title="Klik untuk memperbesar foto Pin Logam Lambang Kab. Banjar">
+                                <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Kab Banjar">
+                                <span style="color: var(--status-green);">+ Pin Free</span>
+                            </div>
+                        </div>
+
                         <ul class="spec-list">
                             <li>Khusus Kepala Dinas, Kepala Badan, Asisten Sekda, Staf Ahli &amp; Sekda.</li>
                             <li>Aksen <strong>Bordir List Benang Emas Tebal</strong> di sekeliling mutz.</li>
@@ -3123,21 +4220,32 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             </p>
 
             <div class="modal-summary-box">
-                <div class="modal-summary-line">
-                    <span style="color: var(--gov-subtle);">Jenis Mutz:</span>
-                    <strong id="modalCat">-</strong>
-                </div>
-                <div class="modal-summary-line">
-                    <span style="color: var(--gov-subtle);">Peruntukan:</span>
-                    <strong id="modalGender">-</strong>
-                </div>
-                <div class="modal-summary-line">
-                    <span style="color: var(--gov-subtle);">Nomor Ukuran:</span>
-                    <strong style="color: var(--korpri-blue);" id="modalSize">-</strong>
-                </div>
-                <div class="modal-summary-line">
-                    <span style="color: var(--gov-subtle);">Status:</span>
-                    <strong id="modalStockStatus">-</strong>
+                <div class="modal-summary-grid">
+                    <div class="modal-summary-thumb-box" title="Foto Model Mutz Terpilih + Pin Logam (Klik untuk memperbesar)" onclick="openLightboxFromOrder()">
+                        <img src="assets/images/mutz-standar-pria.jpg" id="modalOrderProductImg" alt="Foto Model Mutz" class="modal-order-img">
+                        <div class="modal-order-pin-badge" title="Sudah Termasuk Pin Logam Lambang Kab. Banjar">
+                            <img src="assets/images/pin-kab-banjar.jpg" alt="Pin">
+                            <span>+ Pin</span>
+                        </div>
+                    </div>
+                    <div class="modal-summary-lines">
+                        <div class="modal-summary-line">
+                            <span style="color: var(--gov-subtle);">Jenis Mutz:</span>
+                            <strong id="modalCat">-</strong>
+                        </div>
+                        <div class="modal-summary-line">
+                            <span style="color: var(--gov-subtle);">Peruntukan:</span>
+                            <strong id="modalGender">-</strong>
+                        </div>
+                        <div class="modal-summary-line">
+                            <span style="color: var(--gov-subtle);">Nomor Ukuran:</span>
+                            <strong style="color: var(--korpri-blue);" id="modalSize">-</strong>
+                        </div>
+                        <div class="modal-summary-line">
+                            <span style="color: var(--gov-subtle);">Status:</span>
+                            <strong id="modalStockStatus">-</strong>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -3230,6 +4338,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             </div>
 
             <nav class="footer-nav-links" aria-label="Navigasi Footer">
+                <a href="#galeri-produk">Galeri Fisik Mutz</a>
+                <span class="footer-nav-dot">&bull;</span>
                 <a href="#panduan">Panduan Ukuran</a>
                 <span class="footer-nav-dot">&bull;</span>
                 <a href="#lokasi-pelayanan">Jam Layanan &amp; Peta</a>
@@ -3311,6 +4421,68 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             <button type="button" class="btn-modal-submit" onclick="closePwaGuideModal()" style="width: 100%; justify-content: center;">
                 <span>Saya Mengerti &#128077;</span>
             </button>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal Fullscreen Photo Viewer (5 Foto Resmi) -->
+    <div class="gov-lightbox-overlay" id="productLightboxModal" onclick="closeProductLightbox(event)" role="dialog" aria-modal="true" aria-label="Penampil Foto Mutz &amp; Pin">
+        <div class="gov-lightbox-window" onclick="event.stopPropagation()">
+            <button type="button" class="btn-lightbox-close" onclick="closeProductLightbox()" title="Tutup Galeri (Esc)" aria-label="Tutup">&times;</button>
+            
+            <button type="button" class="btn-lightbox-nav prev" onclick="lightboxPrev()" title="Foto Sebelumnya (Panah Kiri)" aria-label="Sebelumnya">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button type="button" class="btn-lightbox-nav next" onclick="lightboxNext()" title="Foto Selanjutnya (Panah Kanan)" aria-label="Selanjutnya">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+
+            <div class="lightbox-body">
+                <!-- Large Image Container -->
+                <div class="lightbox-media-wrap">
+                    <img src="assets/images/mutz-eselon-pria.jpg" alt="Foto Detail Mutz" id="lightboxMainImg" class="lightbox-main-img">
+                    <div class="lightbox-counter-badge" id="lightboxCounter">Foto 1 dari 5</div>
+                </div>
+
+                <!-- Product Details Panel -->
+                <div class="lightbox-info-panel">
+                    <div>
+                        <div class="lightbox-head">
+                            <span class="lightbox-tag-pill" id="lightboxTag">Eselon II Pria</span>
+                            <h3 class="lightbox-title" id="lightboxTitle">Mutz Kepala SKPD (Eselon II) Pria</h3>
+                            <div class="lightbox-spec-badge" id="lightboxSpec">Bordir List Benang Emas Ganda</div>
+                        </div>
+
+                        <p class="lightbox-desc" id="lightboxDesc">
+                            Deskripsi spesifikasi produk...
+                        </p>
+
+                        <div class="lightbox-features-list">
+                            <div class="lightbox-features-title">Karakteristik &amp; Kelengkapan:</div>
+                            <ul id="lightboxFeaturesUl" class="lightbox-features-ul">
+                                <!-- Populated via JS -->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="lightbox-footer-action">
+                            <div class="lightbox-price-block">
+                                <span class="lightbox-price-label">Harga Satuan Resmi:</span>
+                                <span class="lightbox-price-val" id="lightboxPrice">Rp 75.000</span>
+                                <span class="lightbox-pin-note" id="lightboxPinNote">✓ Sudah termasuk Pin Logam Kab. Banjar</span>
+                            </div>
+                            <button type="button" class="btn-lightbox-select" id="btnLightboxSelect" onclick="selectFromLightboxCurrent()">
+                                <span>Pilih Model &amp; Cek Stok &rarr;</span>
+                            </button>
+                        </div>
+
+                        <!-- Mini Thumbnails Carousel Strip -->
+                        <div class="lightbox-thumbs-strip" id="lightboxThumbsStrip">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -3405,12 +4577,23 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 btnPria.classList.remove('active');
             }
 
+            // Update product choice thumbnails based on selected gender
+            const thumbStandar = document.getElementById('thumbChoiceStandar');
+            const thumbKepala = document.getElementById('thumbChoiceKepala');
+            if (gender === 'Perempuan') {
+                if (thumbStandar) thumbStandar.src = 'assets/images/mutz-standar-wanita.jpg';
+                if (thumbKepala) thumbKepala.src = 'assets/images/mutz-eselon-wanita.jpg';
+            } else {
+                if (thumbStandar) thumbStandar.src = 'assets/images/mutz-standar-pria.jpg';
+                if (thumbKepala) thumbKepala.src = 'assets/images/mutz-eselon-pria.jpg';
+            }
+
             renderSizeChips();
             renderStockCards();
             updateMobileDock();
         }
 
-        function updateCounters() {
+        function updateCounters(animate = true) {
             const dataCat = STOK_DATA[currentCategory] || {};
             
             let totalPria = 0;
@@ -3421,9 +4604,255 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             const wanitaObj = dataCat['Perempuan'] || {};
             for (let sz in wanitaObj) { totalWanita += (wanitaObj[sz] || 0); }
 
-            document.getElementById('counterPria').textContent = totalPria + ' Pcs';
-            document.getElementById('counterWanita').textContent = totalWanita + ' Pcs';
+            const elPria = document.getElementById('counterPria');
+            const elWanita = document.getElementById('counterWanita');
+
+            if (animate) {
+                animateCountUp(elPria, totalPria, 600, 'Pcs');
+                animateCountUp(elWanita, totalWanita, 600, 'Pcs');
+            } else {
+                if (elPria) elPria.textContent = totalPria + ' Pcs';
+                if (elWanita) elWanita.textContent = totalWanita + ' Pcs';
+            }
         }
+
+        /* ==========================================================================
+           OFFICIAL PRODUCT PHOTO GALLERY & LIGHTBOX LOGIC
+           ========================================================================== */
+        const GALLERY_DATA = [
+            {
+                id: 'eselon-pria',
+                category: 'Kepala SKPD',
+                gender: 'Laki-laki',
+                title: 'Mutz Kepala SKPD (Eselon II) Pria',
+                shortTitle: 'Eselon II Pria',
+                tag: 'Eselon II • Pria',
+                spec: 'Bordir List Benang Emas Ganda',
+                price: 'Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?>',
+                image: 'assets/images/mutz-eselon-pria.jpg',
+                desc: 'Topi Mutz resmi khusus Pejabat Pimpinan Tinggi Pratama / Eselon II Pria (Kepala Dinas, Kepala Badan, Asisten Sekda, Staf Ahli, dan Sekda Kabupaten Banjar). Desain bentuk lurus tegak berwibawa dengan aksen bordir pita benang emas ganda tebal di sekeliling mutz.',
+                features: [
+                    'Khusus Pejabat Pimpinan Tinggi Pratama / Eselon II Pria',
+                    'Aksen bordir benang emas ganda tebal resmi kedinasan',
+                    'Bahan kain drill cokelat premium tegap dan kokoh',
+                    'Bentuk lurus standar resmi keprotokolan Pemkab Banjar',
+                    'Sudah termasuk (include) Pin Logam Lambang Kab. Banjar'
+                ]
+            },
+            {
+                id: 'eselon-wanita',
+                category: 'Kepala SKPD',
+                gender: 'Perempuan',
+                title: 'Mutz Kepala SKPD (Eselon II) Wanita',
+                shortTitle: 'Eselon II Wanita',
+                tag: 'Eselon II • Wanita / Hijab',
+                spec: 'Bordir List Benang Emas Ganda',
+                price: 'Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?>',
+                image: 'assets/images/mutz-eselon-wanita.jpg',
+                desc: 'Topi Mutz resmi khusus Pejabat Eselon II Wanita di lingkungan Pemerintah Kabupaten Banjar. Dirancang dengan siluet lengkung perahu yang anggun dan ergonomis untuk memastikan kenyamanan saat mengenakan jilbab maupun sanggul.',
+                features: [
+                    'Khusus Pejabat Pimpinan Tinggi Pratama / Eselon II Wanita',
+                    'Siluet lengkung ergonomis tidak menekan dahi saat berhijab',
+                    'Aksen bordir benang emas ganda tebal resmi kedinasan',
+                    'Tegak rapi dan anggun saat acara upacara maupun kedinasan',
+                    'Sudah termasuk (include) Pin Logam Lambang Kab. Banjar'
+                ]
+            },
+            {
+                id: 'standar-pria',
+                category: 'Biasa',
+                gender: 'Laki-laki',
+                title: 'Mutz Standar ASN Pria',
+                shortTitle: 'Standar ASN Pria',
+                tag: 'Standar ASN • Pria',
+                spec: 'Lis Pita Kuning Standar Kedinasan',
+                price: 'Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?>',
+                image: 'assets/images/mutz-standar-pria.jpg',
+                desc: 'Topi Mutz resmi kedinasan KORPRI bagi seluruh Pegawai ASN (PNS & PPPK) pria di lingkungan Pemerintah Kabupaten Banjar. Desain bentuk tegak lurus dengan lis pita kuning standar kedinasan.',
+                features: [
+                    'Diperuntukkan bagi seluruh ASN (PNS & PPPK) Pria',
+                    'Desain bentuk tegak lurus resmi KORPRI',
+                    'Bahan kain drill kedinasan cokelat kokoh dan rapi',
+                    'Mudah dirawat dan nyaman untuk pemakaian dinas harian',
+                    'Sudah termasuk (include) Pin Logam Lambang Kab. Banjar'
+                ]
+            },
+            {
+                id: 'standar-wanita',
+                category: 'Biasa',
+                gender: 'Perempuan',
+                title: 'Mutz Standar ASN Wanita',
+                shortTitle: 'Standar ASN Wanita',
+                tag: 'Standar ASN • Wanita / Hijab',
+                spec: 'Lis Pita Kuning Standar Kedinasan',
+                price: 'Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?>',
+                image: 'assets/images/mutz-standar-wanita.jpg',
+                desc: 'Topi Mutz resmi kedinasan KORPRI bagi seluruh Pegawai ASN (PNS & PPPK) wanita. Dibuat dengan siluet lengkung ergonomis untuk kenyamanan maksimal saat berhijab atau bersanggul tanpa merusak kerapian jilbab.',
+                features: [
+                    'Diperuntukkan bagi seluruh ASN (PNS & PPPK) Wanita',
+                    'Siluet lengkung ergonomis khusus untuk berhijab / bersanggul',
+                    'Lis pita kuning standar kedinasan KORPRI',
+                    'Kain lentur rapi tidak meninggalkan bekas tekanan di dahi',
+                    'Sudah termasuk (include) Pin Logam Lambang Kab. Banjar'
+                ]
+            },
+            {
+                id: 'pin-banjar',
+                category: 'Pin',
+                gender: 'Semua',
+                title: 'Pin Logam Lambang Kabupaten Banjar',
+                shortTitle: 'Pin Kab. Banjar',
+                tag: 'Kelengkapan Resmi • Gratis',
+                spec: 'Logam Kuningan Emas Timbul "BARAKAT"',
+                price: 'Sudah Include (Gratis)',
+                image: 'assets/images/pin-kab-banjar.jpg',
+                desc: 'Pin lencana resmi logam kuningan berlapis warna emas presisi tinggi menampilkan lambang kebanggaan Kabupaten Banjar bertuliskan semboyan "BANJAR - BARAKAT". Otomatis disertakan di setiap pembelian topi Mutz ASN!',
+                features: [
+                    'Bahan logam kuningan asli warna emas berkilau tahan karat',
+                    'Embos detail lambang intan, padi-kapas, dan bintang Banjar',
+                    'Peniti pengait belakang kokoh tidak mudah lepas',
+                    'Sudah otomatis didapatkan di setiap pesanan Mutz tanpa biaya tambahan'
+                ]
+            }
+        ];
+
+        let currentLightboxIndex = 0;
+
+        function openProductLightbox(index) {
+            currentLightboxIndex = (index >= 0 && index < GALLERY_DATA.length) ? index : 0;
+            renderLightboxContent();
+            const modal = document.getElementById('productLightboxModal');
+            if (modal) modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProductLightbox(event) {
+            if (!event || event.target.id === 'productLightboxModal' || event.target.classList.contains('btn-lightbox-close')) {
+                const modal = document.getElementById('productLightboxModal');
+                if (modal) modal.classList.remove('active');
+                if (!document.getElementById('waOrderModal')?.classList.contains('active')) {
+                    document.body.style.overflow = '';
+                }
+            }
+        }
+
+        function lightboxNext() {
+            currentLightboxIndex = (currentLightboxIndex + 1) % GALLERY_DATA.length;
+            renderLightboxContent();
+        }
+
+        function lightboxPrev() {
+            currentLightboxIndex = (currentLightboxIndex - 1 + GALLERY_DATA.length) % GALLERY_DATA.length;
+            renderLightboxContent();
+        }
+
+        function renderLightboxContent() {
+            const item = GALLERY_DATA[currentLightboxIndex];
+            if (!item) return;
+
+            const imgEl = document.getElementById('lightboxMainImg');
+            const counterEl = document.getElementById('lightboxCounter');
+            const tagEl = document.getElementById('lightboxTag');
+            const titleEl = document.getElementById('lightboxTitle');
+            const specEl = document.getElementById('lightboxSpec');
+            const descEl = document.getElementById('lightboxDesc');
+            const featuresEl = document.getElementById('lightboxFeaturesUl');
+            const priceEl = document.getElementById('lightboxPrice');
+            const selectBtn = document.getElementById('btnLightboxSelect');
+            const pinNote = document.getElementById('lightboxPinNote');
+
+            if (imgEl) {
+                imgEl.src = item.image;
+                imgEl.alt = item.title;
+            }
+            if (counterEl) counterEl.textContent = `Foto ${currentLightboxIndex + 1} dari ${GALLERY_DATA.length}`;
+            if (tagEl) tagEl.textContent = item.tag;
+            if (titleEl) titleEl.textContent = item.title;
+            if (specEl) specEl.textContent = item.spec;
+            if (descEl) descEl.textContent = item.desc;
+            if (priceEl) priceEl.textContent = item.price;
+
+            if (featuresEl) {
+                featuresEl.innerHTML = item.features.map(f => `<li>${f}</li>`).join('');
+            }
+
+            if (selectBtn) {
+                if (item.category === 'Pin') {
+                    selectBtn.innerHTML = '<span>Pesan Mutz (Include Pin) &rarr;</span>';
+                } else {
+                    selectBtn.innerHTML = `<span>Pilih ${item.shortTitle} &amp; Cek Stok &rarr;</span>`;
+                }
+            }
+
+            if (pinNote) {
+                pinNote.textContent = (item.category === 'Pin') ? '✓ Disertakan gratis di setiap pesanan topi Mutz' : '✓ Sudah termasuk Pin Logam Kab. Banjar';
+            }
+
+            // Render mini thumbnails strip
+            const thumbsStrip = document.getElementById('lightboxThumbsStrip');
+            if (thumbsStrip) {
+                thumbsStrip.innerHTML = GALLERY_DATA.map((g, idx) => `
+                    <button type="button" class="lightbox-thumb-btn ${idx === currentLightboxIndex ? 'active' : ''}" onclick="openProductLightbox(${idx})" title="${g.title}">
+                        <img src="${g.image}" alt="${g.title}">
+                    </button>
+                `).join('');
+            }
+        }
+
+        function selectFromLightboxCurrent() {
+            const item = GALLERY_DATA[currentLightboxIndex];
+            closeProductLightbox();
+            if (item) {
+                if (item.category === 'Pin') {
+                    selectCategory('Biasa');
+                    document.getElementById('cardChoiceStandar')?.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    selectCategory(item.category);
+                    selectGender(item.gender);
+                    const targetEl = (item.category === 'Kepala SKPD') ? document.getElementById('cardChoiceKepala') : document.getElementById('cardChoiceStandar');
+                    if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+
+        function selectProductFromGallery(index) {
+            const item = GALLERY_DATA[index];
+            if (!item) return;
+            if (item.category === 'Pin') {
+                openProductLightbox(index);
+                return;
+            }
+            selectCategory(item.category);
+            selectGender(item.gender);
+            const targetEl = (item.category === 'Kepala SKPD') ? document.getElementById('cardChoiceKepala') : document.getElementById('cardChoiceStandar');
+            if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth' });
+            showNotification(`Model terpilih: ${item.title}`);
+        }
+
+        function filterGalleryCards(cat, btn) {
+            document.querySelectorAll('.btn-gallery-tab').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            const cards = document.querySelectorAll('#galleryCardsGrid .gallery-card-item');
+            cards.forEach(card => {
+                const cardCat = card.getAttribute('data-cat');
+                if (cat === 'all' || cardCat === cat) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Keyboard listener for Lightbox navigation
+        document.addEventListener('keydown', function(e) {
+            const lightbox = document.getElementById('productLightboxModal');
+            if (lightbox && lightbox.classList.contains('active')) {
+                if (e.key === 'Escape') closeProductLightbox();
+                else if (e.key === 'ArrowRight') lightboxNext();
+                else if (e.key === 'ArrowLeft') lightboxPrev();
+            }
+        });
 
         // Size Filter Chips
         function renderSizeChips() {
@@ -3542,6 +4971,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
                 const card = document.createElement('div');
                 card.className = 'stock-item-card';
+                card.style.animation = 'cardFadeUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) backwards';
+                card.style.animationDelay = (idx * 0.045) + 's';
                 card.innerHTML = `
                     <div class="stock-card-head">
                         <div class="size-display-wrap">
@@ -3593,8 +5024,32 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 statusElem.style.color = '#B91C1C';
             }
 
+            // Update photo preview inside order modal
+            const orderImg = document.getElementById('modalOrderProductImg');
+            if (orderImg) {
+                if (category === 'Kepala SKPD') {
+                    orderImg.src = (gender === 'Laki-laki') ? 'assets/images/mutz-eselon-pria.jpg' : 'assets/images/mutz-eselon-wanita.jpg';
+                    orderImg.alt = (gender === 'Laki-laki') ? 'Mutz Kepala SKPD Eselon 2 Pria' : 'Mutz Kepala SKPD Eselon 2 Wanita';
+                } else {
+                    orderImg.src = (gender === 'Laki-laki') ? 'assets/images/mutz-standar-pria.jpg' : 'assets/images/mutz-standar-wanita.jpg';
+                    orderImg.alt = (gender === 'Laki-laki') ? 'Mutz Standar ASN Pria' : 'Mutz Standar ASN Wanita';
+                }
+            }
+
             document.getElementById('waOrderModal').classList.add('active');
             document.body.style.overflow = 'hidden';
+        }
+
+        function openLightboxFromOrder() {
+            if (!selectedOrderData) return;
+            const isKepala = (selectedOrderData.category === 'Kepala SKPD');
+            const isPria = (selectedOrderData.gender === 'Laki-laki');
+            let idx = 2; // Default Standar Pria
+            if (isKepala && isPria) idx = 0;
+            else if (isKepala && !isPria) idx = 1;
+            else if (!isKepala && isPria) idx = 2;
+            else if (!isKepala && !isPria) idx = 3;
+            openProductLightbox(idx);
         }
 
         function closeOrderModal(event) {
@@ -3643,8 +5098,11 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
             const phone = '<?= $admin_wa_default ?>';
             const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-            window.open(url, '_blank');
-            closeOrderModal();
+            triggerConfettiBurst();
+            setTimeout(function() {
+                window.open(url, '_blank');
+                closeOrderModal();
+            }, 650);
         }
 
         function openDirectWhatsApp() {
@@ -3971,12 +5429,107 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             });
         }
 
+        // ==========================================================================
+        // EYE-CANDY VISUAL UTILITIES: Odometer Count-Up & Micro-Confetti Burst
+        // ==========================================================================
+        function animateCountUp(el, target, duration = 800, suffix = '') {
+            if (!el) return;
+            const start = 0;
+            const startTime = performance.now();
+            function update(now) {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // EaseOutExpo
+                const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                const current = Math.round(start + (target - start) * ease);
+                el.textContent = current.toLocaleString('id-ID') + (suffix ? ' ' + suffix : '');
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    el.textContent = target.toLocaleString('id-ID') + (suffix ? ' ' + suffix : '');
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
+        function triggerConfettiBurst() {
+            try {
+                const canvas = document.createElement('canvas');
+                canvas.style.position = 'fixed';
+                canvas.style.top = '0';
+                canvas.style.left = '0';
+                canvas.style.width = '100vw';
+                canvas.style.height = '100vh';
+                canvas.style.pointerEvents = 'none';
+                canvas.style.zIndex = '99999';
+                document.body.appendChild(canvas);
+
+                const ctx = canvas.getContext('2d');
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+
+                const colors = ['#D4AF37', '#1D4ED8', '#F59E0B', '#22C55E', '#3B82F6', '#FFFFFF'];
+                const particles = [];
+                const count = 65;
+
+                for (let i = 0; i < count; i++) {
+                    particles.push({
+                        x: window.innerWidth / 2,
+                        y: window.innerHeight * 0.45,
+                        vx: (Math.random() - 0.5) * 16,
+                        vy: (Math.random() - 0.75) * 18,
+                        size: Math.random() * 8 + 4,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        rotation: Math.random() * 360,
+                        rotationSpeed: (Math.random() - 0.5) * 12,
+                        opacity: 1,
+                        gravity: 0.38
+                    });
+                }
+
+                const startTime = performance.now();
+                function animate(now) {
+                    const elapsed = now - startTime;
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    particles.forEach(p => {
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.vy += p.gravity;
+                        p.rotation += p.rotationSpeed;
+                        p.opacity = Math.max(0, 1 - (elapsed / 1600));
+
+                        ctx.save();
+                        ctx.translate(p.x, p.y);
+                        ctx.rotate((p.rotation * Math.PI) / 180);
+                        ctx.fillStyle = p.color;
+                        ctx.globalAlpha = p.opacity;
+                        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.65);
+                        ctx.restore();
+                    });
+
+                    if (elapsed < 1650) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        canvas.remove();
+                    }
+                }
+                requestAnimationFrame(animate);
+            } catch (e) {}
+        }
+
         // Init on DOM ready
         document.addEventListener('DOMContentLoaded', function() {
             selectCategory('Biasa');
             updateCounters();
             renderSizeChips();
             updateMobileDock();
+
+            // Animasi Count-Up Total Stok di Hero
+            const heroStockEl = document.getElementById('heroTotalStockVal');
+            if (heroStockEl) {
+                animateCountUp(heroStockEl, <?= (int)$total_stok_tersedia ?>, 1200, 'Pcs');
+            }
 
             // Cek instalasi PWA
             if (!isRunningStandalone()) {
