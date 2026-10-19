@@ -3374,11 +3374,23 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         }
 
         /* Selector Thumbnail Previews */
+        .choice-info-wrap {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            flex: 1;
+            min-width: 0;
+        }
+        .choice-side-meta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+        }
         .choice-thumb-box {
             display: flex;
             align-items: center;
             position: relative;
-            margin-left: 12px;
             flex-shrink: 0;
         }
         .choice-thumb-img {
@@ -3406,6 +3418,35 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             border: 1.5px solid #FFFFFF;
             box-shadow: 0 2px 6px rgba(0,0,0,0.25);
             background: #FFF;
+        }
+
+        @media (max-width: 860px) {
+            .gov-product-selector {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+        @media (max-width: 520px) {
+            .product-choice-card {
+                padding: 12px 14px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .choice-info-wrap {
+                width: 100%;
+                flex: 1 1 100%;
+            }
+            .choice-side-meta {
+                width: 100%;
+                justify-content: space-between;
+                padding-top: 8px;
+                border-top: 1px dashed var(--gov-hairline);
+                gap: 10px;
+            }
+            .choice-thumb-img {
+                width: 54px;
+                height: 36px;
+            }
         }
 
         /* Spec Box Photos Row */
@@ -3878,7 +3919,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         <div class="gov-product-selector">
             <!-- Card Standar ASN -->
             <div class="product-choice-card choice-standar active" id="cardChoiceStandar" onclick="selectCategory('Biasa')">
-                <div style="display: flex; gap: 12px; align-items: flex-start; flex: 1;">
+                <div class="choice-info-wrap">
                     <div class="choice-check-radio"></div>
                     <div>
                         <div class="choice-meta-title">Mutz Standar ASN</div>
@@ -3889,19 +3930,21 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         </div>
                     </div>
                 </div>
-                <div class="choice-thumb-box" title="Foto Resmi Mutz Standar ASN + Pin (Klik untuk memperbesar)" onclick="event.stopPropagation(); openProductLightbox(currentGender === 'Perempuan' ? 3 : 2);">
-                    <img src="assets/images/mutz-standar-pria.jpg" alt="Mutz Standar ASN" class="choice-thumb-img" id="thumbChoiceStandar">
-                    <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Banjar" class="choice-thumb-pin" title="Include Pin Logam">
-                </div>
-                <div class="choice-price-block">
-                    <div class="choice-price-val">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></div>
-                    <div class="choice-price-label">Harga Satuan</div>
+                <div class="choice-side-meta">
+                    <div class="choice-thumb-box" title="Foto Resmi Mutz Standar ASN + Pin (Klik untuk memperbesar)" onclick="event.stopPropagation(); openProductLightbox(currentGender === 'Perempuan' ? 3 : 2);">
+                        <img src="assets/images/mutz-standar-pria.jpg" alt="Mutz Standar ASN" class="choice-thumb-img" id="thumbChoiceStandar">
+                        <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Banjar" class="choice-thumb-pin" title="Include Pin Logam">
+                    </div>
+                    <div class="choice-price-block">
+                        <div class="choice-price-val">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></div>
+                        <div class="choice-price-label">Harga Satuan</div>
+                    </div>
                 </div>
             </div>
 
             <!-- Card Kepala SKPD (Eselon II) -->
             <div class="product-choice-card choice-kepala" id="cardChoiceKepala" onclick="selectCategory('Kepala SKPD')">
-                <div style="display: flex; gap: 12px; align-items: flex-start; flex: 1;">
+                <div class="choice-info-wrap">
                     <div class="choice-check-radio"></div>
                     <div>
                         <div class="choice-meta-title">Mutz Kepala SKPD (Eselon II)</div>
@@ -3913,13 +3956,15 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         </div>
                     </div>
                 </div>
-                <div class="choice-thumb-box" title="Foto Resmi Mutz Kepala SKPD + Pin (Klik untuk memperbesar)" onclick="event.stopPropagation(); openProductLightbox(currentGender === 'Perempuan' ? 1 : 0);">
-                    <img src="assets/images/mutz-eselon-pria.jpg" alt="Mutz Kepala SKPD" class="choice-thumb-img" id="thumbChoiceKepala">
-                    <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Banjar" class="choice-thumb-pin" title="Include Pin Logam">
-                </div>
-                <div class="choice-price-block">
-                    <div class="choice-price-val">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></div>
-                    <div class="choice-price-label">Harga Satuan</div>
+                <div class="choice-side-meta">
+                    <div class="choice-thumb-box" title="Foto Resmi Mutz Kepala SKPD + Pin (Klik untuk memperbesar)" onclick="event.stopPropagation(); openProductLightbox(currentGender === 'Perempuan' ? 1 : 0);">
+                        <img src="assets/images/mutz-eselon-pria.jpg" alt="Mutz Kepala SKPD" class="choice-thumb-img" id="thumbChoiceKepala">
+                        <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Banjar" class="choice-thumb-pin" title="Include Pin Logam">
+                    </div>
+                    <div class="choice-price-block">
+                        <div class="choice-price-val">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></div>
+                        <div class="choice-price-label">Harga Satuan</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -4805,13 +4850,16 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             if (item) {
                 if (item.category === 'Pin') {
                     selectCategory('Biasa');
-                    document.getElementById('cardChoiceStandar')?.scrollIntoView({ behavior: 'smooth' });
                 } else {
                     selectCategory(item.category);
                     selectGender(item.gender);
-                    const targetEl = (item.category === 'Kepala SKPD') ? document.getElementById('cardChoiceKepala') : document.getElementById('cardChoiceStandar');
-                    if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth' });
                 }
+                setTimeout(() => {
+                    const targetEl = document.querySelector('.gov-filter-toolbar') || document.getElementById('stockCardsContainer');
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 80);
             }
         }
 
@@ -4824,8 +4872,13 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             }
             selectCategory(item.category);
             selectGender(item.gender);
-            const targetEl = (item.category === 'Kepala SKPD') ? document.getElementById('cardChoiceKepala') : document.getElementById('cardChoiceStandar');
-            if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth' });
+            
+            setTimeout(() => {
+                const targetEl = document.querySelector('.gov-filter-toolbar') || document.getElementById('stockCardsContainer');
+                if (targetEl) {
+                    targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 50);
             showNotification(`Model terpilih: ${item.title}`);
         }
 
@@ -4912,7 +4965,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             const isKepala = (currentCategory === 'Kepala SKPD');
             const harga = isKepala ? HARGA_KEPALA : HARGA_BIASA;
 
-            sizes.forEach(sz => {
+            sizes.forEach((sz, idx) => {
                 const qty = stockObj[sz] !== undefined ? stockObj[sz] : 0;
 
                 let statusPillHtml = '';
@@ -4972,7 +5025,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 const card = document.createElement('div');
                 card.className = 'stock-item-card';
                 card.style.animation = 'cardFadeUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) backwards';
-                card.style.animationDelay = (idx * 0.045) + 's';
+                card.style.animationDelay = ((typeof idx === 'number' ? idx : 0) * 0.045) + 's';
                 card.innerHTML = `
                     <div class="stock-card-head">
                         <div class="size-display-wrap">
