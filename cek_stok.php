@@ -3144,60 +3144,59 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             position: absolute;
             top: 12px;
             right: 12px;
-            width: 34px;
-            height: 34px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: var(--gov-hairline-subtle);
-            border: 1px solid var(--gov-hairline);
-            color: var(--gov-slate);
-            font-size: 1.4rem;
+            background: rgba(15, 23, 42, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #FFFFFF;
+            font-size: 1.35rem;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 10;
+            z-index: 25;
             transition: var(--transition);
+            backdrop-filter: blur(4px);
         }
         .btn-lightbox-close:hover {
             background: #EF4444;
             color: #FFFFFF;
             border-color: #EF4444;
+            transform: scale(1.08);
         }
 
         .btn-lightbox-nav {
             position: absolute;
-            top: 40%;
+            top: 50%;
             transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(15, 23, 42, 0.75);
             color: #FFFFFF;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 10;
+            z-index: 15;
             transition: var(--transition);
             backdrop-filter: blur(4px);
         }
-        .btn-lightbox-nav.prev { left: 14px; }
-        .btn-lightbox-nav.next { right: 14px; }
+        .btn-lightbox-nav.prev { left: 12px; }
+        .btn-lightbox-nav.next { right: 12px; }
         .btn-lightbox-nav:hover {
             background: var(--korpri-blue);
-            transform: translateY(-50%) scale(1.1);
+            transform: translateY(-50%) scale(1.08);
+            border-color: rgba(255, 255, 255, 0.6);
         }
 
         .lightbox-body {
             display: grid;
-            grid-template-columns: 1.1fr 1fr;
-            min-height: 460px;
-        }
-        @media (max-width: 768px) {
-            .lightbox-body {
-                grid-template-columns: 1fr;
-            }
+            grid-template-columns: 1.15fr 1fr;
+            min-height: 480px;
+            width: 100%;
         }
 
         .lightbox-media-wrap {
@@ -3208,6 +3207,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             justify-content: center;
             padding: 24px;
             overflow: hidden;
+            border-radius: var(--radius-lg) 0 0 var(--radius-lg);
         }
         [data-theme="dark"] .lightbox-media-wrap {
             background: #0B1424;
@@ -3216,10 +3216,14 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         .lightbox-main-img {
             max-width: 100%;
             max-height: 52vh;
+            width: auto;
+            height: auto;
             object-fit: contain;
+            object-position: center;
             border-radius: var(--radius-md);
             box-shadow: var(--shadow-card);
             transition: transform 0.3s ease;
+            display: block;
         }
 
         .lightbox-counter-badge {
@@ -3232,6 +3236,83 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             font-weight: 700;
             padding: 3px 10px;
             border-radius: 20px;
+            z-index: 12;
+            backdrop-filter: blur(4px);
+        }
+
+        @media (max-width: 768px) {
+            .gov-lightbox-overlay {
+                padding: 10px 8px;
+            }
+            .gov-lightbox-window {
+                max-height: 92vh;
+                border-radius: 18px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .lightbox-body {
+                display: flex;
+                flex-direction: column;
+                min-height: auto;
+            }
+            .lightbox-media-wrap {
+                width: 100%;
+                height: 270px;
+                min-height: 270px;
+                max-height: 300px;
+                flex-shrink: 0;
+                padding: 14px;
+                border-radius: 18px 18px 0 0;
+                background: #F1F5F9;
+            }
+            [data-theme="dark"] .lightbox-media-wrap {
+                background: #0B132B;
+            }
+            .lightbox-main-img {
+                width: 100%;
+                height: 100%;
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+                object-position: center;
+                border-radius: 8px;
+            }
+            .btn-lightbox-nav {
+                width: 36px;
+                height: 36px;
+            }
+            .btn-lightbox-nav.prev { left: 8px; }
+            .btn-lightbox-nav.next { right: 8px; }
+            .lightbox-counter-badge {
+                bottom: 8px;
+                left: 8px;
+            }
+            .lightbox-info-panel {
+                padding: 16px 14px 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+            }
+            .lightbox-footer-action {
+                margin-top: 8px;
+                padding: 12px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            .btn-lightbox-select {
+                width: 100%;
+                justify-content: center;
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+        }
+        @media (max-width: 420px) {
+            .lightbox-media-wrap {
+                height: 230px;
+                min-height: 230px;
+                padding: 10px;
+            }
         }
 
         .lightbox-info-panel {
@@ -4473,17 +4554,16 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
     <div class="gov-lightbox-overlay" id="productLightboxModal" onclick="closeProductLightbox(event)" role="dialog" aria-modal="true" aria-label="Penampil Foto Mutz &amp; Pin">
         <div class="gov-lightbox-window" onclick="event.stopPropagation()">
             <button type="button" class="btn-lightbox-close" onclick="closeProductLightbox()" title="Tutup Galeri (Esc)" aria-label="Tutup">&times;</button>
-            
-            <button type="button" class="btn-lightbox-nav prev" onclick="lightboxPrev()" title="Foto Sebelumnya (Panah Kiri)" aria-label="Sebelumnya">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg>
-            </button>
-            <button type="button" class="btn-lightbox-nav next" onclick="lightboxNext()" title="Foto Selanjutnya (Panah Kanan)" aria-label="Selanjutnya">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
-            </button>
 
             <div class="lightbox-body">
                 <!-- Large Image Container -->
                 <div class="lightbox-media-wrap">
+                    <button type="button" class="btn-lightbox-nav prev" onclick="lightboxPrev()" title="Foto Sebelumnya (Panah Kiri)" aria-label="Sebelumnya">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg>
+                    </button>
+                    <button type="button" class="btn-lightbox-nav next" onclick="lightboxNext()" title="Foto Selanjutnya (Panah Kanan)" aria-label="Selanjutnya">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+                    </button>
                     <img src="assets/images/mutz-eselon-pria.jpg" alt="Foto Detail Mutz" id="lightboxMainImg" class="lightbox-main-img">
                     <div class="lightbox-counter-badge" id="lightboxCounter">Foto 1 dari 5</div>
                 </div>
@@ -4767,7 +4847,11 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             currentLightboxIndex = (index >= 0 && index < GALLERY_DATA.length) ? index : 0;
             renderLightboxContent();
             const modal = document.getElementById('productLightboxModal');
-            if (modal) modal.classList.add('active');
+            if (modal) {
+                modal.classList.add('active');
+                const win = modal.querySelector('.gov-lightbox-window');
+                if (win) win.scrollTop = 0;
+            }
             document.body.style.overflow = 'hidden';
         }
 
