@@ -238,7 +238,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             --shadow-card: 0 4px 12px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -2px rgba(15, 23, 42, 0.03);
             --shadow-float: 0 12px 28px -4px rgba(11, 30, 59, 0.12), 0 4px 10px -2px rgba(11, 30, 59, 0.06);
             
-            --transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
         }
 
         /* Dignified Dark Mode */
@@ -286,8 +286,14 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         }
 
         html {
-            scroll-behavior: smooth;
             -webkit-text-size-adjust: 100%;
+        }
+
+        /* Smooth scroll aktif khusus navigasi target/anchor tanpa memberatkan gesture scroll manual */
+        @media (prefers-reduced-motion: no-preference) {
+            :root:has(:target) {
+                scroll-behavior: smooth;
+            }
         }
 
         body.gov-portal {
@@ -303,7 +309,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             position: relative;
         }
 
-        /* Official Architectural Background Texture (Dignified & Subtle) */
+        /* Official Architectural Background Texture (Dignified, Crisp & Feather-Light) */
         .gov-bg-backdrop {
             position: fixed;
             top: 0;
@@ -314,18 +320,14 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             height: 100%;
             z-index: -3;
             pointer-events: none;
+            contain: strict;
+            transform: translateZ(0);
             background-image: 
                 radial-gradient(ellipse at 15% 15%, rgba(29, 78, 216, 0.08) 0%, transparent 55%),
                 radial-gradient(ellipse at 85% 25%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
                 radial-gradient(ellipse at 50% 90%, rgba(11, 30, 59, 0.06) 0%, transparent 60%),
                 linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
-            background-size: 130% 130%;
-            animation: ambientAuroraFlow 22s ease-in-out infinite alternate;
-        }
-        @keyframes ambientAuroraFlow {
-            0% { background-position: 0% 0%; }
-            50% { background-position: 50% 30%; }
-            100% { background-position: 100% 10%; }
+            background-size: 100% 100%;
         }
         [data-theme="dark"] .gov-bg-backdrop {
             background-image: 
@@ -340,7 +342,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             position: fixed;
             top: 45%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) translateZ(0);
             width: min(70vw, 420px);
             height: min(70vw, 420px);
             background-image: url('assets/images/korpri-badge.png');
@@ -350,6 +352,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             opacity: 0.025;
             z-index: -2;
             pointer-events: none;
+            contain: strict;
         }
         [data-theme="dark"] .gov-bg-seal {
             opacity: 0.035;
@@ -365,6 +368,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             position: sticky;
             top: 0;
             z-index: 101;
+            transform: translateZ(0);
         }
 
         .gov-header {
@@ -375,6 +379,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             border-bottom: 1px solid var(--gov-hairline);
             box-shadow: var(--shadow-subtle);
             padding: 0.75rem 1.5rem;
+            transform: translateZ(0);
+            will-change: transform;
         }
 
         .gov-header-inner {
@@ -539,11 +545,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             pointer-events: none;
             will-change: transform;
             transform-origin: center center;
-            filter: brightness(0.96) saturate(1.08);
             animation: heroKenBurnsCinematic 32s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
-        }
-        [data-theme="dark"] .gov-hero-batik {
-            filter: brightness(0.82) saturate(1.05);
         }
 
         /* Ambient Glass/Radial Overlay for perfect text contrast */
@@ -892,17 +894,18 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             content: '';
             position: absolute;
             top: -50%;
-            left: -150%;
+            left: 0;
             width: 70%;
             height: 200%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
-            transform: rotate(25deg);
+            transform: translateX(-200%) rotate(25deg);
             animation: goldShimmerSweep 4.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
             pointer-events: none;
+            will-change: transform;
         }
         @keyframes goldShimmerSweep {
-            0%, 40% { left: -150%; }
-            70%, 100% { left: 200%; }
+            0%, 40% { transform: translateX(-200%) rotate(25deg); }
+            70%, 100% { transform: translateX(350%) rotate(25deg); }
         }
         [data-theme="dark"] .tag-micro-gold {
             color: #FDE68A;
@@ -918,13 +921,14 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             content: '';
             position: absolute;
             top: -50%;
-            left: -150%;
+            left: 0;
             width: 70%;
             height: 200%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-            transform: rotate(25deg);
+            transform: translateX(-200%) rotate(25deg);
             animation: goldShimmerSweep 5s cubic-bezier(0.4, 0, 0.2, 1) infinite 1.5s;
             pointer-events: none;
+            will-change: transform;
         }
 
         .choice-price-block {
@@ -1381,6 +1385,12 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             padding: 2rem;
             margin-bottom: 2rem;
             box-shadow: var(--shadow-subtle);
+        }
+
+        /* High-performance scroll optimization: skip rendering offscreen sections */
+        #panduan, #lokasi-pelayanan, .gov-footer {
+            content-visibility: auto;
+            contain-intrinsic-size: auto 650px;
         }
 
         .section-header-row {
@@ -2850,7 +2860,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
             position: relative;
         }
         .gallery-card-item:hover {
@@ -2904,7 +2914,6 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             font-weight: 800;
             padding: 2px 8px;
             border-radius: 20px;
-            backdrop-filter: blur(4px);
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
         .tag-pill-blue {
@@ -2914,7 +2923,6 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             font-weight: 800;
             padding: 2px 8px;
             border-radius: 20px;
-            backdrop-filter: blur(4px);
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
         .tag-pill-emerald {
@@ -2924,7 +2932,6 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             font-weight: 800;
             padding: 2px 8px;
             border-radius: 20px;
-            backdrop-filter: blur(4px);
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
         .tag-pill-dark {
@@ -2934,7 +2941,6 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             font-weight: 700;
             padding: 2px 7px;
             border-radius: 20px;
-            backdrop-filter: blur(4px);
         }
 
         .gallery-hover-overlay {
@@ -3797,7 +3803,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 <!-- 1. Mutz Kepala SKPD Eselon 2 Pria -->
                 <article class="gallery-card-item card-eselon" data-cat="Kepala SKPD" data-gender="Laki-laki">
                     <div class="gallery-img-box" onclick="openProductLightbox(0)" role="button" tabindex="0" title="Klik untuk memperbesar foto Mutz Kepala SKPD Pria">
-                        <img src="assets/images/mutz-eselon-pria.jpg" alt="Foto Resmi Mutz Kepala SKPD Eselon 2 Pria" class="gallery-img" loading="lazy">
+                        <img src="assets/images/mutz-eselon-pria.jpg" alt="Foto Resmi Mutz Kepala SKPD Eselon 2 Pria" class="gallery-img" loading="lazy" decoding="async">
                         <div class="gallery-floating-tags">
                             <span class="tag-pill-gold">Eselon II • Pria</span>
                             <span class="tag-pill-dark">Bordir Emas</span>
@@ -3837,7 +3843,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 <!-- 2. Mutz Kepala SKPD Eselon 2 Wanita -->
                 <article class="gallery-card-item card-eselon" data-cat="Kepala SKPD" data-gender="Perempuan">
                     <div class="gallery-img-box" onclick="openProductLightbox(1)" role="button" tabindex="0" title="Klik untuk memperbesar foto Mutz Kepala SKPD Wanita">
-                        <img src="assets/images/mutz-eselon-wanita.jpg" alt="Foto Resmi Mutz Kepala SKPD Eselon 2 Wanita" class="gallery-img" loading="lazy">
+                        <img src="assets/images/mutz-eselon-wanita.jpg" alt="Foto Resmi Mutz Kepala SKPD Eselon 2 Wanita" class="gallery-img" loading="lazy" decoding="async">
                         <div class="gallery-floating-tags">
                             <span class="tag-pill-gold">Eselon II • Wanita</span>
                             <span class="tag-pill-dark">Bordir Emas</span>
@@ -3877,7 +3883,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 <!-- 3. Mutz Standar ASN Pria -->
                 <article class="gallery-card-item card-standar" data-cat="Biasa" data-gender="Laki-laki">
                     <div class="gallery-img-box" onclick="openProductLightbox(2)" role="button" tabindex="0" title="Klik untuk memperbesar foto Mutz Standar ASN Pria">
-                        <img src="assets/images/mutz-standar-pria.jpg" alt="Foto Resmi Mutz Standar ASN Pria" class="gallery-img" loading="lazy">
+                        <img src="assets/images/mutz-standar-pria.jpg" alt="Foto Resmi Mutz Standar ASN Pria" class="gallery-img" loading="lazy" decoding="async">
                         <div class="gallery-floating-tags">
                             <span class="tag-pill-blue">Standar • Pria</span>
                             <span class="tag-pill-dark">Lis Kuning</span>
@@ -3917,7 +3923,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 <!-- 4. Mutz Standar ASN Wanita -->
                 <article class="gallery-card-item card-standar" data-cat="Biasa" data-gender="Perempuan">
                     <div class="gallery-img-box" onclick="openProductLightbox(3)" role="button" tabindex="0" title="Klik untuk memperbesar foto Mutz Standar ASN Wanita">
-                        <img src="assets/images/mutz-standar-wanita.jpg" alt="Foto Resmi Mutz Standar ASN Wanita" class="gallery-img" loading="lazy">
+                        <img src="assets/images/mutz-standar-wanita.jpg" alt="Foto Resmi Mutz Standar ASN Wanita" class="gallery-img" loading="lazy" decoding="async">
                         <div class="gallery-floating-tags">
                             <span class="tag-pill-blue">Standar • Wanita</span>
                             <span class="tag-pill-dark">Lis Kuning</span>
@@ -3957,7 +3963,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 <!-- 5. Pin Logam Kabupaten Banjar -->
                 <article class="gallery-card-item card-pin" data-cat="Pin" data-gender="Semua">
                     <div class="gallery-img-box" onclick="openProductLightbox(4)" role="button" tabindex="0" title="Klik untuk memperbesar foto Pin Logam Kabupaten Banjar">
-                        <img src="assets/images/pin-kab-banjar.jpg" alt="Foto Resmi Pin Logam Lambang Kabupaten Banjar" class="gallery-img" loading="lazy">
+                        <img src="assets/images/pin-kab-banjar.jpg" alt="Foto Resmi Pin Logam Lambang Kabupaten Banjar" class="gallery-img" loading="lazy" decoding="async">
                         <div class="gallery-floating-tags">
                             <span class="tag-pill-emerald">Include Gratis</span>
                             <span class="tag-pill-dark">Kuningan Emas</span>
@@ -4013,8 +4019,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 </div>
                 <div class="choice-side-meta">
                     <div class="choice-thumb-box" title="Foto Resmi Mutz Standar ASN + Pin (Klik untuk memperbesar)" onclick="event.stopPropagation(); openProductLightbox(currentGender === 'Perempuan' ? 3 : 2);">
-                        <img src="assets/images/mutz-standar-pria.jpg" alt="Mutz Standar ASN" class="choice-thumb-img" id="thumbChoiceStandar">
-                        <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Banjar" class="choice-thumb-pin" title="Include Pin Logam">
+                        <img src="assets/images/mutz-standar-pria.jpg" alt="Mutz Standar ASN" class="choice-thumb-img" id="thumbChoiceStandar" loading="lazy" decoding="async">
+                        <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Banjar" class="choice-thumb-pin" title="Include Pin Logam" loading="lazy" decoding="async">
                     </div>
                     <div class="choice-price-block">
                         <div class="choice-price-val">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></div>
@@ -4039,8 +4045,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 </div>
                 <div class="choice-side-meta">
                     <div class="choice-thumb-box" title="Foto Resmi Mutz Kepala SKPD + Pin (Klik untuk memperbesar)" onclick="event.stopPropagation(); openProductLightbox(currentGender === 'Perempuan' ? 1 : 0);">
-                        <img src="assets/images/mutz-eselon-pria.jpg" alt="Mutz Kepala SKPD" class="choice-thumb-img" id="thumbChoiceKepala">
-                        <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Banjar" class="choice-thumb-pin" title="Include Pin Logam">
+                        <img src="assets/images/mutz-eselon-pria.jpg" alt="Mutz Kepala SKPD" class="choice-thumb-img" id="thumbChoiceKepala" loading="lazy" decoding="async">
+                        <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Banjar" class="choice-thumb-pin" title="Include Pin Logam" loading="lazy" decoding="async">
                     </div>
                     <div class="choice-price-block">
                         <div class="choice-price-val">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></div>
@@ -4159,15 +4165,15 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
                         <div class="spec-photos-row">
                             <div class="spec-photo-thumb" onclick="openProductLightbox(2)" title="Klik untuk memperbesar foto Mutz Standar ASN Pria">
-                                <img src="assets/images/mutz-standar-pria.jpg" alt="Mutz Standar Pria">
+                                <img src="assets/images/mutz-standar-pria.jpg" alt="Mutz Standar Pria" loading="lazy" decoding="async">
                                 <span>Pria</span>
                             </div>
                             <div class="spec-photo-thumb" onclick="openProductLightbox(3)" title="Klik untuk memperbesar foto Mutz Standar ASN Wanita">
-                                <img src="assets/images/mutz-standar-wanita.jpg" alt="Mutz Standar Wanita">
+                                <img src="assets/images/mutz-standar-wanita.jpg" alt="Mutz Standar Wanita" loading="lazy" decoding="async">
                                 <span>Wanita</span>
                             </div>
                             <div class="spec-photo-thumb" onclick="openProductLightbox(4)" title="Klik untuk memperbesar foto Pin Logam Lambang Kab. Banjar">
-                                <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Kab Banjar">
+                                <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Kab Banjar" loading="lazy" decoding="async">
                                 <span style="color: var(--status-green);">+ Pin Free</span>
                             </div>
                         </div>
@@ -4186,15 +4192,15 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
                         <div class="spec-photos-row">
                             <div class="spec-photo-thumb" onclick="openProductLightbox(0)" title="Klik untuk memperbesar foto Mutz Kepala SKPD Pria">
-                                <img src="assets/images/mutz-eselon-pria.jpg" alt="Mutz Kepala SKPD Pria">
+                                <img src="assets/images/mutz-eselon-pria.jpg" alt="Mutz Kepala SKPD Pria" loading="lazy" decoding="async">
                                 <span>Pria</span>
                             </div>
                             <div class="spec-photo-thumb" onclick="openProductLightbox(1)" title="Klik untuk memperbesar foto Mutz Kepala SKPD Wanita">
-                                <img src="assets/images/mutz-eselon-wanita.jpg" alt="Mutz Kepala SKPD Wanita">
+                                <img src="assets/images/mutz-eselon-wanita.jpg" alt="Mutz Kepala SKPD Wanita" loading="lazy" decoding="async">
                                 <span>Wanita</span>
                             </div>
                             <div class="spec-photo-thumb" onclick="openProductLightbox(4)" title="Klik untuk memperbesar foto Pin Logam Lambang Kab. Banjar">
-                                <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Kab Banjar">
+                                <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Kab Banjar" loading="lazy" decoding="async">
                                 <span style="color: var(--status-green);">+ Pin Free</span>
                             </div>
                         </div>
@@ -5428,29 +5434,34 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             openOrderModal(currentCategory, currentGender, currentDockSize, qty);
         }
 
-        // Scroll Listener: Mengatur visibilitas Scroll-to-Top dan Mobile Dock
+        // Scroll Listener: Mengatur visibilitas Scroll-to-Top dan Mobile Dock (High Performance & Zero Jank)
         let scrollTicking = false;
+        let lastScrollTopState = null;
+        let lastDockState = null;
+        const btnScrollTopEl = document.getElementById('btnScrollTop');
+        const mobileDockEl = document.getElementById('mobileDock');
+
         window.addEventListener('scroll', function() {
             if (!scrollTicking) {
                 window.requestAnimationFrame(function() {
-                    const btn = document.getElementById('btnScrollTop');
-                    if (btn) {
-                        if (window.scrollY > 300) {
-                            btn.classList.add('visible');
-                        } else {
-                            btn.classList.remove('visible');
+                    const y = window.scrollY || window.pageYOffset || 0;
+
+                    // Scroll-to-Top (> 300px)
+                    const shouldShowTop = (y > 300);
+                    if (shouldShowTop !== lastScrollTopState) {
+                        lastScrollTopState = shouldShowTop;
+                        if (btnScrollTopEl) {
+                            btnScrollTopEl.classList.toggle('visible', shouldShowTop);
                         }
                     }
 
-                    // Tampilkan Mobile Dock otomatis saat user mulai menjelajah (scroll > 180px)
-                    const dock = document.getElementById('mobileDock');
-                    if (dock) {
-                        if (window.scrollY > 180) {
-                            dock.classList.add('dock-visible');
-                            document.body.classList.add('has-dock-visible');
-                        } else {
-                            dock.classList.remove('dock-visible');
-                            document.body.classList.remove('has-dock-visible');
+                    // Mobile Dock (> 180px)
+                    const shouldShowDock = (y > 180);
+                    if (shouldShowDock !== lastDockState) {
+                        lastDockState = shouldShowDock;
+                        if (mobileDockEl) {
+                            mobileDockEl.classList.toggle('dock-visible', shouldShowDock);
+                            document.body.classList.toggle('has-dock-visible', shouldShowDock);
                         }
                     }
 
