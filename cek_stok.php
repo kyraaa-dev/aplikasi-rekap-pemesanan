@@ -499,6 +499,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             border-color: #2563EB;
         }
 
+        .btn-login-txt-short {
+            display: none;
+        }
+
         /* ==========================================================================
            MAIN CONTAINER
            ========================================================================== */
@@ -2251,67 +2255,96 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
            ========================================================================== */
         @media (max-width: 680px) {
             .gov-header {
-                padding: 0.65rem 1rem;
+                padding: 0.6rem 0.85rem;
+            }
+            .gov-brand {
+                gap: 8px;
+                min-width: 0;
             }
             .gov-brand-seal {
-                width: 36px;
-                height: 36px;
+                width: 32px;
+                height: 32px;
+                flex-shrink: 0;
+            }
+            .gov-brand-seal img {
+                width: 32px;
+                height: 32px;
+            }
+            .gov-brand-text {
+                min-width: 0;
             }
             .gov-brand-title {
-                font-size: 0.88rem;
+                font-size: 0.82rem;
+                letter-spacing: -0.01em;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             .gov-brand-sub {
                 display: none;
             }
+            .gov-nav-actions {
+                gap: 5px;
+                flex-shrink: 0;
+            }
             .btn-gov-nav {
-                padding: 7px 11px;
-                font-size: 0.78rem;
+                padding: 6px 9px;
+                font-size: 0.76rem;
+                gap: 4px;
             }
             .btn-nav-label-long {
                 display: none;
             }
+            .btn-login-txt-full {
+                display: none;
+            }
+            .btn-login-txt-short {
+                display: inline;
+            }
 
             .gov-container {
-                padding: 1.25rem 1rem 5.5rem 1rem;
+                padding: 1rem 0.85rem 5.5rem 0.85rem;
             }
 
             .gov-hero {
-                padding: 1.5rem 1.15rem;
+                padding: 1.35rem 1rem;
                 margin-bottom: 1.25rem;
+                border-radius: var(--radius-md);
             }
             .gov-authority-badge {
                 padding: 4px 10px;
                 font-size: 0.68rem;
-                margin-bottom: 0.85rem;
+                margin-bottom: 0.75rem;
             }
             .gov-hero-h1 {
-                font-size: 1.45rem;
+                font-size: clamp(1.3rem, 5.2vw, 1.55rem);
                 margin-bottom: 0.5rem;
+                line-height: 1.3;
             }
             .gov-hero-sub {
-                font-size: 0.86rem;
-                margin-bottom: 1rem;
+                font-size: 0.84rem;
+                margin-bottom: 0.9rem;
+                line-height: 1.55;
             }
             .gov-info-strip {
-                gap: 0.75rem;
-                padding-top: 1rem;
+                gap: 0.65rem;
+                padding-top: 0.85rem;
                 flex-direction: column;
                 align-items: center;
+                width: 100%;
             }
             .gov-info-location {
                 width: 100%;
-                max-width: 380px;
-                border-radius: 12px;
-                padding: 8px 12px;
-                gap: 10px;
-                text-align: left;
-                align-items: center;
-                justify-content: flex-start;
+                max-width: 100%;
+                border-radius: 10px;
+                padding: 8px 10px;
+                gap: 8px;
                 box-sizing: border-box;
             }
             .loc-pin-icon {
-                width: 28px;
-                height: 28px;
+                width: 26px;
+                height: 26px;
+                flex-shrink: 0;
             }
             .loc-text-block {
                 display: flex;
@@ -2325,13 +2358,13 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 display: none;
             }
             .loc-instansi {
-                font-size: 0.82rem;
+                font-size: 0.8rem;
                 font-weight: 800;
                 color: #FFFFFF;
                 line-height: 1.25;
             }
             .loc-alamat {
-                font-size: 0.74rem;
+                font-size: 0.72rem;
                 font-weight: 600;
                 color: #FDE68A;
                 line-height: 1.25;
@@ -2341,12 +2374,40 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                gap: 8px;
+                gap: 6px;
                 flex-wrap: wrap;
             }
             .gov-meta-chip {
-                padding: 4px 10px;
-                font-size: 0.72rem;
+                padding: 4px 8px;
+                font-size: 0.7rem;
+            }
+
+            /* Section Header & Gallery on Mobile */
+            .section-header-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                margin-bottom: 0.85rem;
+                padding-bottom: 0.75rem;
+            }
+            .gallery-filter-pills {
+                width: 100%;
+                display: flex;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                gap: 6px;
+                padding-bottom: 4px;
+                scrollbar-width: none;
+            }
+            .gallery-filter-pills::-webkit-scrollbar {
+                display: none;
+            }
+            .btn-gallery-tab {
+                flex-shrink: 0;
+                white-space: nowrap;
+                padding: 5px 12px;
+                font-size: 0.78rem;
             }
 
             /* Product Selector on Mobile */
@@ -2356,18 +2417,27 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 margin-bottom: 1.25rem;
             }
             .product-choice-card {
-                padding: 14px 16px;
+                padding: 12px 14px;
+                border-radius: var(--radius-md);
             }
             .choice-meta-title {
-                font-size: 1rem;
+                font-size: 0.98rem;
+            }
+            .choice-meta-desc {
+                font-size: 0.78rem;
+                margin-bottom: 6px;
+            }
+            .choice-thumb-box {
+                width: 48px;
+                height: 48px;
             }
             .choice-price-val {
-                font-size: 1.15rem;
+                font-size: 1.12rem;
             }
 
             /* Filter Toolbar on Mobile */
             .gov-filter-toolbar {
-                padding: 8px 10px;
+                padding: 10px;
                 margin-bottom: 1.25rem;
                 flex-direction: column;
                 align-items: stretch;
@@ -2375,16 +2445,42 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 width: 100%;
                 box-sizing: border-box;
             }
-            .gender-segmented-control {
+            .filter-controls-left {
                 width: 100%;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                box-sizing: border-box;
+            }
+            .gender-segmented-control {
+                flex: 1;
+                min-width: 0;
+                width: auto;
                 display: flex;
                 box-sizing: border-box;
             }
             .btn-segment {
                 flex: 1;
                 justify-content: center;
-                padding: 8px 10px;
+                padding: 7px 6px;
                 font-size: 0.8rem;
+                gap: 4px;
+            }
+            .btn-segment svg {
+                width: 14px;
+                height: 14px;
+                flex-shrink: 0;
+            }
+            .segment-counter {
+                font-size: 0.7rem;
+                padding: 1px 4px;
+            }
+            .btn-ready-toggle {
+                flex-shrink: 0;
+                padding: 7px 10px;
+                font-size: 0.78rem;
+                gap: 6px;
+                box-sizing: border-box;
             }
             .size-chips-scroller {
                 width: 100%;
@@ -2396,11 +2492,32 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 -webkit-overflow-scrolling: touch;
                 overscroll-behavior-x: contain;
                 box-sizing: border-box;
+                scrollbar-width: none;
+            }
+            .size-chips-scroller::-webkit-scrollbar {
+                display: none;
             }
             .btn-size-chip {
-                padding: 6px 10px;
+                padding: 6px 11px;
                 font-size: 0.78rem;
                 flex-shrink: 0;
+            }
+
+            @media (max-width: 480px) {
+                .filter-controls-left {
+                    gap: 6px;
+                }
+                .btn-segment {
+                    padding: 7px 4px;
+                    font-size: 0.76rem;
+                }
+                .btn-ready-toggle {
+                    padding: 7px 8px;
+                    font-size: 0.75rem;
+                    gap: 5px;
+                }
+                .ready-lbl-full { display: none; }
+                .ready-lbl-short { display: inline; }
             }
 
             /* Stock Grid on Mobile: Dynamic, Crisp 2 Columns */
@@ -2537,6 +2654,14 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 transform: translateY(0);
                 opacity: 1;
                 pointer-events: auto;
+            }
+            body.has-dock-visible .gov-container {
+                padding-bottom: calc(90px + env(safe-area-inset-bottom, 12px)) !important;
+            }
+            body.has-dock-visible .gov-pwa-banner {
+                transform: translateY(160%) !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
             }
             [data-theme="dark"] .gov-mobile-dock {
                 background: rgba(11, 22, 44, 0.96);
@@ -3900,12 +4025,14 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 <!-- Admin Link -->
                 <?php if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true): ?>
                     <a href="index.php" class="btn-gov-nav btn-gov-primary">
-                        <span>Dashboard</span>
+                        <span class="btn-login-txt-full">Dashboard</span>
+                        <span class="btn-login-txt-short">Admin</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                     </a>
                 <?php else: ?>
                     <a href="login.php" class="btn-gov-nav btn-gov-primary">
-                        <span>Portal Petugas</span>
+                        <span class="btn-login-txt-full">Portal Petugas</span>
+                        <span class="btn-login-txt-short">Petugas</span>
                     </a>
                 <?php endif; ?>
             </div>
