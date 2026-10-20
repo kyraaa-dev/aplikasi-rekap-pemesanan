@@ -3164,6 +3164,20 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             .gallery-cards-grid {
                 grid-template-columns: 1fr;
             }
+            .gallery-filter-pills {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                padding-bottom: 4px;
+            }
+            .gallery-filter-pills::-webkit-scrollbar {
+                display: none;
+            }
+            .btn-gallery-tab {
+                flex-shrink: 0;
+                white-space: nowrap;
+            }
         }
 
         .gallery-card-item {
