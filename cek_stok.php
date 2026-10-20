@@ -1079,6 +1079,179 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             color: #FFFFFF;
         }
 
+        /* Filter Controls Left & Ready Stock Toggle */
+        .filter-controls-left {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .btn-ready-toggle {
+            border: 1px solid var(--gov-hairline);
+            background: var(--gov-surface);
+            color: var(--gov-muted);
+            border-radius: var(--radius-sm);
+            padding: 7px 13px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            font-family: var(--font-sans);
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            flex-shrink: 0;
+            box-sizing: border-box;
+        }
+
+        .btn-ready-toggle:hover {
+            border-color: #22C55E;
+            color: var(--gov-slate);
+            transform: translateY(-1px);
+        }
+
+        .ready-toggle-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #94A3B8;
+            transition: all 0.22s ease;
+            flex-shrink: 0;
+        }
+
+        .ready-toggle-badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 10px;
+            background: var(--gov-hairline);
+            color: var(--gov-muted);
+            transition: all 0.22s ease;
+        }
+
+        .ready-lbl-short {
+            display: none;
+        }
+
+        .btn-ready-toggle.active {
+            background: rgba(34, 197, 94, 0.09);
+            border-color: #22C55E;
+            color: #15803D;
+            box-shadow: 0 1px 4px rgba(34, 197, 94, 0.16);
+        }
+
+        .btn-ready-toggle.active .ready-toggle-dot {
+            background: #22C55E;
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+            animation: readyDotPulse 1.8s infinite ease-in-out;
+        }
+
+        .btn-ready-toggle.active .ready-toggle-badge {
+            background: #22C55E;
+            color: #FFFFFF;
+        }
+
+        @keyframes readyDotPulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.65); }
+            70% { transform: scale(1.2); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+
+        [data-theme="dark"] .btn-ready-toggle {
+            background: #1E293B;
+            border-color: #334155;
+            color: #94A3B8;
+        }
+        [data-theme="dark"] .btn-ready-toggle:hover {
+            border-color: #4ADE80;
+            color: #E2E8F0;
+        }
+        [data-theme="dark"] .btn-ready-toggle.active {
+            background: rgba(34, 197, 94, 0.16);
+            border-color: #4ADE80;
+            color: #4ADE80;
+        }
+        [data-theme="dark"] .btn-ready-toggle.active .ready-toggle-badge {
+            background: #16A34A;
+            color: #FFFFFF;
+        }
+
+        /* Empty State Card when Ready Filter yields 0 matches */
+        .gov-empty-stock-card {
+            grid-column: 1 / -1;
+            background: var(--gov-surface);
+            border: 1px dashed var(--gov-hairline);
+            border-radius: var(--radius-md);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-subtle);
+            animation: cardFadeUp 0.35s ease backwards;
+        }
+
+        .empty-stock-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: rgba(245, 158, 11, 0.12);
+            color: #D97706;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        [data-theme="dark"] .empty-stock-icon {
+            background: rgba(245, 158, 11, 0.2);
+            color: #FBBF24;
+        }
+
+        .empty-stock-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--gov-slate);
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-stock-sub {
+            font-size: 0.9rem;
+            color: var(--gov-muted);
+            max-width: 500px;
+            line-height: 1.55;
+            margin-bottom: 1.4rem;
+        }
+
+        .btn-empty-reset {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--korpri-navy);
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-empty-reset:hover {
+            background: var(--korpri-blue);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+        [data-theme="dark"] .btn-empty-reset {
+            background: #1D4ED8;
+        }
+        [data-theme="dark"] .btn-empty-reset:hover {
+            background: #2563EB;
+        }
+
         /* Responsive Filter Toolbar: Clean Stacking on Tablet & Medium Screens */
         @media (max-width: 1039px) {
             .gov-filter-toolbar {
@@ -1087,13 +1260,23 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 gap: 10px;
                 padding: 10px 12px;
             }
-            .gender-segmented-control {
+            .filter-controls-left {
                 width: 100%;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .gender-segmented-control {
+                flex: 1;
                 display: flex;
             }
             .btn-segment {
                 flex: 1;
                 justify-content: center;
+            }
+            .btn-ready-toggle {
+                padding: 7px 11px;
+                font-size: 0.78rem;
             }
             .size-chips-scroller {
                 width: 100%;
@@ -1103,6 +1286,11 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 -webkit-overflow-scrolling: touch;
                 padding-bottom: 2px;
             }
+        }
+
+        @media (max-width: 480px) {
+            .ready-lbl-full { display: none; }
+            .ready-lbl-short { display: inline; }
         }
 
         /* Eselon II Callout Bar (Clean Governmental Notice) */
@@ -4058,17 +4246,29 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
         <!-- Unified Filter Toolbar (Gender & Size) -->
         <div class="gov-filter-toolbar">
-            <!-- Gender Segmented Switch -->
-            <div class="gender-segmented-control" role="group" aria-label="Pilihan Jenis Kelamin">
-                <button type="button" class="btn-segment active" id="btnGenderPria" onclick="selectGender('Laki-laki')">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                    <span>Pria</span>
-                    <span class="segment-counter" id="counterPria">...</span>
-                </button>
-                <button type="button" class="btn-segment" id="btnGenderWanita" onclick="selectGender('Perempuan')">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2a5 5 0 0 1 5 5c0 2.22-1.2 4.16-3 5.2V14a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2v-1.8C8.2 11.16 7 9.22 7 7a5 5 0 0 1 5-5z"></path><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg>
-                    <span>Wanita</span>
-                    <span class="segment-counter" id="counterWanita">...</span>
+            <div class="filter-controls-left">
+                <!-- Gender Segmented Switch -->
+                <div class="gender-segmented-control" role="group" aria-label="Pilihan Jenis Kelamin">
+                    <button type="button" class="btn-segment active" id="btnGenderPria" onclick="selectGender('Laki-laki')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span>Pria</span>
+                        <span class="segment-counter" id="counterPria">...</span>
+                    </button>
+                    <button type="button" class="btn-segment" id="btnGenderWanita" onclick="selectGender('Perempuan')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2a5 5 0 0 1 5 5c0 2.22-1.2 4.16-3 5.2V14a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2v-1.8C8.2 11.16 7 9.22 7 7a5 5 0 0 1 5-5z"></path><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg>
+                        <span>Wanita</span>
+                        <span class="segment-counter" id="counterWanita">...</span>
+                    </button>
+                </div>
+
+                <!-- Ready Stock Only Switch Toggle (Fitur Tampilan #4) -->
+                <button type="button" class="btn-ready-toggle" id="btnReadyFilter" onclick="toggleReadyStockFilter()" aria-pressed="false" title="Saring hanya nomor ukuran yang ready stock">
+                    <span class="ready-toggle-dot"></span>
+                    <span class="ready-toggle-label">
+                        <span class="ready-lbl-full">Hanya Ready Stock</span>
+                        <span class="ready-lbl-short">Ready Saja</span>
+                    </span>
+                    <span class="ready-toggle-badge" id="readyCountBadge">0</span>
                 </button>
             </div>
 
@@ -4634,6 +4834,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         let currentCategory = 'Biasa'; 
         let currentGender = 'Laki-laki'; 
         let selectedSizeFilter = null; // null = tampilkan semua ukuran
+        let onlyReadyFilter = false; // true = hanya tampilkan ukuran yang ready stock (Fitur #4)
 
         let selectedOrderData = {
             category: '',
@@ -4689,6 +4890,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             renderSizeChips();
             renderStockCards();
             updateCounters();
+            updateReadyFilterCounter();
             updateMobileDock();
         }
 
@@ -4721,6 +4923,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
             renderSizeChips();
             renderStockCards();
+            updateReadyFilterCounter();
             updateMobileDock();
         }
 
@@ -4745,6 +4948,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 if (elPria) elPria.textContent = totalPria + ' Pcs';
                 if (elWanita) elWanita.textContent = totalWanita + ' Pcs';
             }
+
+            updateReadyFilterCounter();
         }
 
         /* ==========================================================================
@@ -5008,11 +5213,17 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 ? STOK_DATA[currentCategory][currentGender] 
                 : {};
 
+            const readySizes = allSizes.filter(sz => (stockObj[sz] || 0) > 0);
+
             // Chip "Semua Ukuran"
             const btnAll = document.createElement('button');
             btnAll.type = 'button';
             btnAll.className = 'btn-size-chip' + (selectedSizeFilter === null ? ' active' : '');
-            btnAll.innerHTML = '<span class="chip-text-full">Semua Ukuran (' + allSizes.length + ')</span><span class="chip-text-short">Semua (' + allSizes.length + ')</span>';
+            if (onlyReadyFilter) {
+                btnAll.innerHTML = '<span class="chip-text-full">Semua Ready (' + readySizes.length + ')</span><span class="chip-text-short">Ready (' + readySizes.length + ')</span>';
+            } else {
+                btnAll.innerHTML = '<span class="chip-text-full">Semua Ukuran (' + allSizes.length + ')</span><span class="chip-text-short">Semua (' + allSizes.length + ')</span>';
+            }
             btnAll.onclick = function() {
                 selectedSizeFilter = null;
                 renderSizeChips();
@@ -5024,6 +5235,13 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             // Per Size Chip
             allSizes.forEach(sz => {
                 const qty = stockObj[sz] !== undefined ? stockObj[sz] : 0;
+                const isReady = qty > 0;
+                
+                // Jika filter Ready Stock aktif dan ukuran ini habis, sembunyikan chip
+                if (onlyReadyFilter && !isReady) {
+                    return;
+                }
+
                 const btn = document.createElement('button');
                 btn.type = 'button';
                 btn.className = 'btn-size-chip' + (selectedSizeFilter === sz ? ' active' : '');
@@ -5038,22 +5256,97 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             });
         }
 
+        // Ready Stock Filter Logic (Fitur Tampilan #4)
+        function updateReadyFilterCounter() {
+            const stockObj = (STOK_DATA[currentCategory] && STOK_DATA[currentCategory][currentGender]) 
+                ? STOK_DATA[currentCategory][currentGender] 
+                : {};
+            const allSizes = (currentGender === 'Laki-laki') ? SIZES_PRIA : SIZES_WANITA;
+            let readyCount = 0;
+            allSizes.forEach(sz => {
+                if ((stockObj[sz] || 0) > 0) readyCount++;
+            });
+            const badge = document.getElementById('readyCountBadge');
+            if (badge) {
+                badge.textContent = readyCount;
+            }
+        }
+
+        function toggleReadyStockFilter(forceVal) {
+            if (typeof forceVal === 'boolean') {
+                onlyReadyFilter = forceVal;
+            } else {
+                onlyReadyFilter = !onlyReadyFilter;
+            }
+
+            const btn = document.getElementById('btnReadyFilter');
+            if (btn) {
+                btn.classList.toggle('active', onlyReadyFilter);
+                btn.setAttribute('aria-pressed', onlyReadyFilter ? 'true' : 'false');
+            }
+
+            // Jika filter diaktifkan dan ukuran terpilih ternyata kosong, kembalikan filter ukuran ke Semua
+            if (onlyReadyFilter && selectedSizeFilter !== null) {
+                const stockObj = (STOK_DATA[currentCategory] && STOK_DATA[currentCategory][currentGender]) 
+                    ? STOK_DATA[currentCategory][currentGender] 
+                    : {};
+                if ((stockObj[selectedSizeFilter] || 0) <= 0) {
+                    selectedSizeFilter = null;
+                }
+            }
+
+            renderSizeChips();
+            renderStockCards();
+            updateMobileDock();
+            updateReadyFilterCounter();
+
+            if (onlyReadyFilter) {
+                showNotification('Menampilkan hanya ukuran yang Ready Stock');
+            } else {
+                showNotification('Menampilkan semua ukuran (termasuk Pre-Order)');
+            }
+        }
+
         // Stock Cards Rendering (Crisp, Dignified, No AI Slop Progress Bars)
         function renderStockCards() {
             const container = document.getElementById('stockCardsContainer');
             container.innerHTML = '';
 
             const allSizes = (currentGender === 'Laki-laki') ? SIZES_PRIA : SIZES_WANITA;
-            const sizes = (selectedSizeFilter !== null && allSizes.includes(selectedSizeFilter))
-                ? [selectedSizeFilter]
-                : allSizes;
-
             const stockObj = (STOK_DATA[currentCategory] && STOK_DATA[currentCategory][currentGender]) 
                 ? STOK_DATA[currentCategory][currentGender] 
                 : {};
 
             const isKepala = (currentCategory === 'Kepala SKPD');
             const harga = isKepala ? HARGA_KEPALA : HARGA_BIASA;
+
+            let sizes = (selectedSizeFilter !== null && allSizes.includes(selectedSizeFilter))
+                ? [selectedSizeFilter]
+                : allSizes;
+
+            if (onlyReadyFilter) {
+                sizes = sizes.filter(sz => (stockObj[sz] !== undefined ? stockObj[sz] : 0) > 0);
+            }
+
+            if (sizes.length === 0) {
+                const emptyCard = document.createElement('div');
+                emptyCard.className = 'gov-empty-stock-card';
+                emptyCard.innerHTML = `
+                    <div class="empty-stock-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+                    </div>
+                    <div class="empty-stock-title">Tidak Ada Ukuran yang Ready Stock</div>
+                    <div class="empty-stock-sub">
+                        Saat ini seluruh stok fisik untuk <strong>${isKepala ? 'Mutz Kepala SKPD (Eselon II)' : 'Mutz Standar ASN'} (${currentGender === 'Laki-laki' ? 'Pria' : 'Wanita'})</strong> sedang habis atau dalam proses pengadaan. Anda tetap dapat mengajukan pemesanan (Pre-Order) melalui WhatsApp resmi.
+                    </div>
+                    <button type="button" class="btn-empty-reset" onclick="toggleReadyStockFilter(false)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                        <span>Tampilkan Semua Ukuran (Termasuk Pre-Order)</span>
+                    </button>
+                `;
+                container.appendChild(emptyCard);
+                return;
+            }
 
             sizes.forEach((sz, idx) => {
                 const qty = stockObj[sz] !== undefined ? stockObj[sz] : 0;
@@ -5337,14 +5630,24 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 ? STOK_DATA[currentCategory][currentGender] 
                 : {};
 
+            let availableDockSizes = allSizes;
+            if (onlyReadyFilter) {
+                const readyOnly = allSizes.filter(sz => (stockObj[sz] || 0) > 0);
+                if (readyOnly.length > 0) {
+                    availableDockSizes = readyOnly;
+                }
+            }
+
             // Prioritaskan ukuran yang dipilih dari chips halaman jika ada
-            if (selectedSizeFilter !== null && allSizes.includes(selectedSizeFilter)) {
+            if (selectedSizeFilter !== null && availableDockSizes.includes(selectedSizeFilter)) {
                 currentDockSize = selectedSizeFilter;
-            } else if (!currentDockSize || !allSizes.includes(currentDockSize)) {
-                // Default ke ukuran standar yang paling umum
-                currentDockSize = (currentGender === 'Laki-laki') ? 57 : 59;
-                if (!allSizes.includes(currentDockSize)) {
-                    currentDockSize = allSizes[0];
+            } else if (!currentDockSize || !availableDockSizes.includes(currentDockSize)) {
+                // Default ke ukuran standar yang paling umum yang ready
+                const defaultFav = (currentGender === 'Laki-laki') ? 57 : 59;
+                if (availableDockSizes.includes(defaultFav)) {
+                    currentDockSize = defaultFav;
+                } else {
+                    currentDockSize = availableDockSizes[0];
                 }
             }
 
@@ -5364,7 +5667,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             const sizeSelect = document.getElementById('dockSizeSelect');
             if (sizeSelect) {
                 sizeSelect.innerHTML = '';
-                allSizes.forEach(sz => {
+                availableDockSizes.forEach(sz => {
                     const qty = stockObj[sz] !== undefined ? stockObj[sz] : 0;
                     const opt = document.createElement('option');
                     opt.value = sz;
@@ -5671,6 +5974,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             selectCategory('Biasa');
             updateCounters();
             renderSizeChips();
+            updateReadyFilterCounter();
             updateMobileDock();
 
             // Animasi Count-Up Total Stok di Hero
