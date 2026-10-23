@@ -92,7 +92,7 @@ $office_lat = -3.4088348290815493;
 $office_lng = 114.84823236685016;
 $maps_search_url = "https://www.google.com/maps/search/?api=1&query={$office_lat},{$office_lng}";
 $maps_dir_url = "https://www.google.com/maps/dir/?api=1&destination={$office_lat},{$office_lng}";
-$maps_embed_url = "https://maps.google.com/maps?q={$office_lat},{$office_lng}&hl=id&z=17&output=embed";
+$maps_embed_url = "https://www.openstreetmap.org/export/embed.html?bbox=114.8422%2C-3.4128%2C114.8542%2C-3.4048&layer=mapnik&marker={$office_lat}%2C{$office_lng}";
 
 // Service Hours check in WITA (UTC+8)
 try {
@@ -188,6 +188,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet Interactive Maps (Reliable, No API Key, No SAMEORIGIN block) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
     <style>
         /* ==========================================================================
@@ -1809,7 +1813,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
         .location-map-wrap {
             width: 100%;
-            height: 200px;
+            height: 220px;
             border-radius: var(--radius-sm);
             overflow: hidden;
             border: 1px solid var(--gov-hairline);
@@ -1817,11 +1821,27 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             position: relative;
             background: #E2E8F0;
         }
-        .location-map-wrap iframe {
+        [data-theme="dark"] .location-map-wrap {
+            background: #1E293B;
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+        #korpri-office-map {
             width: 100%;
             height: 100%;
-            border: 0;
-            display: block;
+            border-radius: inherit;
+            z-index: 1;
+        }
+        .leaflet-container {
+            font-family: var(--font-sans) !important;
+        }
+        .leaflet-popup-content-wrapper {
+            border-radius: var(--radius-sm) !important;
+            box-shadow: 0 4px 16px rgba(11, 30, 59, 0.18) !important;
+            padding: 2px !important;
+        }
+        .leaflet-popup-content {
+            margin: 10px 14px !important;
+            line-height: 1.4 !important;
         }
 
         .location-meta-details {
@@ -4643,15 +4663,9 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         </a>
                     </div>
 
-                    <!-- Embed Google Maps -->
+                    <!-- Interactive Map (Leaflet.js + OpenStreetMap) -->
                     <div class="location-map-wrap">
-                        <iframe 
-                            src="<?= htmlspecialchars($maps_embed_url) ?>" 
-                            title="Peta Lokasi Sekretariat KORPRI Kabupaten Banjar"
-                            loading="lazy" 
-                            allowfullscreen="" 
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
+                        <div id="korpri-office-map"></div>
                     </div>
 
                     <div class="location-meta-details">
@@ -6133,7 +6147,92 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     setTimeout(showPwaBanner, 2500);
                 }
             }
+
+            // Inisialisasi Peta Interaktif Sekretariat KORPRI
+            initOfficeMap();
         });
+
+        // Inisialisasi Peta Interaktif Leaflet
+        function initOfficeMap() {
+            const mapContainer = document.getElementById('korpri-office-map');
+            if (!mapContainer) return;
+            if (typeof L === 'undefined') {
+                // Fallback jika library Leaflet terlambat dimuat
+                setTimeout(initOfficeMap, 250);
+                return;
+            }
+
+            const officeLat = <?= json_encode((float)$office_lat) ?>;
+            const officeLng = <?= json_encode((float)$office_lng) ?>;
+
+            try {
+                const map = L.map('korpri-office-map', {
+                    scrollWheelZoom: false,
+                    zoomControl: true,
+                    attributionControl: false
+                }).setView([officeLat, officeLng], 16);
+
+                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19
+                }).addTo(map);
+
+                // Custom Pin Marker Elegan KORPRI Navy & Gold
+                const korpriPinIcon = L.divIcon({
+                    className: 'korpri-map-pin',
+                    html: `<div style="
+                        background: #0B1E3B;
+                        border: 2px solid #D4AF37;
+                        border-radius: 50% 50% 50% 0;
+                        width: 32px;
+                        height: 32px;
+                        transform: rotate(-45deg);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        box-shadow: 0 4px 14px rgba(11, 30, 59, 0.5);
+                    ">
+                        <svg style="transform: rotate(45deg); width: 16px; height: 16px; color: #D4AF37;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </div>`,
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 32],
+                    popupAnchor: [0, -32]
+                });
+
+                const marker = L.marker([officeLat, officeLng], { icon: korpriPinIcon }).addTo(map);
+                marker.bindPopup(`
+                    <div style="font-family: inherit; font-size: 0.82rem; line-height: 1.45;">
+                        <div style="font-weight: 800; color: #0B1E3B; margin-bottom: 2px;">Sekretariat KORPRI Kab. Banjar</div>
+                        <div style="color: #475569; font-size: 0.76rem; margin-bottom: 6px;">Jl. Ahmad Yani No. 2, Martapura</div>
+                        <a href="<?= htmlspecialchars($maps_search_url) ?>" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 4px; color: #1D4ED8; font-weight: 700; text-decoration: none; font-size: 0.76rem;">
+                            <span>Buka Google Maps</span>
+                            <span style="font-size: 0.85rem;">&rarr;</span>
+                        </a>
+                    </div>
+                `).openPopup();
+
+                // Pastikan ukuran peta disesuaikan saat kontainer terlihat & dimuat
+                setTimeout(function() { map.invalidateSize(); }, 150);
+                setTimeout(function() { map.invalidateSize(); }, 600);
+                setTimeout(function() { map.invalidateSize(); }, 1500);
+
+                window.addEventListener('resize', function() {
+                    map.invalidateSize();
+                });
+
+                if ('IntersectionObserver' in window) {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                map.invalidateSize();
+                            }
+                        });
+                    }, { threshold: 0.1 });
+                    observer.observe(mapContainer);
+                }
+            } catch (e) {
+                console.error("Gagal memuat peta kantor:", e);
+            }
+        }
     </script>
 </body>
 </html>
