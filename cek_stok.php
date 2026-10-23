@@ -6125,40 +6125,56 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         }
 
         // Init on DOM ready
-        document.addEventListener('DOMContentLoaded', function() {
-            selectCategory('Biasa');
-            updateCounters();
-            renderSizeChips();
-            updateReadyFilterCounter();
-            updateMobileDock();
+        function initApp() {
+            try { selectCategory('Biasa'); } catch (e) {}
+            try { updateCounters(); } catch (e) {}
+            try { renderSizeChips(); } catch (e) {}
+            try { updateReadyFilterCounter(); } catch (e) {}
+            try { updateMobileDock(); } catch (e) {}
 
             // Animasi Count-Up Total Stok di Hero
-            const heroStockEl = document.getElementById('heroTotalStockVal');
-            if (heroStockEl) {
-                animateCountUp(heroStockEl, <?= (int)$total_stok_tersedia ?>, 1200, 'Pcs');
-            }
+            try {
+                const heroStockEl = document.getElementById('heroTotalStockVal');
+                if (heroStockEl) {
+                    animateCountUp(heroStockEl, <?= (int)$total_stok_tersedia ?>, 1200, 'Pcs');
+                }
+            } catch (e) {}
 
             // Cek instalasi PWA
-            if (!isRunningStandalone()) {
-                const headerBtn = document.getElementById('headerPwaInstallBtn');
-                if (headerBtn) headerBtn.style.display = 'inline-flex';
-                // Tampilkan banner di layar mobile setelah 2.5 detik
-                if (window.innerWidth <= 768 && !isPwaDismissedRecently()) {
-                    setTimeout(showPwaBanner, 2500);
+            try {
+                if (!isRunningStandalone()) {
+                    const headerBtn = document.getElementById('headerPwaInstallBtn');
+                    if (headerBtn) headerBtn.style.display = 'inline-flex';
+                    if (window.innerWidth <= 768 && !isPwaDismissedRecently()) {
+                        setTimeout(showPwaBanner, 2500);
+                    }
                 }
-            }
+            } catch (e) {}
 
             // Inisialisasi Peta Interaktif Sekretariat KORPRI
+            initOfficeMap();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
+        }
+        window.addEventListener('load', function() {
             initOfficeMap();
         });
 
         // Inisialisasi Peta Interaktif Leaflet
+        let korpriMapInstance = null;
         function initOfficeMap() {
             const mapContainer = document.getElementById('korpri-office-map');
             if (!mapContainer) return;
+            if (korpriMapInstance) {
+                try { korpriMapInstance.invalidateSize(); } catch (e) {}
+                return;
+            }
             if (typeof L === 'undefined') {
-                // Fallback jika library Leaflet terlambat dimuat
-                setTimeout(initOfficeMap, 250);
+                setTimeout(initOfficeMap, 200);
                 return;
             }
 
@@ -6166,7 +6182,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             const officeLng = <?= json_encode((float)$office_lng) ?>;
 
             try {
-                const map = L.map('korpri-office-map', {
+                korpriMapInstance = L.map('korpri-office-map', {
                     scrollWheelZoom: false,
                     zoomControl: true,
                     attributionControl: false
@@ -6174,7 +6190,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
                 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     maxZoom: 19
-                }).addTo(map);
+                }).addTo(korpriMapInstance);
 
                 // Custom Pin Marker Elegan KORPRI Navy & Gold
                 const korpriPinIcon = L.divIcon({
@@ -6198,7 +6214,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     popupAnchor: [0, -32]
                 });
 
-                const marker = L.marker([officeLat, officeLng], { icon: korpriPinIcon }).addTo(map);
+                const marker = L.marker([officeLat, officeLng], { icon: korpriPinIcon }).addTo(korpriMapInstance);
                 marker.bindPopup(`
                     <div style="font-family: inherit; font-size: 0.82rem; line-height: 1.45;">
                         <div style="font-weight: 800; color: #0B1E3B; margin-bottom: 2px;">Sekretariat KORPRI Kab. Banjar</div>
@@ -6211,19 +6227,19 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 `).openPopup();
 
                 // Pastikan ukuran peta disesuaikan saat kontainer terlihat & dimuat
-                setTimeout(function() { map.invalidateSize(); }, 150);
-                setTimeout(function() { map.invalidateSize(); }, 600);
-                setTimeout(function() { map.invalidateSize(); }, 1500);
+                setTimeout(function() { if (korpriMapInstance) korpriMapInstance.invalidateSize(); }, 150);
+                setTimeout(function() { if (korpriMapInstance) korpriMapInstance.invalidateSize(); }, 500);
+                setTimeout(function() { if (korpriMapInstance) korpriMapInstance.invalidateSize(); }, 1500);
 
                 window.addEventListener('resize', function() {
-                    map.invalidateSize();
+                    if (korpriMapInstance) korpriMapInstance.invalidateSize();
                 });
 
                 if ('IntersectionObserver' in window) {
                     const observer = new IntersectionObserver((entries) => {
                         entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                map.invalidateSize();
+                            if (entry.isIntersecting && korpriMapInstance) {
+                                korpriMapInstance.invalidateSize();
                             }
                         });
                     }, { threshold: 0.1 });
