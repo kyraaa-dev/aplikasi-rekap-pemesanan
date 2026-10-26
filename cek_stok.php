@@ -6188,9 +6188,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     attributionControl: false
                 }).setView([officeLat, officeLng], 16);
 
-                L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-                    subdomains: 'abcd',
-                    maxZoom: 20
+                L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                    subdomains: 'abc',
+                    maxZoom: 20,
+                    attribution: '&copy; OpenStreetMap'
                 }).addTo(korpriMapInstance);
 
                 // Custom Pin Marker Elegan KORPRI Navy & Gold
