@@ -192,6 +192,17 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
     <!-- Leaflet Interactive Maps (Reliable, No API Key, No SAMEORIGIN block) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- Anti-flicker Theme Initialization -->
+    <script>
+        (function() {
+            try {
+                var saved = localStorage.getItem('theme');
+                if (saved === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch(e) {}
+        })();
+    </script>
     
     <style>
         /* ==========================================================================
@@ -1659,6 +1670,845 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             color: var(--korpri-blue);
             flex-shrink: 0;
             margin-top: 2px;
+        }
+
+        /* ==========================================================================
+           INTERACTIVE SIZE CALCULATOR (KALKULATOR UKURAN MUTZ LINGKAR KEPALA)
+           ========================================================================== */
+        .gov-size-calculator-box {
+            background: var(--gov-surface);
+            border: 1px solid var(--gov-hairline);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-top: 1.75rem;
+            box-shadow: 0 8px 24px -4px rgba(11, 30, 59, 0.06), 0 2px 6px -1px rgba(11, 30, 59, 0.03);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        [data-theme="dark"] .gov-size-calculator-box {
+            background: #0E1B30;
+            border-color: rgba(212, 175, 55, 0.28);
+            box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.6);
+        }
+
+        .calc-top-accent {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3.5px;
+            background: linear-gradient(90deg, #1D4ED8 0%, #D4AF37 50%, #15803D 100%);
+        }
+
+        .calc-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .calc-header-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .calc-icon-badge {
+            width: 42px;
+            height: 42px;
+            border-radius: var(--radius-sm);
+            background: var(--korpri-blue-subtle);
+            color: var(--korpri-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid rgba(29, 78, 216, 0.15);
+        }
+        [data-theme="dark"] .calc-icon-badge {
+            background: rgba(59, 130, 246, 0.15);
+            color: #93C5FD;
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .calc-badge-label {
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--korpri-gold);
+            line-height: 1.2;
+        }
+        [data-theme="dark"] .calc-badge-label {
+            color: #FDE047;
+        }
+
+        .calc-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--gov-slate);
+            margin: 2px 0 0 0;
+            line-height: 1.25;
+        }
+        [data-theme="dark"] .calc-title {
+            color: #F8FAFC;
+        }
+
+        .calc-guide-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: var(--radius-full);
+            background: rgba(21, 128, 61, 0.1);
+            border: 1px solid rgba(21, 128, 61, 0.25);
+            color: var(--status-green);
+            font-size: 0.76rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        [data-theme="dark"] .calc-guide-pill {
+            background: rgba(34, 197, 94, 0.12);
+            border-color: rgba(34, 197, 94, 0.3);
+            color: #4ADE80;
+        }
+
+        .calc-desc {
+            font-size: 0.88rem;
+            color: var(--gov-muted);
+            line-height: 1.6;
+            margin: 0 0 1.35rem 0;
+        }
+        [data-theme="dark"] .calc-desc {
+            color: #94A3B8;
+        }
+
+        .calc-body-grid {
+            display: grid;
+            grid-template-columns: 1.18fr 0.82fr;
+            gap: 22px;
+            align-items: stretch;
+        }
+
+        .calc-controls-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .calc-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .calc-label {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: var(--gov-slate);
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        [data-theme="dark"] .calc-label {
+            color: #E2E8F0;
+        }
+
+        /* Segmented Buttons for User Type */
+        .calc-segmented-group {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .calc-seg-btn {
+            border: 1.5px solid var(--gov-hairline);
+            background: var(--gov-hairline-subtle);
+            border-radius: var(--radius-sm);
+            padding: 10px 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        [data-theme="dark"] .calc-seg-btn {
+            background: #14233D;
+            border-color: #243B60;
+        }
+
+        .calc-seg-btn:hover {
+            border-color: var(--korpri-blue);
+            background: var(--gov-surface);
+        }
+        [data-theme="dark"] .calc-seg-btn:hover {
+            background: #1A2F50;
+        }
+
+        .calc-seg-btn.active {
+            border-color: var(--korpri-blue);
+            background: var(--korpri-blue-subtle);
+            box-shadow: 0 0 0 1px var(--korpri-blue);
+        }
+        [data-theme="dark"] .calc-seg-btn.active {
+            border-color: #3B82F6;
+            background: rgba(59, 130, 246, 0.16);
+            box-shadow: 0 0 0 1px #3B82F6;
+        }
+
+        .calc-seg-btn .seg-icon {
+            font-size: 1.3rem;
+            line-height: 1;
+        }
+
+        .calc-seg-btn .seg-name {
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--gov-slate);
+            line-height: 1.2;
+        }
+        .calc-seg-btn.active .seg-name {
+            color: var(--korpri-blue);
+        }
+        [data-theme="dark"] .calc-seg-btn .seg-name {
+            color: #E2E8F0;
+        }
+        [data-theme="dark"] .calc-seg-btn.active .seg-name {
+            color: #93C5FD;
+        }
+
+        .calc-seg-btn .seg-sub {
+            font-size: 0.67rem;
+            color: var(--gov-subtle);
+            line-height: 1.15;
+            font-weight: 600;
+        }
+        [data-theme="dark"] .calc-seg-btn .seg-sub {
+            color: #94A3B8;
+        }
+
+        /* Category Buttons */
+        .calc-cat-toggle-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .calc-cat-btn {
+            border: 1.5px solid var(--gov-hairline);
+            background: var(--gov-hairline-subtle);
+            border-radius: var(--radius-sm);
+            padding: 9px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--gov-slate);
+            transition: var(--transition);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        [data-theme="dark"] .calc-cat-btn {
+            background: #14233D;
+            border-color: #243B60;
+            color: #E2E8F0;
+        }
+
+        .calc-cat-btn:hover {
+            border-color: var(--korpri-gold);
+            background: var(--gov-surface);
+        }
+        [data-theme="dark"] .calc-cat-btn:hover {
+            background: #1A2F50;
+        }
+
+        .calc-cat-btn.active {
+            border-color: var(--korpri-gold);
+            background: var(--korpri-gold-light);
+            color: #785208;
+            box-shadow: 0 0 0 1px var(--korpri-gold);
+        }
+        [data-theme="dark"] .calc-cat-btn.active {
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.18);
+            color: #FDE047;
+            box-shadow: 0 0 0 1px #D4AF37;
+        }
+
+        .cat-pill-micro {
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: var(--radius-full);
+            background: rgba(11, 30, 59, 0.08);
+            color: var(--gov-slate);
+        }
+        .cat-pill-micro.gold {
+            background: rgba(180, 130, 40, 0.15);
+            color: #855D10;
+        }
+        [data-theme="dark"] .cat-pill-micro {
+            background: rgba(255, 255, 255, 0.12);
+            color: #F1F5F9;
+        }
+        [data-theme="dark"] .cat-pill-micro.gold {
+            background: rgba(212, 175, 55, 0.25);
+            color: #FDE047;
+        }
+
+        /* Stepper & Unit Display */
+        .calc-label-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .calc-stepper-box {
+            display: inline-flex;
+            align-items: center;
+            border: 1.5px solid var(--gov-hairline);
+            border-radius: var(--radius-sm);
+            background: var(--gov-surface);
+            overflow: hidden;
+            box-shadow: var(--shadow-subtle);
+        }
+        [data-theme="dark"] .calc-stepper-box {
+            background: #111F36;
+            border-color: #2A4365;
+        }
+
+        .calc-stepper-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gov-slate);
+            transition: var(--transition);
+        }
+        .calc-stepper-btn:hover {
+            background: var(--gov-hairline-subtle);
+            color: var(--korpri-blue);
+        }
+        [data-theme="dark"] .calc-stepper-btn {
+            color: #E2E8F0;
+        }
+        [data-theme="dark"] .calc-stepper-btn:hover {
+            background: #1C3052;
+            color: #93C5FD;
+        }
+
+        .calc-val-display {
+            display: flex;
+            align-items: baseline;
+            padding: 0 8px;
+            border-left: 1px solid var(--gov-hairline);
+            border-right: 1px solid var(--gov-hairline);
+        }
+        [data-theme="dark"] .calc-val-display {
+            border-color: #2A4365;
+        }
+
+        .calc-val-display input {
+            width: 54px;
+            border: none;
+            outline: none;
+            background: transparent;
+            text-align: right;
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--korpri-navy);
+            font-family: var(--font-sans);
+            -moz-appearance: textfield;
+        }
+        [data-theme="dark"] .calc-val-display input {
+            color: #FDE047;
+        }
+        .calc-val-display input::-webkit-outer-spin-button,
+        .calc-val-display input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .calc-unit {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--gov-muted);
+            margin-left: 3px;
+        }
+        [data-theme="dark"] .calc-unit {
+            color: #94A3B8;
+        }
+
+        /* Range Slider */
+        .calc-slider-wrap {
+            margin-top: 4px;
+        }
+
+        .calc-slider-wrap input[type=range] {
+            width: 100%;
+            height: 8px;
+            border-radius: 6px;
+            outline: none;
+            -webkit-appearance: none;
+            background: linear-gradient(90deg, #93C5FD 0%, #1D4ED8 45%, #D4AF37 100%);
+            cursor: pointer;
+        }
+        [data-theme="dark"] .calc-slider-wrap input[type=range] {
+            background: linear-gradient(90deg, #1E3A8A 0%, #3B82F6 45%, #D4AF37 100%);
+        }
+
+        .calc-slider-wrap input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            border: 3.5px solid var(--korpri-navy);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            cursor: grab;
+            transition: transform 0.12s ease;
+        }
+        [data-theme="dark"] .calc-slider-wrap input[type=range]::-webkit-slider-thumb {
+            background: #0B1E3B;
+            border-color: #D4AF37;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+        .calc-slider-wrap input[type=range]::-webkit-slider-thumb:active {
+            cursor: grabbing;
+            transform: scale(1.15);
+        }
+        .calc-slider-wrap input[type=range]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            border: 3.5px solid var(--korpri-navy);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            cursor: grab;
+        }
+
+        .calc-slider-scale {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+            padding: 0 4px;
+        }
+
+        .scale-mark {
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: var(--gov-subtle);
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.15s ease;
+        }
+        .scale-mark:hover {
+            color: var(--korpri-blue);
+            font-weight: 800;
+        }
+        [data-theme="dark"] .scale-mark {
+            color: #64748B;
+        }
+        [data-theme="dark"] .scale-mark:hover {
+            color: #93C5FD;
+        }
+
+        /* Preset Chips */
+        .calc-presets-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .preset-label {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--gov-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-right: 2px;
+        }
+        [data-theme="dark"] .preset-label {
+            color: #94A3B8;
+        }
+
+        .btn-calc-preset {
+            border: 1px solid var(--gov-hairline);
+            background: var(--gov-hairline-subtle);
+            border-radius: var(--radius-full);
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--gov-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        [data-theme="dark"] .btn-calc-preset {
+            background: #14233D;
+            border-color: #243B60;
+            color: #94A3B8;
+        }
+
+        .btn-calc-preset:hover,
+        .btn-calc-preset.active {
+            border-color: var(--korpri-blue);
+            background: var(--korpri-blue-subtle);
+            color: var(--korpri-blue);
+        }
+        [data-theme="dark"] .btn-calc-preset:hover,
+        [data-theme="dark"] .btn-calc-preset.active {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3B82F6;
+            color: #93C5FD;
+        }
+
+        /* Result Panel & Card */
+        .calc-result-panel {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .calc-result-card {
+            background: linear-gradient(135deg, rgba(29, 78, 216, 0.03) 0%, rgba(212, 175, 55, 0.07) 100%);
+            border: 1.5px solid rgba(212, 175, 55, 0.45);
+            border-radius: var(--radius-md);
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+            height: 100%;
+            box-sizing: border-box;
+            position: relative;
+            box-shadow: 0 6px 18px -3px rgba(11, 30, 59, 0.06);
+        }
+        [data-theme="dark"] .calc-result-card {
+            background: linear-gradient(135deg, rgba(15, 32, 60, 0.75) 0%, rgba(26, 44, 76, 0.85) 100%);
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 8px 24px -3px rgba(0, 0, 0, 0.5);
+        }
+
+        .res-card-top-tag {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .res-tag-live {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--korpri-navy);
+        }
+        [data-theme="dark"] .res-tag-live {
+            color: #FDE047;
+        }
+
+        .res-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22C55E;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+        }
+
+        .res-model-badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: var(--radius-full);
+            background: rgba(11, 30, 59, 0.08);
+            color: var(--gov-slate);
+        }
+        [data-theme="dark"] .res-model-badge {
+            background: rgba(255, 255, 255, 0.12);
+            color: #E2E8F0;
+        }
+
+        .res-main-block {
+            background: var(--gov-surface);
+            border: 1px solid var(--gov-hairline);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            text-align: center;
+            box-shadow: var(--shadow-subtle);
+        }
+        [data-theme="dark"] .res-main-block {
+            background: #0A1628;
+            border-color: #1E3557;
+        }
+
+        .res-rec-label {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gov-muted);
+        }
+        [data-theme="dark"] .res-rec-label {
+            color: #94A3B8;
+        }
+
+        .res-number-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 6px 0;
+            flex-wrap: wrap;
+        }
+
+        .res-size-number {
+            font-size: 2.75rem;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--korpri-navy);
+            letter-spacing: -0.02em;
+        }
+        [data-theme="dark"] .res-size-number {
+            color: #FDE047;
+        }
+
+        .res-comfort-tag {
+            background: var(--status-green-bg);
+            border: 1px solid var(--status-green-border);
+            color: var(--status-green);
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            font-size: 0.76rem;
+            font-weight: 800;
+        }
+        [data-theme="dark"] .res-comfort-tag {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.35);
+            color: #4ADE80;
+        }
+
+        .res-detail-cm {
+            font-size: 0.82rem;
+            color: var(--gov-subtle);
+            font-weight: 600;
+        }
+        [data-theme="dark"] .res-detail-cm {
+            color: #94A3B8;
+        }
+
+        /* Live Stock Banner in Result */
+        .res-stock-banner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+        .res-stock-banner.available {
+            background: var(--status-green-bg);
+            border: 1px solid var(--status-green-border);
+            color: var(--status-green);
+        }
+        [data-theme="dark"] .res-stock-banner.available {
+            background: rgba(34, 197, 94, 0.12);
+            border-color: rgba(34, 197, 94, 0.3);
+            color: #4ADE80;
+        }
+
+        .res-stock-banner.empty {
+            background: var(--status-amber-bg);
+            border: 1px solid var(--status-amber-border);
+            color: var(--status-amber);
+        }
+        [data-theme="dark"] .res-stock-banner.empty {
+            background: rgba(245, 158, 11, 0.12);
+            border-color: rgba(245, 158, 11, 0.3);
+            color: #FBBF24;
+        }
+
+        .res-stock-indicator svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .res-stock-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .res-stock-title {
+            font-size: 0.82rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .res-stock-desc {
+            font-size: 0.74rem;
+            opacity: 0.92;
+            line-height: 1.3;
+        }
+
+        .res-notes-box {
+            font-size: 0.82rem;
+            line-height: 1.5;
+            color: var(--gov-muted);
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: var(--radius-sm);
+            padding: 9px 12px;
+            border-left: 3.5px solid var(--korpri-gold);
+        }
+        [data-theme="dark"] .res-notes-box {
+            background: rgba(15, 30, 54, 0.7);
+            color: #CBD5E1;
+            border-left-color: #D4AF37;
+        }
+
+        .res-alt-row {
+            font-size: 0.76rem;
+            color: var(--gov-subtle);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        [data-theme="dark"] .res-alt-row {
+            color: #94A3B8;
+        }
+
+        .res-alt-chip {
+            background: var(--gov-surface);
+            border: 1px solid var(--gov-hairline);
+            border-radius: var(--radius-full);
+            padding: 3px 9px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: var(--gov-slate);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        [data-theme="dark"] .res-alt-chip {
+            background: #14233D;
+            border-color: #243B60;
+            color: #E2E8F0;
+        }
+        .res-alt-chip:hover {
+            border-color: var(--korpri-blue);
+            color: var(--korpri-blue);
+            background: var(--korpri-blue-subtle);
+        }
+        [data-theme="dark"] .res-alt-chip:hover {
+            border-color: #3B82F6;
+            color: #93C5FD;
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        .res-actions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .btn-calc-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 11px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            border: none;
+            font-family: var(--font-sans);
+            min-height: 44px;
+            white-space: nowrap;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-calc-catalog {
+            background: var(--korpri-navy);
+            color: #FFFFFF;
+        }
+        .btn-calc-catalog:hover {
+            background: var(--korpri-blue);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.25);
+        }
+        [data-theme="dark"] .btn-calc-catalog {
+            background: #1D4ED8;
+            color: #FFFFFF;
+        }
+        [data-theme="dark"] .btn-calc-catalog:hover {
+            background: #2563EB;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-calc-wa {
+            background: #15803D;
+            color: #FFFFFF;
+        }
+        .btn-calc-wa:hover {
+            background: #166534;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(21, 128, 61, 0.25);
+        }
+        [data-theme="dark"] .btn-calc-wa {
+            background: #16A34A;
+        }
+        [data-theme="dark"] .btn-calc-wa:hover {
+            background: #22C55E;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.35);
+        }
+
+        @media (max-width: 860px) {
+            .gov-size-calculator-box {
+                padding: 18px 16px;
+            }
+            .calc-body-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+            .calc-segmented-group {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .res-actions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .calc-segmented-group {
+                grid-template-columns: 1fr;
+            }
+            .calc-cat-toggle-row {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Comparison 2-Column Grid */
@@ -4118,6 +4968,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                             <span>Galeri <strong>5 Foto Fisik</strong></span>
                         </a>
+                        <a href="#kalkulator-ukuran" class="gov-meta-chip gov-chip-gallery" title="Hitung Rekomendasi Nomor Ukuran Mutz dari Lingkar Kepala">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4Z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/><path d="m4.5 13.5 2 2"/></svg>
+                            <span>Kalkulator <strong>Ukuran (cm)</strong></span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -4512,6 +5366,181 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 </div>
             </div>
 
+            <!-- Kalkulator Ukuran Mutz Interaktif (Lingkar Kepala cm) -->
+            <div class="gov-size-calculator-box" id="kalkulator-ukuran">
+                <div class="calc-top-accent"></div>
+
+                <div class="calc-header-row">
+                    <div class="calc-header-title-wrap">
+                        <div class="calc-icon-badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4Z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/><path d="m4.5 13.5 2 2"/></svg>
+                        </div>
+                        <div>
+                            <div class="calc-badge-label">FITUR PANDUAN INTERAKTIF ASN</div>
+                            <h3 class="calc-title">Kalkulator Ukuran Mutz &amp; Cek Stok</h3>
+                        </div>
+                    </div>
+                    <div class="calc-header-guide-link">
+                        <span class="calc-guide-pill">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Toleransi Hijab Otomatis
+                        </span>
+                    </div>
+                </div>
+
+                <p class="calc-desc">
+                    Masukkan hasil pengukuran lingkar kepala Anda (dalam satuan cm). Sistem akan menganalisis nomor ukuran resmi KORPRI yang paling presisi, memperhitungkan kelonggaran jilbab/sanggul, serta menampilkan jumlah stok fisik yang ready saat ini di Sekretariat.
+                </p>
+
+                <div class="calc-body-grid">
+                    <!-- Sisi Kiri: Parameter Input Pengguna -->
+                    <div class="calc-controls-panel">
+                        <!-- 1. Pilihan Pengguna / Hijab -->
+                        <div class="calc-group">
+                            <div class="calc-label">
+                                <span>1. Tipe Pengguna &amp; Ketentuan Hijab</span>
+                            </div>
+                            <div class="calc-segmented-group" id="calcUserTypeGroup" role="radiogroup" aria-label="Tipe Pemakai">
+                                <button type="button" class="calc-seg-btn active" data-type="pria" onclick="setCalcUserType('pria')" aria-pressed="true">
+                                    <span class="seg-icon">👨</span>
+                                    <span class="seg-name">Pria (ASN)</span>
+                                    <span class="seg-sub">Pola Lurus Pas</span>
+                                </button>
+                                <button type="button" class="calc-seg-btn" data-type="wanita_hijab" onclick="setCalcUserType('wanita_hijab')" aria-pressed="false">
+                                    <span class="seg-icon">🧕</span>
+                                    <span class="seg-name">Wanita Berhijab</span>
+                                    <span class="seg-sub">+1 No. Toleransi Hijab</span>
+                                </button>
+                                <button type="button" class="calc-seg-btn" data-type="wanita_biasa" onclick="setCalcUserType('wanita_biasa')" aria-pressed="false">
+                                    <span class="seg-icon">👩</span>
+                                    <span class="seg-name">Wanita (Non-Hijab)</span>
+                                    <span class="seg-sub">Pola Lengkung Anggun</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 2. Pilihan Kategori Mutz -->
+                        <div class="calc-group">
+                            <div class="calc-label">
+                                <span>2. Model Topi Mutz</span>
+                            </div>
+                            <div class="calc-cat-toggle-row">
+                                <button type="button" class="calc-cat-btn active" id="calcCatStandarBtn" onclick="setCalcCategory('Biasa')">
+                                    <span>Standar ASN (Biasa)</span>
+                                    <span class="cat-pill-micro">+ Pin Free</span>
+                                </button>
+                                <button type="button" class="calc-cat-btn" id="calcCatKepalaBtn" onclick="setCalcCategory('Kepala SKPD')">
+                                    <span>Kepala SKPD (Eselon II)</span>
+                                    <span class="cat-pill-micro gold">Lis Emas</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 3. Input Lingkar Kepala (cm) Stepper + Slider -->
+                        <div class="calc-group">
+                            <div class="calc-label-row">
+                                <label class="calc-label" for="calcCmInput">
+                                    <span>3. Lingkar Kepala (cm)</span>
+                                </label>
+                                <div class="calc-stepper-box">
+                                    <button type="button" class="calc-stepper-btn" onclick="stepCalcCm(-0.5)" title="Kurangi 0.5 cm" aria-label="Kurangi 0.5 cm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </button>
+                                    <div class="calc-val-display">
+                                        <input type="number" id="calcCmInput" min="53.0" max="62.0" step="0.5" value="57.0" oninput="onCalcCmInputChange(this.value)" aria-label="Angka lingkar kepala sentimeter">
+                                        <span class="calc-unit">cm</span>
+                                    </div>
+                                    <button type="button" class="calc-stepper-btn" onclick="stepCalcCm(0.5)" title="Tambah 0.5 cm" aria-label="Tambah 0.5 cm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="calc-slider-wrap">
+                                <input type="range" id="calcCmSlider" min="53.0" max="62.0" step="0.5" value="57.0" oninput="onCalcSliderChange(this.value)" aria-label="Geser untuk memilih lingkar kepala">
+                                <div class="calc-slider-scale">
+                                    <span class="scale-mark" onclick="setCalcCm(54)">54 cm</span>
+                                    <span class="scale-mark" onclick="setCalcCm(55)">55</span>
+                                    <span class="scale-mark" onclick="setCalcCm(56)">56</span>
+                                    <span class="scale-mark" onclick="setCalcCm(57)">57</span>
+                                    <span class="scale-mark" onclick="setCalcCm(58)">58</span>
+                                    <span class="scale-mark" onclick="setCalcCm(59)">59</span>
+                                    <span class="scale-mark" onclick="setCalcCm(60)">60</span>
+                                    <span class="scale-mark" onclick="setCalcCm(61)">61 cm</span>
+                                </div>
+                            </div>
+
+                            <!-- Tombol Presets Cepat -->
+                            <div class="calc-presets-row">
+                                <span class="preset-label">Pilihan Cepat:</span>
+                                <button type="button" class="btn-calc-preset" data-val="55.0" onclick="setCalcCm(55.0)">55 cm (S)</button>
+                                <button type="button" class="btn-calc-preset" data-val="56.0" onclick="setCalcCm(56.0)">56 cm (M)</button>
+                                <button type="button" class="btn-calc-preset active" data-val="57.0" onclick="setCalcCm(57.0)">57 cm (Rata-rata Pria)</button>
+                                <button type="button" class="btn-calc-preset" data-val="58.0" onclick="setCalcCm(58.0)">58 cm (Standar Wanita)</button>
+                                <button type="button" class="btn-calc-preset" data-val="59.0" onclick="setCalcCm(59.0)">59 cm (Hijab Tebal)</button>
+                                <button type="button" class="btn-calc-preset" data-val="60.0" onclick="setCalcCm(60.0)">60 cm (Jumbo)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sisi Kanan: Panel Hasil Rekomendasi & Aksi -->
+                    <div class="calc-result-panel">
+                        <div class="calc-result-card" id="calcResultCard">
+                            <div class="res-card-top-tag">
+                                <span class="res-tag-live">
+                                    <span class="res-dot"></span>
+                                    <span>ANALISIS REKOMENDASI RESMI</span>
+                                </span>
+                                <span class="res-model-badge" id="calcResModelBadge">Standar ASN • Pria</span>
+                            </div>
+
+                            <div class="res-main-block">
+                                <div class="res-rec-label">Nomor Ukuran Rekomendasi:</div>
+                                <div class="res-number-row">
+                                    <div class="res-size-number" id="calcResNumber">No. 57</div>
+                                    <div class="res-comfort-tag" id="calcResComfortTag">Pas Mantap</div>
+                                </div>
+                                <div class="res-detail-cm" id="calcResCmDetail">Berdasarkan lingkar kepala 57.0 cm</div>
+                            </div>
+
+                            <!-- Live Stock Status Banner -->
+                            <div class="res-stock-banner available" id="calcResStockBanner">
+                                <div class="res-stock-indicator" id="calcResStockIcon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                </div>
+                                <div class="res-stock-info">
+                                    <div class="res-stock-title" id="calcResStockTitle">Stok Fisik Tersedia</div>
+                                    <div class="res-stock-desc" id="calcResStockDesc">18 Pcs siap diambil di Sekretariat</div>
+                                </div>
+                            </div>
+
+                            <!-- Notes Explanation -->
+                            <div class="res-notes-box" id="calcResNotes">
+                                Ukuran No. 57 dirancang pas untuk lingkar kepala 57.0 cm. Pola topi lurus tegak berdiri kokoh tanpa menekan pelipis saat upacara maupun berdinas.
+                            </div>
+
+                            <!-- Alternative Suggestions -->
+                            <div class="res-alt-row" id="calcResAltRow">
+                                <span style="font-weight: 700;">Alternatif:</span>
+                                <!-- Rendered dynamically by JS -->
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="res-actions-grid">
+                                <button type="button" class="btn-calc-action btn-calc-catalog" onclick="applyCalcToCatalog()" id="btnCalcApplyCatalog" title="Tampilkan dan pilih ukuran ini di tabel katalog stok di atas">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                                    <span>Pilih di Katalog</span>
+                                </button>
+                                <button type="button" class="btn-calc-action btn-calc-wa" onclick="orderFromCalculator()" id="btnCalcOrderWa" title="Hubungi WhatsApp panitia dengan rincian ukuran rekomendasi ini">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                    <span>Pesan via WA</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Perbedaan Spesifikasi Standar vs Kepala SKPD -->
             <div style="margin-top: 2rem;" id="spesifikasi">
                 <h3 style="font-size: 1.12rem; font-weight: 800; color: var(--gov-slate); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;">
@@ -4827,7 +5856,9 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             <nav class="footer-nav-links" aria-label="Navigasi Footer">
                 <a href="#galeri-produk">Galeri Fisik Mutz</a>
                 <span class="footer-nav-dot">&bull;</span>
-                <a href="#panduan">Panduan Ukuran</a>
+                <a href="#kalkulator-ukuran">Kalkulator Ukuran (cm)</a>
+                <span class="footer-nav-dot">&bull;</span>
+                <a href="#panduan">Pedoman Ukuran</a>
                 <span class="footer-nav-dot">&bull;</span>
                 <a href="#lokasi-pelayanan">Jam Layanan &amp; Peta</a>
                 <span class="footer-nav-dot">&bull;</span>
@@ -5460,6 +6491,294 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             } else {
                 showNotification('Menampilkan semua ukuran (termasuk Pre-Order)');
             }
+        }
+
+        /* ==========================================================================
+           INTERACTIVE SIZE CALCULATOR ENGINE (KALKULATOR UKURAN MUTZ LINGKAR KEPALA)
+           ========================================================================== */
+        let calcUserType = 'pria'; // 'pria' | 'wanita_hijab' | 'wanita_biasa'
+        let calcCategory = 'Biasa'; // 'Biasa' | 'Kepala SKPD'
+        let calcCm = 57.0; // Default lingkar kepala 57.0 cm (standar ASN)
+        let calcRecSize = 57;
+        let calcTargetGender = 'Laki-laki';
+
+        function setCalcUserType(type) {
+            calcUserType = type;
+            document.querySelectorAll('#calcUserTypeGroup .calc-seg-btn').forEach(btn => {
+                const isActive = (btn.getAttribute('data-type') === type);
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            });
+            calculateRecommendedSize();
+        }
+
+        function setCalcCategory(cat) {
+            calcCategory = cat;
+            const btnStandar = document.getElementById('calcCatStandarBtn');
+            const btnKepala = document.getElementById('calcCatKepalaBtn');
+            if (btnStandar) btnStandar.classList.toggle('active', cat === 'Biasa');
+            if (btnKepala) btnKepala.classList.toggle('active', cat === 'Kepala SKPD');
+            calculateRecommendedSize();
+        }
+
+        function setCalcCm(val) {
+            let num = parseFloat(val);
+            if (isNaN(num)) num = 57.0;
+            num = Math.max(53.0, Math.min(62.0, num));
+            calcCm = Math.round(num * 2) / 2; // kelipatan 0.5
+            syncCalcInputs();
+            calculateRecommendedSize();
+        }
+
+        function stepCalcCm(delta) {
+            setCalcCm(calcCm + delta);
+        }
+
+        function onCalcCmInputChange(val) {
+            let num = parseFloat(val);
+            if (isNaN(num)) return;
+            num = Math.max(53.0, Math.min(62.0, num));
+            calcCm = Math.round(num * 2) / 2;
+            const slider = document.getElementById('calcCmSlider');
+            if (slider) slider.value = calcCm;
+            updatePresetActiveState();
+            calculateRecommendedSize();
+        }
+
+        function onCalcSliderChange(val) {
+            calcCm = parseFloat(val) || 57.0;
+            const input = document.getElementById('calcCmInput');
+            if (input) input.value = calcCm.toFixed(1);
+            updatePresetActiveState();
+            calculateRecommendedSize();
+        }
+
+        function syncCalcInputs() {
+            const input = document.getElementById('calcCmInput');
+            const slider = document.getElementById('calcCmSlider');
+            if (input) input.value = calcCm.toFixed(1);
+            if (slider) slider.value = calcCm;
+            updatePresetActiveState();
+        }
+
+        function updatePresetActiveState() {
+            document.querySelectorAll('.btn-calc-preset').forEach(btn => {
+                const pVal = parseFloat(btn.getAttribute('data-val'));
+                btn.classList.toggle('active', Math.abs(pVal - calcCm) < 0.1);
+            });
+        }
+
+        function getBaseSizeFromCircumference(cm) {
+            if (cm < 54.5) return 55;
+            if (cm < 55.5) return 55;
+            if (cm < 56.5) return 56;
+            if (cm < 57.5) return 57;
+            if (cm < 58.5) return 58;
+            if (cm < 59.5) return 59;
+            return 60;
+        }
+
+        function calculateRecommendedSize() {
+            const baseSize = getBaseSizeFromCircumference(calcCm);
+            let recSize = 57;
+            let comfortTag = 'Pas Mantap';
+            let notes = '';
+            let altSizes = [];
+
+            if (calcUserType === 'pria') {
+                calcTargetGender = 'Laki-laki';
+                recSize = baseSize;
+                comfortTag = 'Pas & Mantap';
+                notes = `Nomor <strong>${recSize}</strong> adalah ukuran ideal untuk lingkar kepala ${calcCm.toFixed(1)} cm. Pola topi berpotongan lurus tegas standar resmi keprotokolan Pemkab Banjar, pas tanpa menekan pelipis saat upacara maupun bertugas.`;
+                
+                if (recSize < 60) {
+                    altSizes.push({ size: recSize + 1, label: 'Lebih Longgar' });
+                }
+                if (recSize > 55) {
+                    altSizes.push({ size: recSize - 1, label: 'Lebih Ketat / Pas' });
+                }
+            } else if (calcUserType === 'wanita_hijab') {
+                calcTargetGender = 'Perempuan';
+                // Toleransi hijab: +1 nomor untuk ruang jilbab, ciput & sanggul
+                let rawRec = baseSize + 1;
+                if (rawRec < 58) rawRec = 58; // Ukuran standar mutz wanita mulai dari No. 58
+                if (rawRec > 60) rawRec = 60;
+                recSize = rawRec;
+                comfortTag = 'Nyaman Berhijab (+1 No.)';
+                notes = `Dengan lingkar kepala dasar ${calcCm.toFixed(1)} cm, sistem otomatis menambahkan <strong>toleransi +1 nomor (No. ${recSize})</strong> agar lipatan jilbab, inner ciput, dan sanggul rambut leluasa sehingga tidak menimbulkan pusing saat mutz dipakai berjam-jam.`;
+                
+                if (recSize === 58) {
+                    altSizes.push({ size: 59, label: 'Sanggul / Hijab Tebal' });
+                } else if (recSize === 59) {
+                    altSizes.push({ size: 60, label: 'Lebih Longgar' });
+                    altSizes.push({ size: 58, label: 'Lebih Pas' });
+                } else if (recSize === 60) {
+                    altSizes.push({ size: 59, label: 'Lebih Pas' });
+                }
+            } else if (calcUserType === 'wanita_biasa') {
+                calcTargetGender = 'Perempuan';
+                if (baseSize >= 58) {
+                    recSize = Math.min(60, baseSize);
+                    comfortTag = 'Pas Tanpa Hijab';
+                    notes = `Ukuran <strong>No. ${recSize}</strong> sesuai dengan lingkar kepala ${calcCm.toFixed(1)} cm Anda. Siluet lengkung perahu memberikan kesan anggun dan rapi.`;
+                    if (recSize < 60) altSizes.push({ size: recSize + 1, label: 'Lebih Longgar' });
+                    if (recSize > 58) altSizes.push({ size: recSize - 1, label: 'Lebih Pas' });
+                } else {
+                    recSize = 58;
+                    comfortTag = 'Kelonggaran Nyaman';
+                    notes = `Pola mutz khusus wanita diproduksi mulai No. 58. Untuk lingkar ${calcCm.toFixed(1)} cm, No. 58 memberikan kelonggaran yang sejuk dan nyaman. Anda juga dapat memilih pola lurus Pria No. ${baseSize} jika menyukai ukuran yang presisi menempel.`;
+                    altSizes.push({ size: 59, label: 'Lebih Longgar' });
+                }
+            }
+
+            calcRecSize = recSize;
+
+            // Update UI Elemen Hasil
+            const elNumber = document.getElementById('calcResNumber');
+            const elComfort = document.getElementById('calcResComfortTag');
+            const elCmDetail = document.getElementById('calcResCmDetail');
+            const elModelBadge = document.getElementById('calcResModelBadge');
+            const elNotes = document.getElementById('calcResNotes');
+
+            if (elNumber) elNumber.textContent = `No. ${recSize}`;
+            if (elComfort) elComfort.textContent = comfortTag;
+            if (elCmDetail) {
+                const hijabNotice = (calcUserType === 'wanita_hijab') ? ' + toleransi hijab (+1 nomor)' : '';
+                elCmDetail.textContent = `Lingkar kepala terukur ${calcCm.toFixed(1)} cm${hijabNotice}`;
+            }
+            if (elModelBadge) {
+                const catText = (calcCategory === 'Biasa') ? 'Standar ASN' : 'Kepala SKPD';
+                const genderText = (calcTargetGender === 'Laki-laki') ? 'Pria' : (calcUserType === 'wanita_hijab' ? 'Wanita (Hijab)' : 'Wanita');
+                elModelBadge.textContent = `${catText} • ${genderText}`;
+            }
+            if (elNotes) elNotes.innerHTML = notes;
+
+            // Query live physical stock from STOK_DATA
+            const catObj = STOK_DATA[calcCategory] || {};
+            const genderObj = catObj[calcTargetGender] || {};
+            const stockQty = (genderObj[recSize] !== undefined) ? (genderObj[recSize] || 0) : 0;
+
+            const banner = document.getElementById('calcResStockBanner');
+            const stockIcon = document.getElementById('calcResStockIcon');
+            const stockTitle = document.getElementById('calcResStockTitle');
+            const stockDesc = document.getElementById('calcResStockDesc');
+
+            if (banner && stockTitle && stockDesc) {
+                if (stockQty > 0) {
+                    banner.className = 'res-stock-banner available';
+                    if (stockIcon) {
+                        stockIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`;
+                    }
+                    stockTitle.textContent = `Ready Stock: ${stockQty} Pcs`;
+                    stockDesc.textContent = `Tersedia fisik di Sekretariat KORPRI Martapura (Siap diambil/dikirim)`;
+                } else {
+                    banner.className = 'res-stock-banner empty';
+                    if (stockIcon) {
+                        stockIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
+                    }
+                    stockTitle.textContent = `Stok Habis Sementara (0 Pcs)`;
+                    stockDesc.textContent = `Dapat diajukan Pre-Order/Indent atau cek ukuran alternatif di bawah`;
+                }
+            }
+
+            // Render Alternative chips
+            const altContainer = document.getElementById('calcResAltRow');
+            if (altContainer) {
+                if (altSizes.length > 0) {
+                    altContainer.innerHTML = '<span style="font-weight: 700; color: var(--gov-slate);">Alternatif Ukuran:</span>';
+                    altSizes.forEach(alt => {
+                        const altStock = (genderObj[alt.size] !== undefined) ? (genderObj[alt.size] || 0) : 0;
+                        const btnAlt = document.createElement('button');
+                        btnAlt.type = 'button';
+                        btnAlt.className = 'res-alt-chip';
+                        btnAlt.innerHTML = `No. ${alt.size} (${alt.label} • <strong>${altStock} Pcs</strong>)`;
+                        btnAlt.title = `Klik untuk memilih alternatif No. ${alt.size}`;
+                        btnAlt.onclick = function() {
+                            selectCalcAltSize(alt.size);
+                        };
+                        altContainer.appendChild(btnAlt);
+                    });
+                    altContainer.style.display = 'flex';
+                } else {
+                    altContainer.style.display = 'none';
+                }
+            }
+        }
+
+        function selectCalcAltSize(sz) {
+            calcRecSize = sz;
+            const elNumber = document.getElementById('calcResNumber');
+            const elComfort = document.getElementById('calcResComfortTag');
+            if (elNumber) elNumber.textContent = `No. ${sz}`;
+            if (elComfort) elComfort.textContent = 'Pilihan Alternatif';
+
+            const catObj = STOK_DATA[calcCategory] || {};
+            const genderObj = catObj[calcTargetGender] || {};
+            const stockQty = (genderObj[sz] !== undefined) ? (genderObj[sz] || 0) : 0;
+
+            const banner = document.getElementById('calcResStockBanner');
+            const stockTitle = document.getElementById('calcResStockTitle');
+            const stockDesc = document.getElementById('calcResStockDesc');
+
+            if (banner && stockTitle && stockDesc) {
+                if (stockQty > 0) {
+                    banner.className = 'res-stock-banner available';
+                    stockTitle.textContent = `Ready Stock: ${stockQty} Pcs (No. ${sz})`;
+                    stockDesc.textContent = `Tersedia fisik di Sekretariat KORPRI Martapura`;
+                } else {
+                    banner.className = 'res-stock-banner empty';
+                    stockTitle.textContent = `Stok Habis Sementara (No. ${sz})`;
+                    stockDesc.textContent = `Dapat diajukan Pre-Order/Indent`;
+                }
+            }
+            showNotification(`Ukuran beralih ke alternatif: No. ${sz}`);
+        }
+
+        function applyCalcToCatalog() {
+            selectCategory(calcCategory);
+            selectGender(calcTargetGender);
+            selectedSizeFilter = calcRecSize;
+            renderSizeChips();
+            renderStockCards();
+            updateMobileDock();
+
+            const target = document.querySelector('.gov-filter-toolbar') || document.getElementById('stockCardsContainer');
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            const genderLabel = (calcTargetGender === 'Laki-laki') ? 'Pria' : 'Wanita';
+            showNotification(`Ukuran No. ${calcRecSize} (${calcCategory} ${genderLabel}) berhasil dipilih di katalog!`);
+        }
+
+        function orderFromCalculator() {
+            const catText = (calcCategory === 'Biasa') ? 'Standar ASN (Biasa)' : 'Kepala SKPD (Eselon II)';
+            const genderText = (calcTargetGender === 'Laki-laki') ? 'Pria' : (calcUserType === 'wanita_hijab' ? 'Wanita (Berhijab / Sanggul)' : 'Wanita (Non-Hijab)');
+            
+            const catObj = STOK_DATA[calcCategory] || {};
+            const genderObj = catObj[calcTargetGender] || {};
+            const stockQty = (genderObj[calcRecSize] !== undefined) ? (genderObj[calcRecSize] || 0) : 0;
+            const statusText = stockQty > 0 ? `Ready Stock (${stockQty} Pcs)` : 'Pre-Order / Indent';
+
+            let msg = `Halo Admin Sekretariat KORPRI Kab. Banjar,\n\n`;
+            msg += `Saya telah menghitung rekomendasi ukuran topi Mutz melalui *Kalkulator Ukuran Resmi* dengan data berikut:\n`;
+            msg += `• *Lingkar Kepala:* ${calcCm.toFixed(1)} cm\n`;
+            msg += `• *Tipe Pengguna:* ${genderText}\n`;
+            msg += `• *Model Mutz:* ${catText}\n`;
+            msg += `• *Rekomendasi Ukuran:* No. ${calcRecSize}\n`;
+            msg += `• *Status Fisik:* ${statusText}\n\n`;
+            msg += `Mohon konfirmasi kesiapan barang dan petunjuk pengambilan di kantor Sekretariat KORPRI Jl. A. Yani Nomor 2 Martapura. Terima kasih!`;
+
+            const phone = '<?= $admin_wa_default ?>';
+            const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+            triggerConfettiBurst();
+            setTimeout(function() {
+                window.open(url, '_blank');
+            }, 600);
+        }
+
+        function initSizeCalculator() {
+            syncCalcInputs();
+            calculateRecommendedSize();
         }
 
         // Stock Cards Rendering (Crisp, Dignified, No AI Slop Progress Bars)
@@ -6131,6 +7450,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             try { renderSizeChips(); } catch (e) {}
             try { updateReadyFilterCounter(); } catch (e) {}
             try { updateMobileDock(); } catch (e) {}
+            try { initSizeCalculator(); } catch (e) {}
 
             // Animasi Count-Up Total Stok di Hero
             try {
