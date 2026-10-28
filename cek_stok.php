@@ -3266,7 +3266,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         .footer-nav-links {
             display: flex;
             align-items: center;
-            gap: 12px;
+            flex-wrap: wrap;
+            gap: 10px 12px;
             font-size: 0.84rem;
             font-weight: 600;
         }
@@ -3276,6 +3277,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             transition: var(--transition);
             padding: 5px 10px;
             border-radius: var(--radius-sm);
+            white-space: nowrap;
         }
         .footer-nav-links a:hover {
             color: var(--korpri-blue);
@@ -3352,7 +3354,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             }
 
             .gov-container {
-                padding: 1rem 0.85rem 5.5rem 0.85rem;
+                padding: 1rem 0.85rem 1.75rem 0.85rem;
             }
 
             .gov-hero {
@@ -3698,9 +3700,6 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 opacity: 1;
                 pointer-events: auto;
             }
-            body.has-dock-visible .gov-container {
-                padding-bottom: calc(90px + env(safe-area-inset-bottom, 12px)) !important;
-            }
             body.has-dock-visible .gov-pwa-banner {
                 transform: translateY(160%) !important;
                 opacity: 0 !important;
@@ -3868,16 +3867,17 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 display: none !important; /* Digantikan secara sempurna oleh Mobile Quick Action Dock */
             }
 
-            /* Footer on Mobile (Centered, Balanced, Zero Floating Button Overlap) */
+            /* Footer on Mobile (Centered, Structured Grid, Zero Floating Button Overlap) */
             .gov-footer {
-                padding: 2rem 1.25rem calc(6.5rem + env(safe-area-inset-bottom, 10px)) 1.25rem !important;
+                padding: 1.75rem 1rem calc(6.25rem + env(safe-area-inset-bottom, 12px)) 1rem !important;
                 text-align: center;
             }
             .gov-footer-inner {
                 flex-direction: column;
-                align-items: center;
+                align-items: stretch;
                 text-align: center;
-                gap: 1.25rem;
+                gap: 1.15rem;
+                width: 100%;
             }
             .footer-identity {
                 flex-direction: column;
@@ -3886,13 +3886,14 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 gap: 10px;
             }
             .footer-seal {
-                width: 40px;
-                height: 40px;
+                width: 44px;
+                height: 44px;
             }
             .footer-identity-details {
                 align-items: center;
                 text-align: center;
-                gap: 6px;
+                gap: 8px;
+                width: 100%;
             }
             .footer-title-row {
                 flex-direction: column;
@@ -3900,26 +3901,67 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 gap: 6px;
             }
             .footer-name {
-                font-size: 0.92rem;
+                font-size: 0.95rem;
+                line-height: 1.3;
             }
             .footer-address-txt {
+                display: inline-flex;
+                align-items: center;
                 justify-content: center;
-                font-size: 0.76rem;
+                gap: 6px;
+                font-size: 0.75rem;
+                line-height: 1.35;
                 text-align: center;
+                background: var(--gov-hairline-subtle);
+                border: 1px solid var(--gov-hairline);
+                border-radius: var(--radius-full);
+                padding: 6px 12px;
+                max-width: 100%;
+                box-sizing: border-box;
             }
             .footer-nav-links {
-                justify-content: center;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 8px;
-                font-size: 0.80rem;
+                width: 100%;
+                font-size: 0.78rem;
+            }
+            .footer-nav-dot {
+                display: none !important;
+            }
+            .footer-nav-links a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                padding: 9px 10px;
+                background: var(--gov-hairline-subtle);
+                border: 1px solid var(--gov-hairline);
+                border-radius: var(--radius-sm);
+                color: var(--gov-slate);
+                font-weight: 700;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .footer-nav-links a:last-child {
+                grid-column: 1 / -1;
+                background: var(--korpri-blue-subtle);
+                border-color: rgba(29, 78, 216, 0.22);
+                color: var(--korpri-blue);
+            }
+            [data-theme="dark"] .footer-nav-links a:last-child {
+                background: rgba(59, 130, 246, 0.15);
+                border-color: rgba(59, 130, 246, 0.32);
+                color: #93C5FD;
             }
             .footer-copyright-bar {
-                margin-top: 1.25rem;
-                padding-top: 1rem;
-                padding-right: 0;
+                margin-top: 1.15rem;
+                padding: 1rem 2.75rem 0 2.75rem;
                 text-align: center;
             }
             .footer-copy-text {
-                font-size: 0.75rem;
+                font-size: 0.74rem;
                 line-height: 1.5;
             }
 
@@ -7707,7 +7749,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         // Daftarkan Service Worker & bersihkan cache lawas di perangkat mobile
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('sw.js?v=20261028_2').then(function(reg) {
+                navigator.serviceWorker.register('sw.js?v=20261028_3').then(function(reg) {
                     if (reg && typeof reg.update === 'function') {
                         reg.update();
                     }
