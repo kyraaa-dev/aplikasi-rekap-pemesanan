@@ -2,6 +2,13 @@
 define('ALLOW_DB_FAIL', true);
 require_once 'config.php';
 
+if (!headers_sent()) {
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
+    header("Expires: 0");
+}
+
 // Fetch current stock from database
 $q_stok = $conn ? $conn->query("
     SELECT jenis_mutz, jenis_kelamin, ukuran, jumlah_stok 
@@ -43,6 +50,11 @@ if ($q_stok) {
         }
     }
 }
+
+$stok_biasa_pria    = array_sum($stok_data['Biasa']['Laki-laki']);
+$stok_biasa_wanita  = array_sum($stok_data['Biasa']['Perempuan']);
+$stok_kepala_pria   = array_sum($stok_data['Kepala SKPD']['Laki-laki']);
+$stok_kepala_wanita = array_sum($stok_data['Kepala SKPD']['Perempuan']);
 
 // Default standard sizes
 $sizes_pria = [55, 56, 57, 58, 59, 60];
@@ -949,6 +961,19 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             pointer-events: none;
             will-change: transform;
         }
+        .tag-micro-red {
+            background: rgba(239, 68, 68, 0.12);
+            color: #DC2626;
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        [data-theme="dark"] .tag-micro-red {
+            background: rgba(239, 68, 68, 0.22);
+            color: #FCA5A5;
+            border-color: rgba(239, 68, 68, 0.45);
+        }
 
         .choice-price-block {
             text-align: right;
@@ -1583,9 +1608,9 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
         /* Chip Filter Indicator for Empty Size */
         .btn-size-chip.is-chip-empty {
-            opacity: 0.88;
+            opacity: 0.92;
             border-style: dashed;
-            border-color: rgba(220, 38, 38, 0.35);
+            border-color: rgba(220, 38, 38, 0.4);
         }
         .btn-size-chip.is-chip-empty .chip-empty-indicator {
             color: #DC2626;
@@ -1593,8 +1618,16 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             font-weight: 700;
             margin-left: 3px;
         }
+        .btn-size-chip.is-chip-empty.active {
+            border-style: solid;
+            border-color: #DC2626;
+            background: var(--korpri-navy);
+        }
+        .btn-size-chip.is-chip-empty.active .chip-empty-indicator {
+            color: #FCA5A5;
+        }
         [data-theme="dark"] .btn-size-chip.is-chip-empty {
-            border-color: rgba(239, 68, 68, 0.45);
+            border-color: rgba(239, 68, 68, 0.5);
         }
         [data-theme="dark"] .btn-size-chip.is-chip-empty .chip-empty-indicator {
             color: #FCA5A5;
@@ -2473,14 +2506,14 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         }
 
         .res-stock-banner.empty {
-            background: var(--status-amber-bg);
-            border: 1px solid var(--status-amber-border);
-            color: var(--status-amber);
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px dashed rgba(220, 38, 38, 0.4);
+            color: #DC2626;
         }
         [data-theme="dark"] .res-stock-banner.empty {
-            background: rgba(245, 158, 11, 0.12);
-            border-color: rgba(245, 158, 11, 0.3);
-            color: #FBBF24;
+            background: rgba(239, 68, 68, 0.18);
+            border-color: rgba(239, 68, 68, 0.45);
+            color: #FCA5A5;
         }
 
         .res-stock-indicator svg {
@@ -2620,6 +2653,16 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         [data-theme="dark"] .btn-calc-wa:hover {
             background: #22C55E;
             box-shadow: 0 4px 14px rgba(34, 197, 94, 0.35);
+        }
+        .btn-calc-wa.preorder-wa {
+            background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+            color: #FFFFFF;
+            box-shadow: 0 3px 10px rgba(217, 119, 6, 0.28);
+        }
+        .btn-calc-wa.preorder-wa:hover {
+            background: linear-gradient(135deg, #B45309 0%, #92400E 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 14px rgba(217, 119, 6, 0.42);
         }
 
         @media (max-width: 860px) {
@@ -3509,141 +3552,113 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 flex-shrink: 0;
             }
 
-            @media (max-width: 480px) {
-                .filter-controls-left {
-                    gap: 6px;
-                }
-                .btn-segment {
-                    padding: 7px 4px;
-                    font-size: 0.76rem;
-                }
-                .btn-ready-toggle {
-                    padding: 7px 8px;
-                    font-size: 0.75rem;
-                    gap: 5px;
-                }
-                .ready-lbl-full { display: none; }
-                .ready-lbl-short { display: inline; }
-            }
-
-            /* Stock Grid on Mobile: Dynamic, Crisp 2 Columns */
+            /* Stock Grid on Mobile: Full-Width Identical to Web Card Layout */
             .gov-stock-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 10px;
+                grid-template-columns: 1fr;
+                gap: 14px;
                 margin-bottom: 2rem;
             }
             .stock-item-card {
-                padding: 12px 10px;
-                border-radius: var(--radius-sm);
+                padding: 18px 16px;
+                border-radius: var(--radius-md);
             }
             .stock-item-card.is-out-of-stock {
                 border-width: 1.5px;
             }
             .stock-out-banner {
-                margin: -12px -10px 8px -10px;
-                padding: 4px 6px;
-                font-size: 0.62rem;
-                gap: 5px;
+                margin: -18px -16px 14px -16px;
+                padding: 7px 12px;
+                font-size: 0.72rem;
+                gap: 7px;
             }
-            .banner-text-desktop { display: none !important; }
-            .banner-text-mobile { display: inline !important; }
+            .banner-text-desktop { display: inline !important; }
+            .banner-text-mobile { display: none !important; }
 
             .stock-card-out-notice {
-                padding: 5px 6px;
-                font-size: 0.68rem;
-                margin-bottom: 8px;
-                gap: 4px;
+                padding: 8px 10px;
+                font-size: 0.75rem;
+                margin-bottom: 12px;
+                gap: 7px;
             }
             .stock-card-out-notice svg {
-                width: 11px;
-                height: 11px;
+                width: 14px;
+                height: 14px;
             }
             .stock-card-head {
-                margin-bottom: 6px;
+                margin-bottom: 12px;
                 align-items: flex-start;
-                gap: 4px;
+                gap: 8px;
             }
             .size-num-title {
-                font-size: 1.26rem;
+                font-size: 1.65rem;
                 line-height: 1;
             }
             .size-circumference {
-                font-size: 0.68rem;
-                margin-top: 2px;
+                font-size: 0.78rem;
+                margin-top: 3px;
             }
             .status-pill {
-                padding: 2px 6px;
-                font-size: 0.68rem;
-                gap: 4px;
+                padding: 4px 10px;
+                font-size: 0.75rem;
+                gap: 6px;
                 flex-shrink: 0;
             }
             .status-dot-sm {
-                width: 5px;
-                height: 5px;
+                width: 6px;
+                height: 6px;
             }
             .stock-card-body {
-                padding: 8px 8px;
-                margin-bottom: 10px;
-                border-radius: 4px;
+                padding: 12px 14px;
+                margin-bottom: 14px;
+                border-radius: var(--radius-sm);
             }
             .body-row {
-                font-size: 0.73rem;
-                margin-bottom: 2px;
+                font-size: 0.82rem;
+                margin-bottom: 5px;
             }
             .body-row-cat {
-                display: none; /* redundant in 2-column mobile cards */
+                display: flex;
             }
             .body-value {
-                font-size: 0.76rem;
+                font-size: 0.82rem;
             }
             .body-row-pin {
-                margin-top: 5px;
-                padding-top: 5px;
+                margin-top: 6px;
+                padding-top: 6px;
                 border-top: 1px dashed var(--gov-hairline);
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 2px;
-            }
-            .body-row-pin .body-label {
-                font-size: 0.67rem;
-                color: var(--gov-muted);
-                line-height: 1.2;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                gap: 6px;
             }
             .body-pin-val {
-                font-size: 0.72rem;
-                gap: 3.5px;
-                white-space: normal;
-                line-height: 1.25;
+                font-size: 0.78rem;
+                gap: 4px;
+                white-space: nowrap;
                 color: var(--korpri-blue);
-                width: 100%;
+                width: auto;
             }
             .body-pin-val svg {
-                width: 11px;
-                height: 11px;
+                width: 12px;
+                height: 12px;
                 flex-shrink: 0;
             }
             .btn-order-action {
-                padding: 7px 6px;
-                font-size: 0.76rem;
-                gap: 4px;
-                border-radius: 6px;
+                padding: 10px 14px;
+                font-size: 0.86rem;
+                gap: 7px;
+                border-radius: var(--radius-sm);
             }
             .btn-order-action svg {
-                width: 14px;
-                height: 14px;
+                width: 15px;
+                height: 15px;
                 flex-shrink: 0;
             }
 
-            /* Toggle Text Full / Short on Mobile */
-            .pill-text-full,
-            .btn-text-full,
-            .pin-text-full,
+            /* Keep Card Text Identical to Web; Only Shorten Filter Chip Label on Mobile */
             .chip-text-full {
                 display: none !important;
             }
-            .pill-text-short,
-            .btn-text-short,
-            .pin-text-short,
             .chip-text-short {
                 display: inline !important;
             }
@@ -3919,6 +3934,23 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 border-bottom-right-radius: 0;
                 padding: 20px 18px 26px 18px;
             }
+        }
+
+        @media (max-width: 480px) {
+            .filter-controls-left {
+                gap: 6px;
+            }
+            .btn-segment {
+                padding: 7px 4px;
+                font-size: 0.76rem;
+            }
+            .btn-ready-toggle {
+                padding: 7px 8px;
+                font-size: 0.75rem;
+                gap: 5px;
+            }
+            .ready-lbl-full { display: none; }
+            .ready-lbl-short { display: inline; }
         }
 
         /* ==========================================================================
@@ -4426,6 +4458,16 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             background: var(--status-green-bg);
             padding: 1px 6px;
             border-radius: 3px;
+        }
+        .gallery-price-sub.is-empty {
+            color: #DC2626;
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        [data-theme="dark"] .gallery-price-sub.is-empty {
+            color: #FCA5A5;
+            background: rgba(239, 68, 68, 0.22);
+            border-color: rgba(239, 68, 68, 0.4);
         }
 
         .btn-gallery-action {
@@ -5199,7 +5241,11 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         <div class="gallery-card-footer">
                             <div class="gallery-price-wrap">
                                 <span class="gallery-price-val">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></span>
-                                <span class="gallery-price-sub">Ready Stock</span>
+                                <?php if ($stok_kepala_pria > 0): ?>
+                                    <span class="gallery-price-sub">Ready Stock (<?= number_format($stok_kepala_pria, 0, ',', '.') ?> Pcs)</span>
+                                <?php else: ?>
+                                    <span class="gallery-price-sub is-empty">Habis (0 Pcs • PO)</span>
+                                <?php endif; ?>
                             </div>
                             <button type="button" class="btn-gallery-action btn-action-gold" onclick="selectProductFromGallery(0)">
                                 <span>Pilih Model &amp; Cek Stok</span>
@@ -5239,7 +5285,11 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         <div class="gallery-card-footer">
                             <div class="gallery-price-wrap">
                                 <span class="gallery-price-val">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></span>
-                                <span class="gallery-price-sub">Ready Stock</span>
+                                <?php if ($stok_kepala_wanita > 0): ?>
+                                    <span class="gallery-price-sub">Ready Stock (<?= number_format($stok_kepala_wanita, 0, ',', '.') ?> Pcs)</span>
+                                <?php else: ?>
+                                    <span class="gallery-price-sub is-empty">Habis (0 Pcs • PO)</span>
+                                <?php endif; ?>
                             </div>
                             <button type="button" class="btn-gallery-action btn-action-gold" onclick="selectProductFromGallery(1)">
                                 <span>Pilih Model &amp; Cek Stok</span>
@@ -5279,7 +5329,11 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         <div class="gallery-card-footer">
                             <div class="gallery-price-wrap">
                                 <span class="gallery-price-val">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></span>
-                                <span class="gallery-price-sub">Ready Stock</span>
+                                <?php if ($stok_biasa_pria > 0): ?>
+                                    <span class="gallery-price-sub">Ready Stock (<?= number_format($stok_biasa_pria, 0, ',', '.') ?> Pcs)</span>
+                                <?php else: ?>
+                                    <span class="gallery-price-sub is-empty">Habis (0 Pcs • PO)</span>
+                                <?php endif; ?>
                             </div>
                             <button type="button" class="btn-gallery-action btn-action-blue" onclick="selectProductFromGallery(2)">
                                 <span>Pilih Model &amp; Cek Stok</span>
@@ -5319,7 +5373,11 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         <div class="gallery-card-footer">
                             <div class="gallery-price-wrap">
                                 <span class="gallery-price-val">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></span>
-                                <span class="gallery-price-sub">Ready Stock</span>
+                                <?php if ($stok_biasa_wanita > 0): ?>
+                                    <span class="gallery-price-sub">Ready Stock (<?= number_format($stok_biasa_wanita, 0, ',', '.') ?> Pcs)</span>
+                                <?php else: ?>
+                                    <span class="gallery-price-sub is-empty">Habis (0 Pcs • PO)</span>
+                                <?php endif; ?>
                             </div>
                             <button type="button" class="btn-gallery-action btn-action-blue" onclick="selectProductFromGallery(3)">
                                 <span>Pilih Model &amp; Cek Stok</span>
@@ -5381,7 +5439,11 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         <div class="choice-meta-title">Mutz Standar ASN</div>
                         <div class="choice-meta-desc">Diperuntukkan bagi seluruh ASN (PNS &amp; PPPK)</div>
                         <div class="choice-tags-row">
-                            <span class="tag-micro tag-micro-green">Ready Stock</span>
+                            <?php if ($total_stok_biasa > 0): ?>
+                                <span class="tag-micro tag-micro-green">Ready Stock (<?= number_format($total_stok_biasa, 0, ',', '.') ?> Pcs)</span>
+                            <?php else: ?>
+                                <span class="tag-micro tag-micro-red">Stok Habis (0 Pcs) • Pre-Order</span>
+                            <?php endif; ?>
                             <span class="tag-micro tag-micro-blue">Include Pin Kab. Banjar</span>
                         </div>
                     </div>
@@ -5406,7 +5468,11 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         <div class="choice-meta-title">Mutz Kepala SKPD (Eselon II)</div>
                         <div class="choice-meta-desc">Pejabat Pimpinan Tinggi Pratama / Kepala Dinas</div>
                         <div class="choice-tags-row">
-                            <span class="tag-micro tag-micro-green">Ready Stock</span>
+                            <?php if ($total_stok_kepala > 0): ?>
+                                <span class="tag-micro tag-micro-green">Ready Stock (<?= number_format($total_stok_kepala, 0, ',', '.') ?> Pcs)</span>
+                            <?php else: ?>
+                                <span class="tag-micro tag-micro-red">Stok Habis (0 Pcs) • Pre-Order</span>
+                            <?php endif; ?>
                             <span class="tag-micro tag-micro-gold">Bordir List Benang Emas</span>
                             <span class="tag-micro tag-micro-blue">Include Pin Kab. Banjar</span>
                         </div>
@@ -5738,7 +5804,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <li>Diperuntukkan bagi seluruh ASN (PNS dan PPPK).</li>
                             <li><strong>Sudah termasuk (include) Pin Logam Lambang Kab. Banjar</strong>.</li>
                             <li>Bahan standar kedinasan resmi rapi &amp; tahan lama.</li>
-                            <li>Harga resmi: <strong>Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></strong>.</li>
+                            <li>Harga resmi: <strong>Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></strong> <?= $total_stok_biasa > 0 ? '(Ready Stock: ' . number_format($total_stok_biasa, 0, ',', '.') . ' Pcs)' : '(Stok Habis 0 Pcs • Tersedia Pre-Order)' ?>.</li>
                         </ul>
                     </div>
 
@@ -5766,7 +5832,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <li>Aksen <strong>Bordir List Benang Emas Tebal</strong> di sekeliling mutz.</li>
                             <li><strong>Sudah termasuk (include) Pin Logam Lambang Kab. Banjar</strong>.</li>
                             <li>Bahan kokoh premium tahan lipatan.</li>
-                            <li>Harga resmi: <strong>Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></strong> (Ready Stock).</li>
+                            <li>Harga resmi: <strong>Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></strong> <?= $total_stok_kepala > 0 ? '(Ready Stock: ' . number_format($total_stok_kepala, 0, ',', '.') . ' Pcs)' : '(Stok Habis 0 Pcs • Tersedia Pre-Order)' ?>.</li>
                         </ul>
                     </div>
                 </div>
@@ -6844,6 +6910,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             const stockIcon = document.getElementById('calcResStockIcon');
             const stockTitle = document.getElementById('calcResStockTitle');
             const stockDesc = document.getElementById('calcResStockDesc');
+            const btnCalcOrderWa = document.getElementById('btnCalcOrderWa');
 
             if (banner && stockTitle && stockDesc) {
                 if (stockQty > 0) {
@@ -6853,13 +6920,27 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     }
                     stockTitle.textContent = `Ready Stock: ${stockQty} Pcs`;
                     stockDesc.textContent = `Tersedia fisik di Sekretariat KORPRI Martapura (Siap diambil/dikirim)`;
+                    if (btnCalcOrderWa) {
+                        btnCalcOrderWa.classList.remove('preorder-wa');
+                        btnCalcOrderWa.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            <span>Pesan No. ${recSize} via WA</span>
+                        `;
+                    }
                 } else {
                     banner.className = 'res-stock-banner empty';
                     if (stockIcon) {
                         stockIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
                     }
-                    stockTitle.textContent = `Stok Habis Sementara (0 Pcs)`;
-                    stockDesc.textContent = `Dapat diajukan Pre-Order/Indent atau cek ukuran alternatif di bawah`;
+                    stockTitle.textContent = `Stok Habis (0 Pcs) • Tersedia Pre-Order`;
+                    stockDesc.textContent = `Stok fisik kosong di Sekretariat. Dapat diajukan Pre-Order/Indent atau cek alternatif di bawah`;
+                    if (btnCalcOrderWa) {
+                        btnCalcOrderWa.classList.add('preorder-wa');
+                        btnCalcOrderWa.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <span>Pre-Order No. ${recSize} via WA</span>
+                        `;
+                    }
                 }
             }
 
@@ -6873,7 +6954,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         const btnAlt = document.createElement('button');
                         btnAlt.type = 'button';
                         btnAlt.className = 'res-alt-chip';
-                        btnAlt.innerHTML = `No. ${alt.size} (${alt.label} • <strong>${altStock} Pcs</strong>)`;
+                        btnAlt.innerHTML = `No. ${alt.size} (${alt.label} • <strong>${altStock > 0 ? altStock + ' Pcs' : '0 Pcs / PO'}</strong>)`;
                         btnAlt.title = `Klik untuk memilih alternatif No. ${alt.size}`;
                         btnAlt.onclick = function() {
                             selectCalcAltSize(alt.size);
@@ -6899,18 +6980,40 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             const stockQty = (genderObj[sz] !== undefined) ? (genderObj[sz] || 0) : 0;
 
             const banner = document.getElementById('calcResStockBanner');
+            const stockIcon = document.getElementById('calcResStockIcon');
             const stockTitle = document.getElementById('calcResStockTitle');
             const stockDesc = document.getElementById('calcResStockDesc');
+            const btnCalcOrderWa = document.getElementById('btnCalcOrderWa');
 
             if (banner && stockTitle && stockDesc) {
                 if (stockQty > 0) {
                     banner.className = 'res-stock-banner available';
+                    if (stockIcon) {
+                        stockIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`;
+                    }
                     stockTitle.textContent = `Ready Stock: ${stockQty} Pcs (No. ${sz})`;
                     stockDesc.textContent = `Tersedia fisik di Sekretariat KORPRI Martapura`;
+                    if (btnCalcOrderWa) {
+                        btnCalcOrderWa.classList.remove('preorder-wa');
+                        btnCalcOrderWa.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            <span>Pesan No. ${sz} via WA</span>
+                        `;
+                    }
                 } else {
                     banner.className = 'res-stock-banner empty';
-                    stockTitle.textContent = `Stok Habis Sementara (No. ${sz})`;
-                    stockDesc.textContent = `Dapat diajukan Pre-Order/Indent`;
+                    if (stockIcon) {
+                        stockIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
+                    }
+                    stockTitle.textContent = `Stok Habis (0 Pcs) • Tersedia Pre-Order (No. ${sz})`;
+                    stockDesc.textContent = `Stok fisik kosong di Sekretariat. Dapat diajukan Pre-Order/Indent`;
+                    if (btnCalcOrderWa) {
+                        btnCalcOrderWa.classList.add('preorder-wa');
+                        btnCalcOrderWa.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <span>Pre-Order No. ${sz} via WA</span>
+                        `;
+                    }
                 }
             }
             showNotification(`Ukuran beralih ke alternatif: No. ${sz}`);
@@ -6939,7 +7042,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             const catObj = STOK_DATA[calcCategory] || {};
             const genderObj = catObj[calcTargetGender] || {};
             const stockQty = (genderObj[calcRecSize] !== undefined) ? (genderObj[calcRecSize] || 0) : 0;
-            const statusText = stockQty > 0 ? `Ready Stock (${stockQty} Pcs)` : 'Pre-Order / Indent';
+            const statusText = stockQty > 0 ? `Ready Stock (${stockQty} Pcs)` : 'Stok Habis (0 Pcs) • Pengajuan Pre-Order / Indent';
 
             let msg = `Halo Admin Sekretariat KORPRI Kab. Banjar,\n\n`;
             msg += `Saya telah menghitung rekomendasi ukuran topi Mutz melalui *Kalkulator Ukuran Resmi* dengan data berikut:\n`;
@@ -6948,7 +7051,11 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             msg += `• *Model Mutz:* ${catText}\n`;
             msg += `• *Rekomendasi Ukuran:* No. ${calcRecSize}\n`;
             msg += `• *Status Fisik:* ${statusText}\n\n`;
-            msg += `Mohon konfirmasi kesiapan barang dan petunjuk pengambilan di kantor Sekretariat KORPRI Jl. A. Yani Nomor 2 Martapura. Terima kasih!`;
+            if (stockQty > 0) {
+                msg += `Mohon konfirmasi kesiapan barang dan petunjuk pengambilan di kantor Sekretariat KORPRI Jl. A. Yani Nomor 2 Martapura. Terima kasih!`;
+            } else {
+                msg += `Berhubung stok fisik di sekretariat sedang habis (0 Pcs), mohon informasi prosedur dan estimasi waktu *Pre-Order (PO)* untuk ukuran tersebut. Terima kasih!`;
+            }
 
             const phone = '<?= $admin_wa_default ?>';
             const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
@@ -7045,13 +7152,13 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     `;
                 } else {
                     statusPillHtml = `
-                        <span class="status-pill pill-avail-empty" title="Stok fisik di sekretariat habis. Tersedia pemesanan sistem Pre-Order.">
+                        <span class="status-pill pill-avail-empty" title="Stok fisik di sekretariat habis (0 Pcs). Tersedia pemesanan sistem Pre-Order.">
                             <span class="status-dot-sm"></span>
-                            <span class="pill-text-full">Habis (Pre-Order)</span>
+                            <span class="pill-text-full">Habis (0 Pcs) • Pre-Order</span>
                             <span class="pill-text-short">0 Pcs (PO)</span>
                         </span>
                     `;
-                    stockText = 'Stok Fisik Habis';
+                    stockText = '0 Pcs (Stok Habis)';
                     btnActionHtml = `
                         <button type="button" class="btn-order-action preorder-wa" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, 0)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
@@ -7070,14 +7177,14 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     <div class="stock-out-banner" aria-label="Status: Stok Habis 0 Pcs, Dapat Pre-Order">
                         <span class="banner-pulse-dot"></span>
                         <span class="banner-text-desktop">STOK HABIS (0 PCS) • AJUKAN PRE-ORDER</span>
-                        <span class="banner-text-mobile">HABIS (0 PCS) • PRE-ORDER</span>
+                        <span class="banner-text-mobile">STOK HABIS (0 PCS) • AJUKAN PRE-ORDER</span>
                     </div>
                 ` : '';
 
                 const outNoticeHtml = (qty === 0) ? `
                     <div class="stock-card-out-notice">
                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                        <span>Stok fisik kosong di sekretariat. Pesanan diajukan Pre-Order.</span>
+                        <span>Stok fisik kosong (0 Pcs) di sekretariat. Pesanan diajukan Pre-Order.</span>
                     </div>
                 ` : '';
 
@@ -7095,6 +7202,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         <div class="body-row body-row-cat">
                             <span class="body-label">Kategori</span>
                             <span class="body-value">${isKepala ? 'Kepala SKPD' : 'Standar ASN'}</span>
+                        </div>
+                        <div class="body-row">
+                            <span class="body-label">Stok Fisik</span>
+                            <span class="body-value" style="color: ${qty > 0 ? '#15803D' : '#B91C1C'};">${qty > 0 ? qty + ' Pcs (Tersedia)' : '0 Pcs (Habis / PO)'}</span>
                         </div>
                         <div class="body-row">
                             <span class="body-label">Harga Resmi</span>
@@ -7366,7 +7477,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     const qty = stockObj[sz] !== undefined ? stockObj[sz] : 0;
                     const opt = document.createElement('option');
                     opt.value = sz;
-                    opt.textContent = `No. ${sz} (${qty > 0 ? qty + ' pcs' : 'Habis'})`;
+                    opt.textContent = `No. ${sz} (${qty > 0 ? qty + ' Pcs' : '0 Pcs • PO'})`;
                     if (sz === currentDockSize) opt.selected = true;
                     sizeSelect.appendChild(opt);
                 });
@@ -7389,7 +7500,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 stockTag.classList.remove('ready', 'low', 'empty');
                 if (qty > 5) {
                     stockTag.classList.add('ready');
-                    stockText.textContent = `Ready (${qty} pcs)`;
+                    stockText.textContent = `Ready (${qty} Pcs)`;
                     if (pulseDot) {
                         pulseDot.style.background = '#22C55E';
                         pulseDot.style.boxShadow = '0 0 6px #22C55E';
@@ -7404,7 +7515,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     }
                 } else if (qty > 0) {
                     stockTag.classList.add('low');
-                    stockText.textContent = `Sisa ${qty} pcs`;
+                    stockText.textContent = `Sisa ${qty} Pcs`;
                     if (pulseDot) {
                         pulseDot.style.background = '#F59E0B';
                         pulseDot.style.boxShadow = '0 0 6px #F59E0B';
@@ -7419,7 +7530,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     }
                 } else {
                     stockTag.classList.add('empty');
-                    stockText.textContent = 'Habis (Pre-Order)';
+                    stockText.textContent = 'Habis (0 Pcs • PO)';
                     if (pulseDot) {
                         pulseDot.style.background = '#EF4444';
                         pulseDot.style.boxShadow = '0 0 6px #EF4444';
@@ -7593,10 +7704,19 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             showToast('E-MutZ KORPRI Berhasil Terpasang di HP! 🎉');
         });
 
-        // Daftarkan Service Worker
+        // Daftarkan Service Worker & bersihkan cache lawas di perangkat mobile
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('sw.js').catch(function() {});
+                navigator.serviceWorker.register('sw.js?v=20261028_2').then(function(reg) {
+                    if (reg && typeof reg.update === 'function') {
+                        reg.update();
+                    }
+                }).catch(function() {});
+                if ('caches' in window) {
+                    caches.keys().then(function(names) {
+                        names.forEach(function(name) { caches.delete(name); });
+                    }).catch(function() {});
+                }
             });
         }
 
