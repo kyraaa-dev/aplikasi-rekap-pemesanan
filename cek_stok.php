@@ -1483,12 +1483,146 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         }
 
         .pill-avail-empty {
-            background: var(--status-red-bg);
-            color: var(--status-red);
-            border: 1px solid var(--status-red-border);
+            background: rgba(239, 68, 68, 0.12);
+            color: #DC2626;
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            font-weight: 700;
         }
         .pill-avail-empty .status-dot-sm {
             background: #DC2626;
+            box-shadow: 0 0 6px rgba(220, 38, 38, 0.8);
+            animation: redDotPulse 1.8s infinite;
+        }
+        [data-theme="dark"] .pill-avail-empty {
+            background: rgba(239, 68, 68, 0.22);
+            color: #FCA5A5;
+            border: 1px solid rgba(239, 68, 68, 0.45);
+        }
+
+        /* Stock Item Card - Out of Stock (0 Pcs) State */
+        .stock-item-card.is-out-of-stock {
+            border-color: rgba(239, 68, 68, 0.38);
+            background: var(--gov-surface);
+            position: relative;
+        }
+        .stock-item-card.is-out-of-stock:hover {
+            border-color: rgba(239, 68, 68, 0.65);
+            box-shadow: 0 10px 24px -4px rgba(220, 38, 38, 0.14);
+        }
+        [data-theme="dark"] .stock-item-card.is-out-of-stock {
+            border-color: rgba(239, 68, 68, 0.45);
+            background: rgba(23, 33, 51, 0.72);
+        }
+        [data-theme="dark"] .stock-item-card.is-out-of-stock:hover {
+            border-color: rgba(248, 113, 113, 0.75);
+            box-shadow: 0 10px 26px -4px rgba(239, 68, 68, 0.25);
+        }
+
+        /* Dynamic Ribbon / Header Banner for Out of Stock */
+        .stock-out-banner {
+            background: linear-gradient(90deg, rgba(220, 38, 38, 0.12) 0%, rgba(217, 119, 6, 0.12) 100%);
+            border-bottom: 1px dashed rgba(220, 38, 38, 0.32);
+            margin: -20px -20px 14px -20px;
+            padding: 7px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #DC2626;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+        [data-theme="dark"] .stock-out-banner {
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.22) 0%, rgba(217, 119, 6, 0.22) 100%);
+            border-bottom: 1px dashed rgba(239, 68, 68, 0.4);
+            color: #FCA5A5;
+        }
+        .stock-out-banner .banner-pulse-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #DC2626;
+            box-shadow: 0 0 6px rgba(220, 38, 38, 0.8);
+            animation: redDotPulse 1.8s infinite;
+            flex-shrink: 0;
+        }
+        .banner-text-desktop { display: inline; }
+        .banner-text-mobile { display: none; }
+
+        @keyframes redDotPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.6; }
+        }
+
+        /* Micro Notice Inside Card for Out of Stock */
+        .stock-card-out-notice {
+            background: rgba(217, 119, 6, 0.08);
+            border: 1px solid rgba(217, 119, 6, 0.25);
+            border-radius: 6px;
+            padding: 7px 10px;
+            font-size: 0.74rem;
+            color: #B45309;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            line-height: 1.35;
+        }
+        [data-theme="dark"] .stock-card-out-notice {
+            background: rgba(217, 119, 6, 0.16);
+            border-color: rgba(217, 119, 6, 0.35);
+            color: #FCD34D;
+        }
+        .stock-card-out-notice svg {
+            flex-shrink: 0;
+            margin-top: 1px;
+            color: #D97706;
+        }
+
+        /* Chip Filter Indicator for Empty Size */
+        .btn-size-chip.is-chip-empty {
+            opacity: 0.88;
+            border-style: dashed;
+            border-color: rgba(220, 38, 38, 0.35);
+        }
+        .btn-size-chip.is-chip-empty .chip-empty-indicator {
+            color: #DC2626;
+            font-size: 0.72rem;
+            font-weight: 700;
+            margin-left: 3px;
+        }
+        [data-theme="dark"] .btn-size-chip.is-chip-empty {
+            border-color: rgba(239, 68, 68, 0.45);
+        }
+        [data-theme="dark"] .btn-size-chip.is-chip-empty .chip-empty-indicator {
+            color: #FCA5A5;
+        }
+
+        /* Modal Pre-Order Warning Alert Box */
+        .modal-preorder-alert {
+            background: rgba(220, 38, 38, 0.08);
+            border: 1px solid rgba(220, 38, 38, 0.28);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.82rem;
+            color: #B91C1C;
+            line-height: 1.45;
+        }
+        [data-theme="dark"] .modal-preorder-alert {
+            background: rgba(220, 38, 38, 0.18);
+            border-color: rgba(239, 68, 68, 0.4);
+            color: #FCA5A5;
+        }
+        .modal-preorder-alert svg {
+            flex-shrink: 0;
+            margin-top: 2px;
+            color: #DC2626;
         }
 
         /* Middle Body of Card */
@@ -1572,14 +1706,16 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         }
 
         .btn-order-action.preorder-wa {
-            background: var(--gov-surface);
-            color: var(--gov-slate);
-            border-color: var(--gov-hairline);
+            background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+            color: #FFFFFF;
+            border-color: #B45309;
+            box-shadow: 0 3px 10px rgba(217, 119, 6, 0.28);
         }
         .btn-order-action.preorder-wa:hover {
-            background: var(--gov-hairline-subtle);
-            border-color: #94A3B8;
+            background: linear-gradient(135deg, #B45309 0%, #92400E 100%);
+            border-color: #92400E;
             transform: translateY(-1px);
+            box-shadow: 0 5px 14px rgba(217, 119, 6, 0.42);
         }
 
         /* ==========================================================================
@@ -3400,6 +3536,28 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 padding: 12px 10px;
                 border-radius: var(--radius-sm);
             }
+            .stock-item-card.is-out-of-stock {
+                border-width: 1.5px;
+            }
+            .stock-out-banner {
+                margin: -12px -10px 8px -10px;
+                padding: 4px 6px;
+                font-size: 0.62rem;
+                gap: 5px;
+            }
+            .banner-text-desktop { display: none !important; }
+            .banner-text-mobile { display: inline !important; }
+
+            .stock-card-out-notice {
+                padding: 5px 6px;
+                font-size: 0.68rem;
+                margin-bottom: 8px;
+                gap: 4px;
+            }
+            .stock-card-out-notice svg {
+                width: 11px;
+                height: 11px;
+            }
             .stock-card-head {
                 margin-bottom: 6px;
                 align-items: flex-start;
@@ -3674,6 +3832,14 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             }
             .btn-dock-order:active {
                 transform: scale(0.97);
+            }
+            .btn-dock-order.btn-dock-preorder {
+                background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+                box-shadow: 0 4px 14px rgba(217, 119, 6, 0.45);
+            }
+            .btn-dock-order.btn-dock-preorder:hover {
+                background: linear-gradient(135deg, #B45309 0%, #92400E 100%);
+                box-shadow: 0 6px 18px rgba(217, 119, 6, 0.55);
             }
 
             /* Floating Button on Mobile */
@@ -5765,6 +5931,14 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 </div>
             </div>
 
+            <div class="modal-preorder-alert" id="modalPreorderAlert" style="display: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <div class="modal-alert-text">
+                    <strong>Pemberitahuan Stok Kosong (Pre-Order):</strong>
+                    <span>Stok fisik ukuran ini sedang kosong di sekretariat. Pesanan Anda akan dicatat dan diajukan ke panitia pengadaan sebagai antrean <strong>Pre-Order (Indent)</strong>.</span>
+                </div>
+            </div>
+
             <div class="gov-form-group">
                 <label class="gov-form-label" for="orderNama">Nama Pemesan (Opsional):</label>
                 <input type="text" id="orderNama" class="gov-form-input" placeholder="Contoh: Budi Santoso, S.IP">
@@ -5784,9 +5958,9 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 </div>
             </div>
 
-            <button type="button" onclick="submitWhatsAppOrder()" class="btn-order-action ready-wa" style="padding: 12px; font-size: 0.94rem;">
+            <button type="button" onclick="submitWhatsAppOrder()" id="btnSubmitWaModal" class="btn-order-action ready-wa" style="padding: 12px; font-size: 0.94rem;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                <span>Lanjutkan ke WhatsApp &rarr;</span>
+                <span id="btnSubmitWaModalText">Lanjutkan ke WhatsApp &rarr;</span>
             </button>
         </div>
     </div>
@@ -6430,8 +6604,16 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
                 const btn = document.createElement('button');
                 btn.type = 'button';
-                btn.className = 'btn-size-chip' + (selectedSizeFilter === sz ? ' active' : '');
-                btn.textContent = `No. ${sz} (${qty})`;
+                let chipClass = 'btn-size-chip' + (selectedSizeFilter === sz ? ' active' : '');
+                if (!isReady) chipClass += ' is-chip-empty';
+                btn.className = chipClass;
+                
+                if (!isReady) {
+                    btn.innerHTML = `No. ${sz} <span class="chip-empty-indicator">(0 PO)</span>`;
+                    btn.title = `Ukuran No. ${sz} sedang habis fisik (Tersedia Pre-Order)`;
+                } else {
+                    btn.textContent = `No. ${sz} (${qty})`;
+                }
                 btn.onclick = function() {
                     selectedSizeFilter = (selectedSizeFilter === sz) ? null : sz;
                     renderSizeChips();
@@ -6863,27 +7045,44 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     `;
                 } else {
                     statusPillHtml = `
-                        <span class="status-pill pill-avail-empty">
+                        <span class="status-pill pill-avail-empty" title="Stok fisik di sekretariat habis. Tersedia pemesanan sistem Pre-Order.">
                             <span class="status-dot-sm"></span>
-                            <span class="pill-text-full">Pesan (Stok Habis)</span>
-                            <span class="pill-text-short">Pesan</span>
+                            <span class="pill-text-full">Habis (Pre-Order)</span>
+                            <span class="pill-text-short">0 Pcs (PO)</span>
                         </span>
                     `;
                     stockText = 'Stok Fisik Habis';
                     btnActionHtml = `
-                        <button type="button" class="btn-order-action ready-wa" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, 0)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                            <span class="btn-text-full">Pesan Ukuran ${sz} via WA</span>
-                            <span class="btn-text-short">Pesan WA</span>
+                        <button type="button" class="btn-order-action preorder-wa" onclick="openOrderModal('${currentCategory}', '${currentGender}', ${sz}, 0)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <span class="btn-text-full">Pre-Order Ukuran ${sz} via WA</span>
+                            <span class="btn-text-short">Pre-Order WA</span>
                         </button>
                     `;
                 }
 
                 const card = document.createElement('div');
-                card.className = 'stock-item-card';
+                card.className = 'stock-item-card' + (qty === 0 ? ' is-out-of-stock' : '');
                 card.style.animation = 'cardFadeUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) backwards';
                 card.style.animationDelay = ((typeof idx === 'number' ? idx : 0) * 0.045) + 's';
+
+                const topBannerHtml = (qty === 0) ? `
+                    <div class="stock-out-banner" aria-label="Status: Stok Habis 0 Pcs, Dapat Pre-Order">
+                        <span class="banner-pulse-dot"></span>
+                        <span class="banner-text-desktop">STOK HABIS (0 PCS) • AJUKAN PRE-ORDER</span>
+                        <span class="banner-text-mobile">HABIS (0 PCS) • PRE-ORDER</span>
+                    </div>
+                ` : '';
+
+                const outNoticeHtml = (qty === 0) ? `
+                    <div class="stock-card-out-notice">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        <span>Stok fisik kosong di sekretariat. Pesanan diajukan Pre-Order.</span>
+                    </div>
+                ` : '';
+
                 card.innerHTML = `
+                    ${topBannerHtml}
                     <div class="stock-card-head">
                         <div class="size-display-wrap">
                             <div class="size-num-title">No. ${sz}</div>
@@ -6910,6 +7109,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         </div>
                     </div>
 
+                    ${outNoticeHtml}
                     ${btnActionHtml}
                 `;
 
@@ -6926,12 +7126,28 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             document.getElementById('modalSize').textContent = 'Nomor ' + size + ' (Lingkar ~' + size + ' cm)';
             
             const statusElem = document.getElementById('modalStockStatus');
+            const alertElem = document.getElementById('modalPreorderAlert');
+            const btnSubmit = document.getElementById('btnSubmitWaModal');
+            const btnSubmitText = document.getElementById('btnSubmitWaModalText');
+
             if (stock > 0) {
                 statusElem.textContent = `Ready Stock (${stock} Pcs Tersedia)`;
                 statusElem.style.color = '#15803D';
+                if (alertElem) alertElem.style.display = 'none';
+                if (btnSubmit) {
+                    btnSubmit.classList.remove('preorder-wa');
+                    btnSubmit.classList.add('ready-wa');
+                }
+                if (btnSubmitText) btnSubmitText.textContent = 'Lanjutkan ke WhatsApp →';
             } else {
-                statusElem.textContent = 'Pemesanan (Stok Fisik Habis / Pre-Order)';
-                statusElem.style.color = '#B91C1C';
+                statusElem.textContent = 'Stok Fisik Habis (Pengajuan Pre-Order)';
+                statusElem.style.color = '#DC2626';
+                if (alertElem) alertElem.style.display = 'flex';
+                if (btnSubmit) {
+                    btnSubmit.classList.remove('ready-wa');
+                    btnSubmit.classList.add('preorder-wa');
+                }
+                if (btnSubmitText) btnSubmitText.textContent = 'Ajukan Pre-Order via WhatsApp →';
             }
 
             // Update photo preview inside order modal
@@ -6993,7 +7209,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
             const isKepala = (selectedOrderData.category === 'Kepala SKPD');
             const catText = isKepala ? 'Mutz Kepala SKPD (Eselon II)' : 'Mutz Standar ASN (Biasa)';
-            const statusPesanan = (selectedOrderData.stock > 0) ? 'Pemesanan Ready Stock' : 'Pemesanan Mutz ASN (Pre-Order)';
+            const isPreOrder = (selectedOrderData.stock <= 0);
+            const statusPesanan = isPreOrder ? 'Pengajuan Pre-Order (Stok Fisik Habis 0 Pcs)' : 'Pemesanan Ready Stock';
 
             let msg = `Halo Admin Sekretariat KORPRI Kab. Banjar,\n\n`;
             msg += `Saya ingin mengajukan *${statusPesanan}* dengan rincian berikut:\n`;
@@ -7004,7 +7221,11 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             if (nama) msg += `• *Nama Pemesan:* ${nama}\n`;
             if (skpd) msg += `• *Asal SKPD:* ${skpd}\n`;
             
-            msg += `\nMohon informasi kesiapan fisik dan petunjuk pengambilannya di Sekretariat KORPRI Kabupaten Banjar Jl. A.Yani Nomor 2 Martapura. Terima kasih!`;
+            if (isPreOrder) {
+                msg += `\n*Catatan Pemesan:* Saya mengetahui stok fisik ukuran ini sedang kosong di sekretariat. Mohon dibantu pencatatan antrean Pre-Order/pengadaan berikutnya. Terima kasih!`;
+            } else {
+                msg += `\nMohon informasi kesiapan fisik dan petunjuk pengambilannya di Sekretariat KORPRI Kabupaten Banjar Jl. A.Yani Nomor 2 Martapura. Terima kasih!`;
+            }
 
             const phone = '<?= $admin_wa_default ?>';
             const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
@@ -7162,6 +7383,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             const stockTag = document.getElementById('dockStockTag');
             const stockText = document.getElementById('dockStockText');
             const pulseDot = document.getElementById('dockPulseDot');
+            const btnDockOrder = document.getElementById('btnDockOrder');
 
             if (stockTag && stockText) {
                 stockTag.classList.remove('ready', 'low', 'empty');
@@ -7172,6 +7394,14 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         pulseDot.style.background = '#22C55E';
                         pulseDot.style.boxShadow = '0 0 6px #22C55E';
                     }
+                    if (btnDockOrder) {
+                        btnDockOrder.classList.remove('btn-dock-preorder');
+                        btnDockOrder.title = 'Pesan Ukuran Terpilih via WhatsApp';
+                        btnDockOrder.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                            <span>Pesan WA</span>
+                        `;
+                    }
                 } else if (qty > 0) {
                     stockTag.classList.add('low');
                     stockText.textContent = `Sisa ${qty} pcs`;
@@ -7179,12 +7409,28 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         pulseDot.style.background = '#F59E0B';
                         pulseDot.style.boxShadow = '0 0 6px #F59E0B';
                     }
+                    if (btnDockOrder) {
+                        btnDockOrder.classList.remove('btn-dock-preorder');
+                        btnDockOrder.title = 'Pesan Ukuran Terpilih via WhatsApp';
+                        btnDockOrder.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                            <span>Pesan WA</span>
+                        `;
+                    }
                 } else {
                     stockTag.classList.add('empty');
-                    stockText.textContent = 'Pre-Order';
+                    stockText.textContent = 'Habis (Pre-Order)';
                     if (pulseDot) {
                         pulseDot.style.background = '#EF4444';
                         pulseDot.style.boxShadow = '0 0 6px #EF4444';
+                    }
+                    if (btnDockOrder) {
+                        btnDockOrder.classList.add('btn-dock-preorder');
+                        btnDockOrder.title = 'Ajukan Pre-Order Ukuran Terpilih via WhatsApp (Stok Fisik 0 Pcs)';
+                        btnDockOrder.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <span>Pre-Order WA</span>
+                        `;
                     }
                 }
             }
