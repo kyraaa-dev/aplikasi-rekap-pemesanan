@@ -3164,23 +3164,23 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         }
 
         /* ==========================================================================
-           MINIMALIST OFFICIAL FOOTER (Precise, Dignified, Zero Overlap)
+           ULTRA-MINIMALIST MODERN OFFICIAL FOOTER
            ========================================================================== */
         .gov-footer {
             background: var(--gov-surface);
             border-top: 1px solid var(--gov-hairline);
-            padding: 2.25rem 1.5rem 2.25rem 1.5rem;
+            padding: 1.5rem 1.5rem 1.75rem 1.5rem;
             margin-top: auto;
             position: relative;
         }
         .gov-footer::before {
             content: '';
             position: absolute;
-            top: 0;
+            top: -1px;
             left: 0;
             right: 0;
             height: 2px;
-            background: linear-gradient(90deg, #0B1E3B 0%, #B48228 35%, #0B1E3B 70%, #15803D 100%);
+            background: linear-gradient(90deg, transparent 0%, rgba(29, 78, 216, 0.45) 25%, rgba(212, 175, 55, 0.75) 50%, rgba(22, 163, 74, 0.45) 75%, transparent 100%);
         }
 
         .gov-footer-inner {
@@ -3189,116 +3189,144 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 1.5rem;
+            gap: 1.25rem;
             flex-wrap: wrap;
+            padding-right: 175px; /* Ruang aman agar tombol floating kanan bawah tidak menutupi navigasi di desktop */
         }
 
         .footer-identity {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
+        }
+        .footer-seal-wrap {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--gov-hairline-subtle);
+            border: 1px solid var(--gov-hairline);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
         .footer-seal {
-            width: 38px;
-            height: 38px;
+            width: 24px;
+            height: 24px;
             object-fit: contain;
-            flex-shrink: 0;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.08));
         }
         .footer-identity-details {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 2px;
         }
         .footer-title-row {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
         }
         .footer-name {
-            font-size: 0.95rem;
+            font-size: 0.88rem;
             font-weight: 800;
             color: var(--gov-slate);
-            line-height: 1.25;
+            line-height: 1.2;
             letter-spacing: -0.01em;
         }
         .footer-status-pill {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             background: rgba(22, 163, 74, 0.08);
-            border: 1px solid rgba(22, 163, 74, 0.22);
+            border: 1px solid rgba(22, 163, 74, 0.2);
             color: #15803D;
-            padding: 2px 9px;
+            padding: 1px 8px;
             border-radius: var(--radius-full);
             font-weight: 700;
-            font-size: 0.72rem;
+            font-size: 0.68rem;
             letter-spacing: 0.01em;
-            vertical-align: middle;
         }
         [data-theme="dark"] .footer-status-pill {
             background: rgba(34, 197, 94, 0.12);
-            border-color: rgba(34, 197, 94, 0.3);
+            border-color: rgba(34, 197, 94, 0.28);
             color: #4ADE80;
         }
         .status-indicator-dot {
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
             border-radius: 50%;
             background: #16A34A;
             display: inline-block;
             box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
         }
-        .footer-address-txt {
-            font-size: 0.80rem;
-            color: var(--gov-muted);
-            font-weight: 500;
+        .footer-sub-meta {
             display: flex;
             align-items: center;
             gap: 6px;
+            flex-wrap: wrap;
+            font-size: 0.76rem;
+            color: var(--gov-subtle);
+            font-weight: 500;
+        }
+        .footer-address-txt {
+            color: var(--gov-muted);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: var(--transition);
+        }
+        .footer-address-txt:hover {
+            color: var(--korpri-blue);
         }
         .footer-address-txt svg {
             color: var(--korpri-gold);
             flex-shrink: 0;
         }
-
-        .footer-nav-links {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px 12px;
-            font-size: 0.84rem;
-            font-weight: 600;
+        .footer-meta-sep {
+            color: var(--gov-hairline);
         }
-        .footer-nav-links a {
+
+        .footer-nav-capsule {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            background: var(--gov-hairline-subtle);
+            border: 1px solid var(--gov-hairline);
+            border-radius: var(--radius-full);
+            padding: 4px;
+        }
+        .footer-nav-capsule a {
             color: var(--gov-muted);
             text-decoration: none;
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 5px 11px;
+            border-radius: var(--radius-full);
             transition: var(--transition);
-            padding: 5px 10px;
-            border-radius: var(--radius-sm);
             white-space: nowrap;
         }
-        .footer-nav-links a:hover {
+        .footer-nav-capsule a:hover {
+            color: var(--gov-slate);
+            background: var(--gov-surface);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        }
+        .footer-nav-capsule a.footer-portal-link {
             color: var(--korpri-blue);
             background: var(--korpri-blue-subtle);
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
-        .footer-nav-dot {
-            color: var(--gov-hairline);
-            font-size: 0.75rem;
+        [data-theme="dark"] .footer-nav-capsule a.footer-portal-link {
+            color: #93C5FD;
+            background: rgba(59, 130, 246, 0.16);
         }
-
-        .footer-copyright-bar {
-            max-width: 1140px;
-            margin: 1.5rem auto 0 auto;
-            padding-top: 1.15rem;
-            border-top: 1px solid var(--gov-hairline);
-            font-size: 0.78rem;
-            color: var(--gov-subtle);
-            padding-right: 250px; /* Ruang aman presisi agar tombol floating WA & Top tidak menutupi teks */
-        }
-        .footer-copy-text {
-            line-height: 1.45;
+        .footer-nav-capsule a.footer-portal-link:hover {
+            background: var(--korpri-blue);
+            color: #FFFFFF;
         }
 
         /* ==========================================================================
@@ -3858,111 +3886,77 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 
             /* Floating Button on Mobile */
             .gov-floating-actions {
-                bottom: calc(76px + env(safe-area-inset-bottom, 10px)) !important;
-                right: 14px !important;
+                bottom: calc(70px + env(safe-area-inset-bottom, 10px)) !important;
+                right: 12px !important;
                 z-index: 994 !important;
                 gap: 8px;
+            }
+            .btn-gov-top {
+                width: 36px;
+                height: 36px;
             }
             .btn-floating-wa {
                 display: none !important; /* Digantikan secara sempurna oleh Mobile Quick Action Dock */
             }
 
-            /* Footer on Mobile (Centered, Structured Grid, Zero Floating Button Overlap) */
+            /* Ultra-Minimalist Footer on Mobile */
             .gov-footer {
-                padding: 1.75rem 1rem calc(6.25rem + env(safe-area-inset-bottom, 12px)) 1rem !important;
-                text-align: center;
+                padding: 1.25rem 0.85rem calc(7.15rem + env(safe-area-inset-bottom, 12px)) 0.85rem !important;
             }
             .gov-footer-inner {
                 flex-direction: column;
-                align-items: stretch;
-                text-align: center;
-                gap: 1.15rem;
-                width: 100%;
+                align-items: center;
+                justify-content: center;
+                gap: 0.85rem;
+                padding-right: 0;
             }
             .footer-identity {
-                flex-direction: column;
+                flex-direction: row;
                 align-items: center;
-                text-align: center;
+                justify-content: center;
+                text-align: left;
                 gap: 10px;
             }
+            .footer-seal-wrap {
+                width: 36px;
+                height: 36px;
+                border-radius: 10px;
+            }
             .footer-seal {
-                width: 44px;
-                height: 44px;
+                width: 22px;
+                height: 22px;
             }
             .footer-identity-details {
-                align-items: center;
-                text-align: center;
-                gap: 8px;
-                width: 100%;
+                align-items: flex-start;
+                gap: 3px;
             }
             .footer-title-row {
-                flex-direction: column;
-                align-items: center;
+                justify-content: flex-start;
                 gap: 6px;
             }
             .footer-name {
-                font-size: 0.95rem;
-                line-height: 1.3;
+                font-size: 0.83rem;
             }
-            .footer-address-txt {
+            .footer-status-pill {
+                font-size: 0.64rem;
+                padding: 1px 7px;
+            }
+            .footer-sub-meta {
+                justify-content: flex-start;
+                font-size: 0.72rem;
+                gap: 5px;
+            }
+            .footer-nav-capsule {
                 display: inline-flex;
-                align-items: center;
+                flex-wrap: wrap;
                 justify-content: center;
-                gap: 6px;
-                font-size: 0.75rem;
-                line-height: 1.35;
-                text-align: center;
-                background: var(--gov-hairline-subtle);
-                border: 1px solid var(--gov-hairline);
-                border-radius: var(--radius-full);
-                padding: 6px 12px;
+                gap: 2px;
+                padding: 3.5px;
                 max-width: 100%;
-                box-sizing: border-box;
             }
-            .footer-nav-links {
-                display: grid;
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 8px;
-                width: 100%;
-                font-size: 0.78rem;
-            }
-            .footer-nav-dot {
-                display: none !important;
-            }
-            .footer-nav-links a {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                padding: 9px 10px;
-                background: var(--gov-hairline-subtle);
-                border: 1px solid var(--gov-hairline);
-                border-radius: var(--radius-sm);
-                color: var(--gov-slate);
-                font-weight: 700;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-            .footer-nav-links a:last-child {
-                grid-column: 1 / -1;
-                background: var(--korpri-blue-subtle);
-                border-color: rgba(29, 78, 216, 0.22);
-                color: var(--korpri-blue);
-            }
-            [data-theme="dark"] .footer-nav-links a:last-child {
-                background: rgba(59, 130, 246, 0.15);
-                border-color: rgba(59, 130, 246, 0.32);
-                color: #93C5FD;
-            }
-            .footer-copyright-bar {
-                margin-top: 1.15rem;
-                padding: 1rem 2.75rem 0 2.75rem;
-                text-align: center;
-            }
-            .footer-copy-text {
-                font-size: 0.74rem;
-                line-height: 1.5;
+            .footer-nav-capsule a {
+                font-size: 0.73rem;
+                padding: 5px 10px;
             }
 
             /* Bottom Sheet on Mobile */
@@ -6115,41 +6109,42 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         </a>
     </div>
 
-    <!-- Minimalist Official Footer -->
+    <!-- Ultra-Minimalist Modern Official Footer -->
     <footer class="gov-footer">
         <div class="gov-footer-inner">
             <div class="footer-identity">
-                <img src="assets/images/korpri-badge.png" alt="Logo KORPRI" class="footer-seal" width="38" height="38">
+                <div class="footer-seal-wrap">
+                    <img src="assets/images/korpri-badge.png" alt="Logo KORPRI" class="footer-seal" width="24" height="24">
+                </div>
                 <div class="footer-identity-details">
                     <div class="footer-title-row">
-                        <span class="footer-name">Sekretariat KORPRI Kabupaten Banjar</span>
+                        <span class="footer-name">Sekretariat KORPRI Kab. Banjar</span>
                         <span class="footer-status-pill">
                             <span class="status-indicator-dot"></span>
-                            <span>Layanan Publik Resmi</span>
+                            <span>Resmi</span>
                         </span>
                     </div>
-                    <a href="<?= htmlspecialchars($maps_search_url) ?>" target="_blank" rel="noopener" class="footer-address-txt" title="Buka Lokasi di Google Maps" style="text-decoration: none; color: inherit;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                        <span>Jl. A. Yani Nomor 2 Martapura, Kabupaten Banjar</span>
-                    </a>
+                    <div class="footer-sub-meta">
+                        <a href="<?= htmlspecialchars($maps_search_url) ?>" target="_blank" rel="noopener" class="footer-address-txt" title="Buka Lokasi di Google Maps">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            <span>Jl. A. Yani No. 2 Martapura</span>
+                        </a>
+                        <span class="footer-meta-sep">&bull;</span>
+                        <span>&copy; <?= date('Y') ?> E-MutZ</span>
+                    </div>
                 </div>
             </div>
 
-            <nav class="footer-nav-links" aria-label="Navigasi Footer">
-                <a href="#galeri-produk">Galeri Fisik Mutz</a>
-                <span class="footer-nav-dot">&bull;</span>
-                <a href="#kalkulator-ukuran">Kalkulator Ukuran (cm)</a>
-                <span class="footer-nav-dot">&bull;</span>
-                <a href="#panduan">Pedoman Ukuran</a>
-                <span class="footer-nav-dot">&bull;</span>
-                <a href="#lokasi-pelayanan">Jam Layanan &amp; Peta</a>
-                <span class="footer-nav-dot">&bull;</span>
-                <a href="login.php">Portal Petugas</a>
+            <nav class="footer-nav-capsule" aria-label="Navigasi Footer">
+                <a href="#galeri-produk">Galeri</a>
+                <a href="#kalkulator-ukuran">Kalkulator</a>
+                <a href="#panduan">Ukuran</a>
+                <a href="#lokasi-pelayanan">Lokasi</a>
+                <a href="login.php" class="footer-portal-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <span>Petugas</span>
+                </a>
             </nav>
-        </div>
-
-        <div class="footer-copyright-bar">
-            <div class="footer-copy-text">&copy; <?= date('Y') ?> Sekretariat KORPRI Kabupaten Banjar. Seluruh Hak Cipta Dilindungi.</div>
         </div>
     </footer>
 
@@ -7749,7 +7744,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         // Daftarkan Service Worker & bersihkan cache lawas di perangkat mobile
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('sw.js?v=20261028_3').then(function(reg) {
+                navigator.serviceWorker.register('sw.js?v=20261028_4').then(function(reg) {
                     if (reg && typeof reg.update === 'function') {
                         reg.update();
                     }
