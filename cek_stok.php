@@ -3572,71 +3572,120 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 font-size: 0.74rem;
             }
 
-            /* Product Selector on Mobile: Sleek Single-Row Compact Cards */
+            /* Product Selector on Mobile: Structured 2-Zone Bento Cards (Zero Overflow) */
             .gov-product-selector {
                 grid-template-columns: 1fr;
-                gap: 8px;
-                margin-bottom: 1rem;
+                gap: 10px;
+                margin-bottom: 1.1rem;
             }
             .product-choice-card {
-                padding: 10px 12px !important;
+                padding: 13px 14px !important;
                 border-radius: var(--radius-md);
-                flex-wrap: nowrap !important;
-                align-items: center !important;
-                gap: 10px !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 11px !important;
             }
             .choice-info-wrap {
+                width: 100% !important;
                 flex: 1 1 auto !important;
                 min-width: 0;
-                gap: 9px;
-                align-items: center;
+                gap: 10px !important;
+                align-items: flex-start !important;
             }
             .choice-check-radio {
-                width: 18px;
-                height: 18px;
-                margin-top: 0;
+                width: 20px;
+                height: 20px;
+                margin-top: 2px;
             }
             .choice-check-radio::after {
-                width: 8px;
-                height: 8px;
+                width: 9px;
+                height: 9px;
+            }
+            .choice-text-col {
+                flex: 1;
+                min-width: 0;
             }
             .choice-meta-title {
-                font-size: 0.88rem;
-                margin-bottom: 2px;
+                font-size: 0.95rem;
+                line-height: 1.25;
+                margin-bottom: 3px;
             }
             .choice-meta-desc {
-                font-size: 0.72rem;
-                margin-bottom: 5px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
+                font-size: 0.76rem;
+                line-height: 1.35;
+                margin-bottom: 8px;
+                white-space: normal;
             }
             .choice-tags-row {
-                gap: 4px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 5px;
             }
             .choice-tags-row .tag-micro {
-                font-size: 0.63rem;
-                padding: 1px 6px;
+                font-size: 0.65rem;
+                padding: 2px 7px;
             }
             .choice-side-meta {
-                width: auto !important;
-                flex-shrink: 0;
+                width: 100% !important;
                 flex-direction: row !important;
                 align-items: center !important;
-                justify-content: flex-end !important;
-                padding-top: 0 !important;
-                border-top: none !important;
-                gap: 8px !important;
+                justify-content: space-between !important;
+                background: var(--gov-hairline-subtle);
+                border: 1px solid var(--gov-hairline);
+                border-radius: var(--radius-sm);
+                padding: 8px 11px !important;
+                box-sizing: border-box;
+                gap: 10px !important;
+            }
+            .choice-thumb-group {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                cursor: pointer;
             }
             .choice-thumb-box {
-                width: 42px;
-                height: 42px;
+                width: 52px !important;
+                height: 36px !important;
+            }
+            .choice-thumb-img {
+                width: 52px !important;
+                height: 36px !important;
+            }
+            .choice-thumb-pin {
+                width: 19px !important;
+                height: 19px !important;
+                bottom: -4px !important;
+                right: -4px !important;
+            }
+            .choice-thumb-caption {
+                display: inline-flex !important;
+                flex-direction: column;
+                gap: 1px;
+                text-align: left;
+            }
+            .choice-thumb-caption-title {
+                font-size: 0.72rem;
+                font-weight: 700;
+                color: var(--gov-slate);
+                line-height: 1.2;
+            }
+            .choice-thumb-caption-sub {
+                font-size: 0.64rem;
+                font-weight: 600;
+                color: var(--korpri-blue);
+                line-height: 1.2;
+            }
+            [data-theme="dark"] .choice-thumb-caption-sub {
+                color: #93C5FD;
+            }
+            .choice-price-block {
+                text-align: right;
             }
             .choice-price-val {
-                font-size: 0.98rem;
+                font-size: 1.08rem;
             }
             .choice-price-label {
-                font-size: 0.62rem;
+                font-size: 0.64rem;
             }
 
             /* Sticky Glass Filter Toolbar on Mobile */
@@ -5143,16 +5192,22 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             background: #FFF;
         }
 
+        .choice-text-col {
+            flex: 1;
+            min-width: 0;
+        }
+        .choice-thumb-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .choice-thumb-caption {
+            display: none;
+        }
         @media (max-width: 860px) {
             .gov-product-selector {
                 grid-template-columns: 1fr;
                 gap: 10px;
-            }
-        }
-        @media (max-width: 520px) {
-            .choice-thumb-img {
-                width: 44px;
-                height: 44px;
             }
         }
 
@@ -5650,7 +5705,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             <div class="product-choice-card choice-standar active" id="cardChoiceStandar" onclick="selectCategory('Biasa')">
                 <div class="choice-info-wrap">
                     <div class="choice-check-radio"></div>
-                    <div>
+                    <div class="choice-text-col">
                         <div class="choice-meta-title">Mutz Standar ASN</div>
                         <div class="choice-meta-desc">Diperuntukkan bagi seluruh ASN (PNS &amp; PPPK)</div>
                         <div class="choice-tags-row">
@@ -5664,9 +5719,15 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     </div>
                 </div>
                 <div class="choice-side-meta">
-                    <div class="choice-thumb-box" title="Foto Resmi Mutz Standar ASN + Pin (Klik untuk memperbesar)" onclick="event.stopPropagation(); openProductLightbox(currentGender === 'Perempuan' ? 3 : 2);">
-                        <img src="assets/images/mutz-standar-pria.jpg" alt="Mutz Standar ASN" class="choice-thumb-img" id="thumbChoiceStandar" loading="lazy" decoding="async">
-                        <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Banjar" class="choice-thumb-pin" title="Include Pin Logam" loading="lazy" decoding="async">
+                    <div class="choice-thumb-group" title="Foto Resmi Mutz Standar ASN + Pin (Klik untuk memperbesar)" onclick="event.stopPropagation(); openProductLightbox(currentGender === 'Perempuan' ? 3 : 2);">
+                        <div class="choice-thumb-box">
+                            <img src="assets/images/mutz-standar-pria.jpg" alt="Mutz Standar ASN" class="choice-thumb-img" id="thumbChoiceStandar" loading="lazy" decoding="async">
+                            <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Banjar" class="choice-thumb-pin" title="Include Pin Logam" loading="lazy" decoding="async">
+                        </div>
+                        <div class="choice-thumb-caption">
+                            <span class="choice-thumb-caption-title">Foto Fisik &amp; Pin</span>
+                            <span class="choice-thumb-caption-sub">Ketuk perbesar &nearr;</span>
+                        </div>
                     </div>
                     <div class="choice-price-block">
                         <div class="choice-price-val">Rp <?= number_format(HARGA_BIASA, 0, ',', '.') ?></div>
@@ -5679,7 +5740,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             <div class="product-choice-card choice-kepala" id="cardChoiceKepala" onclick="selectCategory('Kepala SKPD')">
                 <div class="choice-info-wrap">
                     <div class="choice-check-radio"></div>
-                    <div>
+                    <div class="choice-text-col">
                         <div class="choice-meta-title">Mutz Kepala SKPD (Eselon II)</div>
                         <div class="choice-meta-desc">Pejabat Pimpinan Tinggi Pratama / Kepala Dinas</div>
                         <div class="choice-tags-row">
@@ -5694,9 +5755,15 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     </div>
                 </div>
                 <div class="choice-side-meta">
-                    <div class="choice-thumb-box" title="Foto Resmi Mutz Kepala SKPD + Pin (Klik untuk memperbesar)" onclick="event.stopPropagation(); openProductLightbox(currentGender === 'Perempuan' ? 1 : 0);">
-                        <img src="assets/images/mutz-eselon-pria.jpg" alt="Mutz Kepala SKPD" class="choice-thumb-img" id="thumbChoiceKepala" loading="lazy" decoding="async">
-                        <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Banjar" class="choice-thumb-pin" title="Include Pin Logam" loading="lazy" decoding="async">
+                    <div class="choice-thumb-group" title="Foto Resmi Mutz Kepala SKPD + Pin (Klik untuk memperbesar)" onclick="event.stopPropagation(); openProductLightbox(currentGender === 'Perempuan' ? 1 : 0);">
+                        <div class="choice-thumb-box">
+                            <img src="assets/images/mutz-eselon-pria.jpg" alt="Mutz Kepala SKPD" class="choice-thumb-img" id="thumbChoiceKepala" loading="lazy" decoding="async">
+                            <img src="assets/images/pin-kab-banjar.jpg" alt="Pin Banjar" class="choice-thumb-pin" title="Include Pin Logam" loading="lazy" decoding="async">
+                        </div>
+                        <div class="choice-thumb-caption">
+                            <span class="choice-thumb-caption-title">Foto Fisik &amp; Pin</span>
+                            <span class="choice-thumb-caption-sub">Ketuk perbesar &nearr;</span>
+                        </div>
                     </div>
                     <div class="choice-price-block">
                         <div class="choice-price-val">Rp <?= number_format(HARGA_KEPALA, 0, ',', '.') ?></div>
@@ -7962,7 +8029,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         // Daftarkan Service Worker & bersihkan cache lawas di perangkat mobile
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('sw.js?v=20261028_5').then(function(reg) {
+                navigator.serviceWorker.register('sw.js?v=20261028_6').then(function(reg) {
                     if (reg && typeof reg.update === 'function') {
                         reg.update();
                     }
