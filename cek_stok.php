@@ -1402,6 +1402,9 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             line-height: 1.45;
             font-weight: 500;
         }
+        .eselon-desc-mobile {
+            display: none;
+        }
 
         /* ==========================================================================
            AUTHENTIC STOCK GRID (Clean Product Presentation, Zero Slop)
@@ -2701,19 +2704,221 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 gap: 18px;
             }
             .calc-segmented-group {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(3, minmax(0, 1fr));
             }
             .res-actions-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
 
-        @media (max-width: 520px) {
+        @media (max-width: 680px) {
+            .gov-size-calculator-box {
+                padding: 13px 12px;
+                border-radius: 13px;
+            }
+            .calc-header-row {
+                gap: 8px;
+                margin-bottom: 5px;
+            }
+            .calc-icon-badge {
+                width: 34px;
+                height: 34px;
+                border-radius: 9px;
+            }
+            .calc-icon-badge svg {
+                width: 17px;
+                height: 17px;
+            }
+            .calc-badge-label {
+                font-size: 0.60rem;
+            }
+            .calc-title {
+                font-size: 0.93rem;
+            }
+            .calc-header-guide-link {
+                display: none;
+            }
+            .calc-desc {
+                font-size: 0.76rem;
+                line-height: 1.42;
+                margin-bottom: 11px;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .calc-body-grid {
+                gap: 13px;
+            }
+            .calc-controls-panel {
+                gap: 12px;
+            }
+            .calc-group {
+                gap: 6px;
+            }
+            .calc-label {
+                font-size: 0.72rem;
+            }
             .calc-segmented-group {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 6px;
+            }
+            .calc-seg-btn {
+                padding: 8px 4px;
+                gap: 2.5px;
+                border-radius: 9px;
+            }
+            .calc-seg-btn .seg-icon {
+                font-size: 1.12rem;
+            }
+            .calc-seg-btn .seg-name {
+                font-size: 0.70rem;
+                line-height: 1.15;
+            }
+            .calc-seg-btn .seg-sub {
+                font-size: 0.59rem;
+                line-height: 1.12;
             }
             .calc-cat-toggle-row {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 6px;
+            }
+            .calc-cat-btn {
+                padding: 8px 9px;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                gap: 3px;
+                font-size: 0.73rem;
+                line-height: 1.2;
+                border-radius: 9px;
+            }
+            .cat-pill-micro {
+                font-size: 0.60rem;
+                padding: 1.5px 6px;
+            }
+            .calc-stepper-btn {
+                width: 32px;
+                height: 32px;
+            }
+            .calc-val-display input {
+                font-size: 16px;
+                width: 48px;
+            }
+            .calc-slider-scale {
+                margin-top: 5px;
+                padding: 0 2px;
+            }
+            .scale-mark {
+                font-size: 0.68rem;
+            }
+            .calc-presets-row {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                gap: 5px;
+                margin-top: 4px;
+                padding-bottom: 2px;
+            }
+            .calc-presets-row::-webkit-scrollbar {
+                display: none;
+            }
+            .preset-label {
+                flex-shrink: 0;
+                white-space: nowrap;
+                font-size: 0.65rem;
+            }
+            .btn-calc-preset {
+                flex-shrink: 0;
+                white-space: nowrap;
+                font-size: 0.71rem;
+                padding: 4px 9px;
+            }
+            .calc-result-card {
+                padding: 12px;
+                gap: 9px;
+                border-radius: 12px;
+            }
+            .res-card-top-tag {
+                gap: 6px;
+            }
+            .res-tag-live {
+                font-size: 0.62rem;
+                gap: 5px;
+            }
+            .res-dot {
+                width: 6.5px;
+                height: 6.5px;
+            }
+            .res-model-badge {
+                font-size: 0.64rem;
+                padding: 2px 7px;
+                white-space: nowrap;
+            }
+            .res-main-block {
+                padding: 10px 12px;
+                border-radius: 9px;
+            }
+            .res-rec-label {
+                font-size: 0.68rem;
+            }
+            .res-number-row {
+                margin: 4px 0;
+                gap: 8px;
+            }
+            .res-size-number {
+                font-size: 2.15rem;
+            }
+            .res-comfort-tag {
+                font-size: 0.69rem;
+                padding: 3px 8px;
+            }
+            .res-detail-cm {
+                font-size: 0.75rem;
+            }
+            .res-stock-banner {
+                padding: 8px 10px;
+                gap: 8px;
+            }
+            .res-stock-indicator svg {
+                width: 17px;
+                height: 17px;
+            }
+            .res-stock-title {
+                font-size: 0.77rem;
+            }
+            .res-stock-desc {
+                font-size: 0.71rem;
+            }
+            .res-notes-box {
+                font-size: 0.74rem;
+                line-height: 1.42;
+                padding: 7px 10px;
+            }
+            .res-alt-row {
+                font-size: 0.71rem;
+                gap: 5px;
+            }
+            .res-alt-chip {
+                font-size: 0.70rem;
+                padding: 2.5px 8px;
+            }
+            .res-actions-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 7px;
+            }
+            .btn-calc-action {
+                font-size: 0.75rem;
+                padding: 9px 7px;
+                min-height: 40px;
+                gap: 5px;
+                border-radius: 9px;
+            }
+            .btn-calc-action svg {
+                width: 14px;
+                height: 14px;
+                flex-shrink: 0;
             }
         }
 
@@ -2973,10 +3178,17 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             transform: translateY(-1px);
             color: var(--korpri-blue);
         }
+        .sched-txt-mobile,
+        .map-btn-lbl-mobile {
+            display: none;
+        }
 
         /* ==========================================================================
            MODAL & FLOATING DIALOG
            ========================================================================== */
+        .modal-sheet-handle {
+            display: none;
+        }
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -3857,6 +4069,59 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 padding: 6px 8px;
                 font-size: 0.74rem;
             }
+            .gallery-touch-zoom-pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 3.5px;
+                position: absolute;
+                bottom: 7px;
+                right: 7px;
+                z-index: 2;
+                background: rgba(11, 30, 59, 0.74);
+                backdrop-filter: blur(6px);
+                -webkit-backdrop-filter: blur(6px);
+                border: 1px solid rgba(255, 255, 255, 0.22);
+                color: #F8FAFC;
+                font-size: 0.61rem;
+                font-weight: 700;
+                letter-spacing: 0.01em;
+                padding: 2.5px 7px;
+                border-radius: var(--radius-full);
+                pointer-events: none;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24);
+            }
+            .gallery-mobile-dots {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                margin-top: 2px;
+                padding-top: 2px;
+            }
+            .gallery-mobile-dots.is-single {
+                display: none;
+            }
+            .gallery-dot-btn {
+                width: 6px;
+                height: 6px;
+                border-radius: 999px;
+                border: none;
+                padding: 0;
+                background: rgba(148, 163, 184, 0.42);
+                cursor: pointer;
+                transition: width 0.24s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+                -webkit-tap-highlight-color: transparent;
+            }
+            [data-theme="dark"] .gallery-dot-btn {
+                background: rgba(148, 163, 184, 0.28);
+            }
+            .gallery-dot-btn.active {
+                width: 18px;
+                background: var(--korpri-gold);
+            }
+            [data-theme="dark"] .gallery-dot-btn.active {
+                background: #FBBF24;
+            }
 
             /* Product Selector on Mobile: Structured 2-Zone Bento Cards (Zero Overflow) */
             .gov-product-selector {
@@ -4560,16 +4825,255 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 padding: 5px 10px;
             }
 
-            /* Bottom Sheet on Mobile */
+            /* Minimalist Eselon II Micro Callout on Mobile */
+            .gov-eselon-alert {
+                padding: 9px 11px;
+                margin-bottom: 0.9rem;
+                gap: 9px;
+                border-radius: 10px;
+                align-items: flex-start;
+            }
+            .eselon-icon-wrap {
+                width: 28px;
+                height: 28px;
+                border-radius: 7px;
+                margin-top: 1px;
+            }
+            .eselon-icon-wrap svg {
+                width: 15px;
+                height: 15px;
+            }
+            .eselon-alert-title {
+                font-size: 0.78rem;
+                margin-bottom: 1px;
+                line-height: 1.25;
+            }
+            .eselon-alert-desc {
+                font-size: 0.72rem;
+                line-height: 1.38;
+            }
+            .eselon-desc-desktop {
+                display: none;
+            }
+            .eselon-desc-mobile {
+                display: inline;
+            }
+
+            /* Service Hours 2x2 Bento Grid & Compact Location Card on Mobile */
+            .office-lead-desc {
+                font-size: 0.78rem !important;
+                line-height: 1.45 !important;
+                margin-bottom: 0.35rem !important;
+            }
+            .gov-office-grid {
+                gap: 10px;
+                margin-top: 0.75rem;
+            }
+            .office-card {
+                padding: 12px;
+                border-radius: 12px;
+            }
+            .office-subhead {
+                margin-bottom: 10px;
+                gap: 6px;
+            }
+            .office-subhead-title {
+                font-size: 0.87rem;
+                gap: 6px;
+            }
+            .office-subhead-title svg {
+                width: 16px;
+                height: 16px;
+                flex-shrink: 0;
+            }
+            .schedule-list {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 6px;
+                margin-bottom: 10px;
+            }
+            .schedule-item {
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                gap: 2.5px;
+                padding: 8px 9px;
+                border-radius: 9px;
+            }
+            .schedule-day {
+                font-size: 0.72rem;
+                line-height: 1.2;
+            }
+            .schedule-hours {
+                font-size: 0.72rem;
+                line-height: 1.25;
+            }
+            .sched-txt-desktop,
+            .map-btn-lbl-desktop {
+                display: none;
+            }
+            .sched-txt-mobile,
+            .map-btn-lbl-mobile {
+                display: inline;
+            }
+            .office-notice-box {
+                padding: 8px 10px;
+                font-size: 0.73rem;
+                line-height: 1.4;
+                gap: 7px;
+                border-radius: 9px;
+            }
+            .location-map-wrap {
+                height: 175px;
+                margin-bottom: 10px;
+                border-radius: 10px;
+            }
+            .location-meta-details {
+                margin-bottom: 10px;
+            }
+            .loc-instansi-name {
+                font-size: 0.85rem;
+                line-height: 1.3;
+            }
+            .loc-full-address {
+                font-size: 0.76rem;
+                line-height: 1.42;
+                margin-bottom: 6px;
+            }
+            .loc-coords-pill {
+                font-size: 0.69rem;
+                padding: 2.5px 7px;
+            }
+            .location-actions-row {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 7px;
+            }
+            .btn-map-action {
+                min-width: 0;
+                padding: 9px 8px;
+                font-size: 0.75rem;
+                gap: 5px;
+                white-space: nowrap;
+                border-radius: 9px;
+            }
+            .btn-map-action svg {
+                width: 14px;
+                height: 14px;
+                flex-shrink: 0;
+            }
+
+            /* Native iOS-Style Scrollable Bottom Sheet on Mobile */
             .modal-overlay {
                 align-items: flex-end;
                 padding: 0;
             }
             .modal-window {
-                max-width: 100%;
-                border-bottom-left-radius: 0;
-                border-bottom-right-radius: 0;
-                padding: 20px 18px max(26px, calc(env(safe-area-inset-bottom, 0px) + 18px)) 18px;
+                max-width: 100% !important;
+                max-height: 88dvh;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior: contain;
+                border-radius: 20px 20px 0 0;
+                padding: 10px 16px max(22px, calc(env(safe-area-inset-bottom, 0px) + 16px)) 16px;
+                transform: translateY(24px);
+                transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .modal-overlay.active .modal-window {
+                transform: translateY(0);
+            }
+            .modal-sheet-handle {
+                display: block;
+                width: 38px;
+                height: 4px;
+                border-radius: 999px;
+                background: rgba(148, 163, 184, 0.45);
+                margin: 0 auto 10px auto;
+            }
+            [data-theme="dark"] .modal-sheet-handle {
+                background: rgba(148, 163, 184, 0.32);
+            }
+            .modal-head {
+                padding-bottom: 10px;
+                margin-bottom: 10px;
+            }
+            .modal-title-text {
+                font-size: 1.02rem;
+            }
+            .modal-lead-note {
+                font-size: 0.78rem !important;
+                line-height: 1.42;
+                margin-bottom: 10px !important;
+            }
+            .modal-summary-box {
+                padding: 10px 11px;
+                margin-bottom: 12px;
+                font-size: 0.78rem;
+                border-radius: 10px;
+            }
+            .modal-summary-grid {
+                flex-direction: row;
+                align-items: center;
+                gap: 11px;
+            }
+            .modal-summary-thumb-box {
+                width: 72px;
+                height: 50px;
+                margin: 0;
+            }
+            .modal-summary-line {
+                margin-bottom: 4px;
+                gap: 8px;
+            }
+            .modal-summary-line:last-child {
+                padding-top: 4px;
+                margin-top: 4px;
+            }
+            .modal-preorder-alert {
+                padding: 9px 11px;
+                margin-bottom: 12px;
+                font-size: 0.75rem;
+                line-height: 1.4;
+                gap: 8px;
+                border-radius: 10px;
+            }
+            .gov-form-group {
+                margin-bottom: 11px;
+            }
+            .gov-form-label {
+                font-size: 0.78rem;
+                margin-bottom: 4px;
+            }
+            .gov-form-input {
+                font-size: 16px;
+                padding: 9px 11px;
+                border-radius: 9px;
+            }
+            #btnSubmitWaModal {
+                padding: 11px 14px !important;
+                font-size: 0.88rem !important;
+                border-radius: 11px;
+            }
+
+            /* Compact Safe-Area PWA Banner on Mobile */
+            .gov-pwa-banner {
+                left: 10px;
+                right: 10px;
+                padding: 10px 12px;
+                border-radius: 15px;
+                gap: 10px;
+            }
+            .pwa-banner-icon {
+                width: 36px;
+                height: 36px;
+                border-radius: 9px;
+            }
+            .pwa-banner-icon img {
+                width: 26px;
+                height: 26px;
+            }
+            .pwa-banner-title {
+                font-size: 0.79rem;
             }
         }
 
@@ -4642,7 +5146,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
            ========================================================================== */
         .gov-pwa-banner {
             position: fixed;
-            bottom: 16px;
+            bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 10px));
             left: 14px;
             right: 14px;
             max-width: 480px;
@@ -5055,6 +5559,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         .gallery-img-box:hover .overlay-zoom-btn {
             transform: scale(1);
         }
+        .gallery-touch-zoom-pill,
+        .gallery-mobile-dots {
+            display: none;
+        }
 
         .gallery-card-content {
             padding: 12px 13px 13px;
@@ -5335,81 +5843,6 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             backdrop-filter: blur(4px);
         }
 
-        @media (max-width: 768px) {
-            .gov-lightbox-overlay {
-                padding: 10px 8px;
-            }
-            .gov-lightbox-window {
-                max-height: 92vh;
-                border-radius: 18px;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            .lightbox-body {
-                display: flex;
-                flex-direction: column;
-                min-height: auto;
-            }
-            .lightbox-media-wrap {
-                width: 100%;
-                height: 270px;
-                min-height: 270px;
-                max-height: 300px;
-                flex-shrink: 0;
-                padding: 14px;
-                border-radius: 18px 18px 0 0;
-                background: #F1F5F9;
-            }
-            [data-theme="dark"] .lightbox-media-wrap {
-                background: #0B132B;
-            }
-            .lightbox-main-img {
-                width: 100%;
-                height: 100%;
-                max-width: 100%;
-                max-height: 100%;
-                object-fit: contain;
-                object-position: center;
-                border-radius: 8px;
-            }
-            .btn-lightbox-nav {
-                width: 36px;
-                height: 36px;
-            }
-            .btn-lightbox-nav.prev { left: 8px; }
-            .btn-lightbox-nav.next { right: 8px; }
-            .lightbox-counter-badge {
-                bottom: 8px;
-                left: 8px;
-            }
-            .lightbox-info-panel {
-                padding: 16px 14px 20px;
-                display: flex;
-                flex-direction: column;
-                gap: 14px;
-            }
-            .lightbox-footer-action {
-                margin-top: 8px;
-                padding: 12px;
-                flex-direction: column;
-                align-items: stretch;
-                gap: 10px;
-            }
-            .btn-lightbox-select {
-                width: 100%;
-                justify-content: center;
-                padding: 12px;
-                font-size: 0.9rem;
-            }
-        }
-        @media (max-width: 420px) {
-            .lightbox-media-wrap {
-                height: 230px;
-                min-height: 230px;
-                padding: 10px;
-            }
-        }
-
         .lightbox-info-panel {
             padding: 24px;
             display: flex;
@@ -5549,6 +5982,146 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
         }
 
+        @media (max-width: 768px) {
+            .gov-lightbox-overlay {
+                padding: 8px;
+            }
+            .gov-lightbox-window {
+                max-height: 90dvh;
+                border-radius: 18px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .btn-lightbox-close {
+                top: 9px;
+                right: 9px;
+                width: 33px;
+                height: 33px;
+                font-size: 1.25rem;
+            }
+            .lightbox-body {
+                display: flex;
+                flex-direction: column;
+                min-height: auto;
+            }
+            .lightbox-media-wrap {
+                width: 100%;
+                height: 225px;
+                min-height: 225px;
+                max-height: 245px;
+                flex-shrink: 0;
+                padding: 12px;
+                border-radius: 18px 18px 0 0;
+                background: #F1F5F9;
+            }
+            [data-theme="dark"] .lightbox-media-wrap {
+                background: #0B132B;
+            }
+            .lightbox-main-img {
+                width: 100%;
+                height: 100%;
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+                object-position: center;
+                border-radius: 8px;
+            }
+            .btn-lightbox-nav {
+                width: 34px;
+                height: 34px;
+            }
+            .btn-lightbox-nav.prev { left: 8px; }
+            .btn-lightbox-nav.next { right: 8px; }
+            .lightbox-counter-badge {
+                bottom: 8px;
+                left: 8px;
+                font-size: 0.68rem;
+                padding: 2px 9px;
+            }
+            .lightbox-info-panel {
+                padding: 14px 14px max(16px, calc(env(safe-area-inset-bottom, 0px) + 12px));
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .lightbox-tag-pill {
+                font-size: 0.66rem;
+                padding: 2.5px 9px;
+                margin-bottom: 5px;
+            }
+            .lightbox-title {
+                font-size: 1.02rem;
+                margin-bottom: 3px;
+                line-height: 1.3;
+            }
+            .lightbox-spec-badge {
+                font-size: 0.76rem;
+                margin-bottom: 7px;
+            }
+            .lightbox-desc {
+                font-size: 0.78rem;
+                line-height: 1.48;
+                margin-bottom: 9px;
+            }
+            .lightbox-features-title {
+                font-size: 0.70rem;
+                margin-bottom: 4px;
+            }
+            .lightbox-features-ul {
+                font-size: 0.76rem;
+                line-height: 1.48;
+                padding-left: 16px;
+            }
+            .lightbox-features-ul li {
+                margin-bottom: 2px;
+            }
+            .lightbox-footer-action {
+                margin-top: 6px;
+                padding: 10px 12px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+                border-radius: 11px;
+            }
+            .lightbox-price-block {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: baseline;
+                justify-content: space-between;
+                gap: 2px 8px;
+            }
+            .lightbox-price-label {
+                font-size: 0.72rem;
+            }
+            .lightbox-price-val {
+                font-size: 1.06rem;
+            }
+            .lightbox-pin-note {
+                width: 100%;
+                font-size: 0.69rem;
+                margin-top: 0;
+            }
+            .btn-lightbox-select {
+                width: 100%;
+                justify-content: center;
+                padding: 10px 12px;
+                font-size: 0.82rem;
+                border-radius: 9px;
+            }
+            .lightbox-thumbs-strip {
+                margin-top: 11px;
+                padding-top: 10px;
+                gap: 6px;
+            }
+        }
+        @media (max-width: 420px) {
+            .lightbox-media-wrap {
+                height: 200px;
+                min-height: 200px;
+                padding: 10px;
+            }
+        }
+
         /* Selector Thumbnail Previews */
         .choice-info-wrap {
             display: flex;
@@ -5657,19 +6230,13 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             gap: 14px;
             align-items: center;
         }
-        @media (max-width: 480px) {
-            .modal-summary-grid {
-                flex-direction: column;
-                align-items: stretch;
-            }
-        }
         .modal-summary-thumb-box {
             position: relative;
             width: 82px;
             height: 56px;
             flex-shrink: 0;
             cursor: pointer;
-            margin: 0 auto;
+            margin: 0;
         }
         .modal-order-img {
             width: 100%;
@@ -5916,6 +6483,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <span class="tag-pill-gold">Eselon II • Pria</span>
                             <span class="tag-pill-dark">Bordir Emas</span>
                         </div>
+                        <span class="gallery-touch-zoom-pill" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10.5" height="10.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Perbesar</span>
+                        </span>
                         <div class="gallery-hover-overlay">
                             <div class="overlay-zoom-btn">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
@@ -5960,6 +6531,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <span class="tag-pill-gold">Eselon II • Wanita</span>
                             <span class="tag-pill-dark">Bordir Emas</span>
                         </div>
+                        <span class="gallery-touch-zoom-pill" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10.5" height="10.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Perbesar</span>
+                        </span>
                         <div class="gallery-hover-overlay">
                             <div class="overlay-zoom-btn">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
@@ -6004,6 +6579,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <span class="tag-pill-blue">Standar • Pria</span>
                             <span class="tag-pill-dark">Lis Kuning</span>
                         </div>
+                        <span class="gallery-touch-zoom-pill" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10.5" height="10.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Perbesar</span>
+                        </span>
                         <div class="gallery-hover-overlay">
                             <div class="overlay-zoom-btn">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
@@ -6048,6 +6627,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <span class="tag-pill-blue">Standar • Wanita</span>
                             <span class="tag-pill-dark">Lis Kuning</span>
                         </div>
+                        <span class="gallery-touch-zoom-pill" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10.5" height="10.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Perbesar</span>
+                        </span>
                         <div class="gallery-hover-overlay">
                             <div class="overlay-zoom-btn">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
@@ -6092,6 +6675,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <span class="tag-pill-emerald">Include Gratis</span>
                             <span class="tag-pill-dark">Kuningan Emas</span>
                         </div>
+                        <span class="gallery-touch-zoom-pill" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10.5" height="10.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Perbesar</span>
+                        </span>
                         <div class="gallery-hover-overlay">
                             <div class="overlay-zoom-btn">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
@@ -6124,6 +6711,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     </div>
                 </article>
             </div>
+            <div class="gallery-mobile-dots" id="galleryMobileDots" aria-label="Indikator Geser Foto Galeri"></div>
         </section>
 
         <!-- Product Type Selector (Tactile 2-Card Segmented Choice) -->
@@ -6241,7 +6829,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             </div>
             <div>
                 <div class="eselon-alert-title">Spesifikasi Khusus Pejabat Eselon II</div>
-                <div class="eselon-alert-desc">Dilengkapi aksen bordir list benang emas tebal resmi KORPRI untuk Kepala Dinas, Kepala Badan, Asisten Sekda, Staf Ahli, dan Sekda. Sudah include Pin Logam Lambang Kabupaten Banjar.</div>
+                <div class="eselon-alert-desc">
+                    <span class="eselon-desc-desktop">Dilengkapi aksen bordir list benang emas tebal resmi KORPRI untuk Kepala Dinas, Kepala Badan, Asisten Sekda, Staf Ahli, dan Sekda. Sudah include Pin Logam Lambang Kabupaten Banjar.</span>
+                    <span class="eselon-desc-mobile">Bordir list benang emas tebal resmi Pejabat Eselon II (Ka. SKPD, Asisten, Staf Ahli &amp; Sekda) + Pin Kab. Banjar.</span>
+                </div>
             </div>
         </div>
 
@@ -6584,7 +7175,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 </div>
             </div>
 
-            <p style="font-size: 0.9rem; color: var(--gov-muted); line-height: 1.6; margin-bottom: 0.5rem;">
+            <p class="office-lead-desc" style="font-size: 0.9rem; color: var(--gov-muted); line-height: 1.6; margin-bottom: 0.5rem;">
                 Sekretariat Dewan Pengurus KORPRI melayani pengambilan fisik topi Mutz resmi, penukaran ukuran, serta konsultasi pemesanan bagi seluruh ASN dan perwakilan SKPD Kabupaten Banjar.
             </p>
 
@@ -6616,7 +7207,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <span class="schedule-day">
                                 <strong>Sabtu &amp; Minggu</strong>
                             </span>
-                            <span class="schedule-hours closed">Tutup (Libur Akhir Pekan)</span>
+                            <span class="schedule-hours closed">
+                                <span class="sched-txt-desktop">Tutup (Libur Akhir Pekan)</span>
+                                <span class="sched-txt-mobile">Tutup (Akhir Pekan)</span>
+                            </span>
                         </li>
                         <li class="schedule-item">
                             <span class="schedule-day">
@@ -6665,7 +7259,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     <div class="location-actions-row">
                         <a href="<?= htmlspecialchars($maps_search_url) ?>" target="_blank" rel="noopener" class="btn-map-action btn-map-primary">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                            <span>Buka di Google Maps</span>
+                            <span class="map-btn-lbl-desktop">Buka di Google Maps</span>
+                            <span class="map-btn-lbl-mobile">Google Maps</span>
                         </a>
                         <a href="<?= htmlspecialchars($maps_dir_url) ?>" target="_blank" rel="noopener" class="btn-map-action btn-map-secondary">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
@@ -6680,12 +7275,13 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
     <!-- Modal Form WhatsApp Booking -->
     <div class="modal-overlay" id="waOrderModal" onclick="closeOrderModal(event)">
         <div class="modal-window" onclick="event.stopPropagation()">
+            <div class="modal-sheet-handle" aria-hidden="true"></div>
             <div class="modal-head">
                 <span class="modal-title-text" id="modalTitle">Konfirmasi Pemesanan</span>
                 <button type="button" class="btn-modal-close" onclick="closeOrderModal()">&times;</button>
             </div>
 
-            <p style="font-size: 0.84rem; color: var(--gov-muted); margin-bottom: 14px; font-weight: 500;">
+            <p class="modal-lead-note" style="font-size: 0.84rem; color: var(--gov-muted); margin-bottom: 14px; font-weight: 500;">
                 Format pesanan akan dikirimkan langsung ke nomor WhatsApp Pengurus / Admin Sekretariat KORPRI.
             </p>
 
@@ -6862,6 +7458,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
     <!-- Modal Panduan Pasang PWA (Khusus Safari iOS & Panduan Manual) -->
     <div class="modal-overlay" id="pwaGuideModal" onclick="closePwaGuideModal(event)">
         <div class="modal-window" onclick="event.stopPropagation()" style="max-width: 500px;">
+            <div class="modal-sheet-handle" aria-hidden="true"></div>
             <div class="modal-head">
                 <span class="modal-title-text" style="display: flex; align-items: center; gap: 8px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="color: var(--korpri-gold);"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line><polyline points="9 9 12 12 15 9"></polyline><line x1="12" y1="6" x2="12" y2="12"></line></svg>
@@ -7331,6 +7928,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             document.querySelectorAll('.btn-gallery-tab').forEach(b => b.classList.remove('active'));
             if (btn) btn.classList.add('active');
 
+            const grid = document.getElementById('galleryCardsGrid');
             const cards = document.querySelectorAll('#galleryCardsGrid .gallery-card-item');
             cards.forEach(card => {
                 const cardCat = card.getAttribute('data-cat');
@@ -7340,6 +7938,91 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     card.style.display = 'none';
                 }
             });
+            if (grid) {
+                grid.scrollLeft = 0;
+            }
+            renderGalleryMobileDots();
+        }
+
+        function getVisibleGalleryCards() {
+            return Array.from(document.querySelectorAll('#galleryCardsGrid .gallery-card-item')).filter(
+                card => card.style.display !== 'none'
+            );
+        }
+
+        function renderGalleryMobileDots() {
+            const dotsWrap = document.getElementById('galleryMobileDots');
+            const grid = document.getElementById('galleryCardsGrid');
+            if (!dotsWrap || !grid) return;
+
+            const visibleCards = getVisibleGalleryCards();
+            if (visibleCards.length <= 1) {
+                dotsWrap.classList.add('is-single');
+                dotsWrap.innerHTML = '';
+                return;
+            }
+
+            dotsWrap.classList.remove('is-single');
+            dotsWrap.innerHTML = visibleCards.map((_, idx) =>
+                `<button type="button" class="gallery-dot-btn${idx === 0 ? ' active' : ''}" data-dot-idx="${idx}" aria-label="Foto ${idx + 1}"></button>`
+            ).join('');
+
+            dotsWrap.querySelectorAll('.gallery-dot-btn').forEach(dotBtn => {
+                dotBtn.addEventListener('click', function() {
+                    const targetIdx = parseInt(this.getAttribute('data-dot-idx'), 10);
+                    const cards = getVisibleGalleryCards();
+                    const targetCard = cards[targetIdx];
+                    if (targetCard && grid) {
+                        const targetLeft = targetCard.offsetLeft - grid.offsetLeft;
+                        grid.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
+                    }
+                });
+            });
+
+            syncGalleryMobileDots();
+        }
+
+        function syncGalleryMobileDots() {
+            const dotsWrap = document.getElementById('galleryMobileDots');
+            const grid = document.getElementById('galleryCardsGrid');
+            if (!dotsWrap || !grid) return;
+
+            const visibleCards = getVisibleGalleryCards();
+            const dotBtns = dotsWrap.querySelectorAll('.gallery-dot-btn');
+            if (visibleCards.length <= 1 || dotBtns.length === 0) return;
+
+            const scrollLeft = grid.scrollLeft;
+            let closestIdx = 0;
+            let minDist = Infinity;
+
+            visibleCards.forEach((card, idx) => {
+                const cardStart = card.offsetLeft - grid.offsetLeft;
+                const dist = Math.abs(cardStart - scrollLeft);
+                if (dist < minDist) {
+                    minDist = dist;
+                    closestIdx = idx;
+                }
+            });
+
+            dotBtns.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === closestIdx);
+            });
+        }
+
+        function initGalleryMobileDots() {
+            const grid = document.getElementById('galleryCardsGrid');
+            if (!grid) return;
+            renderGalleryMobileDots();
+            let scrollTick = false;
+            grid.addEventListener('scroll', function() {
+                if (!scrollTick) {
+                    scrollTick = true;
+                    window.requestAnimationFrame(function() {
+                        syncGalleryMobileDots();
+                        scrollTick = false;
+                    });
+                }
+            }, { passive: true });
         }
 
         // Keyboard listener for Lightbox navigation
@@ -8474,7 +9157,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         // Daftarkan Service Worker & bersihkan cache lawas di perangkat mobile
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('sw.js?v=20261029_3').then(function(reg) {
+                navigator.serviceWorker.register('sw.js?v=20261029_4').then(function(reg) {
                     if (reg && typeof reg.update === 'function') {
                         reg.update();
                     }
@@ -8584,6 +9267,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             try { updateReadyFilterCounter(); } catch (e) {}
             try { updateMobileDock(); } catch (e) {}
             try { initSizeCalculator(); } catch (e) {}
+            try { initGalleryMobileDots(); } catch (e) {}
 
             // Animasi Count-Up Total Stok di Hero
             try {
