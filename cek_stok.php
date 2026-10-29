@@ -147,7 +147,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>Pemesanan Mutz | Dewan Pengurus KORPRI Kab. Banjar</title>
     
     <!-- Primary SEO Meta Tags -->
@@ -4233,23 +4233,25 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 margin-top: 0 !important;
             }
 
-            /* Mobile Floating Quick-Action Dock (Fitur Tampilan #7) */
+            /* Mobile Floating Quick-Action Island Dock (Minimalist & Pre-Order Ready) */
             .gov-mobile-dock {
                 display: block;
                 position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
+                bottom: max(12px, calc(env(safe-area-inset-bottom, 0px) + 8px));
+                left: 10px;
+                right: 10px;
+                max-width: 480px;
+                margin: 0 auto;
                 z-index: 995;
-                background: rgba(255, 255, 255, 0.95);
-                backdrop-filter: blur(16px);
-                -webkit-backdrop-filter: blur(16px);
-                border-top: 1px solid rgba(226, 232, 240, 0.95);
-                box-shadow: 0 -6px 24px rgba(11, 30, 59, 0.12);
-                padding: 10px 14px;
-                padding-bottom: max(10px, env(safe-area-inset-bottom, 10px));
-                transform: translateY(115%);
-                transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+                background: rgba(255, 255, 255, 0.93);
+                backdrop-filter: blur(20px) saturate(180%);
+                -webkit-backdrop-filter: blur(20px) saturate(180%);
+                border: 1px solid rgba(203, 213, 225, 0.88);
+                border-radius: 16px;
+                box-shadow: 0 12px 30px -6px rgba(11, 30, 59, 0.16), 0 2px 8px rgba(11, 30, 59, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+                padding: 9px 11px;
+                transform: translateY(145%);
+                transition: transform 0.34s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, border-color 0.22s ease, background 0.22s ease;
                 opacity: 0;
                 pointer-events: none;
             }
@@ -4258,49 +4260,64 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 opacity: 1;
                 pointer-events: auto;
             }
+            .gov-mobile-dock.is-preorder-dock {
+                background: linear-gradient(180deg, rgba(255, 251, 235, 0.95) 0%, rgba(255, 255, 255, 0.95) 100%);
+                border-color: rgba(217, 119, 6, 0.36);
+                box-shadow: 0 12px 30px -6px rgba(180, 83, 9, 0.15), 0 2px 8px rgba(11, 30, 59, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            }
             body.has-dock-visible .gov-pwa-banner {
                 transform: translateY(160%) !important;
                 opacity: 0 !important;
                 pointer-events: none !important;
             }
             [data-theme="dark"] .gov-mobile-dock {
-                background: rgba(11, 22, 44, 0.96);
-                border-top-color: rgba(255, 255, 255, 0.12);
-                box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.65);
+                background: rgba(11, 22, 44, 0.94);
+                border-color: rgba(51, 65, 85, 0.85);
+                box-shadow: 0 14px 34px -6px rgba(0, 0, 0, 0.72), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            }
+            [data-theme="dark"] .gov-mobile-dock.is-preorder-dock {
+                background: linear-gradient(180deg, rgba(28, 22, 16, 0.95) 0%, rgba(11, 22, 44, 0.96) 100%);
+                border-color: rgba(245, 158, 11, 0.34);
+                box-shadow: 0 14px 34px -6px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(253, 230, 138, 0.08);
             }
             .mobile-dock-inner {
-                max-width: 500px;
+                width: 100%;
                 margin: 0 auto;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                gap: 12px;
+                gap: 10px;
             }
             .mobile-dock-info {
                 display: flex;
                 flex-direction: column;
-                gap: 3px;
+                gap: 4px;
                 min-width: 0;
                 flex: 1;
             }
             .dock-meta-line {
                 display: flex;
                 align-items: center;
-                gap: 6px;
+                gap: 5px;
                 flex-wrap: nowrap;
-                overflow: hidden;
+                min-width: 0;
             }
             .dock-cat-badge {
-                font-size: 0.68rem;
+                font-size: 0.63rem;
                 font-weight: 800;
-                padding: 2px 7px;
-                border-radius: var(--radius-sm);
+                padding: 2.5px 7px;
+                border-radius: 6px;
                 text-transform: uppercase;
-                letter-spacing: 0.02em;
+                letter-spacing: 0.025em;
                 white-space: nowrap;
                 background: var(--korpri-blue-subtle);
                 color: var(--korpri-blue);
                 border: 1px solid rgba(29, 78, 216, 0.2);
+                line-height: 1.2;
+            }
+            [data-theme="dark"] .dock-cat-badge {
+                color: #93C5FD;
+                border-color: rgba(59, 130, 246, 0.3);
             }
             .dock-cat-badge.eselon {
                 background: var(--korpri-gold-light);
@@ -4312,111 +4329,165 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 background: rgba(212, 175, 55, 0.18);
             }
             .dock-size-pill {
+                position: relative;
                 display: inline-flex;
                 align-items: center;
-            }
-            .dock-size-select {
-                font-family: var(--font-sans);
-                font-size: 0.8rem;
-                font-weight: 800;
-                color: var(--gov-slate);
+                gap: 3px;
                 background: var(--gov-hairline-subtle);
                 border: 1.5px solid var(--gov-hairline);
-                border-radius: var(--radius-sm);
-                padding: 3px 22px 3px 7px;
-                cursor: pointer;
-                outline: none;
-                appearance: none;
-                -webkit-appearance: none;
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-                background-repeat: no-repeat;
-                background-position: right 6px center;
+                border-radius: 6px;
+                padding: 2px 6.5px;
+                font-size: 0.72rem;
+                font-weight: 800;
+                color: var(--gov-slate);
+                line-height: 1.2;
+                white-space: nowrap;
+                flex-shrink: 0;
                 transition: var(--transition);
             }
-            .dock-size-select:focus {
-                border-color: var(--korpri-blue);
+            .dock-size-chevron {
+                color: var(--gov-subtle);
+                flex-shrink: 0;
             }
-            [data-theme="dark"] .dock-size-select {
-                background-color: #1E293B;
+            .gov-mobile-dock.is-preorder-dock .dock-size-pill {
+                background: rgba(254, 243, 199, 0.55);
+                border-color: rgba(217, 119, 6, 0.36);
+                color: #78350F;
+            }
+            .gov-mobile-dock.is-preorder-dock .dock-size-chevron {
+                color: #B45309;
+            }
+            [data-theme="dark"] .dock-size-pill {
+                background: #1E293B;
                 color: #F8FAFC;
                 border-color: #334155;
             }
+            [data-theme="dark"] .gov-mobile-dock.is-preorder-dock .dock-size-pill {
+                background: rgba(245, 158, 11, 0.14);
+                border-color: rgba(245, 158, 11, 0.36);
+                color: #FEF3C7;
+            }
+            [data-theme="dark"] .gov-mobile-dock.is-preorder-dock .dock-size-chevron {
+                color: #FBBF24;
+            }
+            .dock-size-select {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                cursor: pointer;
+                font-size: 16px;
+                margin: 0;
+                padding: 0;
+                border: none;
+                appearance: none;
+                -webkit-appearance: none;
+            }
+            .dock-price-line {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                line-height: 1.15;
+                min-width: 0;
+            }
+            .dock-price-val {
+                font-size: 0.98rem;
+                font-weight: 800;
+                color: var(--gov-slate);
+                letter-spacing: -0.015em;
+                white-space: nowrap;
+            }
             .dock-stock-tag {
-                font-size: 0.72rem;
+                font-size: 0.62rem;
                 font-weight: 700;
                 white-space: nowrap;
                 display: inline-flex;
                 align-items: center;
                 gap: 4px;
+                padding: 2px 6.5px;
+                border-radius: var(--radius-full);
+                line-height: 1.15;
+                flex-shrink: 0;
             }
             .dock-stock-tag.ready {
-                color: var(--status-green);
+                color: #15803D;
+                background: rgba(22, 163, 74, 0.10);
+                border: 1px solid rgba(22, 163, 74, 0.22);
+            }
+            [data-theme="dark"] .dock-stock-tag.ready {
+                color: #4ADE80;
+                background: rgba(34, 197, 94, 0.14);
+                border-color: rgba(74, 222, 128, 0.28);
             }
             .dock-stock-tag.low {
-                color: var(--status-amber);
+                color: #B45309;
+                background: rgba(245, 158, 11, 0.12);
+                border: 1px solid rgba(245, 158, 11, 0.28);
+            }
+            [data-theme="dark"] .dock-stock-tag.low {
+                color: #FCD34D;
+                background: rgba(245, 158, 11, 0.16);
+                border-color: rgba(251, 191, 36, 0.32);
             }
             .dock-stock-tag.empty {
-                color: var(--status-red);
+                color: #B45309;
+                background: rgba(217, 119, 6, 0.12);
+                border: 1px solid rgba(217, 119, 6, 0.28);
             }
-            .dock-price-line {
-                display: flex;
-                align-items: baseline;
-                gap: 6px;
-                line-height: 1.15;
-            }
-            .dock-price-val {
-                font-size: 1.08rem;
-                font-weight: 800;
-                color: var(--gov-slate);
-                letter-spacing: -0.015em;
-            }
-            .dock-include-tag {
-                font-size: 0.7rem;
-                font-weight: 600;
-                color: var(--gov-subtle);
+            [data-theme="dark"] .dock-stock-tag.empty {
+                color: #FCD34D;
+                background: rgba(245, 158, 11, 0.16);
+                border-color: rgba(245, 158, 11, 0.34);
             }
             .btn-dock-order {
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
-                gap: 7px;
+                gap: 5.5px;
                 background: linear-gradient(135deg, #16A34A 0%, #15803D 100%);
                 color: #FFFFFF;
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                border-radius: var(--radius-md);
-                padding: 10px 18px;
-                font-size: 0.88rem;
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                border-radius: 11px;
+                padding: 0 13px;
+                height: 39px;
+                min-height: 39px;
+                font-size: 0.78rem;
                 font-weight: 800;
+                letter-spacing: -0.005em;
                 font-family: var(--font-sans);
                 cursor: pointer;
                 white-space: nowrap;
-                box-shadow: 0 4px 14px rgba(21, 128, 61, 0.4);
+                box-shadow: 0 4px 10px -2px rgba(21, 128, 61, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.22);
                 transition: var(--transition);
                 user-select: none;
                 -webkit-tap-highlight-color: transparent;
-                min-height: 44px;
+                flex-shrink: 0;
+            }
+            .btn-dock-order svg {
+                width: 14px;
+                height: 14px;
                 flex-shrink: 0;
             }
             .btn-dock-order:hover {
                 background: linear-gradient(135deg, #15803D 0%, #166534 100%);
                 transform: translateY(-1px);
-                box-shadow: 0 6px 18px rgba(21, 128, 61, 0.48);
             }
             .btn-dock-order:active {
                 transform: scale(0.97);
             }
             .btn-dock-order.btn-dock-preorder {
                 background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
-                box-shadow: 0 4px 14px rgba(217, 119, 6, 0.45);
+                border-color: rgba(253, 230, 138, 0.36);
+                box-shadow: 0 4px 10px -2px rgba(180, 83, 9, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.22);
             }
             .btn-dock-order.btn-dock-preorder:hover {
                 background: linear-gradient(135deg, #B45309 0%, #92400E 100%);
-                box-shadow: 0 6px 18px rgba(217, 119, 6, 0.55);
             }
 
             /* Floating Button on Mobile */
             .gov-floating-actions {
-                bottom: calc(70px + env(safe-area-inset-bottom, 10px)) !important;
+                bottom: calc(80px + env(safe-area-inset-bottom, 10px)) !important;
                 right: 12px !important;
                 z-index: 994 !important;
                 gap: 8px;
@@ -4498,7 +4569,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 max-width: 100%;
                 border-bottom-left-radius: 0;
                 border-bottom-right-radius: 0;
-                padding: 20px 18px 26px 18px;
+                padding: 20px 18px max(26px, calc(env(safe-area-inset-bottom, 0px) + 18px)) 18px;
             }
         }
 
@@ -4549,6 +4620,20 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 height: 26px;
                 padding: 0 8px;
                 font-size: 0.68rem;
+            }
+            .gov-mobile-dock {
+                left: 8px;
+                right: 8px;
+                padding: 8px 9px;
+            }
+            .dock-price-val {
+                font-size: 0.90rem;
+            }
+            .btn-dock-order {
+                padding: 0 11px;
+                height: 37px;
+                min-height: 37px;
+                font-size: 0.74rem;
             }
         }
 
@@ -6674,24 +6759,25 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             <div class="mobile-dock-info">
                 <div class="dock-meta-line">
                     <span class="dock-cat-badge" id="dockCatBadge">Standar Pria</span>
-                    <span class="dock-size-pill">
+                    <span class="dock-size-pill" title="Ketuk untuk memilih nomor ukuran cepat">
+                        <span class="dock-size-label" id="dockSizeLabel">No. 57</span>
+                        <svg class="dock-size-chevron" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="m6 9 6 6 6-6"/></svg>
                         <select id="dockSizeSelect" class="dock-size-select" onchange="onDockSizeChange(this.value)" aria-label="Pilih Ukuran Cepat">
                             <!-- Populated dynamically via JS -->
                         </select>
                     </span>
-                    <span class="dock-stock-tag" id="dockStockTag">
-                        <span class="meta-pulse-dot" id="dockPulseDot" style="width: 6px; height: 6px;"></span>
-                        <span id="dockStockText">...</span>
-                    </span>
                 </div>
                 <div class="dock-price-line">
                     <span class="dock-price-val" id="dockPriceVal">Rp 55.000</span>
-                    <span class="dock-include-tag">+ Pin Kab. Banjar</span>
+                    <span class="dock-stock-tag" id="dockStockTag">
+                        <span class="meta-pulse-dot" id="dockPulseDot" style="width: 5px; height: 5px;"></span>
+                        <span id="dockStockText">...</span>
+                    </span>
                 </div>
             </div>
             <div class="mobile-dock-btn-wrap">
                 <button type="button" class="btn-dock-order" onclick="openOrderModalFromDock()" id="btnDockOrder" title="Pesan Ukuran Terpilih via WhatsApp">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                     <span>Pesan WA</span>
                 </button>
             </div>
@@ -8133,7 +8219,11 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 }
             }
 
-            // Populate Dropdown Ukuran Cepat di Dock
+            // Populate Label & Dropdown Ukuran Cepat di Dock
+            const sizeLabel = document.getElementById('dockSizeLabel');
+            if (sizeLabel) {
+                sizeLabel.textContent = 'No. ' + currentDockSize;
+            }
             const sizeSelect = document.getElementById('dockSizeSelect');
             if (sizeSelect) {
                 sizeSelect.innerHTML = '';
@@ -8141,7 +8231,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     const qty = stockObj[sz] !== undefined ? stockObj[sz] : 0;
                     const opt = document.createElement('option');
                     opt.value = sz;
-                    opt.textContent = `No. ${sz} (${qty > 0 ? qty + ' Pcs' : '0 Pcs • PO'})`;
+                    opt.textContent = `Ukuran No. ${sz} — ${qty > 0 ? 'Ready (' + qty + ' Pcs)' : 'Stok 0 • Pre-Order'}`;
                     if (sz === currentDockSize) opt.selected = true;
                     sizeSelect.appendChild(opt);
                 });
@@ -8153,27 +8243,29 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 priceVal.textContent = 'Rp ' + harga.toLocaleString('id-ID');
             }
 
-            // Update Indikator Status Ketersediaan Fisik
+            // Update Indikator Status Ketersediaan Fisik & Mode Pre-Order Dock
             const qty = stockObj[currentDockSize] !== undefined ? stockObj[currentDockSize] : 0;
             const stockTag = document.getElementById('dockStockTag');
             const stockText = document.getElementById('dockStockText');
             const pulseDot = document.getElementById('dockPulseDot');
             const btnDockOrder = document.getElementById('btnDockOrder');
 
+            dock.classList.toggle('is-preorder-dock', qty <= 0);
+
             if (stockTag && stockText) {
                 stockTag.classList.remove('ready', 'low', 'empty');
                 if (qty > 5) {
                     stockTag.classList.add('ready');
-                    stockText.textContent = `Ready (${qty} Pcs)`;
+                    stockText.textContent = `Ready ${qty} Pcs`;
                     if (pulseDot) {
                         pulseDot.style.background = '#22C55E';
-                        pulseDot.style.boxShadow = '0 0 6px #22C55E';
+                        pulseDot.style.boxShadow = '0 0 5px #22C55E';
                     }
                     if (btnDockOrder) {
                         btnDockOrder.classList.remove('btn-dock-preorder');
                         btnDockOrder.title = 'Pesan Ukuran Terpilih via WhatsApp';
                         btnDockOrder.innerHTML = `
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                             <span>Pesan WA</span>
                         `;
                     }
@@ -8182,28 +8274,28 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     stockText.textContent = `Sisa ${qty} Pcs`;
                     if (pulseDot) {
                         pulseDot.style.background = '#F59E0B';
-                        pulseDot.style.boxShadow = '0 0 6px #F59E0B';
+                        pulseDot.style.boxShadow = '0 0 5px #F59E0B';
                     }
                     if (btnDockOrder) {
                         btnDockOrder.classList.remove('btn-dock-preorder');
                         btnDockOrder.title = 'Pesan Ukuran Terpilih via WhatsApp';
                         btnDockOrder.innerHTML = `
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                             <span>Pesan WA</span>
                         `;
                     }
                 } else {
                     stockTag.classList.add('empty');
-                    stockText.textContent = 'Habis (0 Pcs • PO)';
+                    stockText.textContent = '0 Pcs • PO';
                     if (pulseDot) {
-                        pulseDot.style.background = '#EF4444';
-                        pulseDot.style.boxShadow = '0 0 6px #EF4444';
+                        pulseDot.style.background = '#D97706';
+                        pulseDot.style.boxShadow = '0 0 5px rgba(217, 119, 6, 0.7)';
                     }
                     if (btnDockOrder) {
                         btnDockOrder.classList.add('btn-dock-preorder');
                         btnDockOrder.title = 'Ajukan Pre-Order Ukuran Terpilih via WhatsApp (Stok Fisik 0 Pcs)';
                         btnDockOrder.innerHTML = `
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                             <span>Pre-Order WA</span>
                         `;
                     }
@@ -8382,7 +8474,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         // Daftarkan Service Worker & bersihkan cache lawas di perangkat mobile
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('sw.js?v=20261029_2').then(function(reg) {
+                navigator.serviceWorker.register('sw.js?v=20261029_3').then(function(reg) {
                     if (reg && typeof reg.update === 'function') {
                         reg.update();
                     }
