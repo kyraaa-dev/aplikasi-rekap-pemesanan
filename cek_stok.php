@@ -648,6 +648,13 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             pointer-events: none;
         }
 
+        .hero-eyebrow-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+        }
+
         .gov-authority-badge {
             display: inline-flex;
             align-items: center;
@@ -661,7 +668,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             letter-spacing: 0.05em;
             text-transform: uppercase;
             color: #FDE68A;
-            margin-bottom: 1.25rem;
+            margin-bottom: 0;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
         }
@@ -669,6 +676,15 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             background: rgba(8, 20, 42, 0.8);
             border-color: rgba(212, 175, 55, 0.4);
             color: #FDE68A;
+        }
+
+        .hero-mobile-live-pill,
+        .badge-txt-mobile,
+        .hero-h1-mobile,
+        .hero-sub-mobile,
+        .loc-instansi-mobile,
+        .chip-lbl-mobile {
+            display: none;
         }
 
         .gov-hero-h1 {
@@ -3545,33 +3561,109 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 padding: 1rem 0.85rem 1.75rem 0.85rem;
             }
 
+            /* Minimalist Editorial Mobile Hero Card (Zero Truncation & Bento Dock) */
             .gov-hero {
-                padding: 1.1rem 0.95rem;
+                padding: 15px 14px 13px 14px;
                 margin-bottom: 1rem;
-                border-radius: var(--radius-md);
+                border-radius: 16px;
+                text-align: left;
+                border-color: rgba(212, 175, 55, 0.42);
+                box-shadow: 0 12px 28px -6px rgba(7, 21, 43, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+            }
+            .gov-hero-overlay {
+                background:
+                    radial-gradient(circle at 88% 14%, rgba(212, 175, 55, 0.15) 0%, transparent 46%),
+                    linear-gradient(160deg, rgba(10, 28, 60, 0.76) 0%, rgba(6, 17, 38, 0.89) 56%, rgba(3, 10, 24, 0.96) 100%);
+            }
+            [data-theme="dark"] .gov-hero-overlay {
+                background:
+                    radial-gradient(circle at 88% 14%, rgba(212, 175, 55, 0.14) 0%, transparent 46%),
+                    linear-gradient(160deg, rgba(8, 22, 48, 0.80) 0%, rgba(5, 14, 32, 0.91) 56%, rgba(2, 6, 18, 0.97) 100%);
+            }
+            .hero-eyebrow-bar {
+                justify-content: space-between;
+                gap: 8px;
+                margin-bottom: 11px;
             }
             .gov-authority-badge {
-                padding: 3px 9px;
-                font-size: 0.65rem;
-                margin-bottom: 0.55rem;
+                padding: 4px 9px;
+                font-size: 0.61rem;
+                font-weight: 800;
+                letter-spacing: 0.055em;
+                gap: 5px;
+                margin-bottom: 0;
+                background: rgba(11, 30, 59, 0.72);
+                border-color: rgba(212, 175, 55, 0.42);
+            }
+            .gov-authority-badge svg {
+                width: 11.5px;
+                height: 11.5px;
+                flex-shrink: 0;
+            }
+            .badge-txt-desktop {
+                display: none;
+            }
+            .badge-txt-mobile {
+                display: inline;
+            }
+            .hero-mobile-live-pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                background: rgba(16, 185, 129, 0.14);
+                border: 1px solid rgba(52, 211, 153, 0.34);
+                padding: 4px 9px;
+                border-radius: var(--radius-full);
+                font-size: 0.62rem;
+                font-weight: 700;
+                color: #A7F3D0;
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+            .hero-mobile-live-pill strong {
+                color: #FFFFFF;
+                font-weight: 800;
             }
             .gov-hero-h1 {
-                font-size: clamp(1.22rem, 5vw, 1.45rem);
-                margin-bottom: 0.35rem;
-                line-height: 1.25;
+                font-size: clamp(1.26rem, 5.4vw, 1.46rem);
+                line-height: 1.18;
+                letter-spacing: -0.025em;
+                margin: 0 0 6px 0;
+            }
+            .hero-h1-desktop {
+                display: none;
+            }
+            .hero-h1-mobile {
+                display: block;
+            }
+            .hero-h1-accent {
+                display: block;
+                background: linear-gradient(90deg, #FFFFFF 0%, #FEF08A 55%, #FBBF24 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                color: #FDE68A;
             }
             .gov-hero-sub {
-                font-size: 0.78rem;
-                margin-bottom: 0.7rem;
-                line-height: 1.45;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
+                font-size: 0.76rem;
+                line-height: 1.48;
+                color: rgba(226, 232, 240, 0.88);
+                margin: 0 0 12px 0;
+                display: block;
+                overflow: visible;
+            }
+            .hero-sub-desktop {
+                display: none;
+            }
+            .hero-sub-mobile {
+                display: block;
             }
             .gov-info-strip {
-                gap: 0.5rem;
-                padding-top: 0.65rem;
+                gap: 7px;
+                padding-top: 11px;
+                border-top: 1px solid rgba(255, 255, 255, 0.11);
                 flex-direction: column;
                 align-items: stretch;
                 width: 100%;
@@ -3579,68 +3671,102 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             .gov-info-location {
                 width: 100%;
                 max-width: 100%;
-                border-radius: 999px;
-                padding: 6px 10px;
-                gap: 7px;
+                border-radius: 11px;
+                padding: 8px 10px;
+                gap: 9px;
+                background: rgba(15, 23, 42, 0.56);
+                border: 1px solid rgba(255, 255, 255, 0.13);
+                box-shadow: none;
                 box-sizing: border-box;
             }
             .loc-pin-icon {
-                width: 22px;
-                height: 22px;
+                width: 28px;
+                height: 28px;
+                border-radius: 8px;
+                background: rgba(212, 175, 55, 0.16);
+                border-color: rgba(212, 175, 55, 0.38);
                 flex-shrink: 0;
+            }
+            .loc-pin-icon svg {
+                width: 13.5px;
+                height: 13.5px;
             }
             .loc-text-block {
                 display: flex;
-                flex-direction: row;
-                align-items: center;
-                gap: 5px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.5px;
                 flex: 1;
                 min-width: 0;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
+                white-space: normal;
+                overflow: visible;
             }
-            .loc-divider {
-                display: inline;
-                font-size: 0.7rem;
-                opacity: 0.6;
+            .loc-divider,
+            .loc-instansi-desktop {
+                display: none;
+            }
+            .loc-instansi-mobile {
+                display: block;
             }
             .loc-instansi {
-                font-size: 0.74rem;
-                font-weight: 800;
+                font-size: 0.75rem;
+                font-weight: 700;
                 color: #FFFFFF;
-                line-height: 1.2;
+                line-height: 1.22;
+                letter-spacing: -0.005em;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                max-width: 100%;
             }
             .loc-alamat {
-                font-size: 0.72rem;
-                font-weight: 600;
+                font-size: 0.67rem;
+                font-weight: 500;
                 color: #FDE68A;
-                line-height: 1.2;
+                opacity: 0.92;
+                line-height: 1.22;
                 white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
             }
             .gov-info-meta-row {
                 width: 100%;
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
-                gap: 6px;
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-                padding-bottom: 2px;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 7px;
+                overflow: visible;
+                padding-bottom: 0;
             }
-            .gov-info-meta-row::-webkit-scrollbar {
-                display: none;
+            .meta-chip-desktop-only {
+                display: none !important;
             }
             .gov-meta-chip {
-                padding: 4px 9px;
-                font-size: 0.69rem;
-                flex-shrink: 0;
+                justify-content: center;
+                border-radius: 10px;
+                padding: 7px 9px;
+                font-size: 0.71rem;
+                font-weight: 600;
+                gap: 5.5px;
+                background: rgba(15, 23, 42, 0.52);
+                border: 1px solid rgba(255, 255, 255, 0.13);
+                color: #F1F5F9;
                 white-space: nowrap;
+            }
+            .gov-meta-chip svg {
+                width: 13px;
+                height: 13px;
+            }
+            .gov-meta-chip:active {
+                background: rgba(30, 41, 59, 0.78);
+                border-color: rgba(212, 175, 55, 0.45);
+                transform: scale(0.985);
+            }
+            .chip-lbl-desktop {
+                display: none;
+            }
+            .chip-lbl-mobile {
+                display: inline;
             }
 
             /* Section Header & Horizontal Swipe Gallery on Mobile */
@@ -5608,17 +5734,27 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             <div class="gov-hero-batik" aria-hidden="true"></div>
             <div class="gov-hero-overlay" aria-hidden="true"></div>
             <div class="gov-hero-content">
-                <div class="gov-authority-badge">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                    <span>LAYANAN RESMI PENGADAAN MUTZ ASN</span>
+                <div class="hero-eyebrow-bar">
+                    <div class="gov-authority-badge">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        <span class="badge-txt-desktop">LAYANAN RESMI PENGADAAN MUTZ ASN</span>
+                        <span class="badge-txt-mobile">LAYANAN RESMI ASN</span>
+                    </div>
+
+                    <div class="hero-mobile-live-pill" title="Stok Fisik Terupdate Real-Time">
+                        <span class="meta-pulse-dot" style="width: 6px; height: 6px;"></span>
+                        <span>Live &bull; <strong id="heroMobileStockVal"><?= number_format($total_stok_tersedia, 0, ',', '.') ?> Pcs</strong></span>
+                    </div>
                 </div>
 
                 <h1 class="gov-hero-h1">
-                    Katalog Ketersediaan Stok Mutz ASN
+                    <span class="hero-h1-desktop">Katalog Ketersediaan Stok Mutz ASN</span>
+                    <span class="hero-h1-mobile">Katalog Ketersediaan <span class="hero-h1-accent">Stok Mutz ASN</span></span>
                 </h1>
 
                 <p class="gov-hero-sub">
-                    Informasi ketersediaan fisik topi Mutz resmi bagi Aparatur Sipil Negara (PNS &amp; PPPK) serta Kepala SKPD (Pejabat Eselon II) di lingkungan Pemerintah Kabupaten Banjar secara Real-Time.
+                    <span class="hero-sub-desktop">Informasi ketersediaan fisik topi Mutz resmi bagi Aparatur Sipil Negara (PNS &amp; PPPK) serta Kepala SKPD (Pejabat Eselon II) di lingkungan Pemerintah Kabupaten Banjar secara Real-Time.</span>
+                    <span class="hero-sub-mobile">Cek stok fisik real-time untuk PNS, PPPK, &amp; Kepala SKPD (Eselon II) Pemkab Banjar.</span>
                 </p>
 
                 <div class="gov-info-strip">
@@ -5627,29 +5763,34 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         </div>
                         <div class="loc-text-block">
-                            <span class="loc-instansi">Sekretariat KORPRI Kabupaten Banjar</span>
-                            <span class="loc-divider">•</span>
+                            <span class="loc-instansi">
+                                <span class="loc-instansi-desktop">Sekretariat KORPRI Kabupaten Banjar</span>
+                                <span class="loc-instansi-mobile">Sekretariat KORPRI Kab. Banjar</span>
+                            </span>
+                            <span class="loc-divider">&bull;</span>
                             <span class="loc-alamat">Jl. A. Yani Nomor 2 Martapura</span>
                         </div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity: 0.75; margin-left: 2px;"><path d="m6 9 6 6 6-6"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity: 0.75; margin-left: 2px; flex-shrink: 0;"><path d="m6 9 6 6 6-6"/></svg>
                     </a>
 
                     <div class="gov-info-meta-row">
-                        <div class="gov-meta-chip">
+                        <div class="gov-meta-chip meta-chip-desktop-only">
                             <span class="meta-pulse-dot"></span>
                             <span>Status: <strong>Update Real-Time</strong></span>
                         </div>
-                        <div class="gov-meta-chip">
+                        <div class="gov-meta-chip meta-chip-desktop-only">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
                             <span>Total Stok: <strong id="heroTotalStockVal"><?= number_format($total_stok_tersedia, 0, ',', '.') ?> Pcs</strong></span>
                         </div>
                         <a href="#galeri-produk" class="gov-meta-chip gov-chip-gallery" title="Lihat 5 Foto Fisik Resmi Topi Mutz & Pin">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                            <span>Galeri <strong>5 Foto Fisik</strong></span>
+                            <span class="chip-lbl-desktop">Galeri <strong>5 Foto Fisik</strong></span>
+                            <span class="chip-lbl-mobile">Galeri <strong>5 Foto</strong></span>
                         </a>
                         <a href="#kalkulator-ukuran" class="gov-meta-chip gov-chip-gallery" title="Hitung Rekomendasi Nomor Ukuran Mutz dari Lingkar Kepala">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4Z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/><path d="m4.5 13.5 2 2"/></svg>
-                            <span>Kalkulator <strong>Ukuran (cm)</strong></span>
+                            <span class="chip-lbl-desktop">Kalkulator <strong>Ukuran (cm)</strong></span>
+                            <span class="chip-lbl-mobile">Kalkulator <strong>(cm)</strong></span>
                         </a>
                     </div>
                 </div>
@@ -8241,7 +8382,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         // Daftarkan Service Worker & bersihkan cache lawas di perangkat mobile
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('sw.js?v=20261029_1').then(function(reg) {
+                navigator.serviceWorker.register('sw.js?v=20261029_2').then(function(reg) {
                     if (reg && typeof reg.update === 'function') {
                         reg.update();
                     }
@@ -8357,6 +8498,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 const heroStockEl = document.getElementById('heroTotalStockVal');
                 if (heroStockEl) {
                     animateCountUp(heroStockEl, <?= (int)$total_stok_tersedia ?>, 1200, 'Pcs');
+                }
+                const heroMobileStockEl = document.getElementById('heroMobileStockVal');
+                if (heroMobileStockEl) {
+                    animateCountUp(heroMobileStockEl, <?= (int)$total_stok_tersedia ?>, 1200, 'Pcs');
                 }
             } catch (e) {}
 
