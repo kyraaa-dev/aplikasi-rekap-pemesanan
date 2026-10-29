@@ -408,6 +408,17 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             padding: 0.75rem 1.5rem;
             transform: translateZ(0);
             will-change: transform;
+            transition: background-color 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
+        }
+
+        .brand-title-mobile,
+        .brand-kicker-mobile {
+            display: none;
+        }
+
+        .btn-login-icon {
+            flex-shrink: 0;
+            opacity: 0.92;
         }
 
         .gov-header-inner {
@@ -3333,43 +3344,192 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
            RESPONSIVE MOBILE BREAKPOINTS (Max Width: 680px)
            ========================================================================== */
         @media (max-width: 680px) {
-            .gov-header {
-                padding: 0.6rem 0.85rem;
+            /* Ultra-Minimalist Frosted Glass Mobile Header */
+            .gov-top-accent {
+                height: 2px;
+                background: linear-gradient(90deg, #0B1E3B 0%, #B48228 22%, #FBBF24 50%, #B48228 78%, #0B1E3B 100%);
             }
+            .gov-header {
+                top: 2px;
+                padding: 7px 11px;
+                background: rgba(255, 255, 255, 0.84);
+                backdrop-filter: blur(18px) saturate(180%);
+                -webkit-backdrop-filter: blur(18px) saturate(180%);
+                border-bottom: 1px solid rgba(226, 232, 240, 0.78);
+                box-shadow: none;
+            }
+            [data-theme="dark"] .gov-header {
+                background: rgba(9, 15, 29, 0.82);
+                border-bottom-color: rgba(30, 41, 59, 0.85);
+            }
+            .gov-header.is-scrolled {
+                background: rgba(255, 255, 255, 0.94);
+                border-bottom-color: rgba(212, 175, 55, 0.32);
+                box-shadow: 0 8px 24px -10px rgba(11, 30, 59, 0.14);
+            }
+            [data-theme="dark"] .gov-header.is-scrolled {
+                background: rgba(9, 15, 29, 0.93);
+                border-bottom-color: rgba(212, 175, 55, 0.28);
+                box-shadow: 0 10px 28px -10px rgba(0, 0, 0, 0.65);
+            }
+            .gov-header-inner {
+                gap: 8px;
+            }
+
+            /* Squircle Emblem + 2-Tier Micro Brand Lockup */
             .gov-brand {
                 gap: 8px;
                 min-width: 0;
+                flex: 1;
             }
             .gov-brand-seal {
-                width: 32px;
-                height: 32px;
+                width: 33px;
+                height: 33px;
+                border-radius: 9px;
+                background: linear-gradient(145deg, rgba(11, 30, 59, 0.04) 0%, rgba(212, 175, 55, 0.12) 100%);
+                border: 1px solid rgba(212, 175, 55, 0.30);
+                padding: 4px;
                 flex-shrink: 0;
             }
+            [data-theme="dark"] .gov-brand-seal {
+                background: linear-gradient(145deg, rgba(30, 41, 59, 0.75) 0%, rgba(212, 175, 55, 0.15) 100%);
+                border-color: rgba(212, 175, 55, 0.32);
+            }
             .gov-brand-seal img {
-                width: 32px;
-                height: 32px;
+                width: 23px;
+                height: 23px;
             }
             .gov-brand-text {
                 min-width: 0;
+                gap: 2px;
+            }
+            .brand-title-desktop,
+            .gov-brand-sub {
+                display: none;
             }
             .gov-brand-title {
-                font-size: 0.82rem;
-                letter-spacing: -0.01em;
+                line-height: 1.15;
+            }
+            .brand-title-mobile {
+                display: block;
+                font-size: 0.78rem;
+                font-weight: 800;
+                letter-spacing: -0.015em;
+                color: var(--korpri-navy);
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
-            .gov-brand-sub {
-                display: none;
+            [data-theme="dark"] .brand-title-mobile {
+                color: #F8FAFC;
             }
-            .gov-nav-actions {
-                gap: 5px;
+            .brand-kicker-mobile {
+                display: inline-flex;
+                align-items: center;
+                gap: 4.5px;
+                font-size: 0.58rem;
+                font-weight: 700;
+                letter-spacing: 0.055em;
+                color: var(--gov-subtle);
+                text-transform: uppercase;
+                line-height: 1.1;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            [data-theme="dark"] .brand-kicker-mobile {
+                color: #94A3B8;
+            }
+            .brand-kicker-dot {
+                width: 5px;
+                height: 5px;
+                border-radius: 50%;
+                background: #16A34A;
+                box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.18);
                 flex-shrink: 0;
             }
-            .btn-gov-nav {
-                padding: 6px 9px;
-                font-size: 0.76rem;
+            [data-theme="dark"] .brand-kicker-dot {
+                background: #4ADE80;
+                box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.2);
+            }
+
+            /* Unified Minimalist Floating Capsule Dock in Header */
+            .gov-nav-actions {
+                display: inline-flex;
+                align-items: center;
+                gap: 2px;
+                background: rgba(15, 23, 42, 0.04);
+                border: 1px solid rgba(203, 213, 225, 0.78);
+                border-radius: var(--radius-full);
+                padding: 3px;
+                flex-shrink: 0;
+                box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+            }
+            [data-theme="dark"] .gov-nav-actions {
+                background: rgba(30, 41, 59, 0.65);
+                border-color: rgba(51, 65, 85, 0.85);
+                box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            }
+            .btn-gov-nav:not(.btn-gov-primary) {
+                width: 28px;
+                height: 28px;
+                padding: 0;
+                border: none;
+                border-radius: var(--radius-full);
+                background: transparent;
+                color: var(--gov-muted);
+                box-shadow: none;
+            }
+            .btn-gov-nav:not(.btn-gov-primary) svg {
+                width: 14.5px;
+                height: 14.5px;
+            }
+            .btn-gov-nav:not(.btn-gov-primary):hover,
+            .btn-gov-nav:not(.btn-gov-primary):active {
+                background: var(--gov-surface);
+                color: var(--korpri-blue);
+                box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+            }
+            [data-theme="dark"] .btn-gov-nav:not(.btn-gov-primary) {
+                color: #CBD5E1;
+            }
+            [data-theme="dark"] .btn-gov-nav:not(.btn-gov-primary):hover,
+            [data-theme="dark"] .btn-gov-nav:not(.btn-gov-primary):active {
+                background: rgba(51, 65, 85, 0.85);
+                color: #93C5FD;
+            }
+            #headerPwaInstallBtn {
+                color: #B48228;
+            }
+            [data-theme="dark"] #headerPwaInstallBtn {
+                color: #FBBF24;
+            }
+            .btn-gov-nav.btn-gov-primary {
+                height: 28px;
+                padding: 0 10px;
+                border-radius: var(--radius-full);
+                font-size: 0.71rem;
+                font-weight: 700;
+                letter-spacing: 0.01em;
                 gap: 4px;
+                background: linear-gradient(135deg, #0B1E3B 0%, #173463 100%);
+                border: 1px solid rgba(212, 175, 55, 0.38);
+                color: #FFFFFF;
+                box-shadow: 0 2px 6px rgba(11, 30, 59, 0.16);
+            }
+            .btn-gov-nav.btn-gov-primary svg {
+                width: 11.5px;
+                height: 11.5px;
+                color: #FDE68A;
+            }
+            [data-theme="dark"] .btn-gov-nav.btn-gov-primary {
+                background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 100%);
+                border-color: rgba(147, 197, 253, 0.3);
+                color: #FFFFFF;
+                box-shadow: 0 2px 8px rgba(37, 99, 235, 0.28);
+            }
+            [data-theme="dark"] .btn-gov-nav.btn-gov-primary svg {
+                color: #DBEAFE;
             }
             .btn-nav-label-long {
                 display: none;
@@ -3691,7 +3851,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             /* Sticky Glass Filter Toolbar on Mobile */
             .gov-filter-toolbar {
                 position: sticky;
-                top: 50px;
+                top: 52px;
                 z-index: 95;
                 background: rgba(255, 255, 255, 0.92);
                 backdrop-filter: blur(14px);
@@ -4231,6 +4391,39 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             }
             .ready-lbl-full { display: none; }
             .ready-lbl-short { display: inline; }
+        }
+
+        @media (max-width: 365px) {
+            .gov-header {
+                padding: 6px 8px;
+            }
+            .gov-brand {
+                gap: 6px;
+            }
+            .gov-brand-seal {
+                width: 30px;
+                height: 30px;
+                padding: 3.5px;
+            }
+            .gov-brand-seal img {
+                width: 21px;
+                height: 21px;
+            }
+            .brand-title-mobile {
+                font-size: 0.74rem;
+            }
+            .brand-kicker-mobile {
+                font-size: 0.55rem;
+            }
+            .btn-gov-nav:not(.btn-gov-primary) {
+                width: 26px;
+                height: 26px;
+            }
+            .btn-gov-nav.btn-gov-primary {
+                height: 26px;
+                padding: 0 8px;
+                font-size: 0.68rem;
+            }
         }
 
         /* ==========================================================================
@@ -5354,15 +5547,22 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
     <div class="gov-bg-seal" aria-hidden="true"></div>
 
     <!-- Top Header -->
-    <header class="gov-header">
+    <header class="gov-header" id="govHeader">
         <div class="gov-header-inner">
             <a href="cek_stok.php" class="gov-brand" title="Dewan Pengurus KORPRI Kabupaten Banjar">
                 <div class="gov-brand-seal">
                     <img src="assets/images/korpri-badge.png" alt="Logo KORPRI" width="36" height="36">
                 </div>
                 <div class="gov-brand-text">
-                    <span class="gov-brand-title">DEWAN PENGURUS KORPRI</span>
+                    <span class="gov-brand-title">
+                        <span class="brand-title-desktop">DEWAN PENGURUS KORPRI</span>
+                        <span class="brand-title-mobile">KORPRI KAB. BANJAR</span>
+                    </span>
                     <span class="gov-brand-sub">KABUPATEN BANJAR</span>
+                    <span class="brand-kicker-mobile">
+                        <span class="brand-kicker-dot" aria-hidden="true"></span>
+                        <span>E-MUTZ RESMI ASN</span>
+                    </span>
                 </div>
             </a>
 
@@ -5373,13 +5573,13 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 </button>
 
                 <!-- Share Button -->
-                <button onclick="shareKatalog()" class="btn-gov-nav" title="Bagikan Tautan Katalog">
+                <button onclick="shareKatalog()" class="btn-gov-nav" title="Bagikan Tautan Katalog" aria-label="Bagikan Tautan Katalog">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                     <span class="btn-nav-label-long">Bagikan</span>
                 </button>
 
                 <!-- PWA Install Button in Header -->
-                <button id="headerPwaInstallBtn" class="btn-gov-nav" onclick="triggerPwaInstall()" title="Pasang Aplikasi E-MutZ di Layar Depan HP" style="display: none;">
+                <button id="headerPwaInstallBtn" class="btn-gov-nav" onclick="triggerPwaInstall()" title="Pasang Aplikasi E-MutZ di Layar Depan HP" aria-label="Pasang Aplikasi E-MutZ" style="display: none;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line><polyline points="9 9 12 12 15 9"></polyline><line x1="12" y1="6" x2="12" y2="12"></line></svg>
                     <span class="btn-nav-label-long">Pasang App</span>
                 </button>
@@ -5393,6 +5593,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     </a>
                 <?php else: ?>
                     <a href="login.php" class="btn-gov-nav btn-gov-primary">
+                        <svg class="btn-login-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                         <span class="btn-login-txt-full">Portal Petugas</span>
                         <span class="btn-login-txt-short">Petugas</span>
                     </a>
@@ -7890,10 +8091,12 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             openOrderModal(currentCategory, currentGender, currentDockSize, qty);
         }
 
-        // Scroll Listener: Mengatur visibilitas Scroll-to-Top dan Mobile Dock (High Performance & Zero Jank)
+        // Scroll Listener: Mengatur elevasi Header, visibilitas Scroll-to-Top, dan Mobile Dock (High Performance & Zero Jank)
         let scrollTicking = false;
+        let lastHeaderScrolledState = null;
         let lastScrollTopState = null;
         let lastDockState = null;
+        const govHeaderEl = document.getElementById('govHeader');
         const btnScrollTopEl = document.getElementById('btnScrollTop');
         const mobileDockEl = document.getElementById('mobileDock');
 
@@ -7901,6 +8104,15 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             if (!scrollTicking) {
                 window.requestAnimationFrame(function() {
                     const y = window.scrollY || window.pageYOffset || 0;
+
+                    // Header Frosted Elevation (> 10px)
+                    const shouldElevateHeader = (y > 10);
+                    if (shouldElevateHeader !== lastHeaderScrolledState) {
+                        lastHeaderScrolledState = shouldElevateHeader;
+                        if (govHeaderEl) {
+                            govHeaderEl.classList.toggle('is-scrolled', shouldElevateHeader);
+                        }
+                    }
 
                     // Scroll-to-Top (> 300px)
                     const shouldShowTop = (y > 300);
@@ -8029,7 +8241,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         // Daftarkan Service Worker & bersihkan cache lawas di perangkat mobile
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('sw.js?v=20261028_6').then(function(reg) {
+                navigator.serviceWorker.register('sw.js?v=20261029_1').then(function(reg) {
                     if (reg && typeof reg.update === 'function') {
                         reg.update();
                     }
