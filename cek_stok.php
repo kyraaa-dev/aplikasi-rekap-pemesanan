@@ -2695,13 +2695,28 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             box-shadow: 0 5px 14px rgba(217, 119, 6, 0.42);
         }
 
+        .calc-desc-mobile,
+        .calc-lbl-mobile,
+        .seg-txt-mobile,
+        .preset-txt-mobile,
+        .res-live-txt-mobile,
+        .calc-wa-lbl-mobile {
+            display: none;
+        }
+
         @media (max-width: 860px) {
             .gov-size-calculator-box {
                 padding: 18px 16px;
             }
             .calc-body-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: minmax(0, 1fr);
                 gap: 18px;
+            }
+            .calc-controls-panel,
+            .calc-group,
+            .calc-result-panel,
+            .calc-result-card {
+                min-width: 0;
             }
             .calc-segmented-group {
                 grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2712,213 +2727,343 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         }
 
         @media (max-width: 680px) {
+            .calc-desc-desktop,
+            .calc-lbl-desktop,
+            .seg-txt-desktop,
+            .preset-txt-desktop,
+            .res-live-txt-desktop,
+            .calc-wa-lbl-desktop {
+                display: none;
+            }
+            .calc-desc-mobile,
+            .calc-lbl-mobile,
+            .seg-txt-mobile,
+            .preset-txt-mobile,
+            .res-live-txt-mobile,
+            .calc-wa-lbl-mobile {
+                display: inline;
+            }
+
             .gov-size-calculator-box {
-                padding: 13px 12px;
-                border-radius: 13px;
+                padding: 11px 11px 12px;
+                border-radius: 12px;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+            .calc-top-accent {
+                height: 2.5px;
             }
             .calc-header-row {
+                gap: 6px;
+                margin-bottom: 4px;
+            }
+            .calc-header-title-wrap {
                 gap: 8px;
-                margin-bottom: 5px;
+                min-width: 0;
             }
             .calc-icon-badge {
-                width: 34px;
-                height: 34px;
-                border-radius: 9px;
+                width: 28px;
+                height: 28px;
+                border-radius: 7px;
             }
             .calc-icon-badge svg {
-                width: 17px;
-                height: 17px;
+                width: 15px;
+                height: 15px;
             }
             .calc-badge-label {
-                font-size: 0.60rem;
+                font-size: 0.56rem;
+                letter-spacing: 0.05em;
             }
             .calc-title {
-                font-size: 0.93rem;
+                font-size: 0.86rem;
+                margin-top: 1px;
+                line-height: 1.22;
             }
             .calc-header-guide-link {
                 display: none;
             }
             .calc-desc {
-                font-size: 0.76rem;
-                line-height: 1.42;
-                margin-bottom: 11px;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
+                font-size: 0.72rem;
+                line-height: 1.38;
+                margin-bottom: 10px;
             }
             .calc-body-grid {
-                gap: 13px;
+                grid-template-columns: minmax(0, 1fr);
+                gap: 11px;
+                width: 100%;
             }
             .calc-controls-panel {
-                gap: 12px;
+                gap: 10px;
+                min-width: 0;
+                width: 100%;
             }
             .calc-group {
-                gap: 6px;
+                gap: 5px;
+                min-width: 0;
+                width: 100%;
             }
             .calc-label {
-                font-size: 0.72rem;
+                font-size: 0.68rem;
+                letter-spacing: 0.02em;
             }
             .calc-segmented-group {
                 grid-template-columns: repeat(3, minmax(0, 1fr));
-                gap: 6px;
+                gap: 5px;
+                width: 100%;
             }
             .calc-seg-btn {
-                padding: 8px 4px;
-                gap: 2.5px;
+                min-width: 0;
+                padding: 7px 4px;
+                gap: 2px;
                 border-radius: 9px;
             }
             .calc-seg-btn .seg-icon {
-                font-size: 1.12rem;
+                font-size: 0.96rem;
             }
             .calc-seg-btn .seg-name {
-                font-size: 0.70rem;
+                font-size: 0.69rem;
                 line-height: 1.15;
+                white-space: nowrap;
+                max-width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             .calc-seg-btn .seg-sub {
-                font-size: 0.59rem;
-                line-height: 1.12;
+                font-size: 0.57rem;
+                line-height: 1.15;
+                white-space: nowrap;
+                max-width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             .calc-cat-toggle-row {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 6px;
+                gap: 5px;
+                width: 100%;
             }
             .calc-cat-btn {
-                padding: 8px 9px;
+                min-width: 0;
+                padding: 7px 8px;
                 flex-direction: column;
                 align-items: flex-start;
                 justify-content: center;
-                gap: 3px;
-                font-size: 0.73rem;
+                gap: 2.5px;
+                font-size: 0.71rem;
                 line-height: 1.2;
                 border-radius: 9px;
             }
             .cat-pill-micro {
-                font-size: 0.60rem;
+                font-size: 0.58rem;
                 padding: 1.5px 6px;
+                white-space: nowrap;
+            }
+            .calc-label-row {
+                gap: 6px;
+            }
+            .calc-stepper-box {
+                border-radius: 7px;
+                flex-shrink: 0;
             }
             .calc-stepper-btn {
-                width: 32px;
-                height: 32px;
+                width: 28px;
+                height: 28px;
+            }
+            .calc-stepper-btn svg {
+                width: 13px;
+                height: 13px;
+            }
+            .calc-val-display {
+                padding: 0 6px;
             }
             .calc-val-display input {
                 font-size: 16px;
-                width: 48px;
+                width: 44px;
+            }
+            .calc-unit {
+                font-size: 0.72rem;
+            }
+            .calc-slider-wrap {
+                margin-top: 2px;
+                width: 100%;
+                padding: 2px 0;
+                box-sizing: border-box;
+            }
+            .calc-slider-wrap input[type=range] {
+                height: 6px;
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+                display: block;
+            }
+            .calc-slider-wrap input[type=range]::-webkit-slider-thumb {
+                width: 18px;
+                height: 18px;
+                border-width: 2.5px;
+            }
+            .calc-slider-wrap input[type=range]::-moz-range-thumb {
+                width: 18px;
+                height: 18px;
+                border-width: 2.5px;
             }
             .calc-slider-scale {
-                margin-top: 5px;
-                padding: 0 2px;
+                margin-top: 4px;
+                padding: 0 1px;
             }
             .scale-mark {
-                font-size: 0.68rem;
+                font-size: 0.63rem;
             }
+            /* 3x2 Mini Bento Preset Grid: 100% Visible Without Hidden Scroll */
             .calc-presets-row {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
                 gap: 5px;
-                margin-top: 4px;
-                padding-bottom: 2px;
-            }
-            .calc-presets-row::-webkit-scrollbar {
-                display: none;
+                margin-top: 5px;
+                width: 100%;
+                overflow: visible;
+                padding-bottom: 0;
             }
             .preset-label {
-                flex-shrink: 0;
-                white-space: nowrap;
-                font-size: 0.65rem;
+                display: none;
             }
             .btn-calc-preset {
-                flex-shrink: 0;
+                min-width: 0;
+                width: 100%;
+                text-align: center;
                 white-space: nowrap;
-                font-size: 0.71rem;
-                padding: 4px 9px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 0.67rem;
+                padding: 5px 4px;
+                border-radius: 7px;
+            }
+            /* Compact Proportional Result Card */
+            .calc-result-panel,
+            .calc-result-card {
+                min-width: 0;
+                width: 100%;
+                box-sizing: border-box;
             }
             .calc-result-card {
-                padding: 12px;
-                gap: 9px;
-                border-radius: 12px;
+                padding: 11px;
+                gap: 8px;
+                border-radius: 11px;
             }
             .res-card-top-tag {
                 gap: 6px;
+                min-width: 0;
             }
             .res-tag-live {
-                font-size: 0.62rem;
-                gap: 5px;
+                font-size: 0.59rem;
+                letter-spacing: 0.04em;
+                gap: 4.5px;
+                flex-shrink: 0;
             }
             .res-dot {
-                width: 6.5px;
-                height: 6.5px;
+                width: 6px;
+                height: 6px;
+                box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.22);
             }
             .res-model-badge {
-                font-size: 0.64rem;
+                font-size: 0.62rem;
                 padding: 2px 7px;
                 white-space: nowrap;
+                max-width: 60%;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             .res-main-block {
-                padding: 10px 12px;
+                padding: 9px 10px;
                 border-radius: 9px;
             }
             .res-rec-label {
-                font-size: 0.68rem;
+                font-size: 0.61rem;
+                letter-spacing: 0.04em;
             }
             .res-number-row {
-                margin: 4px 0;
-                gap: 8px;
+                margin: 3px 0;
+                gap: 7px;
             }
             .res-size-number {
-                font-size: 2.15rem;
+                font-size: 1.55rem;
             }
             .res-comfort-tag {
-                font-size: 0.69rem;
-                padding: 3px 8px;
+                font-size: 0.65rem;
+                padding: 2px 8px;
             }
             .res-detail-cm {
-                font-size: 0.75rem;
+                font-size: 0.69rem;
+                line-height: 1.25;
             }
             .res-stock-banner {
-                padding: 8px 10px;
-                gap: 8px;
+                padding: 7px 9px;
+                gap: 7px;
+                border-radius: 8px;
+                min-width: 0;
             }
             .res-stock-indicator svg {
-                width: 17px;
-                height: 17px;
+                width: 16px;
+                height: 16px;
+            }
+            .res-stock-info {
+                min-width: 0;
+                flex: 1;
             }
             .res-stock-title {
-                font-size: 0.77rem;
+                font-size: 0.73rem;
+                line-height: 1.22;
             }
             .res-stock-desc {
-                font-size: 0.71rem;
+                font-size: 0.67rem;
+                line-height: 1.3;
             }
             .res-notes-box {
-                font-size: 0.74rem;
-                line-height: 1.42;
-                padding: 7px 10px;
+                font-size: 0.70rem;
+                line-height: 1.38;
+                padding: 6.5px 9px;
+                border-left-width: 3px;
             }
             .res-alt-row {
-                font-size: 0.71rem;
-                gap: 5px;
+                font-size: 0.68rem;
+                gap: 4.5px;
             }
             .res-alt-chip {
-                font-size: 0.70rem;
-                padding: 2.5px 8px;
+                font-size: 0.66rem;
+                padding: 3px 8px;
+                border-radius: 7px;
+                white-space: normal;
+                text-align: left;
+                line-height: 1.25;
+                max-width: 100%;
             }
             .res-actions-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 7px;
+                gap: 6px;
+                width: 100%;
             }
             .btn-calc-action {
-                font-size: 0.75rem;
-                padding: 9px 7px;
-                min-height: 40px;
-                gap: 5px;
-                border-radius: 9px;
+                min-width: 0;
+                width: 100%;
+                font-size: 0.72rem;
+                padding: 0 7px;
+                height: 37px;
+                min-height: 37px;
+                gap: 4.5px;
+                border-radius: 8px;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             .btn-calc-action svg {
-                width: 14px;
-                height: 14px;
+                width: 13px;
+                height: 13px;
                 flex-shrink: 0;
+            }
+        }
+
+        @media (max-width: 345px) {
+            .res-actions-grid {
+                grid-template-columns: minmax(0, 1fr);
             }
         }
 
@@ -3988,6 +4133,16 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 gap: 8px;
                 margin-bottom: 0.65rem;
                 padding-bottom: 0.65rem;
+            }
+            .section-h2 {
+                font-size: 1.02rem;
+                line-height: 1.3;
+                gap: 7px;
+            }
+            .section-h2 svg {
+                width: 17px;
+                height: 17px;
+                flex-shrink: 0;
             }
             .gallery-lead-desc {
                 font-size: 0.78rem;
@@ -6931,7 +7086,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 </div>
 
                 <p class="calc-desc">
-                    Masukkan hasil pengukuran lingkar kepala Anda (dalam satuan cm). Sistem akan menganalisis nomor ukuran resmi KORPRI yang paling presisi, memperhitungkan kelonggaran jilbab/sanggul, serta menampilkan jumlah stok fisik yang ready saat ini di Sekretariat.
+                    <span class="calc-desc-desktop">Masukkan hasil pengukuran lingkar kepala Anda (dalam satuan cm). Sistem akan menganalisis nomor ukuran resmi KORPRI yang paling presisi, memperhitungkan kelonggaran jilbab/sanggul, serta menampilkan jumlah stok fisik yang ready saat ini di Sekretariat.</span>
+                    <span class="calc-desc-mobile">Pilih tipe pemakai, model mutz, dan geser ukuran lingkar kepala (cm) untuk melihat rekomendasi nomor &amp; stok ready.</span>
                 </p>
 
                 <div class="calc-body-grid">
@@ -6940,23 +7096,24 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         <!-- 1. Pilihan Pengguna / Hijab -->
                         <div class="calc-group">
                             <div class="calc-label">
-                                <span>1. Tipe Pengguna &amp; Ketentuan Hijab</span>
+                                <span class="calc-lbl-desktop">1. Tipe Pengguna &amp; Ketentuan Hijab</span>
+                                <span class="calc-lbl-mobile">1. Tipe Pemakai</span>
                             </div>
                             <div class="calc-segmented-group" id="calcUserTypeGroup" role="radiogroup" aria-label="Tipe Pemakai">
                                 <button type="button" class="calc-seg-btn active" data-type="pria" onclick="setCalcUserType('pria')" aria-pressed="true">
                                     <span class="seg-icon">👨</span>
-                                    <span class="seg-name">Pria (ASN)</span>
-                                    <span class="seg-sub">Pola Lurus Pas</span>
+                                    <span class="seg-name"><span class="seg-txt-desktop">Pria (ASN)</span><span class="seg-txt-mobile">Pria</span></span>
+                                    <span class="seg-sub"><span class="seg-txt-desktop">Pola Lurus Pas</span><span class="seg-txt-mobile">Pola Lurus</span></span>
                                 </button>
                                 <button type="button" class="calc-seg-btn" data-type="wanita_hijab" onclick="setCalcUserType('wanita_hijab')" aria-pressed="false">
                                     <span class="seg-icon">🧕</span>
-                                    <span class="seg-name">Wanita Berhijab</span>
-                                    <span class="seg-sub">+1 No. Toleransi Hijab</span>
+                                    <span class="seg-name"><span class="seg-txt-desktop">Wanita Berhijab</span><span class="seg-txt-mobile">Berhijab</span></span>
+                                    <span class="seg-sub"><span class="seg-txt-desktop">+1 No. Toleransi Hijab</span><span class="seg-txt-mobile">+1 No. Hijab</span></span>
                                 </button>
                                 <button type="button" class="calc-seg-btn" data-type="wanita_biasa" onclick="setCalcUserType('wanita_biasa')" aria-pressed="false">
                                     <span class="seg-icon">👩</span>
-                                    <span class="seg-name">Wanita (Non-Hijab)</span>
-                                    <span class="seg-sub">Pola Lengkung Anggun</span>
+                                    <span class="seg-name"><span class="seg-txt-desktop">Wanita (Non-Hijab)</span><span class="seg-txt-mobile">Non-Hijab</span></span>
+                                    <span class="seg-sub"><span class="seg-txt-desktop">Pola Lengkung Anggun</span><span class="seg-txt-mobile">Lengkung</span></span>
                                 </button>
                             </div>
                         </div>
@@ -6968,12 +7125,12 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             </div>
                             <div class="calc-cat-toggle-row">
                                 <button type="button" class="calc-cat-btn active" id="calcCatStandarBtn" onclick="setCalcCategory('Biasa')">
-                                    <span>Standar ASN (Biasa)</span>
+                                    <span><span class="seg-txt-desktop">Standar ASN (Biasa)</span><span class="seg-txt-mobile">Standar ASN</span></span>
                                     <span class="cat-pill-micro">+ Pin Free</span>
                                 </button>
                                 <button type="button" class="calc-cat-btn" id="calcCatKepalaBtn" onclick="setCalcCategory('Kepala SKPD')">
-                                    <span>Kepala SKPD (Eselon II)</span>
-                                    <span class="cat-pill-micro gold">Lis Emas</span>
+                                    <span><span class="seg-txt-desktop">Kepala SKPD (Eselon II)</span><span class="seg-txt-mobile">Kepala SKPD</span></span>
+                                    <span class="cat-pill-micro gold"><span class="seg-txt-desktop">Lis Emas</span><span class="seg-txt-mobile">Eselon II • Emas</span></span>
                                 </button>
                             </div>
                         </div>
@@ -7015,12 +7172,12 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <!-- Tombol Presets Cepat -->
                             <div class="calc-presets-row">
                                 <span class="preset-label">Pilihan Cepat:</span>
-                                <button type="button" class="btn-calc-preset" data-val="55.0" onclick="setCalcCm(55.0)">55 cm (S)</button>
-                                <button type="button" class="btn-calc-preset" data-val="56.0" onclick="setCalcCm(56.0)">56 cm (M)</button>
-                                <button type="button" class="btn-calc-preset active" data-val="57.0" onclick="setCalcCm(57.0)">57 cm (Rata-rata Pria)</button>
-                                <button type="button" class="btn-calc-preset" data-val="58.0" onclick="setCalcCm(58.0)">58 cm (Standar Wanita)</button>
-                                <button type="button" class="btn-calc-preset" data-val="59.0" onclick="setCalcCm(59.0)">59 cm (Hijab Tebal)</button>
-                                <button type="button" class="btn-calc-preset" data-val="60.0" onclick="setCalcCm(60.0)">60 cm (Jumbo)</button>
+                                <button type="button" class="btn-calc-preset" data-val="55.0" onclick="setCalcCm(55.0)"><span class="preset-txt-desktop">55 cm (S)</span><span class="preset-txt-mobile">55 cm • S</span></button>
+                                <button type="button" class="btn-calc-preset" data-val="56.0" onclick="setCalcCm(56.0)"><span class="preset-txt-desktop">56 cm (M)</span><span class="preset-txt-mobile">56 cm • M</span></button>
+                                <button type="button" class="btn-calc-preset active" data-val="57.0" onclick="setCalcCm(57.0)"><span class="preset-txt-desktop">57 cm (Rata-rata Pria)</span><span class="preset-txt-mobile">57 cm • Pria</span></button>
+                                <button type="button" class="btn-calc-preset" data-val="58.0" onclick="setCalcCm(58.0)"><span class="preset-txt-desktop">58 cm (Standar Wanita)</span><span class="preset-txt-mobile">58 cm • Wanita</span></button>
+                                <button type="button" class="btn-calc-preset" data-val="59.0" onclick="setCalcCm(59.0)"><span class="preset-txt-desktop">59 cm (Hijab Tebal)</span><span class="preset-txt-mobile">59 cm • Hijab</span></button>
+                                <button type="button" class="btn-calc-preset" data-val="60.0" onclick="setCalcCm(60.0)"><span class="preset-txt-desktop">60 cm (Jumbo)</span><span class="preset-txt-mobile">60 cm • XL</span></button>
                             </div>
                         </div>
                     </div>
@@ -7031,7 +7188,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                             <div class="res-card-top-tag">
                                 <span class="res-tag-live">
                                     <span class="res-dot"></span>
-                                    <span>ANALISIS REKOMENDASI RESMI</span>
+                                    <span class="res-live-txt-desktop">ANALISIS REKOMENDASI RESMI</span>
+                                    <span class="res-live-txt-mobile">REKOMENDASI</span>
                                 </span>
                                 <span class="res-model-badge" id="calcResModelBadge">Standar ASN • Pria</span>
                             </div>
@@ -8331,7 +8489,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         btnCalcOrderWa.classList.remove('preorder-wa');
                         btnCalcOrderWa.innerHTML = `
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                            <span>Pesan No. ${recSize} via WA</span>
+                            <span class="calc-wa-lbl-desktop">Pesan No. ${recSize} via WA</span>
+                            <span class="calc-wa-lbl-mobile">Pesan WA (${recSize})</span>
                         `;
                     }
                 } else {
@@ -8345,7 +8504,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         btnCalcOrderWa.classList.add('preorder-wa');
                         btnCalcOrderWa.innerHTML = `
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                            <span>Pre-Order No. ${recSize} via WA</span>
+                            <span class="calc-wa-lbl-desktop">Pre-Order No. ${recSize} via WA</span>
+                            <span class="calc-wa-lbl-mobile">PO WA (No. ${recSize})</span>
                         `;
                     }
                 }
@@ -8404,7 +8564,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         btnCalcOrderWa.classList.remove('preorder-wa');
                         btnCalcOrderWa.innerHTML = `
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                            <span>Pesan No. ${sz} via WA</span>
+                            <span class="calc-wa-lbl-desktop">Pesan No. ${sz} via WA</span>
+                            <span class="calc-wa-lbl-mobile">Pesan WA (${sz})</span>
                         `;
                     }
                 } else {
@@ -8418,7 +8579,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         btnCalcOrderWa.classList.add('preorder-wa');
                         btnCalcOrderWa.innerHTML = `
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                            <span>Pre-Order No. ${sz} via WA</span>
+                            <span class="calc-wa-lbl-desktop">Pre-Order No. ${sz} via WA</span>
+                            <span class="calc-wa-lbl-mobile">PO WA (No. ${sz})</span>
                         `;
                     }
                 }
@@ -9157,7 +9319,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         // Daftarkan Service Worker & bersihkan cache lawas di perangkat mobile
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('sw.js?v=20261029_4').then(function(reg) {
+                navigator.serviceWorker.register('sw.js?v=20261029_5').then(function(reg) {
                     if (reg && typeof reg.update === 'function') {
                         reg.update();
                     }
