@@ -3386,88 +3386,119 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             }
 
             .gov-hero {
-                padding: 1.35rem 1rem;
-                margin-bottom: 1.25rem;
+                padding: 1.1rem 0.95rem;
+                margin-bottom: 1rem;
                 border-radius: var(--radius-md);
             }
             .gov-authority-badge {
-                padding: 4px 10px;
-                font-size: 0.68rem;
-                margin-bottom: 0.75rem;
+                padding: 3px 9px;
+                font-size: 0.65rem;
+                margin-bottom: 0.55rem;
             }
             .gov-hero-h1 {
-                font-size: clamp(1.3rem, 5.2vw, 1.55rem);
-                margin-bottom: 0.5rem;
-                line-height: 1.3;
+                font-size: clamp(1.22rem, 5vw, 1.45rem);
+                margin-bottom: 0.35rem;
+                line-height: 1.25;
             }
             .gov-hero-sub {
-                font-size: 0.84rem;
-                margin-bottom: 0.9rem;
-                line-height: 1.55;
+                font-size: 0.78rem;
+                margin-bottom: 0.7rem;
+                line-height: 1.45;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
             }
             .gov-info-strip {
-                gap: 0.65rem;
-                padding-top: 0.85rem;
+                gap: 0.5rem;
+                padding-top: 0.65rem;
                 flex-direction: column;
-                align-items: center;
+                align-items: stretch;
                 width: 100%;
             }
             .gov-info-location {
                 width: 100%;
                 max-width: 100%;
-                border-radius: 10px;
-                padding: 8px 10px;
-                gap: 8px;
+                border-radius: 999px;
+                padding: 6px 10px;
+                gap: 7px;
                 box-sizing: border-box;
             }
             .loc-pin-icon {
-                width: 26px;
-                height: 26px;
+                width: 22px;
+                height: 22px;
                 flex-shrink: 0;
             }
             .loc-text-block {
                 display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1px;
+                flex-direction: row;
+                align-items: center;
+                gap: 5px;
                 flex: 1;
                 min-width: 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             .loc-divider {
-                display: none;
+                display: inline;
+                font-size: 0.7rem;
+                opacity: 0.6;
             }
             .loc-instansi {
-                font-size: 0.8rem;
+                font-size: 0.74rem;
                 font-weight: 800;
                 color: #FFFFFF;
-                line-height: 1.25;
+                line-height: 1.2;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             .loc-alamat {
                 font-size: 0.72rem;
                 font-weight: 600;
                 color: #FDE68A;
-                line-height: 1.25;
+                line-height: 1.2;
+                white-space: nowrap;
             }
             .gov-info-meta-row {
                 width: 100%;
                 display: flex;
-                justify-content: center;
+                justify-content: flex-start;
                 align-items: center;
                 gap: 6px;
-                flex-wrap: wrap;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                padding-bottom: 2px;
+            }
+            .gov-info-meta-row::-webkit-scrollbar {
+                display: none;
             }
             .gov-meta-chip {
-                padding: 4px 8px;
-                font-size: 0.7rem;
+                padding: 4px 9px;
+                font-size: 0.69rem;
+                flex-shrink: 0;
+                white-space: nowrap;
             }
 
-            /* Section Header & Gallery on Mobile */
+            /* Section Header & Horizontal Swipe Gallery on Mobile */
             .section-header-row {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 10px;
-                margin-bottom: 0.85rem;
-                padding-bottom: 0.75rem;
+                gap: 8px;
+                margin-bottom: 0.65rem;
+                padding-bottom: 0.65rem;
+            }
+            .gallery-lead-desc {
+                font-size: 0.78rem;
+                line-height: 1.45;
+                margin-bottom: 0.4rem;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
             }
             .gallery-filter-pills {
                 width: 100%;
@@ -3476,7 +3507,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
                 gap: 6px;
-                padding-bottom: 4px;
+                padding-bottom: 2px;
                 scrollbar-width: none;
             }
             .gallery-filter-pills::-webkit-scrollbar {
@@ -3485,44 +3516,149 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             .btn-gallery-tab {
                 flex-shrink: 0;
                 white-space: nowrap;
-                padding: 5px 12px;
-                font-size: 0.78rem;
+                padding: 4px 11px;
+                font-size: 0.75rem;
+            }
+            .gallery-cards-grid {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                gap: 10px !important;
+                margin: 0.5rem -0.25rem 0 -0.25rem !important;
+                padding: 2px 0.25rem 8px 0.25rem !important;
+                scrollbar-width: none;
+            }
+            .gallery-cards-grid::-webkit-scrollbar {
+                display: none;
+            }
+            .gallery-card-item {
+                flex: 0 0 76% !important;
+                max-width: 260px !important;
+                scroll-snap-align: start;
+            }
+            .gallery-img-box {
+                aspect-ratio: 16 / 10;
+            }
+            .gallery-card-content {
+                padding: 10px 11px 11px;
+            }
+            .gallery-card-title {
+                font-size: 0.85rem;
+            }
+            .gallery-card-desc {
+                font-size: 0.73rem;
+                line-height: 1.4;
+                margin: 3px 0 7px;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .gallery-card-features {
+                gap: 3px;
+                margin-bottom: 8px;
+            }
+            .feature-chip {
+                font-size: 0.68rem;
+            }
+            .gallery-card-footer {
+                padding-top: 8px;
+                gap: 6px;
+            }
+            .btn-gallery-action {
+                padding: 6px 8px;
+                font-size: 0.74rem;
             }
 
-            /* Product Selector on Mobile */
+            /* Product Selector on Mobile: Sleek Single-Row Compact Cards */
             .gov-product-selector {
                 grid-template-columns: 1fr;
-                gap: 10px;
-                margin-bottom: 1.25rem;
+                gap: 8px;
+                margin-bottom: 1rem;
             }
             .product-choice-card {
-                padding: 12px 14px;
+                padding: 10px 12px !important;
                 border-radius: var(--radius-md);
+                flex-wrap: nowrap !important;
+                align-items: center !important;
+                gap: 10px !important;
+            }
+            .choice-info-wrap {
+                flex: 1 1 auto !important;
+                min-width: 0;
+                gap: 9px;
+                align-items: center;
+            }
+            .choice-check-radio {
+                width: 18px;
+                height: 18px;
+                margin-top: 0;
+            }
+            .choice-check-radio::after {
+                width: 8px;
+                height: 8px;
             }
             .choice-meta-title {
-                font-size: 0.98rem;
+                font-size: 0.88rem;
+                margin-bottom: 2px;
             }
             .choice-meta-desc {
-                font-size: 0.78rem;
-                margin-bottom: 6px;
+                font-size: 0.72rem;
+                margin-bottom: 5px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .choice-tags-row {
+                gap: 4px;
+            }
+            .choice-tags-row .tag-micro {
+                font-size: 0.63rem;
+                padding: 1px 6px;
+            }
+            .choice-side-meta {
+                width: auto !important;
+                flex-shrink: 0;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: flex-end !important;
+                padding-top: 0 !important;
+                border-top: none !important;
+                gap: 8px !important;
             }
             .choice-thumb-box {
-                width: 48px;
-                height: 48px;
+                width: 42px;
+                height: 42px;
             }
             .choice-price-val {
-                font-size: 1.12rem;
+                font-size: 0.98rem;
+            }
+            .choice-price-label {
+                font-size: 0.62rem;
             }
 
-            /* Filter Toolbar on Mobile */
+            /* Sticky Glass Filter Toolbar on Mobile */
             .gov-filter-toolbar {
-                padding: 10px;
-                margin-bottom: 1.25rem;
+                position: sticky;
+                top: 50px;
+                z-index: 95;
+                background: rgba(255, 255, 255, 0.92);
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);
+                box-shadow: 0 6px 20px -6px rgba(11, 30, 59, 0.1);
+                padding: 8px 10px;
+                margin-bottom: 1rem;
                 flex-direction: column;
                 align-items: stretch;
-                gap: 10px;
+                gap: 8px;
                 width: 100%;
                 box-sizing: border-box;
+            }
+            [data-theme="dark"] .gov-filter-toolbar {
+                background: rgba(15, 23, 42, 0.92);
+                box-shadow: 0 6px 20px -6px rgba(0, 0, 0, 0.55);
             }
             .filter-controls-left {
                 width: 100%;
@@ -3541,8 +3677,8 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             .btn-segment {
                 flex: 1;
                 justify-content: center;
-                padding: 7px 6px;
-                font-size: 0.8rem;
+                padding: 6px 6px;
+                font-size: 0.78rem;
                 gap: 4px;
             }
             .btn-segment svg {
@@ -3551,14 +3687,14 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 flex-shrink: 0;
             }
             .segment-counter {
-                font-size: 0.7rem;
+                font-size: 0.68rem;
                 padding: 1px 4px;
             }
             .btn-ready-toggle {
                 flex-shrink: 0;
-                padding: 7px 10px;
-                font-size: 0.78rem;
-                gap: 6px;
+                padding: 6px 9px;
+                font-size: 0.75rem;
+                gap: 5px;
                 box-sizing: border-box;
             }
             .size-chips-scroller {
@@ -3566,7 +3702,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 min-width: 0;
                 max-width: 100%;
                 gap: 6px;
-                padding: 2px 2px 4px 2px;
+                padding: 1px 2px 2px 2px;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
                 overscroll-behavior-x: contain;
@@ -3577,60 +3713,60 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 display: none;
             }
             .btn-size-chip {
-                padding: 6px 11px;
-                font-size: 0.78rem;
+                padding: 5px 10px;
+                font-size: 0.75rem;
                 flex-shrink: 0;
             }
 
-            /* Stock Grid on Mobile: Full-Width Identical to Web Card Layout */
+            /* Stock Grid on Mobile: Modern 2x2 Bento Card Layout */
             .gov-stock-grid {
                 grid-template-columns: 1fr;
-                gap: 14px;
-                margin-bottom: 2rem;
+                gap: 12px;
+                margin-bottom: 1.5rem;
             }
             .stock-item-card {
-                padding: 18px 16px;
+                padding: 14px 14px;
                 border-radius: var(--radius-md);
             }
             .stock-item-card.is-out-of-stock {
                 border-width: 1.5px;
             }
             .stock-out-banner {
-                margin: -18px -16px 14px -16px;
-                padding: 7px 12px;
-                font-size: 0.72rem;
-                gap: 7px;
+                margin: -14px -14px 12px -14px;
+                padding: 6px 10px;
+                font-size: 0.70rem;
+                gap: 6px;
             }
             .banner-text-desktop { display: inline !important; }
             .banner-text-mobile { display: none !important; }
 
             .stock-card-out-notice {
-                padding: 8px 10px;
-                font-size: 0.75rem;
-                margin-bottom: 12px;
-                gap: 7px;
+                padding: 7px 10px;
+                font-size: 0.73rem;
+                margin-bottom: 10px;
+                gap: 6px;
             }
             .stock-card-out-notice svg {
-                width: 14px;
-                height: 14px;
+                width: 13px;
+                height: 13px;
             }
             .stock-card-head {
-                margin-bottom: 12px;
-                align-items: flex-start;
+                margin-bottom: 10px;
+                align-items: center;
                 gap: 8px;
             }
             .size-num-title {
-                font-size: 1.65rem;
+                font-size: 1.45rem;
                 line-height: 1;
             }
             .size-circumference {
-                font-size: 0.78rem;
-                margin-top: 3px;
+                font-size: 0.74rem;
+                margin-top: 2px;
             }
             .status-pill {
                 padding: 4px 10px;
-                font-size: 0.75rem;
-                gap: 6px;
+                font-size: 0.73rem;
+                gap: 5px;
                 flex-shrink: 0;
             }
             .status-dot-sm {
@@ -3638,50 +3774,63 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 height: 6px;
             }
             .stock-card-body {
-                padding: 12px 14px;
-                margin-bottom: 14px;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 8px 12px;
+                padding: 10px 12px;
+                margin-bottom: 10px;
                 border-radius: var(--radius-sm);
             }
             .body-row {
-                font-size: 0.82rem;
-                margin-bottom: 5px;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                gap: 2px;
+                margin-bottom: 0;
             }
             .body-row-cat {
                 display: flex;
             }
+            .body-label {
+                font-size: 0.66rem;
+                text-transform: uppercase;
+                letter-spacing: 0.03em;
+                color: var(--gov-subtle);
+            }
             .body-value {
-                font-size: 0.82rem;
+                font-size: 0.80rem;
+                font-weight: 800;
             }
             .body-row-pin {
-                margin-top: 6px;
-                padding-top: 6px;
-                border-top: 1px dashed var(--gov-hairline);
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                gap: 6px;
+                margin-top: 0;
+                padding-top: 0;
+                border-top: none;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                gap: 2px;
             }
             .body-pin-val {
-                font-size: 0.78rem;
+                font-size: 0.76rem;
                 gap: 4px;
                 white-space: nowrap;
                 color: var(--korpri-blue);
                 width: auto;
             }
             .body-pin-val svg {
-                width: 12px;
-                height: 12px;
+                width: 11px;
+                height: 11px;
                 flex-shrink: 0;
             }
             .btn-order-action {
-                padding: 10px 14px;
-                font-size: 0.86rem;
-                gap: 7px;
+                padding: 9px 12px;
+                font-size: 0.84rem;
+                gap: 6px;
                 border-radius: var(--radius-sm);
             }
             .btn-order-action svg {
-                width: 15px;
-                height: 15px;
+                width: 14px;
+                height: 14px;
                 flex-shrink: 0;
             }
 
@@ -3693,14 +3842,60 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 display: inline !important;
             }
 
-            /* Size Guide & Spec on Mobile */
+            /* Size Guide & Spec on Mobile with Segmented Tab Switcher */
             .gov-section-card {
-                padding: 1.25rem 1rem;
-                margin-bottom: 1.5rem;
+                padding: 1.1rem 0.95rem;
+                margin-bottom: 1.15rem;
             }
             .gov-spec-grid {
                 grid-template-columns: 1fr;
-                gap: 12px;
+                gap: 10px;
+            }
+            .mobile-guide-tabs {
+                display: grid !important;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 4px;
+                background: var(--gov-hairline-subtle);
+                border: 1px solid var(--gov-hairline);
+                border-radius: var(--radius-sm);
+                padding: 4px;
+                margin-bottom: 0.85rem;
+            }
+            .btn-guide-tab {
+                border: none;
+                background: transparent;
+                color: var(--gov-muted);
+                font-family: var(--font-sans);
+                font-size: 0.73rem;
+                font-weight: 700;
+                padding: 7px 4px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: var(--transition);
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .btn-guide-tab.active {
+                background: var(--gov-surface);
+                color: var(--korpri-blue);
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            }
+            [data-theme="dark"] .btn-guide-tab.active {
+                background: #1E293B;
+                color: #93C5FD;
+            }
+            .guide-tab-pane {
+                display: none !important;
+            }
+            .guide-tab-pane.active-mobile-pane {
+                display: block !important;
+                animation: cardFadeUp 0.25s ease;
+            }
+            .guide-tab-pane #kalkulator-ukuran,
+            .guide-tab-pane #spesifikasi {
+                margin-top: 0 !important;
             }
 
             /* Mobile Floating Quick-Action Dock (Fitur Tampilan #7) */
@@ -4264,10 +4459,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 gap: 12px;
             }
         }
+        .mobile-guide-tabs {
+            display: none;
+        }
         @media (max-width: 520px) {
-            .gallery-cards-grid {
-                grid-template-columns: 1fr;
-            }
             .gallery-filter-pills {
                 flex-wrap: nowrap;
                 overflow-x: auto;
@@ -4951,29 +5146,13 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         @media (max-width: 860px) {
             .gov-product-selector {
                 grid-template-columns: 1fr;
-                gap: 12px;
+                gap: 10px;
             }
         }
         @media (max-width: 520px) {
-            .product-choice-card {
-                padding: 12px 14px;
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-            .choice-info-wrap {
-                width: 100%;
-                flex: 1 1 100%;
-            }
-            .choice-side-meta {
-                width: 100%;
-                justify-content: space-between;
-                padding-top: 8px;
-                border-top: 1px dashed var(--gov-hairline);
-                gap: 10px;
-            }
             .choice-thumb-img {
-                width: 54px;
-                height: 36px;
+                width: 44px;
+                height: 44px;
             }
         }
 
@@ -5587,6 +5766,14 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                 <span class="tag-micro tag-micro-gold">Pedoman Resmi</span>
             </div>
 
+            <!-- Mobile Segmented Tab Switcher (Hanya Tampil di Mobile) -->
+            <div class="mobile-guide-tabs" role="tablist" aria-label="Pilih Panduan Ukuran">
+                <button type="button" class="btn-guide-tab active" data-guide-tab="calc" onclick="switchMobileGuideTab('calc')">📏 Kalkulator (cm)</button>
+                <button type="button" class="btn-guide-tab" data-guide-tab="table" onclick="switchMobileGuideTab('table')">📋 Tabel Ukuran</button>
+                <button type="button" class="btn-guide-tab" data-guide-tab="spec" onclick="switchMobileGuideTab('spec')">✨ Beda Model</button>
+            </div>
+
+            <div id="guideTabTable" class="guide-tab-pane">
             <p style="font-size: 0.9rem; color: var(--gov-muted); line-height: 1.6;">
                 Nomor ukuran topi Mutz ASN mengacu pada <strong>lingkar kepala dalam satuan sentimeter (cm)</strong>. Ukur menggunakan pita meteran kain melingkari kepala sekitar 1 cm di atas telinga dan tepat di atas alis.
             </p>
@@ -5633,8 +5820,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     <strong>Petunjuk untuk ASN Wanita (Berhijab / Sanggul):</strong> Disarankan memilih <strong>1 hingga 2 nomor lebih besar</strong> (umumnya No. 58 sampai No. 60) untuk memberikan kelonggaran lipatan kain hijab agar topi tidak menekan dahi dan tetap berdiri tegak rapi.
                 </div>
             </div>
+            </div>
 
             <!-- Kalkulator Ukuran Mutz Interaktif (Lingkar Kepala cm) -->
+            <div id="guideTabCalc" class="guide-tab-pane active-mobile-pane">
             <div class="gov-size-calculator-box" id="kalkulator-ukuran">
                 <div class="calc-top-accent"></div>
 
@@ -5808,8 +5997,10 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                     </div>
                 </div>
             </div>
+            </div>
 
             <!-- Perbedaan Spesifikasi Standar vs Kepala SKPD -->
+            <div id="guideTabSpec" class="guide-tab-pane">
             <div style="margin-top: 2rem;" id="spesifikasi">
                 <h3 style="font-size: 1.12rem; font-weight: 800; color: var(--gov-slate); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--korpri-gold);"><circle cx="12" cy="12" r="10"></circle><path d="m16 10-4 4-2-2"></path></svg>
@@ -5872,6 +6063,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
                         </ul>
                     </div>
                 </div>
+            </div>
             </div>
         </section>
 
@@ -7056,6 +7248,32 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
             showNotification(`Ukuran beralih ke alternatif: No. ${sz}`);
         }
 
+        function switchMobileGuideTab(tabName) {
+            const panes = {
+                calc: document.getElementById('guideTabCalc'),
+                table: document.getElementById('guideTabTable'),
+                spec: document.getElementById('guideTabSpec')
+            };
+            Object.keys(panes).forEach(function(k) {
+                if (panes[k]) {
+                    panes[k].classList.toggle('active-mobile-pane', k === tabName);
+                }
+            });
+            document.querySelectorAll('.btn-guide-tab').forEach(function(btn) {
+                btn.classList.toggle('active', btn.getAttribute('data-guide-tab') === tabName);
+            });
+        }
+
+        // Otomatis buka tab mobile yang sesuai saat tautan anchor diklik
+        document.querySelectorAll('a[href="#kalkulator-ukuran"], a[href="#panduan"], a[href="#spesifikasi"]').forEach(function(link) {
+            link.addEventListener('click', function() {
+                const href = link.getAttribute('href');
+                if (href === '#kalkulator-ukuran') switchMobileGuideTab('calc');
+                else if (href === '#spesifikasi') switchMobileGuideTab('spec');
+                else if (href === '#panduan') switchMobileGuideTab('calc');
+            });
+        });
+
         function applyCalcToCatalog() {
             selectCategory(calcCategory);
             selectGender(calcTargetGender);
@@ -7744,7 +7962,7 @@ $og_page_url     = $og_protocol . $og_host . $_SERVER['REQUEST_URI'];
         // Daftarkan Service Worker & bersihkan cache lawas di perangkat mobile
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('sw.js?v=20261028_4').then(function(reg) {
+                navigator.serviceWorker.register('sw.js?v=20261028_5').then(function(reg) {
                     if (reg && typeof reg.update === 'function') {
                         reg.update();
                     }
